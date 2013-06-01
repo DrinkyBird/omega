@@ -1,0 +1,843 @@
+// ---------------------------------
+//                  UTILITY GUN MENU
+// ---------------------------------
+
+int MenuSelection[2], MenuHorPos;
+
+// SERVER INTERACTION
+// Script #970 - server prepares client to utility menu usage
+// Utility gun AltFire calls this to activate the menu
+script 970 (void) {
+	ActivatorSound ("switch/pulse", 127);
+	
+	int team = 1-PlayerTeam();
+	GiveInventory ("InUtilMenu", 1);
+	GiveInventory ("CannotBuild", 1);
+	
+	// give information on what we have
+	TakeInventory ("GotAdvTurrets", 1);
+	TakeInventory ("GotMoreTurrets", 1);
+	TakeInventory ("GoingToUtilMenu", 1);
+	TakeInventory ("Utility_Percent", 100);
+	if (AdvancedTurrets[team])
+		GiveInventory ("GotAdvTurrets", 1);
+	if (MoreTurrets[team])
+		GiveInventory ("GotMoreTurrets", 1);
+	if (!MechEnabled)
+		GiveInventory ("NoMechs", 1);
+	if (UsePortals)
+		GiveInventory ("PortalsEnabled", 1);
+	
+	// activate the menu
+	GiveInventory ("UtilityMenuActivator", 1);
+	
+	// freeze the player for the duration of menu usage
+	SetPlayerProperty (0, 1, PROP_FROZEN);
+}
+
+// Script #969 - server receives selection from utility guy
+script 969 (int sel0, int sel1) NET {
+	int pn = PlayerNumber();
+	if (!CheckInventory ("InUtilMenu")) terminate;
+	LocalAmbientSound ("menu/dismiss", 127);
+	ActivatorSound ("switch/pulse", 127);
+	
+	TakeInventory ("MenuSelection", 3);
+	TakeInventory ("MenuSelection2", 10);
+	GiveInventory ("MenuSelection", sel0);
+	GiveInventory ("MenuSelection2", sel1);
+	
+	// HACK: determine if the player is allowed to build
+	// THIS CHECK IS ONLY A HINT AND SHOULD NOT BE RELIED UPON
+	if ((sel0 != 2 || sel1 < 4 || AdvancedTurrets[1-PlayerTeam()] == 1) &&
+		(sel0 != 1 || sel1 < 6 || MechEnabled) &&
+		(sel0 != 2 || (sel1 == 2 || sel1 == 3) || TurretLimit() < TurretLimitMax()) &&
+		(sel0 != 2 || sel1 != 2 || MineLimit() < 50) &&
+		(sel0 != 2 || sel1 != 3 || MiniRavenLimit() < 5) &&
+		(sel0 != 3 || sel1 != 0 || RazorWireLimit() < 20) && 
+		(sel0 != 3 || sel1 != 2 || UsePortals))
+	{
+		TakeInventory ("CannotBuild", 1);
+	}
+	
+	// release the player out of the menu
+	delay (8);
+	TakeInventory ("InUtilMenu", 1);
+	SetPlayerProperty (0, 0, PROP_FROZEN);
+	
+	if (Developer) GiveInventory ("Utility_Percent", 75);
+}
+
+// MENU LOOP
+script 965 (void) CLIENTSIDE {
+	DisplayUtilHud();
+	LocalAmbientSound ("menu/prompt", 127);
+	
+	int MenuEpoch = Timer() + 20;
+	delay (10);
+
+	int buttons, lethimbuild;
+	while (CheckInventory ("InUtilMenu")) {
+		buttons = GetPlayerInput (PlayerNumber(), INPUT_BUTTONS);
+		
+		if (buttons & BT_FORWARD) {MoveMenuCursorVertical (true); delay (5);}
+		if (buttons & BT_BACK) {MoveMenuCursorVertical (false); delay (5);}
+		if (buttons & BT_MOVERIGHT) {MoveMenuCursorHorizontal (true); delay (5);}
+		if (buttons & BT_MOVELEFT) {MoveMenuCursorHorizontal (false); delay (5);}
+		if (buttons & BT_ATTACK || buttons & BT_ALTATTACK || GetActorProperty (0, APROP_HEALTH) <= 0) {
+			lethimbuild =
+			(MenuSelection[0] != 2 || MenuSelection[1] < 4 || (CheckInventory ("GotAdvTurrets") == 1)) &&
+			(MenuSelection[0] != 1 || MenuSelection[1] < 5 || (CheckInventory ("NoMechs") == 0)) &&
+			(MenuSelection[0] != 3 || MenuSelection[1] != 2 || (CheckInventory ("PortalsEnabled")));
+			
+			if ((!(buttons & BT_ATTACK) || lethimbuild || GetActorProperty (0, APROP_HEALTH) <= 0) && Timer() > MenuEpoch) {
+				ConsoleCommand (strparam (s:"puke -969 ", d:MenuSelection[0], s:" ", d:MenuSelection[1]));
+				delay (15);
+			} else
+				delay (5);
+		}
+		delay (1);
+	}
+	
+	for (int i = 1; i <= 4; i++) HudMessage (s:""; HUDMSG_PLAIN, i, CR_UNTRANSLATED, 0.0, 0.0, 0.01);
+}
+
+// [Dusk] Cursor moves up/down
+function void MoveMenuCursorVertical (bool up) {
+	if (PlayerNumber() != ConsolePlayer) {return;}
+	
+	LocalAmbientSound ("menu/cursor", 127);
+	int levelnum = GetLevelInfo (LEVELINFO_LEVELNUM);
+	int max = 3; str item = 0;
+	
+	if (MenuHorPos) {
+		item = 1;
+		switch (MenuSelection[0]) {
+			case 0: max = 5; break;
+			case 1: max = 7; break;
+			case 2: max = 7; break;
+			case 3: max = 9; break;
+		}
+	} else
+		MenuSelection[1] = 0;
+	
+	if (!up) {
+		if (MenuSelection[item] == max)
+			MenuSelection[item] = 0;
+		else
+			MenuSelection[item]++;
+	} else {
+		if (MenuSelection[item] == 0)
+			MenuSelection[item] = max;
+		else
+			MenuSelection[item]--;
+	}
+	DisplayUtilHud();
+}
+
+// [Dusk] Cursor moves right/left
+function void MoveMenuCursorHorizontal (bool right) {
+	if (PlayerNumber() != ConsolePlayer) {return;}
+	
+	if (right != MenuHorPos)
+		LocalAmbientSound ("menu/cursor", 127);
+	
+	if (right && !MenuHorPos)
+		MenuHorPos = 1;
+	else if (!right && MenuHorPos)
+		MenuHorPos = 0;
+	DisplayUtilHud();
+}
+
+#define UMENU_X1 -0.7215
+#define UMENU_Y1 -0.2225
+#define UMENU_X2 -0.7075
+#define UMENU_Y2 -0.275
+#define UMENU_X3 -0.81
+#define UMENU_Y3 -0.275
+#define UMENU_X4 -0.7
+#define UMENU_Y4 -0.425
+
+function void DisplayUtilHud (void) {
+	HudMessage (s:"\cFUTILITY GUN";
+		HUDMSG_PLAIN, 1, CR_UNTRANSLATED, UMENU_X1, UMENU_Y1, 0.0);
+	HudMessage (s:UtilMenuItemColor(0, 0), s:"CACHES\n",
+		s:UtilMenuItemColor(0, 1), s:"PICKUPS\n",
+		s:UtilMenuItemColor(0, 2), s:"DEFENSES\n",
+		s:UtilMenuItemColor(0, 3), s:"GEOMETRY\n";
+		HUDMSG_PLAIN, 2, CR_UNTRANSLATED, UMENU_X2, UMENU_Y2, 0.0);
+	
+	int levelnum = GetLevelInfo (LEVELINFO_LEVELNUM);
+	switch (MenuSelection[0]) {
+		case 0:
+			HudMessage (s:UtilMenuItemColor(1, 0), s:"AMMO CACHE\n",
+				s:UtilMenuItemColor(1, 1), s:"MEDICAL CACHE\n",
+				s:UtilMenuItemColor(1, 2), s:"SUPER CACHE\n",
+				s:UtilMenuItemColor(1, 3), s:"MINI-REFINERY\n",
+				s:UtilMenuItemColor(1, 4), s:"HP REGEN\n",
+				s:UtilMenuItemColor(1, 5), s:"AMMO REGEN\n";
+				HUDMSG_PLAIN, 3, CR_UNTRANSLATED, UMENU_X3, UMENU_Y3, 0.0);
+			
+			switch (MenuSelection[1]) {
+				case 0:
+					HudMessage (s:"\cFAmmo Cache\n",
+						s:"Dispenses backpacks.\n\n\n\n\n",
+						s:"\cFCost: \cQ$\cD0 \cJ(free)\n",
+						s:"\cFBuild time: \cD6.5 \cQseconds\n",
+						s:"\cFHealth: \cD400 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 1:
+					HudMessage (s:"\cFMedical Cache\n",
+						s:"Dispenses stimpacks.\n\n\n\n\n",
+						s:"\cFCost: \cQ$\cD0 \cJ(free)\n",
+						s:"\cFBuild time: \cD6.5 \cQseconds\n",
+						s:"\cFHealth: \cD300 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 2:
+					HudMessage (s:"\cFSuper Cache\n",
+						s:"Dispenses stimpacks and\n",
+						s:"backpacks.\n\n\n\n",
+						s:"\cFCost: \cQ$\cD0 \cJ(free)\n",
+						s:"\cFBuild time: \cD14 \cQseconds\n",
+						s:"\cFHealth: \cD800 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 3:
+					HudMessage (s:"\cFMini-Refinery\n",
+						s:"Enhances credit flow.\n",
+						s:"Must be built into a\n",
+						s:"Tiberium field.\n\n\n",
+						s:"\cFCost: \cQ$\cD2250\n",
+						s:"\cFBuild time: \cD36 \cQseconds\n",
+						s:"\cFHealth: \cD6,500 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 4:
+					HudMessage (s:"\cFGlobal Health Regen\n",
+						s:"Provides 1HP/sec health\n",
+						s:"regeration for your team.\n",
+						s:"Must be built into the\n",
+						s:"Repair Facility.\n\n",
+						s:"\cFCost: \cQ$\cD2250\n",
+						s:"\cFBuild time: \cD36 \cQseconds\n",
+						s:"\cFHealth: \cD10,000 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 5:
+					HudMessage (s:"\cFGlobal Ammo Regen\n",
+						s:"Provides slow ammunition\n",
+						s:"regeneration for your\n",
+						s:"team. Must be built into\n",
+						s:"the Repair Facility.\n\n",
+						s:"\cFCost: \cQ$\cD2250\n",
+						s:"\cFBuild time: \cD36 \cQseconds\n",
+						s:"\cFHealth: \cD10,000 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+			}
+			
+			break;
+		case 1:
+			HudMessage (s:UtilMenuItemColor(1, 0), s:"C4 BOX\n",
+				s:UtilMenuItemColor(1, 1), s:"FULL REFILL\n",
+				s:UtilMenuItemColor(1, 2), s:"RIFLE\n",
+				s:UtilMenuItemColor(1, 3), s:"MACHINE GUN\n",
+				s:UtilMenuItemColor(1, 4), s:"FIREPROOF\n",
+				s:UtilMenuItemColor(1, 5), s:"CHEMPROOF\n",
+				s:UtilMenuItemColor(1, 6), s:"RAVEN\n",
+				s:UtilMenuItemColor(1, 7), s:"WOLVERINE\n";
+				HUDMSG_PLAIN, 3, CR_UNTRANSLATED, UMENU_X3, UMENU_Y3, 0.0);
+			
+			switch (MenuSelection[1]) {
+				case 0:
+					HudMessage (s:"\cFC4 Box\n",
+						s:"A box filled with various\n",
+						s:"C4 bombs. Refills all of the\n",
+						s:"picker's timed C4, remote C4\n",
+						s:"bombs and proxy mines.\n\n",
+						s:"\cFCost: \cQ$\cD0 \cJ(free)\n",
+						s:"\cFBuild time: \cD6 \cQseconds\n";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 1:
+					HudMessage (s:"\cFFull refill pack\n",
+						s:"A backpack into which\n",
+						s:"has been compressed enough\n",
+						s:"ammunition to refill all of\n",
+						s:"its picker's weapons.\n\n",
+						s:"\cFCost: \cQ$\cD0 \cJ(free)\n",
+						s:"\cFBuild time: \cD7 \cQseconds\n";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 2:
+					HudMessage (s:"\cFRifle pack\n",
+						s:"A standard issue military\n",
+						s:"rifle capable of shooting\n",
+						s:"grenades.\n\n\n",
+						s:"\cFCost: \cQ$\cD0 \cJ(free)\n",
+						s:"\cFBuild time: \cD4.5 \cQseconds\n";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 3:
+					HudMessage (s:"\cFMachine gun pack\n",
+						s:"A standard issue machine\n",
+						s:"gun capable of tap firing.\n\n\n\n",
+						s:"\cFCost: \cQ$\cD0 \cJ(free)\n",
+						s:"\cFBuild time: \cD6 \cQseconds\n";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 4:
+					HudMessage (s:"\cFFireproof armor\n",
+						s:"Gives the user total\n",
+						s:"immunity against\n",
+						s:"fire-based attacks\n\n\n",
+						s:"\cFCost: \cQ$\cD100\n",
+						s:"\cFBuild time: \cD9 \cQseconds\n";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 5:
+					HudMessage (s:"\cFChemicalproof armor\n",
+						s:"Gives the user total\n",
+						s:"immunity against\n",
+						s:"chemical-based attacks\n\n\n",
+						s:"\cFCost: \cQ$\cD100\n",
+						s:"\cFBuild time: \cD9 \cQseconds\n";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 6:
+					if (!CheckInventory ("NoMechs")) {
+						HudMessage (s:"\cFRaven mech\n",
+							s:"A basic, fast mech armed\n",
+							s:"with LRM-5:s and an AC2\n",
+							s:"rotary gun.\n\n\n",
+							s:"\cFCost: \cQ$\cD1400\n",
+							s:"\cFBuild time: \cD18 \cQseconds\n",
+							s:"\cFHealth: \cD2000 \cQHP\n";
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					} else {
+						HudMessage (s:"\cKRaven mech\n",
+							s:"\cUA basic, fast mech armed\n",
+							s:"\cUwith LRM-5:s and an AC2\n",
+							s:"\cUrotary gun.\n\n\n",
+							s:"\cUCost: $1400\n",
+							s:"\cUBuild time: 18 seconds\n",
+							s:"\cUHealth: 2000 HP\n\n",
+							s:"\cAMechs have been disabled!\n";
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					}
+					break;
+				case 7:
+					if (!CheckInventory ("NoMechs")) {
+						HudMessage (s:"\cFWolverine mech\n",
+							s:"A more powerful but slower\n",
+							s:"mech with LRM-10:s, a\n",
+							s:"flamer and a pulse cannon.\n\n\n",
+							s:"\cFCost: \cQ$\cD1600\n",
+							s:"\cFBuild time: \cD18 \cQseconds\n",
+							s:"\cFHealth: \cD2000 \cQHP\n";
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					} else {
+						HudMessage (s:"\cKWolverine mech\n",
+							s:"\cUA more powerful but slower\n",
+							s:"\cUmech with LRM-10:s, a\n",
+							s:"\cUflamer and a pulse cannon.\n\n\n",
+							s:"\cUCost: $1600\n",
+							s:"\cUBuild time: 18 seconds\n",
+							s:"\cUHealth: 2000 HP\n\n",
+							s:"\cAMechs have been disabled!\n";
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					}
+					break;
+			}
+			
+			break;
+		case 2:
+			HudMessage (s:UtilMenuItemColor(1, 0), s:"GUN TURRET\n",
+				s:UtilMenuItemColor(1, 1), s:"MECH TURRET\n",
+				s:UtilMenuItemColor(1, 2), s:"PROXY MINES\n",
+				s:UtilMenuItemColor(1, 3), s:"MINI-RAVEN\n",
+				s:UtilMenuItemColor(1, 4), s:"KLAXON TURRET\n",
+				s:UtilMenuItemColor(1, 5), s:"RIFLE TURRET\n",
+				s:UtilMenuItemColor(1, 6), s:"REPAIR TURRET\n",
+				s:UtilMenuItemColor(1, 7), s:"ARTILLERY TURRET\n";
+				HUDMSG_PLAIN, 3, CR_UNTRANSLATED, UMENU_X3, UMENU_Y3, 0.0);
+			
+			switch (MenuSelection[1]) {
+				case 0:
+					HudMessage (s:"\cFGun turret\n",
+						s:"Basic gattling gun-armed\n",
+						s:"turret that shoots at\n",
+						s:"enemies on sight.\n\n\n",
+						s:"\cFCost: \cQ$\cD50\n",
+						s:"\cFBuild time: \cD3.5 \cQseconds\n",
+						s:"\cFHealth: \cD250 \cQHP\n",
+						s:LimitColour(0, 2), s:"Limit: ", s:LimitColour(0, 0), d:TurretLimit(), s:LimitColour(0, 1),
+							s:"/", s:LimitColour(0, 0), d:TurretLimitMax(),
+						s:TurretsAtLimitWarning(), s:OutOfRangeWarning();
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 1:
+					HudMessage (s:"\cFAnti-mech turret\n",
+						s:"Turret armed with heavy,\n",
+						s:"metal-tearing bullets made\n",
+						s:"for defeding against mechs.\n\n\n",
+						s:"\cFCost: \cQ$\cD80\cJ\n",
+						s:"\cFBuild time: \cD3.5 \cQseconds\n",
+						s:"\cFHealth: \cD500 \cQHP\n",
+						s:LimitColour(0, 2), s:"Limit: ", s:LimitColour(0, 0), d:TurretLimit(), s:LimitColour(0, 1),
+							s:"/", s:LimitColour(0, 0), d:TurretLimitMax(),
+						s:TurretsAtLimitWarning(), s:OutOfRangeWarning();
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 2:
+					HudMessage (s:"\cF5x Proxy Mine\n",
+						s:"Proxy C4 -mines that\n",
+						s:"explode when enemies run\n",
+						s:"over them. Limit of 50.\n\n\n",
+						s:"\cFCost: \cQ$\cD80\cJ\n",
+						s:"\cFBuild time: \cD3.5 \cQseconds\n",
+						s:"\cFHealth: \cD300 \cQHP\n",
+						s:LimitColour(1, 2), s:"Limit: ", s:LimitColour(1, 0), d:MineLimit(), s:LimitColour(1, 1),
+							s:"/", s:LimitColour(1, 0), d:50;
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 3:
+					HudMessage (s:"\cFMini-Raven companion\n",
+						s:"A mini-version of the Raven\n",
+						s:"with AI. Patrols the base \n",
+						s:"and follows teammates.\n",
+						s:"Limit of five.\n\n",
+						s:"\cFCost: \cQ$\cD150\cJ\n",
+						s:"\cFBuild time: \cD12 \cQseconds\n",
+						s:"\cFHealth: \cD750 \cQHP\n",
+						s:LimitColour(2, 2), s:"Limit: ", s:LimitColour(2, 0), d:MiniRavenLimit(), s:LimitColour(2, 1),
+							s:"/", s:LimitColour(2, 0), d:5,
+						s:OutOfRangeWarning();
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 4:
+					if (CheckInventory ("GotAdvTurrets")) {
+						HudMessage (s:"\cFAdvanced Gun turret\n",
+							s:"An advanced, stronger\n",
+							s:"version of the gun turret\n",
+							s:"with a klaxon alarm. Best\n",
+							s:"used indoors.\n\n",
+							s:"\cFCost: \cQ$\cD100\cJ\n",
+							s:"\cFBuild time: \cD3.5 \cQseconds\n",
+							s:"\cFHealth: \cD250 \cQHP\n",
+							s:LimitColour(0, 2), s:"Limit: ", s:LimitColour(0, 0), d:TurretLimit(),
+								s:LimitColour(0, 1), s:"/", s:LimitColour(0, 0), d:TurretLimitMax(),
+							s:TurretsAtLimitWarning(), s:OutOfRangeWarning();
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					} else {
+						HudMessage (s:"\cMAdvanced Gun turret\n",
+							s:"\cUAn advanced, stronger\n",
+							s:"\cUversion of the gun turret\n",
+							s:"\cUwith a klaxon alarm. Best\n",
+							s:"\cUused indoors.\n\n",
+							s:"\cUCost: $100\n",
+							s:"\cUBuild time: 3.5 seconds\n",
+							s:"\cUHealth: 250 HP\n",
+							s:"\cULimit: ", d:TurretLimit(), s:"/", d:TurretLimitMax(), s:"\n\n",
+							s:"\cKYou need to research\n",
+							s:"\cFAdvanced Turrets \cKbefore\n",
+							s:"\cKyou can build this!", s:TurretsAtLimitWarning(), s:OutOfRangeWarning();
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					}
+					break;
+				case 5:
+					if (CheckInventory ("GotAdvTurrets")) {
+						HudMessage (s:"\cFPrecision turret\n",
+							s:"A variant of the gun turret\n",
+							s:"that shoots accurate shots\n",
+							s:"with a lesser rate of fire.\n\n\n",
+							s:"\cFCost: \cQ$\cD125\cJ\n",
+							s:"\cFBuild time: \cD3.5 \cQseconds\n",
+							s:"\cFHealth: \cD300 \cQHP\n",
+							s:LimitColour(0, 2), s:"Limit: ", s:LimitColour(0, 0), d:TurretLimit(),
+								s:LimitColour(0, 1), s:"/", s:LimitColour(0, 0), d:TurretLimitMax(),
+							s:TurretsAtLimitWarning(), s:OutOfRangeWarning();
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					} else {
+						HudMessage (s:"\cMPrecision turret\n",
+							s:"\cUA variant of the gun turret\n",
+							s:"\cUthat shoots accurate shots\n",
+							s:"\cUwith a lesser rate of fire.\n\n\n",
+							s:"\cUCost: $125\n",
+							s:"\cUBuild time: 3.5 seconds\n",
+							s:"\cUHealth: 300 HP\n",
+							s:"\cULimit: ", d:TurretLimit(), s:"/", d:TurretLimitMax(), s:"\n\n",
+							s:"\cKYou need to research\n",
+							s:"\cFAdvanced Turrets \cKbefore\n",
+							s:"\cKyou can build this!", s:TurretsAtLimitWarning(), s:OutOfRangeWarning();
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					}
+					break;
+				case 6:
+					if (CheckInventory ("GotAdvTurrets")) {
+						HudMessage (s:"\cFRepair turret\n",
+							s:"A gun turret with a repair\n",
+							s:"gun. Place in front of MCTs\n",
+							s:"for automatic repairing.\n\n\n",
+							s:"\cFCost: \cQ$\cD125\cJ\n",
+							s:"\cFBuild time: \cD3.5 \cQseconds\n",
+							s:"\cFHealth: \cD500 \cQHP\n",
+							s:LimitColour(0, 2), s:"Limit: ", s:LimitColour(0, 0), d:TurretLimit(),
+								s:LimitColour(0, 1), s:"/", s:LimitColour(0, 0), d:TurretLimitMax(),
+							s:TurretsAtLimitWarning(), s:OutOfRangeWarning();
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					} else {
+						HudMessage (s:"\cMRepair turret\n",
+							s:"\cUA gun turret with a repair\n",
+							s:"\cUgun. Place in front of MCTs\n",
+							s:"\cUfor automatic repairing.\n\n\n",
+							s:"\cUCost: $125\n",
+							s:"\cUBuild time: 3.5 seconds\n",
+							s:"\cUHealth: 500 HP\n",
+							s:"\cULimit: ", d:TurretLimit(), s:"/", d:TurretLimitMax(), s:"\n\n",
+							s:"\cKYou need to research\n",
+							s:"\cFAdvanced Turrets \cKbefore\n",
+							s:"\cKyou can build this!", s:TurretsAtLimitWarning(), s:OutOfRangeWarning();
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					}
+					break;
+				case 7:
+					if (CheckInventory ("GotAdvTurrets")) {
+						HudMessage (s:"\cFArtillery turret\n",
+							s:"An anti-mech turret with\n",
+							s:"80mm shells. Won't react to\n",
+							s:"infantry. Best used on high\n",
+							s:"spots. Takes two turret slots.\n\n",
+							s:"\cFCost: \cQ$\cD200\cJ\n",
+							s:"\cFBuild time: \cD3.5 \cQseconds\n",
+							s:"\cFHealth: \cD400 \cQHP\n",
+							s:LimitColour(0, 2), s:"Limit: ", s:LimitColour(0, 0), d:TurretLimit(),
+								s:LimitColour(0, 1), s:"/", s:LimitColour(0, 0), d:TurretLimitMax(),
+							s:TurretsAtLimitWarning(), s:OutOfRangeWarning();
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					} else {
+						HudMessage (s:"\cMArtillery turret\n",
+							s:"\cUAn anti-mech turret with\n",
+							s:"\cU80mm shells. Won't react to\n",
+							s:"\cUinfantry. Best used on high\n",
+							s:"\cUspots. Takes two turret slots.\n\n",
+							s:"\cUCost: $200\n",
+							s:"\cUBuild time: 3.5 seconds\n",
+							s:"\cUHealth: 400 HP\n",
+							s:"\cULimit: ", d:TurretLimit(), s:"/", d:TurretLimitMax(), s:"\n\n",
+							s:"\cKYou need to research\n",
+							s:"\cFAdvanced Turrets \cKbefore\n",
+							s:"\cKyou can build this!", s:TurretsAtLimitWarning(), s:OutOfRangeWarning();
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					}
+					break;
+			}
+			
+			break;
+		case 3:
+			// s:UtilMenuItemColor(1, 3), s:"BARREL\n",
+			HudMessage (s:UtilMenuItemColor(1, 0), s:"RAZOR WIRE\n",
+				s:UtilMenuItemColor(1, 1), s:"SANDBAG WALL\n",
+				s:UtilMenuItemColor(1, 2), s:"PORTAL\n",
+				s:UtilMenuItemColor(1, 3), s:"PLATFORM\n",
+				s:UtilMenuItemColor(1, 4), s:"1 STEP UP\n",
+				s:UtilMenuItemColor(1, 5), s:"1 STEP FORWARD\n",
+				s:UtilMenuItemColor(1, 6), s:"1 STEP DOWN\n",
+				s:UtilMenuItemColor(1, 7), s:"3 STEPS UP\n",
+				s:UtilMenuItemColor(1, 8), s:"3 STEPS FORWARD\n",
+				s:UtilMenuItemColor(1, 9), s:"3 STEPS DOWN\n";
+				HUDMSG_PLAIN, 3, CR_UNTRANSLATED, UMENU_X3, UMENU_Y3, 0.0);
+			
+			switch (MenuSelection[1]) {
+				case 0:
+					HudMessage (s:"\cFRazor wire\n",
+						s:"Four meters of razor\n",
+						s:"wire that damages enemies\n",
+						s:"who run through it.\n\n\n",
+						s:"\cFCost: \cQ$\cD0\cJ (free)\n",
+						s:"\cFBuild time: \cD6 \cQseconds\n",
+						s:"\cFHealth: \cD400 \cQHP\n",
+						s:LimitColour(3, 2), s:"Limit: ", s:LimitColour(3, 0), d:RazorWireLimit(),
+							s:LimitColour(3, 1), s:"/", s:LimitColour(3, 0), d:20;
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 1:
+					HudMessage (s:"\cFSandbag wall\n",
+						s:"Big, blocking, solid wall\n",
+						s:"made of sandbags. 'Nuff\n",
+						s:"said.\n\n\n",
+						s:"\cFCost: \cQ$\cD0\cJ (free)\n",
+						s:"\cFBuild time: \cD5 \cQseconds\n",
+						s:"\cFHealth: \cD750 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 2:
+					if (CheckInventory ("PortalsEnabled")) {
+						HudMessage (s:"\cFPortal\n",
+							s:"Want a buildable two-way\n",
+							s:"teleport? Just make two of\n",
+							s:"these and you're set. \n\n\n",
+							s:"\cFCost: \cQ$\cD250\cJ\n",
+							s:"\cFBuild time: \cD18 \cQseconds\n",
+							s:"\cFHealth: \cD2,000 \cQHP\n",
+							s:"\cFMax distance: \cD5,000 units\n",
+							s:LimitColour(4, 2), s:"Limit: ", s:LimitColour(4, 0), d:PortalLimit(),
+								s:LimitColour(4, 1), s:"/", s:LimitColour(4, 0), d:2, s:" (one pair)";
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					} else {
+						HudMessage (s:"\cKPortal\n",
+							s:"\cUWant a buildable two-way\n",
+							s:"\cUteleport? Just make two of\n",
+							s:"\cUthese and you're set. \n\n\n",
+							s:"\cUCost: \cQ$\cD250\cJ\n",
+							s:"\cUBuild time: \cD18 \cQseconds\n",
+							s:"\cUHealth: \cD2,000 \cQHP\n",
+							s:"\cUMax distance: \cD5,000 units\n",
+							s:"\cULimit: 0 / 2 (one pair)\n\n",
+							s:"\cKThis map does not support\n\cKportals!";
+							HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					}
+					break;
+				/*case 3:
+					HudMessage (s:"\cFBarrel\n",
+						s:"A large metal barrel full\n",
+						s:"of green, radioactive and\n",
+						s:"\cgHIGHLY\c- explosive goo.\n",
+						s:"Useful for ambushing...\n\n",
+						s:"\cFCost: \cQ$\cD0\cJ (free)\n",
+						s:"\cFBuild time: \cD6 \cQseconds\n",
+						s:"\cFHealth: \cD400 \cQHP\n";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;*/
+				case 3:
+					HudMessage (s:"\cFFloating platform\n",
+						s:"Large floating platform\n",
+						s:"on what you can build\n",
+						s:"other items, such as\n",
+						s:"turrets and caches.\n\n",
+						s:"\cFCost: \cQ$\cD150\cJ\n",
+						s:"\cFBuild time: \cD18 \cQseconds\n",
+						s:"\cFHealth: \cD2,000 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 4:
+					HudMessage (s:"\cF1 step up\n",
+						s:"One step upwards.\n\n\n\n\n",
+						s:"\cFCost: \cQ$\cD0\cJ (free)\n",
+						s:"\cFBuild time: \cD1.5 \cQseconds\n",
+						s:"\cFHealth: \cD200 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 5:
+					HudMessage (s:"\cF1 step straight\n",
+						s:"One step straight.\n\n\n\n\n",
+						s:"\cFCost: \cQ$\cD0\cJ (free)\n",
+						s:"\cFBuild time: \cD1.5 \cQseconds\n",
+						s:"\cFHealth: \cD200 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 6:
+					HudMessage (s:"\cF1 step down\n",
+						s:"One step downwards.\n\n\n\n\n",
+						s:"\cFCost: \cQ$\cD0\cJ (free)\n",
+						s:"\cFBuild time: \cD1.5 \cQseconds\n",
+						s:"\cFHealth: \cD200 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 7:
+					HudMessage (s:"\cF3 steps up\n",
+						s:"Three steps upwards.\n\n\n\n\n",
+						s:"\cFCost: \cQ$\cD0\cJ (free)\n",
+						s:"\cFBuild time: \cD1.5 \cQseconds\n",
+						s:"\cFHealth: \cD200 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 8:
+					HudMessage (s:"\cF3 steps straight\n",
+						s:"Three steps straight.\n\n\n\n\n",
+						s:"\cFCost: \cQ$\cD0\cJ (free)\n",
+						s:"\cFBuild time: \cD1.5 \cQseconds\n",
+						s:"\cFHealth: \cD200 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+				case 9:
+					HudMessage (s:"\cF3 steps down\n",
+						s:"Three steps downwards.\n\n\n\n\n",
+						s:"\cFCost: \cQ$\cD0\cJ (free)\n",
+						s:"\cFBuild time: \cD1.5 \cQseconds\n",
+						s:"\cFHealth: \cD200 \cQHP";
+						HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0);
+					break;
+			}
+			break;
+		default:
+			HudMessage (s:""; HUDMSG_PLAIN, 3, CR_UNTRANSLATED, 0.0, 0.0, 0.01);
+			break;
+	}
+}
+
+function str UtilMenuItemColor (int i, int j) {
+	if (!i && MenuSelection[0] == j) {
+		if (!MenuHorPos) {
+			return "\cD";
+		} else {
+			return "\cJ";
+		}
+	}
+	
+	if (!i && MenuSelection[0] != j && !MenuHorPos)
+		return "\cQ";
+	
+	// [Dusk] special case for unresearched adv. turrets
+	if (MenuSelection[0] == 2 && !CheckInventory ("GotAdvTurrets") && j >= 4 && i) {
+		if (MenuHorPos && MenuSelection[1] == j)
+			return "\cU";
+		else
+			return "\cM";
+	}
+	
+	// [Dusk] special case for disabled mechs
+	if (MenuSelection[0] == 1 && CheckInventory ("NoMechs") && j >= 6 && i) {
+		if (MenuHorPos && MenuSelection[1] == j)
+			return "\cU";
+		else
+			return "\cM";
+	}
+	
+	// [Dusk] special case for portals in maps which they're not allowed in
+	if (MenuSelection[0] == 3 && !CheckInventory ("PortalsEnabled") && j == 2 && i) {
+		if (MenuHorPos && MenuSelection[1] == j)
+			return "\cU";
+		else
+			return "\cM";
+	}
+	
+	if (i && MenuSelection[1] == j) {
+		if (MenuHorPos)
+			return "\cD";
+		else
+			return "\cJ";
+	}
+	
+	if (i && MenuSelection[1] != j && MenuHorPos) {
+		return "\cQ";
+	}
+
+	return "\cU";
+}
+
+function int TurretLimit (void) {
+	int limit;
+	if (PlayerTeam() == TEAM_BLUE) {
+		limit += ThingCountName ("Utility_GunTurretBlue", 0);
+		limit += ThingCountName ("Utility_MechTurretBlue", 0);
+		limit += ThingCountName ("Utility_KlaxonBlue", 0);
+		limit += ThingCountName ("Utility_PrecisionTurretBlue", 0);
+		limit += ThingCountName ("Utility_RepairGunTurretBlue", 0);
+		limit += ThingCountName ("Utility_ArtilleryTurretBlue", 0) * 2;
+	} else if (PlayerTeam() == TEAM_RED) {
+		limit += ThingCountName ("Utility_GunTurretRed", 0);
+		limit += ThingCountName ("Utility_MechTurretRed", 0);
+		limit += ThingCountName ("Utility_KlaxonRed", 0);
+		limit += ThingCountName ("Utility_PrecisionTurretRed", 0);
+		limit += ThingCountName ("Utility_RepairGunTurretRed", 0);
+		limit += ThingCountName ("Utility_ArtilleryTurretRed", 0) * 2;
+	}
+	return limit;
+}
+
+function int MineLimit (void) {
+	int limit;
+	if (PlayerTeam() == TEAM_BLUE) {
+		limit = ThingCountName ("ProxyMineBlue", 0);
+	} else if (PlayerTeam() == TEAM_RED) {
+		limit = ThingCountName ("ProxyMineRed", 0);
+	}
+	return limit;
+}
+
+function int MiniRavenLimit (void) {
+	int limit;
+	if (PlayerTeam() == TEAM_BLUE) {
+		limit = ThingCountName ("Utility_MiniRavenBlue", 0);
+	} else if (PlayerTeam() == TEAM_RED) {
+		limit = ThingCountName ("Utility_MiniRavenRed", 0);
+	}
+	return limit;
+}
+
+function int TurretLimitMax(void) {
+	int limit = 15;
+	if (CheckInventory ("GotMoreTurrets"))
+		limit = 20;
+	return limit;
+}
+
+function int RazorWireLimit (void) {
+	int limit;
+	if (PlayerTeam() == TEAM_BLUE) {
+		limit = ThingCountName ("Utility_RazorWireBlue", 0);
+	} else if (PlayerTeam() == TEAM_RED) {
+		limit = ThingCountName ("Utility_RazorWire", 0);
+	}
+	return limit;
+}
+
+function int PortalLimit (void) {
+	int limit;
+	if (PlayerTeam() == TEAM_BLUE) {
+		limit = ThingCountName ("Utility_PortalBlue", 0);
+	} else if (PlayerTeam() == TEAM_RED) {
+		limit = ThingCountName ("Utility_PortalRed", 0);
+	}
+	return limit;
+}
+
+function str OutOfRangeWarning (void) {
+	if (CheckInventory ("UtilityOutOfRange")) {
+		return "\n\n\cKYou are too far from\n\cKbase to build this!";
+	}
+	return "";
+}
+
+function str TurretsAtLimitWarning (void) {
+	if (!CheckInventory ("GotMoreTurrets") && TurretLimit() >= 30) {
+		return "\n\n\cKAt limit - research\n\cFMore Turrets\cK to build more!";
+	}
+	return "";
+}
+
+function str LimitColour (int type, int style) {
+	str green, red;
+	switch (style) {
+	case 0: green = "\cD"; red = "\cG"; break;
+	case 1: green = "\cQ"; red = "\cR"; break;
+	case 2: green = "\cF"; red = "\cG"; break;
+	}
+	
+	switch (type) {
+	case 0:
+		// turret
+		if (TurretLimit() >= TurretLimitMax()) return red;
+		break;
+	case 1:
+		// mine
+		if (MineLimit() >= 50) return red;
+		break;
+	case 2:
+		// birdie
+		if (MiniRavenLimit() >= 5) return red;
+		break;
+	case 3:
+		// razorwire
+		if (RazorWireLimit() >= 20) return red;
+		break;
+	case 4:
+		// portal
+		if (PortalLimit() >= 2) return red;
+		break;
+	}
+	return green;
+}

@@ -1,0 +1,58 @@
+// [NF] See weapons/fists.txt for Berserk Fist code
+actor BerserkPlayer : Player {
+	+NOSKIN
+	-PICKUP
+	health 200
+	player.maxhealth 200
+	player.displayName "Berserker"
+	player.startitem "BerserkFists", 1
+	player.forwardmove 1.0 // doomguy speed!
+	player.sidemove 1.0
+	player.morphweapon "BerserkFists"
+	damagefactor "ChemicalRed", 2.25 // aaahhh
+	damagefactor "ChemicalBlue", 2.25
+	
+	states {
+	Death:
+	Death.ChemicalBlue:
+	Death.ChemicalRed:
+	Death.ChemicalSpecial:
+	Death.FireBlue:
+	Death.FireRed:
+	Death.FireSpecial:
+	Death.TimeRed:
+	Death.TimeBlue:
+		goto XDeathGo
+	}
+}
+
+actor BerserkSwitch : PowerupGiver {
+	powerup.type "Berserk"
+	powerup.duration 10500 // five minutes
+	powerup.color RedMap
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	Inventory.MaxAmount 1
+	states {
+	Spawn:
+		TNT1 A 0
+		stop
+	Pickup:
+		TNT1 A 0 A_GiveInventory ("BerserkHue", 1)
+		TNT1 A 5
+		stop
+	}
+}
+
+actor PowerBerserkHue : PowerNull {}
+actor BerserkHue : BerserkSwitch {
+	powerup.type "BerserkHue"
+	powerup.color RedMap
+}
+
+actor BerserkSwitchTest : BerserkSwitch {Powerup.Duration 0x7FFFFFFF}
+
+actor PowerBerserk : PowerMorph {
+	PowerMorph.PlayerClass "BerserkPlayer"
+	PowerMorph.MorphStyle (MRF_FULLHEALTH|MRF_ADDSTAMINA|MRF_NEWTIDBEHAVIOUR|MRF_WHENINVULNERABLE)
+}

@@ -1,0 +1,99 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * All Out War 2 team balancer
+ * Credit to VoltlocK for originally creating the engine
+ * With modifications by Eruanna, Dusk and the Omega Team
+ *
+ * You may use portions of this script in your project as long as you give
+ * credit where credit is due. Please don't be lame and just copy-paste any
+ * of this and call it your own. Thanks!
+ */
+
+/* [Dusk] TODO: Why is this an open script? Make this closed and do checks on
+ * enter/disconnect. Would yield in instant responsitivy and possibly less
+ * CPU usage for the server.
+ */
+
+script 996 OPEN {
+	int i;
+	int Counter;
+	int CurTimeMax;
+	PlayerNeedsSwitched = -1;
+	int PlayerStayTics = TeamStayTime * 60 * 35;
+	
+	if (GetCVar("sv_noteamswitch")) {
+		// [SP] force blue surplus to red
+		if(RedCount() < BlueCount()-1)
+		{
+			//Log(s:"There are too many blue");
+			CurTimeMax = 0;
+			Counter = 0;
+			while(Counter < 32) {
+				if (CheckActorInventory(3800+Counter,"IsBlue") && !IsAdmin[Counter]) {
+					if ( ( StartTime[Counter] > CurTimeMax ) && ( Timer() - StartTime[Counter] < PlayerStayTics ) ) {
+						CurTimeMax = StartTime[Counter];
+						PlayerNeedsSwitched = Counter;
+					}
+				}
+				Counter++;
+			}
+			ACS_ExecuteAlways(992,0,0,0,0);
+		}
+
+		// [SP] force red surplus to blue
+		if(BlueCount() < RedCount()-1)
+		{
+			//Log(s:"There are too many red");
+			CurTimeMax = 0;
+			Counter = 0;
+			while(Counter < 32) {
+				if (CheckActorInventory(3800+Counter,"IsRed") && !IsAdmin[Counter]) {
+					if ( ( StartTime[Counter] > CurTimeMax ) && ( Timer() - StartTime[Counter] < PlayerStayTics ) ) {
+						CurTimeMax = StartTime[Counter];
+						PlayerNeedsSwitched = Counter;
+					}
+				}
+				Counter++;
+			}
+			ACS_ExecuteAlways(992,0,0,0,0);
+		}
+	}
+	
+	delay (35 * 2);
+	
+	AI_ManageCompensation ();
+	
+	delay (35 * 3);
+	restart;
+}
+
+script 992 (void)
+{
+	//Log(s:"Changing team for player #",d:PlayerNeedsSwitched,s:" who was in the game since ",d:StartTime[PlayerNeedsSwitched]);
+	SetActivator(3800+PlayerNeedsSwitched);
+	//Log(s:"SetActivator Successful for ",n:0);
+	delay(1);
+	if(BlueCount() < RedCount()-1 && PlayerTeam() == TEAM_RED && CheckInventory("InGame") == 1)
+	{
+		SetFont("BIGFONT");
+		Player_SetTeam(0);
+		Log(n:0,s:" forced to change to Blue.");
+		delay(1);
+		Teleport(70);
+		GiveInventory("HasClass",1);
+		ACS_ExecuteAlways(95, 0);
+		TakeInventory("IsRed",1);
+		GiveInventory("IsBlue",1);
+	}
+	else if(RedCount() < BlueCount()-1 && PlayerTeam() == TEAM_BLUE && CheckInventory("InGame") == 1)
+	{
+		SetFont("BIGFONT");
+		Player_SetTeam(1);
+		Log(n:0,s:" forced to change to Red.");
+		delay(1);
+		Teleport(71);
+		GiveInventory("HasClass",1);
+		ACS_ExecuteAlways(95, 0);
+		TakeInventory("IsBlue",1);
+		GiveInventory("IsRed",1);
+	}
+}

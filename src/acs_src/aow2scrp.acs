@@ -1,0 +1,401 @@
+/****************************************************************************************************
+ ** All Out War 2: The Second Coming ACS script                                                    **
+ ** Credit to VoltlocK for originally creating the engine                                         **
+ ** With modifications by Eruanna, Dusk and the Omega team                                    **
+ **                                                                                                **
+ ** You may use portions of this script in your project as long as you give credit where credit is **
+ ** due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!        **
+ ****************************************************************************************************/
+
+// Tag legend:
+// [SP] == Eruanna
+// [NG] == Tiger
+
+#include "zcommon.acs"
+#library "aow2scrp.acs"
+
+#define MAX_NORMAL_WEAPONS 22
+
+#define TEAM_NONE 255
+#define MAXPLAYERS 64
+
+// [Dusk] intel HudMessage coords
+#define INTEL_XPOS 0.5
+#define INTEL_YPOS 0.055
+#define INTEL_YPOS2 0.0475
+
+// [Dusk] rank stuff
+#define RANK_PRIVATE 0
+#define RANK_CORPORAL 1
+#define RANK_SERGEANT 2
+#define RANK_MASTERSGT 3
+#define RANK_OFFICER 4
+#define RANK_LIEUTENANT 5
+#define RANK_MAJOR 6
+#define RANK_COMMANDO 7
+
+// [Dusk] these determine xp requirements for level-up
+#define XPREQ_CORPORAL 250
+#define XPREQ_SERGEANT 500
+#define XPREQ_MASTERSGT 1000
+#define XPREQ_OFFICER 1500
+#define XPREQ_LIEUTENANT 2000
+#define XPREQ_MAJOR 2500
+#define XPREQ_COMMANDO 3250
+
+// class ids
+#define CLASS_NONE 0
+#define CLASS_GUNMAN 1
+#define CLASS_ENGINEER 2
+#define CLASS_MINIGUNNER 3
+#define CLASS_TECHNICIAN 4
+#define CLASS_FLAMER 5
+#define CLASS_RIFLEMAN 6
+#define CLASS_MACHINEGUNNER 7
+#define CLASS_GRENADIER 8
+#define CLASS_ROCKETEER 9
+#define CLASS_STEALTH 10
+#define CLASS_GAUSSGUNNER 11
+#define CLASS_CHEMWARRIOR 12
+#define CLASS_SHOCKTROOPER 13
+#define CLASS_COMMANDO 14
+#define CLASS_SHOTGUNNER 15
+#define CLASS_SUICIDEBOMBER 16
+#define CLASS_SNIPER 17
+#define CLASS_UTILITYGUY 18
+#define CLASS_DEMOEXPERT 19
+#define CLASS_MEDIC 20
+#define CLASS_LASERCHAINGUNNER 21
+#define CLASS_JUMPJET 22
+#define CLASS_TIBRIFLE 23
+#define CLASS_DOUBLESHOTGUNNER 24
+#define CLASS_PLASMAGUNNER 25
+#define CLASS_ARTILLERY 26
+#define CLASS_TIMECOP 27
+#define CLASS_HARVESTER 28
+#define CLASS_ADVHARVESTER 29
+
+// mech ids
+#define MECH_ORCA 0
+#define MECH_RAVEN 1
+#define MECH_WOLVERINE 2
+#define MECH_MADCAT 3
+#define MECH_TITAN 4
+#define MECH_GUARDIAN 5
+
+// event scripts
+#define ACTION_DESTROY_BARRACKS 0
+#define ACTION_DESTROY_REFINERY 1
+#define ACTION_DESTROY_PLANT 2
+#define ACTION_DESTROY_FACTORY 3
+#define ACTION_DESTROY_OBELISK 4
+#define ACTION_DESTROY_REPAIR 5
+#define ACTION_SUDDENDEATH 6
+
+#define HM_1TIC  1872 // (1/35) * 2^16
+#define HM_2TICS 3745 // (2/35) * 2^16
+#define HM_3TICS 5617 // (3/35) * 2^16
+#define HM_4TICS 7489 // (4/35) * 2^16
+#define HM_5TICS 9362 // (5/35) * 2^16
+
+#define HP_BARRACKS 20000
+#define HP_REFINERY 30000
+#define HP_PLANT 20000
+#define HP_FACTORY 30000
+#define HP_REPAIR 15000
+#define HP_OBELISK 15000
+#define HP_MINIREF 6500
+#define HP_REGENS 10000
+#define HP_PORTAL 3000
+
+#define BUILDING_ALL -1
+
+#define BUILDING_BARRACKS 0
+#define BUILDING_REFINERY 1
+#define BUILDING_RESCENTRE 2
+#define BUILDING_FACTORY 3
+#define BUILDING_REPAIR 4
+#define BUILDING_OBELISK 5
+#define BUILDING_MINIREF 6
+#define BUILDING_HPREGEN 7 // deprecated
+#define BUILDING_HEALTHREGEN 7
+#define BUILDING_AMMOREGEN 8
+#define BUILDING_PORTAL 9
+
+// TODO: move these to 1000+ range
+#define TID_BARRACKS_BLUE 101
+#define TID_BARRACKS_RED 201
+#define TID_REFINERY_BLUE 103
+#define TID_REFINERY_RED 203
+#define TID_RESCENTRE_BLUE 105
+#define TID_RESCENTRE_RED 205
+#define TID_FACTORY_BLUE 107
+#define TID_FACTORY_RED 207
+#define TID_REPAIR_BLUE 109
+#define TID_REPAIR_RED 209
+#define TID_OBELISK_BLUE 114
+#define TID_OBELISK_RED 214
+#define TID_CRATE 401
+#define TID_TIBERIUM 402
+#define TID_TICKETCOUNTER_BLUE 410
+#define TID_TICKETCOUNTER_RED 411
+#define TID_MINIREF_BLUE 901
+#define TID_MINIREF_RED 900
+#define TID_HEALTHREGEN_BLUE 903
+#define TID_HEALTHREGEN_RED 902
+#define TID_AMMOREGEN_BLUE 905
+#define TID_AMMOREGEN_RED 904
+
+// new tids
+#define TID_PORTAL_BLUE1 1500
+#define TID_PORTAL_BLUE2 1501
+#define TID_PORTAL_RED1 1502
+#define TID_PORTAL_RED2 1503
+#define TID_PORTAL_TELEDEST 1504
+// 1504 - 1505
+#define TID_PORTAL_FX 1508
+// 1508 - 1511
+	// 1512 - 1519 is free
+#define TID_MARINE 1520
+// 1520 - 1544
+
+// TODO: populate this list
+#define SC_PORTAL_TIDREQUEST 935
+#define SC_PORTAL_INIT 936
+#define SC_PORTAL_FUNCTION 937
+#define SC_MARINE_INIT 938
+#define SC_MARINE_COMPENSATION 939
+#define SC_MARINE_STATS 967
+#define SC_MARINE_DEATH 968
+
+// how many points does researching stuff give you?
+// Also used for miniref and utility-built ammo/health regens
+#define POINTS_RESEARCH 12
+
+// largest crate number, bump this every time new crates are added
+#define MAX_CRATE 68
+
+#define MAX_MARINES 24
+
+bool Bots[MAX_MARINES];
+
+int BaseTIDs[18] = {
+	TID_BARRACKS_BLUE, TID_BARRACKS_RED,
+	TID_REFINERY_BLUE, TID_REFINERY_RED,
+	TID_RESCENTRE_BLUE, TID_RESCENTRE_RED,
+	TID_FACTORY_BLUE, TID_FACTORY_RED,
+	TID_REPAIR_BLUE, TID_REPAIR_RED,
+	TID_OBELISK_BLUE, TID_OBELISK_RED,
+	TID_MINIREF_BLUE, TID_MINIREF_RED,
+	TID_HEALTHREGEN_BLUE, TID_HEALTHREGEN_RED,
+	TID_AMMOREGEN_BLUE, TID_AMMOREGEN_RED
+};
+
+str TeamNames[2] = {"Blue", "Red"};
+
+int Developer;
+int DeveloperSafetyLock;
+int ConnectionEpoch;
+
+int EventScripts;
+
+int GameMode;
+int BodycountTimelimit;
+
+int Flags[3];
+
+int Credits[33];
+int Experience[32];
+int Rank[32];
+str RankTitles[8];
+int PlayersTeam[33];
+bool IsAdmin[33];
+bool Surrender[32];
+int LastSurrenderTime[32];
+
+int FirstBlood;
+
+// [SP] Keep track of when player joins game for purposes of team balance
+int StartTime[33];
+int PlayerNeedsSwitched;
+
+// [SP] Plasma cannon tracking
+int LastPurchasedCannon[33];
+int LastPurchasedBeacon[3];
+int NumPlasmaCannons[3];
+int MaxCannonsPerTeam;
+int CannonPurchaseDelay;
+
+// [SP] Time Cop tracking
+int LastPurchasedTimeCop[33];
+int NumTimeCops[3];
+int MaxTimeCopsPerTeam;
+
+int TimedC4Delay;
+
+int UsePortals = 1;
+// [Dusk] this is used to determine which portal is alive *and* active
+// a portal is considered inactive when it has no destinaton
+int Portals[4] = {0};
+// used to determine when a player has teleported in the last 18 tics. prevents teleporting multiple times.
+int HasTeleported[32];
+
+int LastMenu[33] = {0}; // [SP] This is to fix double-pressing on mech switches, causing a huge cost to the buyer.
+
+// [SP] Current Console Player IDX (client-side only)
+// Defaults to -1, this will be the "server" - anytime ConsolePlayer is -1
+// it means the client-side script did not execute, therefore this is the server.
+int ConsolePlayer = -1;
+
+//Bases
+bool GotRefinery[2];
+bool GotBarracks[2];
+bool GotFactory[2];
+bool GotPlant[2];
+bool GotRepair[2];
+bool GotObelisk[2];
+int MiniRefinery[2];
+int RefineryHealth[2];
+int BarracksHealth[2];
+int FactoryHealth[2];
+int PlantHealth[2];
+int RepairHealth[2];
+int ObeliskHealth[2];
+int MiniRefHealth[2];
+int GlobalMedicHealth[2];
+int GlobalAmmoHealth[2];
+int BaseLeft[2];
+
+int BaseHUDUpdate;
+int NextTicketUpdate;
+int LastAttackMessage;
+int LastTickets[2];
+int LastClientRequest;
+int MaxTurretDistance = 2500;
+int MinEnemyTurretDistance = 1500;
+
+int SurrenderWaitTime = 20;
+
+//RESEARCHES!!!!!!!!
+bool EnhancedRefining[2]; //Increases profits from harvesting by $50 //Costs $2000
+bool AdvancedMechResearch[2]; //Enables purchase of Juggernaut, Titan and MadCat //Costs $2000
+int GlobalMedic[2]; //Builds a Team Health Regeneration Cache //Costs $2250
+int GlobalAmmo[2]; //Builds a Team Ammo Regeneration Cache //Costs $2250
+bool AdvancedTurrets[2]; //Allows construction of high level Turrets //Costs $2000
+bool MoreTurrets[2]; //Increases Turret cap by 10 //Costs $2000
+int MaxTurrets[2] = {15, 15};
+
+int GuardianLimit;
+
+int StartCredits;
+int CreditFlow;
+int CreditFlowPower;
+int CreditFragAward;
+int CreditAwardTime;
+int CreditAwardAmount;
+int CreditRepairAmount;
+
+bool MechEnabled;
+bool GettingMech[2];
+bool SuddenDeath = False;
+bool TicketPool = False;
+int Tickets[2];
+int StartingTickets;
+int TournamentMode;
+int BeaconPurchaseDelay;
+
+int TeamStayTime;
+bool TeamUnbalanceCompensation[2];
+
+bool RedBeaconCooldown = False;
+bool BlueBeaconCooldown = False;
+int RedBeaconTime = 300;
+int BlueBeaconTime = 300;
+
+int GameOver;
+
+bool CrateTime = True;
+
+int PlayerSpeeds[32];
+int MechGetter[2]; // which player is in the hanger?
+
+int PlasmaCooldownTime; // plasma cannon cooldown time (CVar)
+int PlasmaCooldown[32]; // same for plasma cannon (internal)
+
+int MaxRazorWire = 20;
+int MaxProxy = 50;
+int MaxMechs = 5; // mini-ravens
+int MaxCrates = 15;
+
+int RepairBonus[32];
+int MedicBonus[32];
+int MedicBonusNeed;
+int AIMarines[2] = {0}; // compensation-spawned only
+
+int AIMarineCount = 0; // how many AI marines are there overall?
+
+int CrateNumber = 0; // crate logic
+
+str NormalWeaponNames[MAX_NORMAL_WEAPONS] = {
+	"ArtilleryCannon",
+	"ChemicalSprayer",
+	"DoubleShotgun",
+	"EagerBeaver",
+	"Flamer",
+	"GatlingGun",
+	"GaussRifle",
+	"GrenadeLauncher",
+	"Knife",
+	"LaserChaingun",
+	"LaserRifle",
+	"MachineGun",
+	"MissileLauncher",
+	"PlasmaCannon",
+	"PlasmaGun",
+	"Rifle",
+	"ShockRifle",
+	"Boomstick",
+	"SniperRifle",
+	"SubMachineGun",
+	"TiberiumAutorifle",
+	"TimeGun"
+};
+
+#include "a_functions.acs"
+#include "a_armor.acs"
+#include "a_monies.acs"
+#include "a_xp.acs"
+
+#include "a_admin.acs"
+#include "a_basehud.acs"
+#include "a_bases.acs"
+#include "a_botmarines.acs"
+#include "a_bots.acs"
+#include "a_clientfx.acs"
+#include "a_clssc.acs"
+#include "a_core.acs"
+#include "a_crate.acs"
+#include "a_death.acs"
+#include "a_dmgovertime.acs"
+#include "a_donate.acs"
+#include "a_hud.acs"
+#include "a_items.acs"
+#include "a_mechs.acs"
+#include "a_menu.acs"
+#include "a_misc.acs"
+#include "a_netscripts.acs"
+#include "a_opendeck.acs"
+#include "a_portal.acs"
+#include "a_regen.acs"
+#include "a_repfac.acs"
+#include "a_repair.acs"
+#include "a_respc.acs"
+#include "a_spawnroom.acs"
+#include "a_stealth.acs"
+#include "a_surrender.acs"
+#include "a_suddendeath.acs"
+#include "a_teambalance.acs"
+#include "a_timegun.acs"
+#include "a_tiberium.acs"
+#include "a_util.acs"
+#include "a_wchk.acs"

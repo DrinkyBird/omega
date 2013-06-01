@@ -1,0 +1,36 @@
+actor PowerPlantSmokeGenerator 21406 {
+	+NOGRAVITY
+	+INVULNERABLE
+	+SHOOTABLE
+	states {
+	Spawn: 
+		TNT1 A 70 A_SpawnItemEx ("PowerPlantSmokeGeneratorFX")
+		loop
+	Death:
+		TNT1 A -1
+		stop
+	Raise:
+		TNT1 A 0
+		goto Spawn
+	}
+}
+
+actor PowerPlantSmokeGeneratorFX {
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	states {
+	Spawn: 
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 2 A_SpawnItemEx ("PowerPlantSmokePuff", random(-32,32), random(-32,32), 0, 0, 0, 3)
+		stop
+	}
+}
+
+actor PowerPlantSmokeGeneratorSmall 24002 {
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	states {
+	Spawn:
+		TNT1 A 2 A_SpawnItemEx ("PowerPlantSmokePuffSmall", random(-32,32), random(-32,32), 0, 0, 0, 3)
+		loop
+	}
+}

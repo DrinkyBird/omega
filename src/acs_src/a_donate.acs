@@ -1,0 +1,148 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * All Out War 2 donation script
+ * Credit to VoltlocK for originally creating the engine
+ * With modifications by Eruanna, Dusk and the Omega Team
+ *
+ * You may use portions of this script in your project as long as you give
+ * credit where credit is due. Please don't be lame and just copy-paste any
+ * of this and call it your own. Thanks!
+ */
+
+int Donor[32];
+
+Function int DonateCredits (int Player, int NewCredits) {
+	Credits[PlayerNumber()+1] -= NewCredits;
+	if(Credits[PlayerNumber()+1] < 0)
+		Credits[PlayerNumber()+1] = 0;
+
+	Credits[CheckInventory("DonationName")+1] += NewCredits;
+	
+	// int donor = PlayerNumber()+1;
+	LocalAmbientSound("powerup/stolsound",255);
+	
+	SETFONT("SMALLFONT");
+	HudMessage(s:"You have donated \cf$",d:NewCredits,s:"\cd to ", n:CheckInventory("DonationName")+1;
+		HUDMSG_FADEOUT, 480+PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0);
+	
+	Donor[CheckInventory("DonationName")] = PlayerNumber(); // used in the message to the donatee
+	GiveActorInventory (3800+CheckInventory("DonationName"), "DonationMessage", 1);
+
+	return NewCredits;
+}
+
+function void ShowCurrentDonationMenu (void)
+{
+	int DonationName = CheckInventory("DonationName");
+
+	if (DonationName > 31)
+		TakeInventory("DonationName", 31);
+	
+	int color = CR_BLUE;
+	if (PlayerTeam() == TEAM_RED) color = CR_RED;
+	
+	SETFONT("DoomFont");
+	HudMessage(s:"\cJ== Make a donation!",
+	s:"\n\cFChange Name \cK-> \cI", k:"DonationName",
+	s:"\n\cFDonate \cQ$\cD100 \cK-> \cI", k:"DonationGive",
+	s:"\n\n", n:DonationName+1, s:"\n\cKCredits: \cQ$\cD", d:Credits[DonationName+1],
+	s:"\n\cKHealth: ", d:GetActorHealth (3800+DonationName), s:" / ", d:GetActorSpawnHealth (3800+DonationName),
+	s:"\n\cK", s:DisplayName (DonationName);
+		HUDMSG_PLAIN, 6000+PlayerNumber(), color, -0.65, 0.65, 1.15);
+}
+
+
+//Donations
+script 333 (void) NET
+{
+	if(CheckInventory("DonateMenu") == 0)
+		terminate;
+
+	if(CheckInventory("InGame") == 0)
+		terminate;
+
+	ShowCurrentDonationMenu();
+
+	delay(35);
+	restart;
+	
+}
+
+script 334 (int Which) NET {
+	int CheckValid = 1;
+
+	if(CheckInventory("InGame") == 0)
+		terminate;
+
+	if(Which == 1 && CheckInventory("DonateMenu") == 1)
+	{
+		GiveInventory("DonationName",1);
+		while ( CheckValid )
+		{
+			if ( GetPlayerInfo(0+CheckInventory("DonationName"),PLAYERINFO_TEAM) != PlayerTeam() )
+				GiveInventory("DonationName",1);
+			else
+				CheckValid = 0;
+			if ( CheckInventory("DonationName") > 32 )
+				TakeInventory("DonationName",100);
+		}
+		ShowCurrentDonationMenu();
+	}
+	else if(Which == 2 && CheckInventory("DonateMenu") == 1)
+	{
+		if(GetPlayerInfo(0+CheckInventory("DonationName"),PLAYERINFO_TEAM) != PlayerTeam()) {
+			SETFONT("BigFont");
+			HudMessage(s:"That player is not on your team!!";
+				HUDMSG_FADEOUT, 480+PlayerNumber(), CR_DarkRed, 0.5, 0.55, 2.0, 1.0);
+			terminate;
+		}
+		
+		if (CheckInventory("DonationName") == PlayerNumber()) {
+			SETFONT("BigFont");
+			HudMessage(s:"You cannot donate to yourself!";
+				HUDMSG_FADEOUT, 480+PlayerNumber(), CR_DarkRed, 0.5, 0.55, 2.0, 1.0);
+			terminate;
+		}
+		
+		if (Credits[PlayerNumber()+1] < 100) {
+			SETFONT("BigFont");
+			HudMessage(s:"You can't afford this!";
+				HUDMSG_FADEOUT, 480+PlayerNumber(), CR_DarkRed, 0.5, 0.55, 2.0, 1.0);
+			terminate;
+		}
+		DonateCredits(CheckInventory("DonationName"), 100);
+	}
+	else if(Which == 3)
+	{
+		SETFONT("SMALLFONT");
+		HudMessage(s:"You have been donated \cf$100"; HUDMSG_FADEOUT, 480+PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0);
+	}
+}
+
+script 335 (void) NET
+{
+	int CheckValid = 1;
+
+	if(CheckInventory("InGame") == 0)
+		terminate;
+
+	if(CheckInventory("DonateMenu") == 1)
+	{
+		TakeInventory("DonateMenu",1);
+		HudMessage(s:""; HUDMSG_PLAIN, 6000+PlayerNumber(), CR_Green, 0.0, 0.2, 0.4); // clear donation menu
+		terminate;
+	}
+	else
+	{
+		GiveInventory("DonateMenu",1);
+		while (CheckValid) {
+			if (GetPlayerInfo(0+CheckInventory("DonationName"),PLAYERINFO_TEAM) != PlayerTeam())
+				GiveInventory("DonationName", 1);
+			else
+				CheckValid = 0;
+			if (CheckInventory("DonationName") > 31)
+				TakeInventory("DonationName", 31);
+		}
+		ShowCurrentDonationMenu();
+		ACS_ExecuteAlways(333, 0);
+	}
+}

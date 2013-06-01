@@ -1,0 +1,54 @@
+// BOT SUPPORT
+int BotClassCosts[13] = {0, 400, 200, 450, 550, 600, 550, 400, 600, 600, 1000, 650, 800};
+int BotClassNumbers[13] = {20, 22, 54, 24, 27, 33, 34, 53, 61, 35, 36, 44, 60};
+int BotClassBarDependencies[13]   = {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+int BotClassPlantDependencies[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1};
+
+script 888 ENTER {
+	if (!PlayerIsBot(PlayerNumber())) terminate;
+	ACS_ExecuteAlways(92,0,0,0,0);
+	int chance = random(0,100);
+	delay (35);
+	
+	GiveInventory("PurchaseToken",1);
+	
+	delay (10);
+	
+	int i; int team = 1-PlayerTeam();
+	int max = 12; int x;
+	if (!GotPlant[Team]) max = 8;
+	if (!GotBarracks[Team]) max = 2;
+	
+	// PrintBold (n:0, s:"\c-: I have \cQ$\cD", d:Credits[PlayerNumber()+1]);
+	
+	// [Dusk]  save some computing time - see if we can only afford an ssg
+	if (Credits[PlayerNumber()+1] < 400) {
+		if (Credits[PlayerNumber()+1] >= 200)
+			i = 2;
+		else
+			i = 0; // if not, pick gunman
+	} else {
+		while (x < 5) {
+			i = random(0, max);
+			if ((GotBarracks[Team] || !BotClassBarDependencies[i]) &&
+				(GotPlant[Team] || !BotClassPlantDependencies[i]) &&
+				Credits[PlayerNumber()+1] >= BotClassCosts[i])
+				break;
+			x++;
+		}
+		
+		// [Dusk] can't decide? simple logic solves the problem.
+		if (x == 5) {
+			if (Credits[PlayerNumber()+1] >= 200)
+				i = 2;
+			else
+				i = 0;
+		}
+	}
+	
+	ACS_ExecuteAlways (BotClassNumbers[i], 0, team);
+}
+
+script 889 RESPAWN {
+	ACS_ExecuteAlways(888, 0);
+}

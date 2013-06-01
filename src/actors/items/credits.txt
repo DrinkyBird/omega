@@ -1,0 +1,75 @@
+actor Credits1 : CustomInventory 21412 {
+	radius 20
+	height 26
+	inventory.pickupmessage "Picked up a lucky coin. +\cq$\cd1"
+	inventory.respawntics 1050
+	inventory.pickupsound "misc/credit_pkup"
+	inventory.maxamount 9999
+	+ALWAYSPICKUP
+	states {
+	Spawn:
+		COIN A -1
+		stop
+	Pickup:
+		TNT1 A 0 ACS_ExecuteAlways (321, 0, 1)
+		stop
+	}
+}
+
+actor Credits20 : CustomInventory 21413 {
+	radius 20
+	height 26
+	inventory.pickupmessage "Picked up a pile of credits! +\cq$\cd20"
+	inventory.respawntics 1575
+	inventory.pickupsound "misc/credit_pkup"
+	inventory.maxamount 9999
+	+ALWAYSPICKUP
+	states {
+	Spawn:
+		CRED A -1
+		stop
+	Pickup:
+		TNT1 A 0 ACS_ExecuteAlways (321, 0, 20)
+		stop
+	}
+}
+
+actor Credits40 : CustomInventory 21414
+{
+	radius 20
+	height 26
+	inventory.pickupmessage "Picked up bag of credits! +\cq$\cd40"
+	inventory.respawntics 2100
+	inventory.pickupsound "misc/credit_pkup"
+	inventory.maxamount 9999
+	+ALWAYSPICKUP
+	states
+	{
+	Spawn:
+		SACK A -1
+		stop
+	Pickup:
+		TNT1 A 0 ACS_ExecuteAlways (321, 0, 40)
+		stop
+	}
+}
+
+actor Credits75 : CustomInventory 21415
+{
+	radius 20
+	height 26
+	inventory.pickupmessage "Picked up credit cache! +\cq$\cd75"
+	inventory.respawntics 3150
+	inventory.pickupsound "misc/credit_pkup"
+	inventory.maxamount 9999
+	+ALWAYSPICKUP
+	states
+	{
+	Spawn:
+		CHST A -1
+		stop
+	Pickup:
+		TNT1 A 0 ACS_ExecuteAlways (321, 0, 75)
+		stop
+	}
+}

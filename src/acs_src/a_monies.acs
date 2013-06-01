@@ -1,0 +1,197 @@
+// MONEY RELATED SCRIPTS
+Function int SpendCredits (int Player, int NewCredits) {
+	if (IsAdmin[PlayerNumber()]) {return -1;}
+	int delta = Discount(NewCredits);
+	NewCredits -= delta;
+	Credits[PlayerNumber()+1] -= NewCredits;
+	if(Credits[PlayerNumber()+1] < 0)
+		Credits[PlayerNumber()+1] = 0;
+		
+	SETFONT("BigFont");
+	if (delta == 0)
+		HudMessage(s:"\cJYou have spent \cQ$\cD",d:NewCredits; HUDMSG_FADEOUT, 480+PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0);
+	else
+		HudMessage(s:"\cJYou have spent \cQ$\cD",d:NewCredits, s:" \cF[\cQ-$\cD", d:delta, s:"\cF]";
+			HUDMSG_FADEOUT, 480+PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0);
+		
+	return NewCredits;
+}
+
+Function int AddCreditsSilent (int Player, int NewCredits) {
+	if (IsAdmin[PlayerNumber()]) {return -1;}
+	Credits[PlayerNumber()+1] += NewCredits;	
+	return NewCredits;
+}
+
+function void AwardCredits (int Player, int NewCredits) {
+	if (IsAdmin[PlayerNumber()]) {return;}
+	if (Player == -1) Player = PlayerNumber();
+	Credits[Player+1] += NewCredits;
+	SetFont ("SMALLFONT");
+	HudMessage (s:"You have been awarded with \cQ$\cD", d:NewCredits;
+	HUDMSG_FADEOUT, 15000, CR_WHITE,
+		    INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+}
+
+// [Dusk] cleaner version :|
+function void GiveCredits (int player, int amount) {
+	if (player < 0) player = PlayerNumber();
+	if (IsAdmin[player]) return;
+	Credits[player+1] += amount;
+}
+
+// testing script
+Script 32 (int amount, int i) {
+	if (IsAdmin [i]) terminate;
+	GiveCredits (i, amount);
+	HudMessageBold (s:"\cRServer \cJhas given \cQ$\cD", d:amount, s:" \cJto ", n:i+1;
+		HUDMSG_FADEOUT, 15000, CR_WHITE,
+		INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+}
+
+// Backpacks and credit items use this to give the player credits
+script 321 (int amount) {
+	if (IsAdmin[PlayerNumber()]) {terminate;}
+	GiveCredits (PlayerNumber(), amount);
+}
+
+//Price check
+script 330 (int Price) {
+	int delta = Discount(Price);
+	Price -= delta;
+	
+	SetFont("BIGFONT");
+	if (delta != 0)
+		HudMessage(s:"\cJDiscount \cQ-$\cD", d:delta, s:"\cF = \cQ$\cD", d:Price;
+			HUDMSG_FADEOUT, 480+PlayerNumber(), CR_Green, 0.25, 0.1, 2.0, 1.0);
+
+	SetResultValue(Price);
+}
+
+// CREDIT BONUS
+Script 326 OPEN {
+	while (CreditAwardTime <= 0)
+		delay (5*35);
+	
+	delay(35*60*CreditAwardTime);
+	
+	for (int i = 0; i <= 31; i++) {
+		if (PlayerInGame(i) && !IsAdmin[i])
+			Credits[i+1] += CreditAwardAmount;
+	}
+	
+	AmbientSound("powerup/credsound", 255);
+	SetFont ("SMALLFONT");
+	HudMessageBold (s:"Credit bonus! You all get \cQ$\cD", d:CreditAwardAmount, s:"\cJ!";
+		HUDMSG_FADEOUT, 15000, CR_WHITE,
+		INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	
+	restart;
+}
+
+function int Discount (int amount) {
+	if (Rank[PlayerNumber()] == RANK_PRIVATE) return 0;
+	int delta;
+	int factor;
+	
+	if (amount < 200 && amount > 0)
+		factor = 10;
+	else if (amount >= 200 && amount < 400)
+		factor = 15;
+	else if (amount >= 400 && amount < 800)
+		factor = 30;
+	else if (amount >= 800 && amount < 1600)
+		factor = 50;
+	else if (amount > 1600)
+		factor = 75;
+	
+	switch (Rank[PlayerNumber()]) {
+		case RANK_CORPORAL:
+		case RANK_SERGEANT:
+			delta = factor; break;
+		case RANK_MASTERSGT:
+		case RANK_OFFICER:
+			delta = factor * 2; break;
+		case RANK_LIEUTENANT:
+		case RANK_MAJOR:
+		case RANK_COMMANDO:
+			delta = factor * 4; break;
+	}
+	
+	return delta;
+}
+
+// ------------------------------------------------------------------------------------
+Function int SetCredits (int Player, int NewCredits)
+{
+	if (IsAdmin[PlayerNumber()]) {return -1;}
+	Credits[PlayerNumber()+1] = NewCredits;
+	return NewCredits;
+}
+
+Function int SetCreditsSilent (int Player, int NewCredits)
+{
+	if (IsAdmin[PlayerNumber()]) {return -1;}
+	Credits[PlayerNumber()+1] = NewCredits;
+	return NewCredits;
+}
+
+Function int AddCredits (int Player, int NewCredits)
+{
+	if (IsAdmin[PlayerNumber()]) {return -1;}
+	Credits[PlayerNumber()+1] += NewCredits;
+	SetFont ("SMALLFONT");
+	HudMessage (s:"You have been awarded with \cQ$\cD", d:NewCredits;
+	HUDMSG_FADEOUT, 15000, CR_WHITE,
+		    INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	return NewCredits;
+}
+
+Function int AddCredits2 (int Player, int NewCredits)
+{
+	if (IsAdmin[Player-1]) {return -1;}
+	Credits[Player] += NewCredits;
+	SetFont("SMALLFONT");
+	HudMessage (s:"You have been awarded with \cQ$\cD", d:NewCredits;
+	HUDMSG_FADEOUT, 15000, CR_WHITE,
+		    INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		    
+		    return NewCredits;
+}
+
+Function int RefundCredits (int Player, int NewCredits)
+{
+	if (IsAdmin[PlayerNumber()]) {return -1;}
+	Credits[PlayerNumber()+1] += NewCredits;
+	SetFont("SMALLFONT");
+	HudMessage (s:"You have been refunded with \cQ$\cD", d:NewCredits;
+	HUDMSG_FADEOUT, 15000, CR_WHITE,
+		    INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		    
+		    return NewCredits;
+}
+
+Function int TakeCredits (int Player, int NewCredits)
+{
+	if (IsAdmin[PlayerNumber()]) {return -1;}
+	Credits[PlayerNumber()+1] -= NewCredits;
+	if(Credits[PlayerNumber()+1] < 0)
+		Credits[PlayerNumber()+1] = 0;
+	
+	SETFONT("SMALLFONT");
+	HudMessage (s:"You have been deducted \cQ$\cD", d:NewCredits;
+	HUDMSG_FADEOUT, 15000, CR_WHITE,
+		    INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		    
+		    return NewCredits;
+}
+
+Function int TakeCreditsSilent (int Player, int NewCredits)
+{
+	if (IsAdmin[PlayerNumber()]) {return -1;}
+	Credits[PlayerNumber()+1] -= NewCredits;
+	if(Credits[PlayerNumber()+1] < 0)
+		Credits[PlayerNumber()+1] = 0;
+	
+	return NewCredits;
+}

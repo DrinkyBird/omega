@@ -1,0 +1,207 @@
+// Powerup Crate and related actors
+actor PowerupCrate : CustomInventory replaces RandomPowerup 21410 {
+	+LOWGRAVITY
+	+ALWAYSPICKUP
+	inventory.pickupmessage "Powerup Crate"
+	inventory.pickupsound "powerup/basic"
+	inventory.respawntics 2100 // 1 minute
+	states {
+	Spawn:
+		UCRT AA 0 Thing_ChangeTID (0, 401)
+		UCRT A 6 BRIGHT
+		UCRT A 6
+		goto Spawn+2
+	Pickup:
+		TNT1 A 0 ACS_ExecuteAlways (309, 0)
+		stop
+	}
+}
+
+actor CrateMapMarker : MapMarker {
+	scale 0.3
+	states {
+	Spawn:
+		AMRK A -1
+		stop
+	}
+}
+
+actor PowerSpeedUpgrade : PowerSpeed {speed 1.25}
+actor SpeedUpgrade : PermanentPowerup {powerup.type "SpeedUpgrade"}
+
+actor PowerFatigue : PowerSpeed {speed 0.55}
+actor SpeedDowngrade : PermanentPowerup {
+	powerup.type "Fatigue"
+	powerup.duration -60
+}
+
+actor IronCurtain : PowerupGiver {
+	+AUTOACTIVATE
+	+ALWAYSPICKUP
+	Inventory.MaxAmount 0
+	Powerup.Duration 1050
+	Powerup.Type "Invulnerable"
+	Powerup.Color GreenMap
+}
+
+actor NukeKamikaze {
+	+NOINTERACTION
+	+FORCERADIUSDMG
+	obituary "$OB_KAMIKAZE" // "%k make %o go boom!"
+	damagetype "ExplosionRed"
+	states {
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx ("Nuke", 0,0,0,0,0,0,0,160)
+		TNT1 A 5 A_Explode(7000, 1024, 1)
+		stop
+	}
+}
+
+actor BlueStrikeKamikaze : NukeKamikaze {
+	damagetype "ExplosionBlue"
+	states {
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx ("BlueStrike", 0,0,0,0,0,0,0,160)
+		TNT1 A 5 A_Explode (7000, 1024, 1)
+		stop
+	}
+}
+
+actor BombExplosion : KamikazeExplosion {
+	+EXTREMEDEATH
+	obituary "%o was blasted away by %k's bomb crate."
+	damagetype "Monster"
+	states {
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx ("KamikazeExplosionFX")
+		TNT1 A 0 A_Explode (5000, 128)
+		TNT1 A 0 A_Explode (1500, 256)
+		stop
+	}
+}
+actor IsBombCrate : Boolean {}
+
+// ==== NEW BOMB CRATE STUFF
+actor BombCrateFXBlue1 {
+	PROJECTILE
+	+NOINTERACTION
+	+CLIENTSIDEONLY
+	+FORCEXYBILLBOARD
+	+NOCLIP
+	radius 0
+	height 0
+	renderstyle add
+	alpha 0
+	reactiontime 42
+	scale 3
+	states {
+	Spawn:
+		ION1 A 0
+		goto Idle
+	Idle:
+		"----" A 0 bright A_FadeIn (0.015)
+		"----" AAAA 1 bright ACS_ExecuteAlways (966, 0)
+		"----" A 0 bright A_Countdown
+		loop
+	Clear:
+		TNT1 A 0
+		TNT1 A 5 A_StopSound (1)
+		stop
+	Death:
+		ION1 A 0
+		stop
+	}
+}
+
+actor BombCrateFXBlue2 : BombCrateFXBlue1 {
+	scale 2.7
+	states {
+	Spawn:
+		ION1 B 0
+		goto Idle
+	}
+}
+
+actor BombCrateFXBlue3 : BombCrateFXBlue1 {
+	scale 2.5
+	states {
+	Spawn:
+		ION1 C 0
+		goto Idle
+	}
+}
+
+actor BombCrateFXBlue4 : BombCrateFXBlue1 {
+	scale 2.5
+	states {
+	Spawn:
+		ION1 D 0
+		goto Idle
+	}
+}
+
+actor BombCrateFXRed1 : BombCrateFXBlue1 {
+	scale 1
+	states {
+	Spawn:
+		FLAR A 0
+		goto Idle
+	}
+}
+
+actor BombCrateFXRed2 : BombCrateFXBlue1 {
+	scale 0.9
+	states {
+	Spawn:
+		FLA2 A 0
+		goto Idle
+	}
+}
+
+actor BombCrateFXRed3 : BombCrateFXBlue1 {
+	scale 0.8
+	states {
+	Spawn:
+		FLA3 A 0
+		goto Idle
+	}
+}
+
+actor BombCrateFXRed4 : BombCrateFXBlue1 {
+	scale 0.8
+	states {
+	Spawn:
+		FLA4 A 0
+		goto Idle
+	}
+}
+
+actor BombCrateFXGiverBlue : CustomInventory {
+	+AUTOACTIVATE
+	+ALWAYSPICKUP
+	states {
+	Pickup:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx ("BombCrateFXBlue1", 0,0,0,0,0,0,0, 32)
+		TNT1 A 0 A_SpawnItemEx ("BombCrateFXBlue2", 0,0,0,0,0,0,0, 32)
+		TNT1 A 0 A_SpawnItemEx ("BombCrateFXBlue3", 0,0,0,0,0,0,0, 32)
+		TNT1 A 0 A_SpawnItemEx ("BombCrateFXBlue4", 0,0,0,0,0,0,0, 32)
+		stop
+	}
+}
+
+actor BombCrateFXGiverRed : CustomInventory {
+	+AUTOACTIVATE
+	+ALWAYSPICKUP
+	states {
+	Pickup:
+		TNT1 A 0 A_SpawnItemEx ("BombCrateFXRed1", 0,0,0,0,0,0,0, 32)
+		TNT1 A 0 A_SpawnItemEx ("BombCrateFXRed2", 0,0,0,0,0,0,0, 32)
+		TNT1 A 0 A_SpawnItemEx ("BombCrateFXRed3", 0,0,0,0,0,0,0, 32)
+		TNT1 A 0 A_SpawnItemEx ("BombCrateFXRed4", 0,0,0,0,0,0,0, 32)
+		stop
+	}
+}

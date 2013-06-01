@@ -1,0 +1,43 @@
+// [SP] This file is just for misc actors to help ACS
+
+// [NF] Thermal cloaking timer - tells how many seconds left.
+actor ThermalCloakingTime : Inventory {inventory.maxamount 90}
+
+// [NF] used to fix iron curtain + resign bug
+actor PowerNull : PowerProtection {damagefactor "normal", 1.0}
+actor RedHueRemover : PowerupGiver {
+	+INVENTORY.AUTOACTIVATE
+	inventory.pickupmessage "wat are you doing"
+	inventory.maxamount 0
+	powerup.color RedMap
+	powerup.duration -2
+	powerup.type "Null"
+}
+
+actor DimGoldHueRemover : RedHueRemover {powerup.color GoldMap, 0.25}
+actor DimRedHueRemover : RedHueRemover {powerup.color "AA 00 00", 0.25}
+actor GreenHueRemover : RedHueRemover {powerup.color GreenMap}
+
+// === GROSS HACK
+actor DonationMessage : CustomInventory {
+	inventory.maxamount 0
+	inventory.amount 0
+	+AUTOACTIVATE
+	+ALWAYSPICKUP
+	states {
+	Spawn:
+		TNT1 A 0
+		stop
+	Use:
+		TNT1 A 5 ACS_ExecuteAlways (111, 0)
+		stop
+	}
+}
+
+actor UtilityMenuActivator : DonationMessage {
+	states {
+	Use:
+		TNT1 A 5 ACS_ExecuteAlways (965, 0)
+		stop
+	}
+}

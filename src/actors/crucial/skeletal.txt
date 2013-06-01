@@ -1,0 +1,58 @@
+// very important stuff
+actor AOWWeapon : Weapon {
+	+NO_AUTO_SWITCH
+	+NOAUTOAIM
+	Weapon.Kickback 50
+	weapon.selectionorder 9999
+	states {
+	DeselectDie:
+		TNT1 A 0 A_Lower
+		TNT1 A 1 A_Lower
+		loop
+	Flash:
+		TNT1 A 2 A_Light1
+		TNT1 A 2 A_Light2
+		TNT1 A 0 A_Light0
+		stop
+	LightDone:
+		TNT1 A 0 A_Light0
+		Stop
+	}
+}
+
+actor AOWMorph : PowerMorph {
+	PowerMorph.MorphStyle (MRF_FULLHEALTH|MRF_ADDSTAMINA|MRF_NEWTIDBEHAVIOUR|MRF_WHENINVULNERABLE)
+}
+
+actor PermanentPowerup : PowerupGiver {
+	inventory.maxamount 0
+	powerup.type "Null"
+	powerup.duration 0x7FFFFFFF
+	+AUTOACTIVATE
+	states {
+	Spawn:
+		TNT1 A 0
+		stop
+	}
+}
+
+actor InventoryItem : CustomInventory {
+	+INVBAR
+	inventory.maxamount 1
+	states {
+	Spawn:
+		TNT1 A 0
+		stop
+	Use.Mech:
+		TNT1 A 0 ACS_ExecuteAlways (697, 0)
+		fail
+	Failure:
+		TNT1 A 0
+		fail
+	Destealth:
+		TNT1 A 0 ACS_ExecuteAlways (310, 0, 3)
+		fail
+	}
+}
+
+actor Boolean : Inventory {inventory.maxamount 1}

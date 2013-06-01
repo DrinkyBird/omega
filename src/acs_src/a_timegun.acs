@@ -1,0 +1,81 @@
+// ===================================================
+// ------------------------------------------ TIME GUN
+// ===================================================
+
+// [Dusk] time gun effect messages and altfire rotation (in one script o.O)
+// action == 0 => intel message
+// action == 1 => altfire rotation
+script 958 (int action, int type) {
+	if (action == 1) {
+		// rotation
+		if (CheckInventory ("TimeGunRotation") == 5)
+			TakeInventory ("TimeGunRotation", 5);
+		else
+			GiveInventory ("TimeGunRotation", 1);
+		
+		ActivatorSound ("switch/pulse", 127);
+		terminate;
+	}
+	
+	SetFont ("SMALLFONT");
+	switch (type) {
+	case 0: // boost
+		HudMessage (s:"\cIYou are turbo!";
+			HUDMSG_FADEOUT, 15000, CR_WHITE,
+			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		break;
+	case 1: // float
+		HudMessage (s:"\cIYou feel lighter!";
+			HUDMSG_FADEOUT, 15000, CR_WHITE,
+			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		break;
+	case 2: // slow
+		HudMessage (s:"\cISomething pulls your legs...";
+			HUDMSG_FADEOUT, 15000, CR_WHITE,
+			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		break;
+	case 3: // weaken
+		HudMessage (s:"\cIYou hear something crack in your weapon...";
+			HUDMSG_FADEOUT, 15000, CR_WHITE,
+			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		break;
+	}
+}
+
+// ------------
+// Time gun HUD
+script 959 (void) NET CLIENTSIDE {
+	while (CheckWeapon ("TimeGun") && GetActorProperty (ActivatorTID(), APROP_HEALTH) >= 0) {
+		SetFont("SMALLFONT");
+		HudMessage(s:TimeHudColor(0), s:"BOOST (25)\n",
+			s:TimeHudColor(1), s:"FLOAT (25)\n",
+			s:TimeHudColor(2), s:"SLOW (25)\n",
+			s:TimeHudColor(3), s:"WEAKEN (25)\n",
+			s:TimeHudColor(4), s:"TELEPORT (100)\n",
+			s:TimeHudColor(5), s:"BURST (5+)";
+			HUDMSG_PLAIN, 0, CR_WHITE, -0.8, -0.6, 0.2);
+		
+		delay (5);
+	}
+}
+
+function str TimeHudColor (int type) {
+	if (CheckInventory ("TimeGunRotation") == type) {
+		// selected
+		if (CheckInventory ("TimeGunCooldown")) return "\cU";
+		switch (type) {
+			case 0: case 1: return "\cD";
+			case 2: case 3: return "\cA";
+			case 4: case 5: return "\cF";
+		}
+	} else {
+		// not selected
+		if (CheckInventory ("TimeGunCooldown")) return "\cM";
+		switch (type) {
+			case 0: case 1: return "\cQ";
+			case 2: case 3: return "\cG";
+			case 4: case 5: return "\cK";
+		}
+	}
+	return "";
+}

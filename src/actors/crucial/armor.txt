@@ -1,0 +1,420 @@
+// ARMOUR GRADES AND MODIFIERS
+actor PowerGrade1Armor : PowerProtection {
+	damagefactor "FistRed",		0.9	damagefactor "FistBlue",	0.9
+	damagefactor "BulletRed",	0.9	damagefactor "BulletBlue",	0.9
+	damagefactor "RifleRed",	0.9	damagefactor "RifleBlue",	0.9
+	damagefactor "ExplosionRed",	0.9	damagefactor "ExplosionBlue",	0.9
+	damagefactor "FireRed",		0.9	damagefactor "FireBlue",	0.9
+	damagefactor "ChemicalRed",	0.9	damagefactor "ChemicalBlue",	0.9
+	damagefactor "LaserRed",	0.9	damagefactor "LaserBlue",	0.9
+	damagefactor "TimeRed",		0.9	damagefactor "TimeBlue",	0.9
+	damagefactor "MassDriverRed",	0.9	damagefactor "MassDriverBlue",	0.9
+	damagefactor "ExplosionMechRed", 0.9	damagefactor "ExplosionMechBlue", 0.9
+	damagefactor "RazorWireRed",	0.9	damagefactor "RazorWireBlue",	0.9
+	
+	damagefactor "FireSpecial",	0.9
+	damagefactor "ChemicalSpecial",	0.9
+	damagefactor "Mechstomp",	0.9
+	damagefactor "Monster",		0.9
+}
+
+actor PowerGrade2Armor : PowerProtection {
+	damagefactor "FistRed",		0.8	damagefactor "FistBlue",	0.8
+	damagefactor "BulletRed",	0.8	damagefactor "BulletBlue",	0.8
+	damagefactor "RifleRed",	0.8	damagefactor "RifleBlue",	0.8
+	damagefactor "ExplosionRed",	0.8	damagefactor "ExplosionBlue",	0.8
+	damagefactor "FireRed",		0.8	damagefactor "FireBlue",	0.8
+	damagefactor "ChemicalRed",	0.8	damagefactor "ChemicalBlue",	0.8
+	damagefactor "LaserRed",	0.8	damagefactor "LaserBlue",	0.8
+	damagefactor "TimeRed",		0.8	damagefactor "TimeBlue",	0.8
+	damagefactor "MassDriverRed",	0.8	damagefactor "MassDriverBlue",	0.8
+	damagefactor "ExplosionMechRed", 0.8	damagefactor "ExplosionMechBlue", 0.8
+	damagefactor "RazorWireRed",	0.8	damagefactor "RazorWireBlue",	0.8
+	
+	damagefactor "FireSpecial",	0.8
+	damagefactor "ChemicalSpecial",	0.8
+	damagefactor "Mechstomp",	0.8
+	damagefactor "Monster",		0.8
+}
+
+actor PowerGrade3Armor : PowerProtection {
+	damagefactor "FistRed",		0.7	damagefactor "FistBlue",	0.7
+	damagefactor "BulletRed",	0.7	damagefactor "BulletBlue",	0.7
+	damagefactor "RifleRed",	0.7	damagefactor "RifleBlue",	0.7
+	damagefactor "ExplosionRed",	0.7	damagefactor "ExplosionBlue",	0.7
+	damagefactor "FireRed",		0.7	damagefactor "FireBlue",	0.7
+	damagefactor "ChemicalRed",	0.7	damagefactor "ChemicalBlue",	0.7
+	damagefactor "LaserRed",	0.7	damagefactor "LaserBlue",	0.7
+	damagefactor "TimeRed",		0.7	damagefactor "TimeBlue",	0.7
+	damagefactor "MassDriverRed",	0.7	damagefactor "MassDriverBlue",	0.7
+	damagefactor "ExplosionMechRed", 0.7	damagefactor "ExplosionMechBlue", 0.7
+	damagefactor "RazorWireRed",	0.7	damagefactor "RazorWireBlue",	0.7
+	
+	damagefactor "FireSpecial",	0.7
+	damagefactor "ChemicalSpecial",	0.7
+	damagefactor "Mechstomp",	0.7
+	damagefactor "Monster",		0.7
+}
+
+actor PowerGrade4Armor : PowerProtection {
+	damagefactor "FistRed",		0.6	damagefactor "FistBlue",	0.6
+	damagefactor "BulletRed",	0.6	damagefactor "BulletBlue",	0.6
+	damagefactor "RifleRed",	0.6	damagefactor "RifleBlue",	0.6
+	damagefactor "ExplosionRed",	0.6	damagefactor "ExplosionBlue",	0.6
+	damagefactor "FireRed",		0.6	damagefactor "FireBlue",	0.6
+	damagefactor "ChemicalRed",	0.6	damagefactor "ChemicalBlue",	0.6
+	damagefactor "LaserRed",	0.6	damagefactor "LaserBlue",	0.6
+	damagefactor "TimeRed",		0.6	damagefactor "TimeBlue",	0.6
+	damagefactor "MassDriverRed",	0.6	damagefactor "MassDriverBlue",	0.6
+	damagefactor "ExplosionMechRed", 0.6	damagefactor "ExplosionMechBlue", 0.6
+	damagefactor "RazorWireRed",	0.6	damagefactor "RazorWireBlue",	0.6
+	
+	damagefactor "FireSpecial",	0.6
+	damagefactor "ChemicalSpecial",	0.6
+	damagefactor "Mechstomp",	0.6
+	damagefactor "Monster",		0.6
+}
+
+
+actor PowerGrade5Armor : PowerProtection {
+	damagefactor "FistRed",		0.5	damagefactor "FistBlue",	0.5
+	damagefactor "BulletRed",	0.5	damagefactor "BulletBlue",	0.5
+	damagefactor "RifleRed",	0.5	damagefactor "RifleBlue",	0.5
+	damagefactor "ExplosionRed",	0.5	damagefactor "ExplosionBlue",	0.5
+	damagefactor "FireRed",		0.5	damagefactor "FireBlue",	0.5
+	damagefactor "ChemicalRed",	0.5	damagefactor "ChemicalBlue",	0.5
+	damagefactor "LaserRed",	0.5	damagefactor "LaserBlue",	0.5
+	damagefactor "TimeRed",		0.5	damagefactor "TimeBlue",	0.5
+	damagefactor "MassDriverRed",	0.5	damagefactor "MassDriverBlue",	0.5
+	damagefactor "ExplosionMechRed", 0.5	damagefactor "ExplosionMechBlue", 0.5
+	damagefactor "RazorWireRed",	0.5	damagefactor "RazorWireBlue",	0.5
+	damagefactor "Superweapon",	0.6	damagefactor "SuperweaponIon",	0.6
+	damagefactor "FireSpecial",	0.5
+	damagefactor "ChemicalSpecial",	0.5
+	damagefactor "Mechstomp",	0.5
+	damagefactor "Monster",		0.5
+}
+
+actor PowerGrade-1Armor : PowerProtection {
+	damagefactor "FistRed",		1.2	damagefactor "FistBlue",	1.2
+	damagefactor "BulletRed",	1.2	damagefactor "BulletBlue",	1.2
+	damagefactor "RifleRed",	1.2	damagefactor "RifleBlue",	1.2
+	damagefactor "ExplosionRed",	1.2	damagefactor "ExplosionBlue",	1.2
+	damagefactor "FireRed",		1.2	damagefactor "FireBlue",	1.2
+	damagefactor "ChemicalRed",	1.2	damagefactor "ChemicalBlue",	1.2
+	damagefactor "LaserRed",	1.2	damagefactor "LaserBlue",	1.2
+	damagefactor "TimeRed",		1.2	damagefactor "TimeBlue",	1.2
+	damagefactor "MassDriverRed",	1.2	damagefactor "MassDriverBlue",	1.2
+	damagefactor "ExplosionMechRed", 1.2	damagefactor "ExplosionMechBlue", 1.2
+	damagefactor "RazorWireRed",	1.2	damagefactor "RazorWireBlue",	1.2
+	
+	damagefactor "FireSpecial",	1.2
+	damagefactor "ChemicalSpecial",	1.2
+	damagefactor "Mechstomp",	1.2
+	damagefactor "Monster",		1.2
+}
+
+actor PowerFireProof : PowerProtection {
+	damagefactor "FireRed",		0.0	damagefactor "FireBlue",	0.0
+	damagefactor "ChemicalRed",	2.0	damagefactor "ChemicalBlue",	2.0
+	damagefactor "FireSpecial",	0.0
+	damagefactor "ChemicalSpecial",	2.0
+}
+
+actor PowerChemicalProof : PowerProtection {
+	damagefactor "FireRed",		2.0	damagefactor "FireBlue",	2.0
+	damagefactor "FireSpecial",	2.0
+	damagefactor "ChemicalRed",	0.0	damagefactor "ChemicalBlue",	0.0
+	damagefactor "ChemicalSpecial",	0.0
+}
+
+actor PowerLaserResistance : PowerProtection {
+	damagefactor "LaserRed", 0.5
+	damagefactor "LaserBlue", 0.5
+	
+	damagefactor "ExplosionRed", 2.0
+	damagefactor "ExplosionBlue", 2.0
+	damagefactor "ExplosionMechRed", 2.0
+	damagefactor "ExplosionMechBlue", 2.0
+	damagefactor "MassDriverRed", 2.0
+	damagefactor "MassDriverBlue", 2.0
+}
+
+actor PowerBulletResistance : PowerProtection {
+	damagefactor "BulletRed", 0.4
+	damagefactor "BulletBlue", 0.4
+	damagefactor "RifleRed", 0.4
+	damagefactor "RifleBlue", 0.4
+	
+	damagefactor "LaserRed", 1.25
+	damagefactor "LaserBlue", 1.25
+	
+	damagefactor "ExplosionRed", 1.25
+	damagefactor "ExplosionBlue", 1.25
+	damagefactor "ExplosionMechRed", 1.25
+	damagefactor "ExplosionMechBlue", 1.25
+	damagefactor "MassDriverRed", 1.25
+	damagefactor "MassDriverBlue", 1.25
+}
+
+actor PowerExplosiveResistance : PowerProtection {
+	damagefactor "ExplosionRed", 0.5
+	damagefactor "ExplosionBlue", 0.5
+	damagefactor "ExplosionMechRed", 0.5
+	damagefactor "ExplosionMechBlue", 0.5
+	damagefactor "MassDriverRed", 0.5
+	damagefactor "MassDriverBlue", 0.5
+	
+	damagefactor "LaserRed", 2.0
+	damagefactor "LaserBlue", 2.0
+}
+
+actor Grade1Armor : PermanentPowerup {powerup.type "Grade1Armor"}
+actor Grade2Armor : PermanentPowerup {powerup.type "Grade2Armor"}
+actor Grade3Armor : PermanentPowerup {powerup.type "Grade3Armor"}
+actor Grade4Armor : PermanentPowerup {powerup.type "Grade4Armor"}
+actor Grade5Armor : PermanentPowerup {powerup.type "Grade5Armor"}
+actor Grade-1Armor : PermanentPowerup {powerup.type "Grade-1Armor"}
+actor FireProof : PermanentPowerup {powerup.type "FireProof"}
+actor ChemicalProof : PermanentPowerup {powerup.type "ChemicalProof"}
+actor BulletResistance : PermanentPowerup {powerup.type "BulletResistance"}
+actor ExplosiveResistance : PermanentPowerup {powerup.type "ExplosiveResistance"}
+actor LaserResistance : PermanentPowerup {powerup.type "LaserResistance"}
+
+// harvesters get this to make sure they can not be harmed by tiberium even if
+// their chemical proof is canceled
+actor PowerTiberiumProof : PowerProtection {damagefactor "ChemicalSpecial", 0.0}
+actor TiberiumProof : PermanentPowerup {powerup.type "TiberiumProof"}
+
+// DAMAGEFACTOR TEMPLATE:
+/*
+	damagefactor "FistRed",			1.0	damagefactor "FistBlue",		1.0
+	damagefactor "BulletRed",		1.0	damagefactor "BulletBlue",		1.0
+	damagefactor "RifleRed",		1.0	damagefactor "RifleBlue",		1.0
+	damagefactor "ExplosionRed",		1.0	damagefactor "ExplosionBlue",		1.0
+	damagefactor "FireRed",			1.0	damagefactor "FireBlue",		1.0
+	damagefactor "ChemicalRed",		1.0	damagefactor "ChemicalBlue",		1.0
+	damagefactor "LaserRed",		1.0	damagefactor "LaserBlue",		1.0
+	damagefactor "TimeRed",			1.0	damagefactor "TimeBlue",		1.0
+	damagefactor "MassDriverRed",		1.0	damagefactor "MassDriverBlue",		1.0
+	damagefactor "ExplosionMechRed",	1.0	damagefactor "ExplosionMechBlue",	1.0
+	damagefactor "RazorWireRed",		1.0	damagefactor "RazorWireBlue",		1.0
+	damagefactor "Superweapon",		1.0	damagefactor "SuperweaponIon",		1.0
+	
+	damagefactor "FireSpecial",	1.0
+	damagefactor "ChemicalSpecial",	1.0
+	damagefactor "Mechstomp",	1.0
+	damagefactor "Disarm",		1.0
+	damagefactor "Deconstruction",	1.0
+	damagefactor "Flash",		1.0
+	damagefactor "Monster",		1.0
+*/
+
+actor SpawnInvulnerability : PowerupGiver {
+	+AUTOACTIVATE
+	Inventory.MaxAmount 0
+	Powerup.Type "Invulnerable"
+	Powerup.Color "FF FF FF", 0.1
+	Powerup.Duration -5
+}
+
+actor SuddenDeathVulnerability : PermanentPowerup {powerup.type "SuddenDeathVulnerability"}
+actor PowerSuddenDeathVulnerability : PowerProtection {
+	damagefactor "FistRed",			4.0	damagefactor "FistBlue",		4.0
+	damagefactor "BulletRed",		4.0	damagefactor "BulletBlue",		4.0
+	damagefactor "RifleRed",		4.0	damagefactor "RifleBlue",		4.0
+	damagefactor "ExplosionRed",		2.5	damagefactor "ExplosionBlue",		2.5
+	damagefactor "FireRed",			4.0	damagefactor "FireBlue",		4.0
+	damagefactor "ChemicalRed",		4.0	damagefactor "ChemicalBlue",		4.0
+	damagefactor "LaserRed",		4.0	damagefactor "LaserBlue",		4.0
+	damagefactor "TimeRed",			4.0	damagefactor "TimeBlue",		4.0
+	damagefactor "MassDriverRed",		2.5	damagefactor "MassDriverBlue",		2.5
+	damagefactor "ExplosionMechRed",	4.0	damagefactor "ExplosionMechBlue",	4.0
+	damagefactor "RazorWireRed",		0.0	damagefactor "RazorWireBlue",		0.0
+	damagefactor "Superweapon",		4.0	damagefactor "SuperweaponIon",		4.0
+	
+	damagefactor "FireSpecial",	4.0
+	damagefactor "ChemicalSpecial",	4.0
+	damagefactor "Mechstomp",	0.0
+	damagefactor "Disarm",		0.0
+	damagefactor "Deconstruction",	0.0
+	damagefactor "Flash",		0.0
+	damagefactor "Monster",		4.0
+}
+
+actor RedTeamArmor : PermanentPowerup {powerup.type "RedTeamArmor"}
+actor PowerRedTeamArmor : PowerProtection {
+	damagefactor "FistRed",			1.0	damagefactor "FistBlue",		1.0
+	damagefactor "BulletRed",		1.0	damagefactor "BulletBlue",		1.0
+	damagefactor "RifleRed",		1.0	damagefactor "RifleBlue",		1.0
+	damagefactor "ExplosionRed",		1.0	damagefactor "ExplosionBlue",		1.0
+	damagefactor "FireRed",			1.0	damagefactor "FireBlue",		1.0
+	damagefactor "ChemicalRed",		1.0	damagefactor "ChemicalBlue",		1.0
+	damagefactor "LaserRed",		1.0	damagefactor "LaserBlue",		1.0
+	damagefactor "TimeRed",			0.0	damagefactor "TimeBlue",		1.0
+	damagefactor "MassDriverRed",		1.0	damagefactor "MassDriverBlue",		1.0
+	damagefactor "ExplosionMechRed",	1.0	damagefactor "ExplosionMechBlue",	1.0
+	damagefactor "RazorWireRed",		0.0	damagefactor "RazorWireBlue",		1.0
+	damagefactor "Superweapon",		0.0	damagefactor "SuperweaponIon",		1.0
+	
+	damagefactor "FireSpecial",	1.0
+	damagefactor "ChemicalSpecial",	1.0
+	damagefactor "Mechstomp",	1.0
+	damagefactor "Disarm",		0.0
+	damagefactor "Deconstruction",	1.0
+	damagefactor "Flash",		1.0
+	damagefactor "Monster",		1.0
+}
+
+actor BlueTeamArmor : PermanentPowerup {powerup.type "BlueTeamArmor"}
+actor PowerBlueTeamArmor : PowerProtection {
+	damagefactor "FistRed",			1.0	damagefactor "FistBlue",		1.0
+	damagefactor "BulletRed",		1.0	damagefactor "BulletBlue",		1.0
+	damagefactor "RifleRed",		1.0	damagefactor "RifleBlue",		1.0
+	damagefactor "ExplosionRed",		1.0	damagefactor "ExplosionBlue",		1.0
+	damagefactor "FireRed",			1.0	damagefactor "FireBlue",		1.0
+	damagefactor "ChemicalRed",		1.0	damagefactor "ChemicalBlue",		1.0
+	damagefactor "LaserRed",		1.0	damagefactor "LaserBlue",		1.0
+	damagefactor "TimeRed",			1.0	damagefactor "TimeBlue",		0.0
+	damagefactor "MassDriverRed",		1.0	damagefactor "MassDriverBlue",		1.0
+	damagefactor "ExplosionMechRed",	1.0	damagefactor "ExplosionMechBlue",	1.0
+	damagefactor "RazorWireRed",		1.0	damagefactor "RazorWireBlue",		0.0
+	damagefactor "Superweapon",		1.0	damagefactor "SuperweaponIon",		0.0
+	
+	damagefactor "FireSpecial",	1.0
+	damagefactor "ChemicalSpecial",	1.0
+	damagefactor "Mechstomp",	1.0
+	damagefactor "Disarm",		0.0
+	damagefactor "Deconstruction",	1.0
+	damagefactor "Flash",		1.0
+	damagefactor "Monster",		1.0
+}
+
+actor PowerGrade0DamagePower : PowerDamage
+{
+  damagefactor "FistRed", 0.8
+  damagefactor "FistBlue", 0.8
+  damagefactor "BulletRed", 0.8
+  damagefactor "BulletBlue", 0.8
+  damagefactor "RifleRed", 0.8
+  damagefactor "RifleBlue", 0.8
+  damagefactor "ExplosionRed", 0.8
+  damagefactor "ExplosionBlue", 0.8
+  damagefactor "FireRed", 0.8
+  damagefactor "FireBlue", 0.8
+  damagefactor "ChemicalRed", 0.8
+  damagefactor "ChemicalBlue", 0.8
+  damagefactor "LaserRed", 0.8
+  damagefactor "LaserBlue", 0.8
+  damagefactor "RazorWireRed", 0.8
+  damagefactor "RazorWireBlue", 0.8
+  damagefactor "ExplosionMechRed", 0.8
+  damagefactor "ExplosionMechBlue", 0.8
+  damagefactor "TimeRed", 0.8
+  damagefactor "TimeBlue", 0.8
+  damagefactor "Disarm", 1.0
+  damagefactor "Flash", 1.0
+  damagefactor "Superweapon", 1.0
+  damagefactor "SuperweaponIon", 1.0
+  damagefactor "Slime", 1.0      //Mines
+  damagefactor "MassDriverRed", 0.8
+  damagefactor "MassDriverBlue", 0.8
+  damagefactor "Mechstomp", 0.8
+  damagefactor "Monster", 0.8
+}
+
+actor Grade0Damage : PowerupGiver
+{
+  inventory.maxamount 0
+  powerup.type "Grade0DamagePower"
+  powerup.duration 9999999
+  +AUTOACTIVATE
+  states
+  {
+  Spawn:
+    TNT1 A -1
+    stop
+  }
+}
+
+actor PowerGrade2DamageArtillery : PowerDamage {
+	damagefactor "FistRed", 1.1
+	damagefactor "FistBlue", 1.1
+	damagefactor "BulletRed", 1.1
+	damagefactor "BulletBlue", 1.1
+	damagefactor "RifleRed", 1.1
+	damagefactor "RifleBlue", 1.1
+	damagefactor "ExplosionRed", 1.25
+	damagefactor "ExplosionBlue", 1.25
+	damagefactor "FireRed", 1.1
+	damagefactor "FireBlue", 1.1
+	damagefactor "ChemicalRed", 1.1
+	damagefactor "ChemicalBlue", 1.1
+	damagefactor "LaserRed", 1.1
+	damagefactor "LaserBlue", 1.1
+	damagefactor "RazorWireRed", 1.1
+	damagefactor "RazorWireBlue", 1.1
+	damagefactor "ExplosionMechRed", 1.25
+	damagefactor "ExplosionMechBlue", 1.25
+	damagefactor "TimeRed", 1.1
+	damagefactor "TimeBlue", 1.1
+	damagefactor "MassDriverRed", 1.25
+	damagefactor "MassDriverBlue", 1.25
+	damagefactor "Mechstomp", 1.1
+}
+
+actor Grade2DamageArtillery : PermanentPowerup {powerup.type "Grade2DamageArtillery"}
+
+actor PowerFirepowerUpgrade : PowerDamage {
+	damagefactor "FistRed", 1.3
+	damagefactor "FistBlue", 1.3
+	damagefactor "BulletRed", 1.3
+	damagefactor "BulletBlue", 1.3
+	damagefactor "RifleRed", 1.3
+	damagefactor "RifleBlue", 1.3
+	damagefactor "ExplosionRed", 1.3
+	damagefactor "ExplosionBlue", 1.3
+	damagefactor "FireRed", 1.3
+	damagefactor "FireBlue", 1.3
+	damagefactor "ChemicalRed", 1.3
+	damagefactor "ChemicalBlue", 1.3
+	damagefactor "LaserRed", 1.3
+	damagefactor "LaserBlue", 1.3
+	damagefactor "ExplosionMechRed", 1.3
+	damagefactor "ExplosionMechBlue", 1.3
+	damagefactor "TimeRed", 1.3
+	damagefactor "TimeBlue", 1.3
+	damagefactor "MassDriverRed", 1.3
+	damagefactor "MassDriverBlue", 1.3
+	damagefactor "Mechstomp", 1.3
+}
+
+actor FirepowerUpgrade : PermanentPowerup {powerup.type "FirepowerUpgrade"}
+
+actor HasArmorUpgrade : Inventory {inventory.maxamount 1}
+
+actor PowerGrade2ArmorFactoryPower : PowerProtection {
+	damagefactor "FistRed", 0.9
+	damagefactor "FistBlue", 0.9
+	damagefactor "BulletRed", 0.9
+	damagefactor "BulletBlue", 0.9
+	damagefactor "RifleRed", 0.9
+	damagefactor "RifleBlue", 0.9
+	damagefactor "ExplosionRed", 0.9
+	damagefactor "ExplosionBlue", 0.9
+	damagefactor "FireRed", 0.9
+	damagefactor "FireBlue", 0.9
+	damagefactor "ChemicalRed", 0.9
+	damagefactor "ChemicalBlue", 0.9
+	damagefactor "LaserRed", 0.9
+	damagefactor "LaserBlue", 0.9
+	damagefactor "ExplosionMechRed", 0.9
+	damagefactor "ExplosionMechBlue", 0.9
+	damagefactor "TimeRed", 1.0
+	damagefactor "TimeBlue", 1.0
+	damagefactor "MassDriverRed", 0.9
+	damagefactor "MassDriverBlue", 0.9
+	damagefactor "Mechstomp", 0.9
+	damagefactor "Monster", 0.9
+}
+actor Grade2ArmorFactory : PermanentPowerup {powerup.type "Grade2ArmorFactoryPower"}

@@ -1,0 +1,222 @@
+// All Out War 2 armour manipulation scripts
+// Credit to VoltlocK for originally creating the engine
+// With modifications by Eruanna, Dusk and the Omega Team
+
+// You may use portions of this script in your project as long as you give credit where credit is
+// due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
+
+// NOTE: AGF_ADDITIVE means subtractive if n < 0!
+#define NOCHANGE 255
+#define ARMOD_NOCHANGE 0
+#define ARMOD_FIRE 1
+#define ARMOD_CHEM 2
+#define ARMOD_LASER 3
+#define ARMOD_EXPLO 4
+#define ARMOD_BULLET 5
+#define ARMOD_NONE 7
+#define AGF_ADDITIVE 8
+#define AGF_DONTSUBTRACT 16
+#define AGF_DONTADD 32
+function int GetArmorGrade (void) {
+	if (CheckInventory ("PowerGrade5Armor")) return 5;
+	if (CheckInventory ("PowerGrade4Armor")) return 4;
+	if (CheckInventory ("PowerGrade3Armor")) return 3;
+	if (CheckInventory ("PowerGrade2Armor")) return 2;
+	if (CheckInventory ("PowerGrade1Armor")) return 1;
+	if (CheckInventory ("PowerGrade-1Armor")) return -1;
+	return 0;
+}
+
+function int GetArmorModifier (void) {
+	if (CheckInventory ("PowerFireProof")) return ARMOD_FIRE;
+	if (CheckInventory ("PowerChemicalProof")) return ARMOD_CHEM;
+	if (CheckInventory ("PowerExplosiveResistance")) return ARMOD_EXPLO;
+	if (CheckInventory ("PowerLaserResistance")) return ARMOD_LASER;
+	if (CheckInventory ("PowerBulletResistance")) return ARMOD_BULLET;
+	return 0;
+}
+
+function void SetArmorGrade (int n, int mod) {
+	int debug = GetCVar ("aow_debugarmor");
+	if (debug) {
+		Log (s:"SetArmorGrade called with arguments ", d:n, s:" and ", d:mod);
+		if (mod & AGF_ADDITIVE) Log (s:"AGF_ADDITIVE set");
+		if (mod & AGF_DONTADD) Log (s:"AGF_DONTADD set");
+		if (mod & AGF_DONTSUBTRACT) Log (s:"AGF_DONTSUBTRACT set");
+	}
+	
+	int grade = GetArmorGrade ();
+	
+	if (n != NOCHANGE) {
+		if (mod & AGF_ADDITIVE) {
+			if (debug) Log (s:"SetArmorGrade: AGF_ADDITIVE is set. n = ", d:grade, s:" + ", d:n);
+			n += grade;
+		} else {
+			// armour upgrade
+			if (CheckInventory ("HasArmorUpgrade")) {
+				if (debug) Log (s:"SetArmorGrade: Player has armor upgrade n = ", d:n+1);
+				n++;
+			}
+		}
+		
+		if (n > 5) n = 5;
+		if (n < 0) {
+			// don't go to -1 with AGF_ADDITIVE
+			if (mod & AGF_ADDITIVE)
+				n = 0;
+			else
+				n = -1;
+		}
+		
+		if ((mod & AGF_DONTSUBTRACT && n <= grade) || (mod & AGF_DONTADD && n >= grade)) {
+			if (debug) Log (s:"SetArmorGrade: AGF_DONTSUBTRACT or AGF_DONTADD vetos grade change.");
+			return;
+		}
+		
+		if (debug) Log (s:"Final armor grade: ", d:n);
+		if (grade != n) {
+			CheckAndRemove ("PowerGrade5Armor");
+			CheckAndRemove ("PowerGrade4Armor");
+			CheckAndRemove ("PowerGrade3Armor");
+			CheckAndRemove ("PowerGrade2Armor");
+			CheckAndRemove ("PowerGrade1Armor");
+			CheckAndRemove ("PowerGrade-1Armor");
+			switch (n) {
+				case 5: GiveInventory ("Grade5Armor", 1); break;
+				case 4: GiveInventory ("Grade4Armor", 1); break;
+				case 3: GiveInventory ("Grade3Armor", 1); break;
+				case 2: GiveInventory ("Grade2Armor", 1); break;
+				case 1: GiveInventory ("Grade1Armor", 1); break;
+				case -1: GiveInventory ("Grade-1Armor", 1); break;
+			}
+			
+			if (n == 5) {
+				SetFont ("SMALLFONT");
+				HudMessageBold (n:0, s:"\c- has \cKGrade 5 Armor!";
+					HUDMSG_FADEOUT, 15000, CR_WHITE,
+					INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+			}
+		}
+	}
+	
+	// rid the flags now
+	if (mod >= 32) mod -= 32;
+	if (mod >= 16) mod -= 16;
+	if (mod >= 8) mod -= 8;
+	
+	if (mod != ARMOD_NOCHANGE) {
+		CheckAndRemove ("PowerFireProof");
+		CheckAndRemove ("PowerChemicalProof");
+		CheckAndRemove ("PowerBulletResistance");
+		CheckAndRemove ("PowerExplosiveResistance");
+		CheckAndRemove ("PowerLaserResistance");
+		
+		switch (mod) {
+			case ARMOD_FIRE: GiveInventory ("FireProof", 1); break;
+			case ARMOD_CHEM: GiveInventory ("ChemicalProof", 1); break;
+			case ARMOD_EXPLO: GiveInventory ("ExplosiveResistance", 1); break;
+			case ARMOD_LASER: GiveInventory ("LaserResistance", 1); break;
+			case ARMOD_BULLET: GiveInventory ("BulletResistance", 1); break;
+		}
+	}
+}
+
+// for testing and decorate (ai marines, et al)
+script 985 (int grade, int mod) {SetArmorGrade (grade, mod);}
+
+// [DEBUG] ARMOR DISPLAY
+int ArmorNames[13] = {"PowerGrade1Armor", "PowerGrade2Armor", "PowerGrade3Armor", "PowerGrade4Armor", "PowerGrade5Armor", 
+	"PowerGrade-1Armor", "PowerFireProof", "PowerChemicalProof", "PowerExplosiveResistance", "PowerLaserResistance", 
+	"PowerBulletResistance", "PowerChemicalResistance", "PowerGrade2ArmorFactoryPower"};
+int ArmorValuesFist[13] = {0.9, 0.8, 0.7, 0.6, 0.5, 1.2,
+	1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.9};
+int ArmorValuesBullet[13] = {0.9, 0.8, 0.7, 0.6, 0.5, 1.2,
+	1.0, 1.0, 1.0, 1.0, 0.5, 1.0, 0.9};
+int ArmorValuesExplo[13] = {0.9, 0.8, 0.7, 0.6, 0.5, 1.2,
+	1.0, 1.0, 0.5, 2.0, 2.0, 1.0, 0.9};
+int ArmorValuesAntiArmor[13] = {0.9, 0.8, 0.7, 0.6, 0.5, 1.2,
+	1.0, 1.0, 0.5, 2.0, 1.0, 1.0, 0.9};
+int ArmorValuesFire[13] = {0.9, 0.8, 0.7, 0.6, 0.5, 1.2,
+	0.0, 2.0, 1.0, 1.0, 1.0, 2.0, 0.9};
+int ArmorValuesChem[13] = {0.9, 0.8, 0.7, 0.6, 0.5, 1.2,
+	2.0, 0.0, 1.0, 1.0, 1.0, 0.5, 0.9};
+int ArmorValuesLaser[13] = {0.9, 0.8, 0.7, 0.6, 0.5, 1.2,
+	1.0, 1.0, 2.0, 0.5, 2.0, 1.0, 0.9};
+
+script 981 (void) NET CLIENTSIDE {
+	int fist, bullet, explo, antiarmor, fire, chem, laser;
+	
+	if (CheckInventory ("IsMech")) {
+		fist = 0.35;
+		bullet = 0.8;
+		explo = 1.35;
+		antiarmor = 2.0;
+		fire = 1.25;
+		chem = 1.75;
+		laser = 1.0;
+	} else {
+		fist = 1.0;
+		bullet = 1.0;
+		explo = 1.0;
+		antiarmor = 1.0;
+		fire = 1.0;
+		if (CheckInventory ("PowerBerserk"))
+			chem = 2.25;
+		else
+			chem = 1.0;
+		laser = 1.0;
+	}
+	
+	for (int i = 0; i < 13; i++) {
+		if (CheckInventory (ArmorNames[i])) {
+			fist = FixedMul (fist, ArmorValuesFist[i]);
+			bullet = FixedMul (bullet, ArmorValuesBullet[i]);
+			explo = FixedMul (explo, ArmorValuesExplo[i]);
+			antiarmor = FixedMul (antiarmor, ArmorValuesAntiArmor[i]);
+			fire = FixedMul (fire, ArmorValuesFire[i]);
+			chem = FixedMul (chem, ArmorValuesChem[i]);
+			laser = FixedMul (laser, ArmorValuesLaser[i]);
+		}
+	}
+	
+	Log (s:"CURRENT DAMAGE FACTORS: \cj", f:fist,
+	     s:" \cu", f:bullet,
+	     s:" \cg", f:fire,
+	     s:" \cd", f:chem,
+	     s:" \cn", f:laser,
+	     s:" \cf", f:explo,
+	     s:" \ci", f:antiarmor);
+}
+
+script 920 (int modtype) {
+	GiveInventory ("IsChangingArmor", 1);
+	ACS_ExecuteAlways (922, 0, modtype);
+	
+	int n = 5;
+	
+	while (n > 0) {
+		if (GetHealth() <= 0) terminate;
+		delay (35);
+		n--;
+	}
+	
+	TakeInventory ("IsChangingArmor", 1);
+	ActivatorSound ("misc/armor_pkup", 127);
+	SetArmorGrade (NOCHANGE, modtype);
+}
+
+script 922 (int modtype) CLIENTSIDE {
+	if (PlayerNumber() != ConsolePlayer) terminate;
+	
+	TakeInventory ("ArmorChangeProgress", 175);
+	
+	int n = 175;
+	while (n > 0) {
+		if (GetHealth() <= 0) terminate;
+		GiveInventory ("ArmorChangeProgress", 1);
+		delay (1);
+		n--;
+	}
+	
+	TakeInventory ("ArmorChangeProgress", 175);
+}

@@ -1,0 +1,70 @@
+// AOW Keyconf
+weaponsection AOW2
+setslot 0 RepairGun HealGun BombSquadGun
+setslot 1 Unarmed EagerBeaver FragGrenade RemoteC4 Knife
+setslot 2 Handgun Rifle SniperRifleWeak SniperRifle
+setslot 3 Boomstick DoubleShotgun
+setslot 4 SubMachineGun MachineGun GatlingGun JumpjetGatlingGun
+setslot 5 Grenade_Launcher MissileLauncher ArtilleryCannon
+setslot 6 Flamer ChemicalSprayer TiberiumAutorifleWeak TiberiumAutorifle
+setslot 7 LaserRifle LaserChaingun GaussRifle ShockRifle PlasmaGun StealthLaserRifle
+setslot 8 PlasmaCannon TimeGun UtilityGun CrateChooser
+
+clearplayerclasses
+addplayerclass Player
+
+addkeysection "All Out War 2" AOW2Keybinds
+addmenukey "Donation: Open/Close Menu" donationmenu
+addmenukey "Donation: Change Name" donationname
+addmenukey "Donation: Donate $100" donationgive
+addmenukey "Surrender" surrender
+addmenukey "Switch to Weaker Team" teamswitch
+addmenukey "Sell Weapon" sellweapon
+addmenukey "Eject Mech (shortcut)" ejectmech
+alias sellweapon "puke 950"
+alias donationmenu "puke 335"
+alias donationname "puke 334 1"
+alias donationgive "puke 334 2"
+alias surrender "puke 342"
+alias spectatorteleport "puke 940"
+alias spectatorflashfix "puke 940 1"
+alias whoami "puke 946"
+alias teamswitch "puke 942"
+alias showarmor "puke 981"
+alias showspeed "puke 921"
+// call this if base hud disappears
+alias rehash-clientfx "puke -366; puke -368"
+alias ejectmech "use mechejectbutton"
+alias dumpmarinestats "puke -967"
+// insta-refreshes the hud
+alias updatehud "puke -931"
+
+// RCON ADMIN COMMANDS
+alias gamemaster "puke 401 %1 3"
+alias forceblue "puke 401 %1 1"
+alias forcered "puke 401 %1 2"
+alias teamshuffle "puke 403"
+
+alias tournamentmode "set aow_tournamentmode 1;set aow_maxcannonsperteam 1;set aow_jugglimit 1;set aow_suddendeathtime 30;set aow_tickets 40;echo Tournament set-up complete - please restart the map."
+
+// DEVELOPER MODE. DO NOT USE IN PUBLIC GAMES.
+alias activatedeveloper "puke -404"
+
+// GAMEMASTER COMMANDS
+alias a_warp "puke 402 1 %1 %2"
+alias a_teleport "puke 402 2 %1"
+alias a_crate "puke 402 3 %1"
+alias a_berserk "puke 402 6"
+alias a_resign "puke 402 7"
+alias a_givebeacon "puke 402 8"
+alias a_admin "puke 402 9"
+alias a_team "puke 402 10 %1"
+alias a_forcered "puke 402 10 1"
+alias a_forceblue "puke 402 10 0"
+alias a_utility "puke 402 11"
+alias a_speed "puke 402 12 %1"
+alias a_opendeck "puke 402 14"
+alias a_notarget "puke 402 15"
+alias a_exit "puke 402 16"
+alias a_health "puke 402 17 %1"
+alias a_fly "puke 402 18"

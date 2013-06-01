@@ -1,0 +1,114 @@
+// --------------------------------------------------------------------------
+//
+// Utility step
+//
+// --------------------------------------------------------------------------
+
+actor Step {
+	+SHOOTABLE
+	+NOBLOOD
+	+SOLID
+	+NOGRAVITY
+	
+	health 200
+	speed 0
+	radius 32
+	height 14
+	mass 0x7FFFFFFF
+	scale 0.25
+	renderstyle Translucent
+	alpha 0.0
+	damagefactor "RazorWireRed", 0.0
+	damagefactor "RazorWireBlue", 0.0
+	damagefactor "Disarm", 0.0
+	damagefactor "Flash", 0.0
+	damagefactor "Fist", 0.1
+	
+	states {
+	Spawn:
+		USTP AAAAAAAAAA 3 A_FadeIn(0.1)
+		USTP A 0 A_SetTranslucent(1.0,0)
+		USTP A 35 
+		goto Idle
+	Idle:
+		USTP A -1
+		loop
+	Death:  
+		TNT1 A 0 
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx ("ExplosionMain", 0, 0, 32)
+		TNT1 A 0 A_PlaySound ("weapons/rocklx")
+		TNT1 A 1
+		stop
+	Death.Deconstruction:
+		"----" A 0 A_NoBlocking
+		"----" A 2 A_PlaySound ("utility/deconstruct")
+		"----" AAAAAAAAAA 2 A_Fadeout(0.1) 
+		stop
+	}
+}
+
+// --------------------------------------------------------------------------
+//
+// Sandbag wall
+//
+// --------------------------------------------------------------------------
+
+actor SandbagWall {
+	+NOBLOOD +ISMONSTER
+	health 650
+	speed 0
+	radius 40
+	height 64
+	mass 0x7FFFFFFF
+	scale 0.35
+	renderstyle translucent
+	alpha 0.0
+	
+	damagefactor "LaserRed", 1.25
+	damagefactor "LaserBlue", 1.25
+	damagefactor "Disarm", 0.0
+	damagefactor "Flash", 0.0
+	damagefactor "RazorWireRed", 0.0
+	damagefactor "RazorWireBlue", 0.0
+	states {
+	Spawn:
+		BAGG A 0
+		BAGG AAAAAAAAAA 3 A_FadeIn (0.1)
+		BAGG A 70
+		BAGG A 0 A_SetTranslucent (1.0, 0)
+		BAGG A 0 A_SetSolid
+		BAGG A 0 A_SetShootable
+		BAGG A 35 A_Gravity
+		BAGG A 0 A_SpawnItemEx ("SandbagWallSideBlocker", 0,32,0,0,0,0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
+		BAGG A -1 A_SpawnItemEx ("SandbagWallSideBlocker", 0,-32,0,0,0,0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
+		stop
+	Death:
+		TNT1 A 0
+		TNT1 A 0 A_RemoveChildren (1)
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx ("ExplosionMain", 0, 0, 32)
+		TNT1 A 0 A_PlaySound ("weapons/rocklx")
+		TNT1 A 1
+		stop
+	Death.Deconstruction:
+		"----" A 0 A_NoBlocking
+		"----" A 0 A_RemoveChildren (1)
+		"----" A 2 A_PlaySound ("utility/deconstruct")
+		"----" A 2 A_Fadeout(0.1) 
+		wait
+	}
+}
+
+actor SandbagWallSideBlocker {
+	+SOLID
+	+ISMONSTER
+	radius 16
+	height 64
+	mass 0x7FFFFFFF
+	states {
+	Spawn:
+		TNT1 A -1
+		stop
+	}
+}

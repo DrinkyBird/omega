@@ -1,0 +1,183 @@
+Actor ShockRifle : AOWWeapon 21068 {
+	obituary "%o felt %k's surge."
+	radius 20
+	height 16
+	inventory.pickupmessage "You got the shock rifle!"
+	weapon.selectionorder 4
+	weapon.kickback 100
+	weapon.ammotype "GeneporiumCharge"
+	weapon.ammouse 1
+	weapon.ammogive 40
+	AttackSound "voltrifle/fire"
+	Weapon.PreferredSkin "MarineFlamer"
+	decal "VoltageScorch"
+	states {
+	Ready:
+		VOLT AAABBBCCCDDDCCCBBB 1 A_WeaponReady
+		loop
+	Deselect:
+		VOLT A 1 A_Lower
+		loop
+	Select:
+		VOLT A 1 A_Raise
+		loop
+	Fire:
+		VOLF A 0 A_JumpIfInventory("IsBlue",1,"FireBlue")
+		VOLF ABC 3 Bright
+		VOLF D 3 BRIGHT A_FireBullets (3, 3, 3, 3, "VoltagePuff",1,2000)
+		VOLF E 3 BRIGHT A_FireBullets (3, 3, 3, 2, "VoltagePuff",1,2000)
+		VOLF A 0 A_ReFire
+		VOLF CBA 3
+		goto Ready
+	Hold:
+		VOLF A 0 A_JumpIfInventory("IsBlue",1,"HoldBlue")
+		VOLF D 3 BRIGHT A_FireBullets (3, 3, 3, 3, "VoltagePuff",1,2000)
+		VOLF E 3 BRIGHT A_FireBullets (3, 3, 3, 2, "VoltagePuff",1,2000)
+		VOLF A 0 A_ReFire
+		VOLF CBA 3
+		goto Ready
+	FireBlue:
+		VOLF ABC 3 Bright
+		VOLF D 3 BRIGHT A_FireBullets (3, 3, 3, 3, "VoltagePuffBlue",1,2000)
+		VOLF E 3 BRIGHT A_FireBullets (3, 3, 3, 2, "VoltagePuffBlue",1,2000)
+		VOLF A 0 A_ReFire
+		VOLF CBA 3
+		goto Ready
+	HoldBlue:  
+		VOLF D 3 BRIGHT A_FireBullets (3, 3, 3, 3, "VoltagePuffBlue",1,2000)
+		VOLF E 3 BRIGHT A_FireBullets (3, 3, 3, 2, "VoltagePuffBlue",1,2000)
+		VOLF A 0 A_ReFire
+		VOLF CBA 3
+		goto Ready
+	Spawn:
+		VOLF X -1
+		stop
+	}
+}
+
+actor GeneporiumCharge : Ammo {
+	inventory.amount 40
+	inventory.maxamount 400
+	ammo.backpackamount 40
+	ammo.backpackmaxamount 400
+	states {
+	Spawn:
+		TNT1 A 0
+		stop
+	}
+}
+
+actor VoltagePuff {
+	renderstyle Add
+	alpha 0.5
+	+NOBLOCKMAP +NOGRAVITY
+	+PUFFONACTORS +ALWAYSPUFF
+	+CLIENTSIDEONLY +NOINTERACTION
+	+FORCEXYBILLBOARD
+	DamageType "LaserRed"
+	Scale 1.2
+	states {
+	Spawn:
+		VOLX A 2 bright
+		VOLX A 0 A_SpawnItemEx("VoltageDecay",0,0,0,0,0,0,0,128,192)
+		VOLX BCDEFEDCB 2 bright
+		stop
+	}
+}
+
+actor VoltagePuffBlue : VoltagePuff {damagetype "LaserBlue"}
+
+actor VoltagePuff2 {
+	renderstyle Add
+	alpha 0.5
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+PUFFONACTORS
+	+FORCEXYBILLBOARD
+	DamageType "LaserRed"
+	Scale 1.2
+	states {
+	Spawn:
+		VOLX A 2 bright
+		VOLX BCDEFEDCB 2 bright
+		stop
+	}
+}
+
+actor VoltageDecay {
+	+CLIENTSIDEONLY -ACTIVATEIMPACT
+	-ACTIVATEPCROSS +NOBLOCKMAP
+	+NOGRAVITY +NOINTERACTION
+	+FORCEXYBILLBOARD
+	
+	renderstyle Add
+	alpha 0.5
+	Scale 2.0
+	
+	states {
+	Spawn:
+		TNT1 AA 0 A_PlaySound("voltrifle/decay")
+		VOLX AABBCCDDEEFFEEDDBBCCAA 2 bright A_SpawnItemEx("VoltageSpark",0,0,0,2,0,random(0,2),random(-180,180),128,64)
+		VOLX BBCCDDEEFFEEDDBBCCAA 2 bright A_SpawnItemEx("VoltageSpark",0,0,0,2,0,random(0,2),random(-180,180),128,64)
+		stop
+	}
+}
+
+actor VoltageSpark {
+	PROJECTILE
+	+CLIENTSIDEONLY -ACTIVATEIMPACT
+	-ACTIVATEPCROSS +NOBLOCKMAP
+	+FORCEXYBILLBOARD
+	+NOCLIP +NONETID
+	renderstyle Add
+	alpha 0.5
+	Scale 0.25
+	Speed 10
+	states {
+	Spawn:
+		VOLX ABCDEF 2 bright
+		stop
+	}
+}
+
+// DECAY CLUSTERS (power generator)
+
+actor VoltageDecayClusterBlue {
+	+NOBLOCKMAP
+	+NOGRAVITY +NOINTERACTION
+	damagetype "LaserBlue"
+	states {
+	Spawn:
+		TNT1 AAAAAAAAAAAAAAAAAAA 5 A_Explode (5, 96)
+		stop
+	}
+}
+
+actor VoltageDecayClusterRed : VoltageDecayClusterBlue {
+	damagetype "LaserRed"
+}
+
+actor VoltageDecayClusterFX {
+	+CLIENTSIDEONLY -ACTIVATEIMPACT
+	-ACTIVATEPCROSS +NOBLOCKMAP
+	+NOGRAVITY +NOINTERACTION
+	damagetype "LaserBlue"
+	states {
+	Spawn:
+		TNT1 AAAAAAAAAAAAAAAAAAA 5 A_SpawnItemEx ("VoltageDecay", random (-48, 48), random (-48, 48), random (0, 96))
+		stop
+	}
+}
+
+actor VoltageDecayCluster {
+	+NOBLOCKMAP
+	+NOGRAVITY +NOINTERACTION
+	states {
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx ("VoltageDecayClusterBlue")
+		TNT1 A 0 A_SpawnItemEx ("VoltageDecayClusterRed")
+		TNT1 A 0 A_SpawnItemEx ("VoltageDecayClusterFX")
+		stop
+	}
+}

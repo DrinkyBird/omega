@@ -1,0 +1,819 @@
+actor Sign_Free 21400
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    SIGN A -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Repair 21401
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    SIGN B -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Explosive 21402
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    SIGN C -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Special 21403
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    SIGN D -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Chemical 21404
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    SIGN E -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_General 21405
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    SIGN F -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Support 21409
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    SIGN G -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Weapon 21411
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    SIGN H -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class01 21421
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS A -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class02 21422
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS B -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class03 21423
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS C -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class04 21424
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS D -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class05 21425
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS E -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class06 21426
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS F -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class07 21427
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS G -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class08 21428
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS H -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class09 21429
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS I -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class10 21430
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS J -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class11 21431
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS K -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class12 21432
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS L -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class13 21433
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS M -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class14 21434
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS N -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class15 21435
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS O -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class16 21456 // was 21436
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS P -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class17 21437
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS Q -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class18 21438
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS R -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class19 21439
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS S -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class20 21440
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS T -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class21 21441
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS U -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class22 21442
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS V -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class23 21443
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS W -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class24 21444
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS X -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class25 21445
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS Y -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade 21446
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    SIGN I -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class26 21447
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLSS Z -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class27 21448
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLS2 A -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Mech01 21449
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    MCHS A -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Mech02 21450
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    MCHS D -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Mech03 21451
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    MCHS C -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Mech04 21452
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    MCHS B -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Mech05 21453
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    MCHS E -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Mech06 21454
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    MCHS F -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class28 21455
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLS2 B -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class29 21436 // was 21456
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLS2 C -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class30 21457
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLS2 D -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade01 21458
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR A -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade02 21459
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR B -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade03 21460
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR C -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade04 21461
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR D -1 BRIGHT
+    stop
+  }
+}
+
+// [NF] removed sign
+actor Sign_Upgrade05 21462 {
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    // UPGR E -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade06 21463
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR F -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade07 21464
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR G -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade08 21465
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR H -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade09 21466
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR I -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade10 21467
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR J -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade11 21468
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR K -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade12 21469
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR L -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade13 21470
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR M -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class31 21471
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLS2 E -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Class32 21472
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    CLS2 F -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade14 21473
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR N -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade15 21474
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR O -1 BRIGHT
+    stop
+  }
+}
+
+actor Sign_Upgrade16 21475
+{
+  Game Doom
+  Scale 0.75
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+    UPGR P -1 BRIGHT
+    stop
+  }
+}

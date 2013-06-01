@@ -1,0 +1,206 @@
+// MEDIC HEALING RADIUS
+actor HealingRadiusCount : Inventory {inventory.maxamount 1}
+actor HealingRadiusItem : InventoryItem {
+	tag "Healing Radius"
+	inventory.icon "hradicon"
+	states {
+	Use:
+		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Failure")
+		TNT1 A 0 A_JumpIfInventory ("IsMech", 1, "Use.Mech")
+		TNT1 A 0 A_JumpIfInventory ("StealthMode", 1, "Destealth")
+		TNT1 A 0 A_JumpIfInventory ("PowerBerserk", 1, "Failure")
+		TNT1 A 0 A_FireCustomMissile ("HealingRadiusThrown", 0, 0)
+		stop
+	}
+}
+
+actor HealingRadiusThrown {
+	PROJECTILE
+	+DOOMBOUNCE
+	-NOGRAVITY
+	damage (0)
+	speed 15
+	gravity 0.75
+	bouncecount 1
+	states {
+	Spawn:
+		HRAD A -1
+		stop
+	Death:
+		HRAD A 0 A_SpawnItemEx ("HealingRadius", 0,0,0,0,0,0,0, SXF_NOCHECKPOSITION)
+		TNT1 A 5
+		stop
+	}
+}
+
+actor HealingRadius {
+	-SOLID
+	+SHOOTABLE
+	+NOBLOOD
+	+NOCLIP
+	+ISMONSTER
+	radius 16
+	height 44
+	health 300
+	mass 0x7FFFFFFF
+	deathsound "weapons/rocklx"
+	obituary "$OB_HEALRAD"
+	
+	damagefactor "Disarm", 0.0
+	damagefactor "Mechstomp", 0.0
+	states {
+	Spawn: 
+		HRAD A 6
+		HRAD B 6 A_RadiusThrust (10, 16)
+		HRAD DE 6
+		DGIZ A 10
+		DGIZ A 0 A_SpawnItemEx ("HealingRadiusBall", 0,0,52, 0,0,0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
+		DGIZ A 0 A_PlaySound ("healradius/active", CHAN_VOICE, 1.0, 1)
+		goto Idle
+	Idle:
+		// argh spam but A_Countdown doesn't work on actors with +ISMONSTER
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX") // -- 10
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX") // -- 20
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX") // -- 30
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX") // -- 40
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX") // -- 50
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX")
+		DGIZ A 0 BRIGHT ACS_ExecuteAlways (952, 0, 0) DGIZ A 35 BRIGHT A_SpawnItemEx ("HealingRadiusFX") // -- 60
+		DGIZ A 0 A_KillChildren
+		DGIZ A 0 A_SetTranslucent (1.0, 1)
+		DGIZ A 2 bright A_FadeOut
+		wait
+	Death:
+		TNT1 A 0 A_StopSound (CHAN_VOICE)
+		TNT1 A 0 A_KillChildren
+		TNT1 A 0 A_Scream
+		TNT1 A 10 A_SpawnItemEx ("ExplosionMain", 0, 0, 32)
+		stop
+	}
+}
+
+actor HealingRadiusBall {
+	+NOINTERACTION
+	+NOGRAVITY
+	+SHOOTABLE
+	+NOBLOCKMAP
+	+NOTARGET
+	+ISMONSTER
+	+FORCEXYBILLBOARD
+	alpha 0.0
+	renderstyle add
+	scale 0.5
+	states {
+	States:
+	Spawn:
+		GIZR CDABCD 3 bright A_FadeIn (0.1)
+		GIZR A 0 A_SetTranslucent (0.6)
+		goto Idle
+	Idle:
+		GIZR ABCD 3 bright
+		loop
+	Death:
+		GIZR ABCD 3 bright A_FadeOut
+		loop
+	}
+}
+
+actor HealingRadiusFX {
+	+CLIENTSIDEONLY
+	states {
+	Spawn:
+		TNT1 A 0
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 A_SpawnItemEx ("HealingRadiusFX2", random (-48, 48), random (-48, 48), random (8, 20), 0, 0, random (3, 6))
+		stop
+	}
+}
+
+actor HealingRadiusFX2 {
+	+NOGRAVITY
+	+CLIENTSIDEONLY
+	renderstyle add
+	alpha 1.0
+	scale 0.35
+	states {
+	Spawn:
+		PLUS A 2 bright A_FadeOut
+		wait
+	}
+}
+
+// map-spawnable healing radius that does not dissipate and cannot be destroyed
+actor HealingRadiusPermanent : HealingRadius 29015 {
+	-SHOOTABLE	
+	states {
+	Spawn: 
+		DGIZ A 0
+		DGIZ A 0 A_SpawnItemEx ("HealingRadiusBall", 0,0,52, 0,0,0, 0, SXF_NOCHECKPOSITION)
+		DGIZ A 0 A_SpawnItemEx ("HealingRadiusFXPerm", 0,0,52, 0,0,0, 0, SXF_NOCHECKPOSITION)
+		DGIZ A 0 A_PlaySound ("healradius/active", CHAN_VOICE, 1.0, 1)
+		DGIZ A 35 bright ACS_ExecuteAlways (952, 0, 0)
+		wait
+	}
+}
+
+actor HealingRadiusFXPerm {
+	+CLIENTSIDEONLY
+	states {
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1 A_SpawnItemEx ("HealingRadiusFX2", random (-48, 48), random (-48, 48), random (8, 20), 0, 0, random (3, 6))
+		loop
+	}
+}

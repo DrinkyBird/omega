@@ -1,0 +1,32 @@
+//Player burnt and is burning script, unfortunately the killer who set the player alight is not awarded for this.
+script 360 (void) {
+	delay (1);
+	
+	if (CheckInventory("CrispyPlayer")) terminate;
+	
+	GiveInventory("CrispyPlayer",1);
+	int n = 10;
+	while (n > 0 && GetHealth() > 1) {
+		Thing_Damage2 (0, 1, "FireSpecial");
+		delay(5);
+		n--;
+	}
+	
+	TakeInventory("CrispyPlayer",1);
+}
+
+//Player poisoned and is burning script, unfortunately the killer who set the player alight is not awarded for this.
+script 361 (void) {
+	delay(1);
+	
+	if (CheckInventory("CrispyPlayer2")) terminate;
+	
+	GiveInventory("CrispyPlayer2", 1);
+	int n = 20;
+	while (n > 0 && GetHealth() > 1) {
+		Thing_Damage2 (0, 1, "ChemicalSpecial");
+		delay(8);
+		n--;
+	}
+	TakeInventory ("CrispyPlayer2", 1);
+}

@@ -1,0 +1,1675 @@
+// All Out War 2 Class purchase scripts
+// Credit to VoltlocK for originally creating the engine
+// With modifications by Eruanna, Dusk and the Omega Team
+
+// You may use portions of this script in your project as long as you give credit where credit is
+// due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
+
+//---------------------------GUNMAN
+script 20 (int Team) {
+	int cost = 0; int speed = 1.0;
+	if (MitigateDoublePress()) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS01", cost)) terminate;
+
+	TakeInventory("PurchaseToken",1);
+	DisplayTick();
+	SpendCredits(Credits[PlayerNumber()+1], 0);
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfgunman!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	GiveInventory("HasClass",1);
+	GiveInventory("NewClipAmmo",160);
+	GiveInventory("Handgun",1);
+	GiveInventory ("TimedC4", 1);
+	GiveInventory ("TimedC4Count", 1);
+	SetFragGrenades (1);
+	GiveInventory("SubMachineGun",1);
+	SetWeapon("SubMachineGun");
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_GUNMAN);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Gunman.");
+}
+
+//---------------------------ENGINEER
+script 21 (int Team) {
+	int cost = 0; int speed = 0.8;
+	if (MitigateDoublePress()) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS02", cost)) terminate;
+	
+	TakeInventory("PurchaseToken",1);
+	DisplayTick();
+	SpendCredits(Credits[PlayerNumber()+1], 0);
+	SETFONT("BigFont");
+	HudMessage(s:"You are an \cfEngineer!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	GiveInventory("HasClass",1);
+	GiveInventory("NewClipAmmo",120);
+	GiveInventory("Handgun",1);
+	SetFragGrenades (1);
+	GiveInventory ("EnhancedTimedC4",1);
+	GiveInventory ("TimedC4",1);
+	GiveInventory ("TimedC4Count",1);
+	GiveInventory("RepairGun",1);
+	SetWeapon("RepairGun");
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_ENGINEER);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Engineer.");
+}
+
+//---------------------------MINIGUNNER
+script 22 (int Team) {
+	int cost = 400; int speed = 0.7;
+	if (MitigateDoublePress()) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS03", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfMinigunner!"; HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	SetFont ("SMALLFONT");
+	HudMessage(s:"Use \cfAlt-Fire\cd for \cjAnti-Mech attack\cd!";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.6, 3.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds", cost/2);
+	SetArmorGrade (1, ARMOD_NOCHANGE);
+	GiveInventory("NewClipAmmo",90);
+	GiveInventory("Handgun",1);
+	GiveInventory("SubMachineGun",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	SetFragGrenades (2);
+	GiveInventory("GatlingGun",1);
+	GiveInventory("MachineGunAmmo",400);
+	SetWeapon("GatlingGun");
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_MINIGUNNER);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes minigunner.");
+}
+
+//---------------------------TECHNICIAN
+script 23 (int Team) {
+	int cost = 200; int speed = 0.8;
+	if (MitigateDoublePress()) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS04", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfTechnician!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0, APROP_SPEED, 0.8);
+	SetArmorGrade (1, ARMOD_NOCHANGE);
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds",cost/2);
+	GiveInventory("NewClipAmmo",90);
+	GiveInventory("Handgun",1);
+	GiveInventory("EnhancedTimedC4",1);
+	GiveInventory("TimedC4",2);
+	GiveInventory("TimedC4Count",2);
+	GiveInventory ("ProxyMine", 4);
+	GiveInventory ("ProxyMineCount", 4);
+	SetFragGrenades (2);
+	GiveInventory("SubMachineGun",1);
+	GiveInventory("RepairGunUpgrade",1);
+	GiveInventory("RepairGun",1);
+	SetWeapon("RepairGun");
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_TECHNICIAN);
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Technician.");
+}
+
+//---------------------------FLAMER
+script 24 (int Team) {
+	int cost = 450; int speed = 0.7;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS05", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], 450);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfFlamethrower!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (1, ARMOD_FIRE);
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds", cost/2);
+	GiveInventory("NewClipAmmo",120);
+	GiveInventory("Handgun",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	SetFragGrenades (2);
+	GiveInventory("Flamer",1);
+	GiveInventory("FlamerAmmo",400);
+	GiveInventory("PhosphorusGrenadeAmmo",4);
+	SetWeapon("Flamer");
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_FLAMER);
+				
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Flamethrower.");
+}
+
+//---------------------------RIFLEMAN
+script 25 (int Team) {
+	int cost = 200; int speed = 0.9;
+	if (MitigateDoublePress()) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS06", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfRifleman!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (1, ARMOD_NOCHANGE);
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds",cost/2);
+	GiveInventory("NewClipAmmo", 90);
+	GiveInventory("Handgun", 1);
+	GiveInventory("TimedC4", 1);
+	GiveInventory("TimedC4Count", 1);
+	GiveInventory("FragGrenade", 1);
+	GiveInventory("FragGrenadeAmmo", 1);
+	ACS_ExecuteAlways(91, 0);
+	GiveInventory("Rifle", 1);
+	GiveInventory("RifleAmmo", 30);
+	GiveInventory("RifleGrenadeAmmo", 4);
+	SetWeapon("Rifle");
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_RIFLEMAN);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Rifleman.");
+}
+
+//---------------------------SUPPORT / MACHINE GUNNER
+script 26 (int Team) {
+	int cost = 300; int speed = 0.9;
+	if (MitigateDoublePress()) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS07", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are \cfMachine Gunner!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (1, ARMOD_NOCHANGE);
+	GiveInventory("HasClass", 1);
+	GiveInventory("Refunds", cost/2);
+	GiveInventory("NewClipAmmo", 90);
+	GiveInventory("Handgun", 1);
+	GiveInventory("SubMachineGun", 1);
+	GiveInventory("TimedC4", 1);
+	GiveInventory("TimedC4Count", 1);
+	GiveInventory("MachineGunAmmo", 160);
+	GiveInventory("FragGrenade", 1);
+	SetAmmoCapacity("FragGrenadeAmmo", 2);
+	GiveInventory("FragGrenadeAmmo", 2);
+	ACS_ExecuteAlways(91, 0);
+	GiveInventory("MachineGun", 1);
+	SetWeapon("MachineGun");
+	
+	GiveInventory("SpawnInvulnerability", 1);
+	GiveInventory ("ClassID", CLASS_MACHINEGUNNER);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes machine gunner.");
+}
+
+//---------------------------GRENADIER
+script 27 (int Team) {
+	int cost = 550; int speed = 0.8;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS08", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfGrenadier!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);	
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (2, ARMOD_EXPLO);
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds", cost/2);
+	GiveInventory("Handgun",1);
+	GiveInventory("NewClipAmmo",60);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	GiveInventory("Rifle",1);
+	GiveInventory("RifleAmmo",20);
+	GiveInventory("RifleGrenadeAmmo",2);
+	SetFragGrenades (4);
+	
+	GiveInventory("GrenadeLauncher",1);
+	GiveInventory("GrenadeAmmo",40);
+	SetWeapon("GrenadeLauncher");
+	
+	ACS_ExecuteAlways(91,0);
+		
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_GRENADIER);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Grenadier.");
+}
+
+//---------------------------ROCKET SOLDIER
+script 28 (int Team) {
+	int cost = 500; int speed = 0.75;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS09", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfRocket Soldier!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (2, ARMOD_EXPLO);
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds", cost/2);
+	GiveInventory("HighUpgrade",1);
+	GiveInventory("NewClipAmmo",60);
+	GiveInventory("Handgun",1);
+	GiveInventory("EnhancedTimedC4",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	GiveInventory("Rifle",1);
+	GiveInventory("RifleAmmo",20);
+	GiveInventory("RifleGrenadeAmmo",2);
+	GiveInventory("MissileAmmo",30);
+	SetFragGrenades (2);
+	GiveInventory("MissileLauncher",1);
+	SetWeapon("MissileLauncher");
+	
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_ROCKETEER);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Rocket Soldier.");
+	
+	ACS_ExecuteAlways (961, 0, Team);
+}
+
+//---------------------------STEALTH TROOPER
+script 29 (int Team) {
+	int cost = 600; int speed = 0.95;
+	if (MitigateDoublePress()) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS10", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfStealth Trooper!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	HudMessage(s:"Use Alt-Fire to toggle \ccStealth.";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0);
+	
+	//Set Statistics
+	SetArmorGrade (-1, ARMOD_NOCHANGE);
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds", cost/2);
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetActorProperty(0,APROP_DeathSound,"stealth/death");
+	GiveInventory("NewClipAmmo",60);
+	GiveInventory("Handgun",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	GiveInventory("LaserRifleAmmo",200);
+	GiveInventory("FragGrenade",1);
+	GiveInventory("FragGrenadeAmmo",1);
+	GiveInventory("StealthLaserRifle",1);
+	GiveInventory("Knife",1);
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_STEALTH);
+				
+	ACS_ExecuteAlways (961, 0, Team);
+	
+	// [Dusk] workaround for stealth knife sound..
+	delay (1);
+	SetWeapon("StealthLaserRifle");
+	
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes stealth trooper.");
+	
+	Delay(35*6);
+	ActivatorSound("misc/stealth",255);
+}
+
+//---------------------------GAUSS GUNNER
+script 33 (int Team) {
+	int cost = 600; int speed = 0.8;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS11", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfGauss Gunner!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	SetFont ("SMALLFONT");
+	HudMessage(s:"Use \cfAlt-Fire\cd for \cjAnti-Mech attack\cd!";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.6, 3.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (2, ARMOD_LASER);
+	GiveInventory("HasClass", 1);
+	GiveInventory("Refunds", cost/2);
+	GiveInventory("NewClipAmmo",60);
+	GiveInventory("Handgun",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	GiveInventory("Rifle",1);
+	GiveInventory("RifleAmmo",40);
+	GiveInventory("RifleGrenadeAmmo",0);
+	GiveInventory("GaussRifleAmmo",50);
+	GiveInventory("FragGrenade",1);
+	SetAmmoCapacity("FragGrenadeAmmo",2);
+	GiveInventory("FragGrenadeAmmo",2);
+	GiveInventory("GaussRifle",1);
+	SetWeapon("GaussRifle");
+
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_GAUSSGUNNER);
+		
+	ACS_ExecuteAlways (961, 0, Team);
+	
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes gauss gunner.");
+}
+
+//---------------------------CHEM WARRIOR
+script 34 (int Team) {
+	int cost = 550; int speed = 0.7;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS12", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds",275);
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfChem Warrior!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (2, ARMOD_CHEM);
+	GiveInventory("NewClipAmmo",90);
+	GiveInventory("Handgun",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	GiveInventory("SubMachineGun",1);
+	GiveInventory("ChemicalAmmo",200);
+	GiveInventory("ChemicalGrenadeAmmo",4);
+	GiveInventory("FragGrenade",1);
+	SetAmmoCapacity("FragGrenadeAmmo",2);
+	GiveInventory("FragGrenadeAmmo",2);
+	ACS_ExecuteAlways (91,0);
+	GiveInventory("ChemicalSprayer",1);
+	SetWeapon("ChemicalSprayer");
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_CHEMWARRIOR);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Chem warrior.");
+	Delay(35*6);
+	ActivatorSound("misc/chem",255);
+}
+
+//---------------------------SHOCK TROOPER
+script 35 (int Team) {
+	int cost = 600; int speed = 0.7;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!CheckPlant(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS13", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds",300);
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfShock Trooper!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (2, ARMOD_LASER);
+	GiveInventory("NewClipAmmo",60);
+	GiveInventory("Handgun",1);
+	GiveInventory("SubMachineGun",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	GiveInventory("FragGrenade",1);
+	SetAmmoCapacity("FragGrenadeAmmo",2);
+	GiveInventory("FragGrenadeAmmo",2);
+	GiveInventory("ShockRifle",1);
+	GiveInventory("GeneporiumCharge",400);
+	SetWeapon("ShockRifle");
+	//Check for RANK to give awards
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_SHOCKTROOPER);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Shock Trooper.");
+	Delay(35*6);
+	ActivatorSound("misc/volt", 255);
+}
+
+//---------------------------COMMANDO
+script 36 (int Team) {
+	int cost = 1000; int speed = 0.85;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!CheckPlant(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS14", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are the \cfCommando!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	SETFONT ("SMALLFONT");
+	if(Team == 0)
+		HudMessageBold (s:"\cGWarning: \cARed\cJ Commando in-field!";
+			HUDMSG_FADEOUT, 15000, CR_WHITE,
+			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	else
+		HudMessageBold (s:"\cGWarning: \cNBlue\cJ Commando in-field!";
+			HUDMSG_FADEOUT, 15000, CR_WHITE,
+			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	GiveInventory("HasClass",1);
+	
+	CheckAndRemove ("HasArmorUpgrade");
+	GiveInventory ("HighUpgrade", 1);
+	GiveInventory("IsCommando",1);
+	GiveInventory("Refunds",cost/2);
+	SetArmorGrade (2, ARMOD_NOCHANGE);
+	GiveInventory("NewClipAmmo",120);
+	GiveInventory("Handgun",1);
+	GiveInventory("EnhancedTimedC4",1);
+	GiveInventory("TimedC4", 2);
+	GiveInventory("TimedC4Count", 2);
+	GiveInventory("MissileLauncher",1);
+	GiveInventory("MissileAmmo",15);			
+	GiveInventory("GatlingGun",1);
+	GiveInventory("MachineGunAmmo",200);
+	GiveInventory("Rifle",1);
+	GiveInventory("RifleAmmo",20);			
+	GiveInventory("RifleGrenadeAmmo",4);
+	GiveInventory("GaussRifle",1);
+	GiveInventory("GaussRifleAmmo",15);
+	SetFragGrenades (4);
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_COMMANDO);
+	ACS_ExecuteAlways(91,0,0,0,0);
+	
+	SetWeapon("GaussRifle");
+				
+	ACS_ExecuteAlways (961, 0, Team);
+	
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Commando.");
+	Delay(35*6);
+	ActivatorSound("misc/commando",255);
+}
+
+//---------------------------PLASMA CANNON
+script 37 (int Team)
+{
+	int cost = 1500;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!CheckPlant(Team)) terminate;
+	if (!CheckPlasmaCooldown()) terminate;
+	
+	if(CheckInventory("PlasmaCannon")) {
+		DisplayCross();
+		SETFONT("BigFont");
+		HudMessage(s:"You already have a \cnPlasma Cannon\cr!";
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+		terminate;
+	}
+	
+	if (NumPlasmaCannons[Team] >= MaxCannonsPerTeam && MaxCannonsPerTeam != -1) {
+		DisplayCross();
+		SETFONT("BigFont");
+		HudMessage(s:"Your team already has too many of those!"; 
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+		terminate;
+	}
+	
+	if (Timer() < CannonPurchaseDelay) {
+		DisplayCross();
+		SETFONT("BigFont");
+		//int mins = (CannonPurchaseDelay - Timer())/(35*60);
+		//int secs = 59 - (Timer()/35)%60;
+
+		HudMessage(s:"You must wait \cF", d:(CannonPurchaseDelay - Timer()) / 60,
+			s:" seconds\nbefore you can get one of these!";
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);		
+		terminate;
+	}
+	
+	if (!IsSecondPress("WEAP01", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	LastPurchasedCannon[PlayerNumber()+1] = Timer();
+	NumPlasmaCannons[Team]++;
+	
+	DisplayTick();
+	SetFont ("BIGFONT");
+	HudMessage(s:"You got \cnPlasma Cannon!"; HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	SetFont ("SMALLFONT");
+	if(Team == 0)
+		HudMessageBold (s:"\cGWarning: \cARed\cJ player has \cNPlasma Cannon!";
+			HUDMSG_FADEOUT, 15000, CR_WHITE,
+			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	else
+		HudMessageBold (s:"\cGWarning: \cNBlue\cJ player has \cNPlasma Cannon!";
+			HUDMSG_FADEOUT, 15000, CR_WHITE,
+			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	
+	GiveInventory("PlasmaCannon",1);
+	GiveInventory("PlasmaCannonAmmo",10);
+	SetWeapon("PlasmaCannon");
+	Log(n:0, s:" purchases Plasma Cannon.");
+	RecountPlasma();
+}
+
+//---------------------------SHOTGUNNER
+script 38 (int Team) {
+	int cost = 0; int speed = 0.8;
+	if (MitigateDoublePress()) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS15", cost)) terminate;
+	
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], 0);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfshotgunner!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	GiveInventory("HasClass",1);
+	GiveInventory("NewClipAmmo",60);
+	GiveInventory("Handgun",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	GiveInventory("ShotgunAmmo",50);
+	SetFragGrenades (1);
+	ACS_ExecuteAlways(91, 0);
+			
+	GiveInventory("Boomstick",1);
+	SetWeapon("Boomstick");
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_SHOTGUNNER);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Shotgunner.");
+}
+
+//---------------------------SUICIDE BOMBER
+script 62 (int Team) {
+	int cost = 1750; int speed = 1.0;
+	if (MitigateDoublePress()) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS16", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	TakeInventory("PurchaseToken", 1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cFSuicide Bomber!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	HudMessage(s:"Use the switch to explode violently.";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0);
+	
+	SetFont ("SMALLFONT");
+	if(Team == 0)
+		HudMessageBold (s:"\cGWarning: \cARed\cJ Suicide Bomber in-field!";
+			HUDMSG_FADEOUT, 15000, CR_WHITE,
+			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	else
+		HudMessageBold (s:"\cGWarning: \cNBlue\cJ Suicide Bomber in-field!";
+			HUDMSG_FADEOUT, 15000, CR_WHITE,
+			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	GiveInventory("HasClass", 1);
+	GiveInventory("HighUpgrade", 1);
+	GiveInventory("Refunds",cost/2);
+	GiveInventory("BombPack",1);
+	SetWeapon("BombPack");
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_SUICIDEBOMBER);
+				
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" goes nuts and becomes Suicide Bomber.");
+	// [Dusk] after two seconds, call SetWeapon() again. Lagged users with Commando
+	// rank may not be able to get it on the first SetWeapon().
+	delay(35*2);
+	SetWeapon("BombPack");
+	
+	delay(35*4);
+	ActivatorSound("misc/commando",255);
+}
+
+//---------------------------SNIPER
+script 40 (int Team) {
+	int cost = 750; int speed = 0.675;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!CheckPlant(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS17", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	
+	TakeInventory("PurchaseToken", 1);
+	SpendCredits(Credits[PlayerNumber()+1], 750);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfSniper!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (1, ARMOD_NOCHANGE);
+	GiveInventory("HasClass", 1);
+	GiveInventory("IsSniper", 500);
+	GiveInventory("Refunds", cost/2);
+	GiveInventory("NewClipAmmo",60);
+	GiveInventory("Handgun",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	GiveInventory("SniperAmmo",50);
+	SetFragGrenades (2);
+	
+	//Check for RANK to give awards
+	ACS_ExecuteAlways(91,0,0,0,0);
+	
+	GiveInventory("SniperRifle",1);
+	SetWeapon("SniperRifle");
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_SNIPER);
+				
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Sniper.");
+	
+	Delay(35*6);
+	ActivatorSound("misc/sniper",255);	
+}
+
+//---------------------------UTILITY GUY
+script 41 (int Team) {
+	int cost = 650; int speed = 0.75;
+	if (MitigateDoublePress()) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS18", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	TakeInventory("PurchaseToken", 1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are an \cfUtility Guy!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	HudMessage(s:"Use \cFAlt-Fire\cD for \cNitem selection menu!";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (2, ARMOD_NOCHANGE);
+	GiveInventory("HasClass", 1);
+	GiveInventory("Refunds", cost/2);
+	GiveInventory("HighUpgrade",1);
+	GiveInventory("NewClipAmmo",60);
+	GiveInventory("Handgun",1);
+	GiveInventory("EnhancedTimedC4",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	GiveInventory("RepairGun",1);
+	SetFragGrenades (2);
+	GiveInventory("UtilityGun", 1);
+	GiveInventory("Utility_Ammo", 75);
+	
+	//Check for RANK to give awards
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_UTILITYGUY);
+				
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Utility Guy.");
+	
+	delay (35);
+	SetWeapon("UtilityGun");
+}
+
+//---------------------------DEMO EXPERT
+script 42 (int Team) {
+	int cost = 550; int speed = 0.75;
+	if (MitigateDoublePress()) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS19", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	
+	TakeInventory("PurchaseToken", 1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfDemolitions Expert!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetArmorGrade (2, ARMOD_EXPLO);
+	SetActorProperty(0,APROP_SPEED,speed);
+	GiveInventory("HighUpgrade",1);
+	GiveInventory("NewClipAmmo",60);
+	GiveInventory("Handgun",1);
+	GiveInventory("HasClass", 1);
+	GiveInventory("Refunds", 275);
+	GiveInventory ("EnhancedTimedC4", 1);
+	GiveInventory ("TimedC4", 4);
+	GiveInventory ("TimedC4Count", 4);
+	GiveInventory ("ProxyMine", 6);
+	GiveInventory ("ProxyMineCount", 6);
+	GiveInventory ("RemoteC4", 1);
+	GiveInventory ("RemoteC4Ammo", 5);
+	GiveInventory("Boomstick",1);
+	GiveInventory("ShotgunAmmo",50);
+	SetFragGrenades (4);
+	GiveInventory("BombSquadGun",1);
+	SetWeapon("BombSquadGun");
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_DEMOEXPERT);
+
+	//Check for RANK to give awards
+	ACS_ExecuteAlways(91, 0);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Demo Expert.");
+}
+
+// FIELD MEDIC
+script 43 (int Team) {
+	int cost = 300; int speed = 0.85;
+	
+	if (MitigateDoublePress()) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS20", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfField Medic!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	HudMessage(s:"Your regeneration will be carried to mechs.";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (2, ARMOD_CHEM);
+	GiveInventory("HasClass",1);
+	GiveInventory ("ClassID", CLASS_MEDIC);
+	GiveInventory("Refunds", cost/2);
+	GiveInventory("IsMedic",1);
+	GiveInventory("NewClipAmmo",60);
+	GiveInventory("Handgun",1);
+	GiveInventory ("HealingRadiusItem", 1);
+	GiveInventory ("HealingRadiusCount", 1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	GiveInventory("Boomstick",1);
+	GiveInventory("ShotgunAmmo",50);
+	SetFragGrenades (2);
+	ACS_ExecuteAlways(91, 0);
+	GiveInventory("HealGun",1);
+	SetWeapon("HealGun");
+	GiveInventory("SpawnInvulnerability",1);
+	// Medic regeneration
+	ACS_ExecuteAlways(352, 0);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Medic.");
+}
+
+//---------------------------LASER CHAINGUNNER
+script 44 (int Team) {
+	int cost = 650; int speed = 0.75;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!CheckPlant(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS21", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfLaser Chaingunner!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (2, ARMOD_LASER);
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds",cost/2);
+	GiveInventory("HighUpgrade",1);
+	GiveInventory("NewClipAmmo",60);
+	GiveInventory("Handgun",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	SetFragGrenades (2);
+	GiveInventory("LaserChaingun",1);
+	GiveInventory("LaserChaingunAmmo",400);
+	SetWeapon("LaserChaingun");
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_LASERCHAINGUNNER);
+				
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Laser Chaingunner.");
+}
+
+//---------------------------T-E 21cal RIFLE
+script 49 (int Team)
+{
+	int cost = 300;
+	if (MitigateDoublePress()) terminate;
+
+	if (CheckInventory("TiberiumAutorifleWeak") || CheckInventory("TiberiumAutorifle")) {
+		DisplayCross();
+		SETFONT("BigFont");
+		HudMessage(s:"You already have a \cdTiberium Autorifle!";
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+		terminate;
+	}
+	
+	if (!IsSecondPress("WEAP02", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], 300);
+	DisplayTick();
+	
+	SETFONT("BigFont");
+	HudMessage(s:"You got the \cqTiberium Autorifle!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	// GiveInventory("Refunds", 100);
+	GiveInventory("TiberiumAutorifleWeak", 1);
+	GiveInventory("TE21CalAmmo", 200);
+	SetWeapon("TiberiumAutorifleWeak");
+	Log(n:0, s:" purchases Tiberium Autorifle.");
+}
+
+//---------------------------CHAINSAW (was flashbangs)
+script 50 (int Team) {
+	int cost = 250;
+	if (MitigateDoublePress()) terminate;
+	if (CheckInventory("EagerBeaver")) {
+		DisplayCross ();
+		SetFont ("BIGFONT");
+		HudMessage (s:"You already have the \cfChainsaw!";
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+		terminate;
+	}
+	
+	if (!IsSecondPress("WEAP03", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	
+	TakeInventory ("PurchaseToken", 1);
+	SpendCredits (Credits[PlayerNumber()+1], cost);
+	DisplayTick ();
+	
+	SetFont ("BIGFONT");
+	HudMessage(s:"You got the \cfChainsaw!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	HudMessage(s:"Use Alt-Fire to throw the chainsaw!";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0);
+	
+	GiveInventory ("EagerBeaver", 1);
+	SetWeapon ("EagerBeaver");
+	Log (n:0, s:" purchases Chainsaw.");
+}
+
+// ARTILLERY CANNON
+script 51 (int Team) {
+	int cost = 550;
+	if (MitigateDoublePress()) terminate;
+	if(CheckInventory("ArtilleryCannon")) {
+		DisplayCross();		
+		SETFONT("BigFont");
+		HudMessage(s:"You already have an \cKArtillery Cannon!";
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);		
+		terminate;
+	}
+	
+	if (!IsSecondPress("WEAP04", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You got the \ckArtillery Cannon!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	HudMessage(s:"Use Alt-Fire for \cFAnti-Mech shells!";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0);
+	
+	// GiveInventory("Refunds", 200);
+	GiveInventory ("ArtilleryCannon", 1);
+	GiveInventory ("ArtilleryShellAmmo", 40);
+	SetWeapon ("ArtilleryCannon");
+	Log(n:0, s:" purchases artillery cannon.");
+}
+
+//---------------------------JUMPJET
+script 52 (int Team) {
+	int cost = 600; int speed = 0.65;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS23", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds", cost/2);
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfJumpJet Infantry!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	HudMessage(s:"Use Alt-Fire to activate JumpJet";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (2, ARMOD_NOCHANGE);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	GiveInventory("NewClipAmmo",90);
+	GiveInventory("Handgun",1);
+	SetFragGrenades (2);
+	GiveInventory("MachineGunAmmo",400);
+	GiveInventory("JumpJetFuel",100);
+	GiveInventory("JumpJetGatlingGun",1);
+	SetWeapon("JumpJetGatlingGun");
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_JUMPJET);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes jumpjet infantry.");
+}
+
+//---------------------------TIBERIUM AUTORIFLEMAN
+script 53 (int Team) {
+	int cost = 400; int speed = 0.8;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS24", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfTiberium Autorifleman!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (1, ARMOD_CHEM);
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds",cost/2);
+	GiveInventory("NewClipAmmo",90);
+	GiveInventory("Handgun",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	GiveInventory("TE21CalAmmo",200);
+	SetFragGrenades (2);
+	GiveInventory("TiberiumAutorifle",1);
+	SetWeapon("TiberiumAutorifle");
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_TIBRIFLE);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Tiberium autorifleman.");
+}
+
+//---------------------------DOUBLE SHOTGUNNER
+script 54 (int Team) {
+	int cost = 200; int speed = 0.8;
+	if (MitigateDoublePress()) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS25", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfSuper Shotgunner!"; HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (1, ARMOD_NOCHANGE);
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds",cost/2);
+	GiveInventory("NewClipAmmo",90);
+	GiveInventory("Handgun",1);
+	GiveInventory("ShotgunAmmo",50);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	SetFragGrenades (1);
+	ACS_ExecuteAlways(91, 0);
+	GiveInventory("DoubleShotgun",1);
+	SetWeapon("DoubleShotgun");
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_DOUBLESHOTGUNNER);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes super shotgunner.");
+}
+
+//-------------------- BLUE TEAM SUPERWEAPON
+//---------------------------ION CANNON BEACON
+script 55 (int Team) {
+	if (PlayerTeam() == TEAM_RED) {
+		// [Dusk] this message should never be displayed in casual games
+		DisplayCross();
+		SETFONT("BigFont");
+		HudMessage(s:"What the \cRfuck\c- are you doing here?";
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+		terminate;
+	}
+	
+	int cost = 1750;
+	if (MitigateDoublePress()) terminate;
+
+	if(CheckInventory("IonCannonBeacon")) {
+		DisplayCross();
+		SETFONT("BigFont");
+		HudMessage(s:"You already have the \cnIon Cannon Beacon\cr!";
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);		
+		terminate;
+	}
+	
+	BlueBeaconTime=BeaconPurchaseDelay-(Timer()-LastPurchasedBeacon[1])/35;
+	if (BlueBeaconTime <= 0)
+		BlueBeaconCooldown = false;
+	else
+		BlueBeaconCooldown = true;
+	
+	if(BlueBeaconCooldown) {
+		int mins = BlueBeaconTime/60 - Timer()/(35*60);
+		int secs = 59 - (Timer()/35)%60;
+		
+		DisplayCross();
+		SETFONT("BigFont");
+		HudMessage(s:"You must wait \cF", d:BlueBeaconTime, s:" seconds\nbefore you can get one of these!";
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);		
+		terminate;
+	}
+	
+	if (!IsSecondPress("WEAP05", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	LastPurchasedBeacon[1] = Timer();
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], 1750);
+	
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You got the \cnIon Cannon Beacon!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_WHITE, 0.5, 0.45, 2.0, 1.0);
+	SetFont ("SMALLFONT");
+	HudMessage(s:"Place this in front of an \cAenemy MCT\cJ and guard";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_WHITE, 0.5, 0.6, 5.0, 1.0);
+	HudMessage(s:"it for \cU60 seconds\cJ for \cKcertain destruction!";
+		HUDMSG_FADEOUT, 1880+PlayerNumber(), CR_WHITE, 0.5, 0.625, 5.0, 1.0);
+	
+	HudMessageBold (s:"\cGWarning: \cNBlue\cJ player has \cNIon Cannon Beacon!!";
+		HUDMSG_FADEOUT, 15000, CR_WHITE,
+		INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	
+	GiveInventory("IonCannonBeacon",1);
+	SetWeapon("IonCannonBeacon");
+	
+	BlueBeaconCooldown = True;
+	Log(n:0, s:" purchases Ion Cannon Beacon.");
+}
+
+//-------------------- RED TEAM SUPERWEAPON
+//---------------------------NUCLEAR STRIKE BEACON
+script 56 (int Team) {
+	if (PlayerTeam() == TEAM_BLUE) {
+		// [Dusk] this message should never be displayed in casual games
+		DisplayCross();
+		SETFONT("BigFont");
+		HudMessage(s:"What the fuck are you doing here?";
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+		terminate;
+	}
+	
+	int cost = 1750;
+	if ( MitigateDoublePress() ) terminate;
+
+	RedBeaconCooldown = true;
+	RedBeaconTime = BeaconPurchaseDelay-(Timer()-LastPurchasedBeacon[2])/35;
+	if (RedBeaconTime <= 0)
+		RedBeaconCooldown = false;
+	
+
+	if(CheckInventory("NuclearStrikeBeacon")) {
+		DisplayCross();
+		SETFONT("BigFont");
+		HudMessage(s:"You already have the \ckNuclear Strike Beacon\cr!";
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+		terminate;
+	}
+	
+	if(RedBeaconCooldown) {
+		DisplayCross();
+		SETFONT("BigFont");
+		HudMessage(s:"You must wait \cF", d:RedBeaconTime, s:" seconds\nbefore you can get one of these!";
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+		terminate;	
+	}	
+	
+	if (!IsSecondPress("WEAP06", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	LastPurchasedBeacon[2] = Timer();
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], 1750);
+	DisplayTick();
+	
+	SETFONT("BigFont");
+	HudMessage(s:"You got the \cANuclear Strike Beacon!"; HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_WHITE, 0.5, 0.45, 2.0, 1.0);
+	SetFont ("SMALLFONT");
+	HudMessage(s:"Place this in front of an \cAenemy MCT\cJ and guard";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_WHITE, 0.5, 0.6, 5.0, 1.0);
+	HudMessage(s:"it for \cU60 seconds\cJ for \cKcertain destruction!";
+		HUDMSG_FADEOUT, 1880+PlayerNumber(), CR_WHITE, 0.5, 0.625, 5.0, 1.0);
+	HudMessageBold (s:"\cGWarning: \cARed\cJ player has \cANuclear Strike Beacon!!";
+		HUDMSG_FADEOUT, 15000, CR_WHITE,
+		INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	
+	GiveInventory ("NuclearStrikeBeacon", 1);
+	SetWeapon ("NuclearStrikeBeacon");
+
+	RedBeaconCooldown = True;
+	Log(n:0, s:" purchases Nuclear Strike Beacon.");
+}
+
+//---------------------------ARMOUR/DAMAGE UPGRADE
+script 57 (int Team) {
+	int cost = 250;
+	if (MitigateDoublePress()) terminate;
+	
+	if (CheckInventory ("IsCommando")) {
+		DisplayCross();
+		SETFONT("BigFont");
+		HudMessage (s:"no u :I";
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+		terminate;
+	}
+	
+	if(CheckInventory("HasArmorUpgrade")) {
+		DisplayCross();
+		SETFONT("BigFont");
+		HudMessage (s:"You already have this \ccupgrade!";
+			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+		terminate;
+	}
+	
+	if (!IsSecondPress("UPGR01", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+
+	DisplayTick();
+	
+	SETFONT("BigFont");
+	HudMessage(s:"You got the \ckarmor upgrade!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	HudMessage(s:"You can no longer pilot mechs.";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0);
+	
+	GiveInventory("Refunds", 200);
+	GiveInventory("HasArmorUpgrade", 1);
+	GiveInventory("HighUpgrade", 1);
+	SetArmorGrade (1, AGF_ADDITIVE);
+	Log(n:0, s:" purchases armour/damage upgrade.");
+}
+
+//---------------------------PLASMA GUNNER
+script 60 (int Team) {
+	int cost = 800; int speed = 0.7;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!CheckPlant(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS26", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds", cost/2);
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], 800);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfPlasma Gunner!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (2, ARMOD_LASER);
+	GiveInventory("HighUpgrade",1);
+	GiveInventory("NewClipAmmo",90);
+	GiveInventory("Handgun",1);
+	GiveInventory("PlasmaRifleAmmo",200);
+	GiveInventory("EnhancedTimedC4",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	SetFragGrenades (2);
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_PLASMAGUNNER);
+	GiveInventory("PlasmaGun",1);
+	SetWeapon("PlasmaGun");
+	
+	ACS_ExecuteAlways(91, 0);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Plasma Gunner.");
+}
+
+// ARTILLERY SOLDIER
+script 61 (int Team) {
+	int cost = 600; int speed = 0.7;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS27", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	DisplayTick();
+
+	SETFONT("BigFont");
+	HudMessage(s:"You are an \cfArtillery Soldier!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	HudMessage(s:"Use Alt-Fire for \cFAnti-Mech shells!";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (2, ARMOD_EXPLO);
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds",cost/2);
+	GiveInventory("IsArtillerySoldier",1);
+	GiveInventory("HighUpgrade",1);
+	GiveInventory("NewClipAmmo",60);
+	GiveInventory("Handgun",1);
+	GiveInventory("EnhancedTimedC4",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	GiveInventory("Rifle",1);
+	GiveInventory("RifleAmmo",20);
+	GiveInventory("RifleGrenadeAmmo",2);
+	GiveInventory("ArtilleryShellAmmo",30);
+	SetFragGrenades (2);
+	GiveInventory("ArtilleryCannon",1);
+	SetWeapon("ArtilleryCannon");
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_ARTILLERY);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes artillery soldier.");
+}
+
+//---------------------------TIME COP
+script 39 (int Team) {
+	int cost = 2000; int speed = 0.9;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks(team)) terminate;
+	if (!CheckPlant(team)) terminate;
+	if (MaxTimeCopsPerTeam > 0 && NumTimeCops[team] >= MaxTimeCopsPerTeam) {
+		DisplayCross();
+		SETFONT("BigFont");
+		if (MaxTimeCopsPerTeam == 1) {
+			HudMessage(s:"You already have a time cop in-field!";
+				HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+		} else {
+			HudMessage(s:"You already have ", d:NumTimeCops[team], s:" time cops in-field!";
+				HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+		}
+		
+		if (GetLevelInfo (LEVELINFO_LEVELNUM) == 20)
+			ThrustThing((VectorAngle(GetActorVelX(0), GetActorVelY(0)) >> 8) + 128, 25, 0, 0);
+		terminate;
+	}
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS29", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+	
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], cost);
+	
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are the \cFTime Cop!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	SETFONT ("SMALLFONT");
+	if(Team == 0)
+		HudMessageBold (s:"\cGWarning: \cARed\cJ TIME COP in-field!";
+			HUDMSG_FADEOUT, 15000, CR_WHITE,
+			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	else
+		HudMessageBold (s:"\cGWarning: \cNBlue\cJ TIME COP in-field!";
+			HUDMSG_FADEOUT, 15000, CR_WHITE,
+			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	
+	SetActorProperty (0, APROP_SPEED, speed);
+	SetArmorGrade (2, ARMOD_NOCHANGE);
+	GiveInventory ("HasClass", 1);
+	GiveInventory ("HighUpgrade", 1);
+	GiveInventory ("Refunds", cost/2);
+	GiveInventory ("NewClipAmmo", 120);
+	GiveInventory ("Handgun", 1);
+	GiveInventory ("EnhancedTimedC4", 1);
+	GiveInventory ("TimedC4", 2);
+	GiveInventory ("TimedC4Count", 2);
+	SetFragGrenades (4);
+	GiveInventory ("SpawnInvulnerability", 1);
+	GiveInventory ("ClassID", CLASS_TIMECOP);
+	GiveInventory("MachineGunAmmo", 50);
+	GiveInventory("MachineGun", 1);
+	GiveInventory ("TimeGun", 1);
+	GiveInventory ("TimeGunAmmo", 100);
+	SetWeapon ("TimeGun");
+	ACS_ExecuteAlways(91, 0);
+	
+	ACS_ExecuteAlways (961, 0, Team);
+	
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log (n:0, s:" becomes Time Cop.");
+	RecountTimeCops();
+	
+	Delay(35*6);
+	ActivatorSound("misc/commando",255);
+}
+
+//---------------------------TIBERIUM HARVESTER //Advanced
+script 63 (int Team) {
+	int cost = 750; int speed = 0.8;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckRefinery(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS30", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	GiveInventory("HasClass",1);
+	GiveInventory("Refunds", cost/2);
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], 750);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are an \cfAdvanced Tiberium Harvester!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.4, 2.0, 1.0);
+	HudMessage(s:"Pick-up \cctiberium crystals \cdand";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.6, 2.0, 1.0);
+	HudMessage(s:"return them to your \ccrefinery \cdfor cash!";
+		HUDMSG_FADEOUT, 1880+PlayerNumber(), CR_GREEN, 0.5, 0.65, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (1, ARMOD_CHEM);
+	GiveInventory("HighUpgrade",1);
+	GiveInventory("IsHarvester",1);
+	GiveInventory("TiberiumProof",1);
+	GiveInventory("Grade0Damage",1);
+	GiveInventory("NewClipAmmo",200);
+	GiveInventory("Handgun",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	SetFragGrenades (2);
+	GiveInventory("MachineGunAmmo",160);
+	GiveInventory("SubMachineGun",1);
+	GiveInventory("MachineGun",1);
+	SetWeapon("MachineGun");
+	ACS_ExecuteAlways(91, 0);
+	
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_ADVHARVESTER);
+				
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes advanced Tiberium Harvester.");
+	Delay(35*6);
+	ActivatorSound("misc/chem",255);
+}
+
+//---------------------------TIBERIUM HARVESTER //Free
+script 64 (int Team) {
+	int cost = 0; int speed = 0.65;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckRefinery(Team)) terminate;
+	if (!IsResigned()) terminate;
+	if (!IsSecondPress("CLSS28", cost)) terminate;
+	if (!CheckCredits(cost)) terminate;
+
+	GiveInventory("HasClass",1);
+	TakeInventory("PurchaseToken",1);
+	SpendCredits(Credits[PlayerNumber()+1], 0);
+	DisplayTick();
+	SETFONT("BigFont");
+	HudMessage(s:"You are a \cfTiberium Harvester!";
+		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.4, 2.0, 1.0);
+	HudMessage(s:"Pick-up \cctiberium crystals \cdand";
+		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.6, 2.0, 1.0);
+	HudMessage(s:"return them to your \ccrefinery \cdfor cash!";
+		HUDMSG_FADEOUT, 1880+PlayerNumber(), CR_GREEN, 0.5, 0.65, 2.0, 1.0);
+	
+	//Set Statistics
+	SetActorProperty(0,APROP_SPEED,speed);
+	SetArmorGrade (0, ARMOD_CHEM);
+	GiveInventory("IsHarvester",1);
+	GiveInventory("TiberiumProof",1);
+	GiveInventory("Grade0Damage",1);
+	GiveInventory("NewClipAmmo",200);
+	GiveInventory("Handgun",1);
+	GiveInventory("TimedC4",1);
+	GiveInventory("TimedC4Count",1);
+	SetFragGrenades (1);
+	GiveInventory("SubMachineGun",1);
+	GiveInventory("SpawnInvulnerability",1);
+	GiveInventory ("ClassID", CLASS_HARVESTER);
+	SetWeapon("SubMachineGun");
+	ACS_ExecuteAlways(91, 0);
+				
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = speed;
+	Log(n:0, s:" becomes Tiberium harvester.");
+	Delay(35*6);
+	ActivatorSound("misc/chem",255);
+}
+
+script 961 (int team) {
+	int tries, i;
+	bool failed = true;
+	if (GetLevelInfo (LEVELINFO_LEVELNUM) == 20 || GetLevelInfo (LEVELINFO_LEVELNUM) == 21) {
+		for (i = 0; i <= 9; i++) {
+			if (Teleport_NoStop (1+(1-team), 0)) {
+				failed = false;
+				break;
+			}
+		}
+	} else {
+		for (i = 0; i <= 9; i++) {
+			if (Teleport (1+(1-team))) {
+				failed = false;
+				break;
+			}
+		}
+	}
+	if (failed) {
+		HudMessage (s:"In-field teleportation \cAfailed\cJ - use the\n\cDTeleport back to Field\cJ -terminal";
+			HUDMSG_FADEOUT, 15000, CR_WHITE,
+			INTEL_XPOS, INTEL_YPOS2, 5.0, 1.0);
+			terminate;
+	} else TakeInventory ("IsInSpawnRoom", 1);
+}

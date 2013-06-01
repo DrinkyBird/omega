@@ -1,0 +1,36 @@
+actor HHBulletPuff : BulletPuff replaces BulletPuff {
+	+CLIENTSIDEONLY
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+FORCEXYBILLBOARD
+	-ALLOWPARTICLES
+	states {
+	Spawn:
+		PUFF A 0 bright
+		PUFF A 0 A_SpawnItemEx("PulseBallSmokePuff", 0, 0, 0, 0, 0, 1, 0, 128, 220)
+		PUFF A 4 bright A_PlaySound("bullet/ricochet")
+		PUFF B 4 
+	Melee:
+		PUFF CD 4
+		stop
+	}
+}
+
+actor HHMetalHit : BulletPuff {
+	+CLIENTSIDEONLY
+	+NOBLOCKMAP
+	+FORCEXYBILLBOARD
+	+NOGRAVITY
+	-ALLOWPARTICLES
+	bloodcolor "White"
+	states {
+	Spawn:
+		PUFF A 0 
+		PUFF A 0 A_PlaySound("bullet/metal")
+		PUFF A 4 Bright A_SpawnItemEx("PulseBallSmokePuff", 0, 0, 0, 0, 0, 1, 0, 128, 192)
+		PUFF B 4
+	Melee:
+		PUFF CD 4
+		stop
+	}
+}

@@ -1,0 +1,148 @@
+ACTOR PlasmaGun : AOWWeapon replaces PlasmaRifle 21087 {
+	Inventory.PickupMessage "You got the plasma gun!"
+	Obituary "%o was incinerated by %k's plasma gun."
+	Weapon.AmmoType "PlasmaRifleAmmo"
+	Weapon.AmmoGive 25
+	Weapon.AmmoUse 1
+	Weapon.AmmoType2 "PlasmaHeat"
+	Weapon.AmmoUse2 0
+	Weapon.AmmoGive2 0
+	Weapon.Kickback 25
+	Weapon.SelectionOrder 5
+	Weapon.PreferredSkin "MarinePlasma"
+	States  { 
+	Spawn:
+		PLAS A -1
+		stop
+	Ready: 
+		ENRG A 3 A_WeaponReady
+		ENRG A 0 A_TakeInventory("PlasmaHeat",2)
+		ENRG A 3 A_WeaponReady
+		ENRG A 0 A_TakeInventory("PlasmaHeat",2)
+		ENRG A 3 A_WeaponReady
+		ENRG A 0 A_TakeInventory("PlasmaHeat",2)
+		ENRG A 3 A_WeaponReady
+		ENRG A 0 A_TakeInventory("PlasmaHeat",2)
+		Goto WarningRemove
+	Deselect:
+		ENRG A 1 A_Lower 
+		loop
+	Select:
+		ENRG A 1 A_Raise 
+		Loop
+	Fire:
+		ENRG A 0 A_JumpIfInventory("PlasmaHeat",100,"Overheat")
+		ENRG A 1 A_GunFlash
+		ENRG B 0 A_PlayWeaponSound("Weapons/PlasmaShot")
+		ENRG B 0 A_JumpIfInventory("IsBlue",1,"FireBlue")
+		ENRG B 1 A_FireCustomMissile("PlasmaShot",0,1,2,0)
+		ENRG C 1 A_GiveInventory("PlasmaHeat",random(0,3))
+		ENRG A 0 A_JumpIfInventory("PlasmaHeat",75,"Warning")
+		ENRG A 1 A_Refire
+		Goto Ready
+	FireBlue:
+		ENRG B 1 A_FireCustomMissile("PlasmaShotBlue",0,1,2,0)
+		ENRG C 1 A_GiveInventory("PlasmaHeat",random(0,3))
+		ENRG A 0 A_JumpIfInventory("PlasmaHeat",75,"Warning")
+		ENRG A 1 A_Refire
+		Goto Ready
+	Overheat:
+		ENRG A 2 A_PlaySoundEx("Plasma/FailFire","SoundSlot6",0)
+		ENRG A 0 A_PlaySoundEx("Plasma/Vapour","SoundSlot7",0)
+		ENRG AAAAAA 2 A_FireCustomMissile("OverheatSmokeSpawner",0,0,6,-2)
+		ENRG AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 3 A_TakeInventory("PlasmaHeat",2)
+		Goto WarningRemove
+	WarningRemove:
+		ENRG A 0 A_TakeInventory("WarningChecker", 1)
+		goto Ready
+	Flash: 
+		RPRL B 0 A_JumpIfInventory ("IsRed", 1, "Flash.Red")
+		ENRF A 1 bright A_Light1
+		ENRF B 2 bright A_Light2
+		ENRF C 1 bright A_Light1
+		ENRF C 0 A_Light0
+		Stop
+	Flash.Red:
+		ENRR A 1 bright A_Light1
+		ENRR B 2 bright A_Light2
+		ENRR C 1 bright A_Light1
+		ENRR C 0 A_Light0
+		Stop
+	Warning:
+		ENRG A 0
+		ENRG AA 0 A_JumpIfInventory("WarningChecker",1,"Ready")
+		ENRG A 0 A_PlaySoundEx("Plasma/Warning","Voice",0)
+		ENRG A 0 A_GiveInventory("WarningChecker",1)
+		Goto Ready
+	}
+}
+
+actor PlasmaRifleAmmo : Ammo {
+	inventory.amount 40
+	inventory.maxamount 300
+	ammo.backpackamount 40
+	ammo.backpackmaxamount 300
+	states {
+	Spawn:
+		TNT1 A 0
+		stop
+	}
+}
+
+actor PlasmaShot {
+	PROJECTILE
+	-RANDOMIZE
+	Radius 12
+	Height 8
+	Scale 0.8
+	Speed 28
+	damage (15)
+	RenderStyle Add
+	Alpha 0.75
+	DeathSound "weapons/plasmax"
+	DamageType "LaserRed"
+	Decal PulseScorch
+	Obituary "%o was incinerated by %k's Plasma Rifle."
+	translation "192:207=169:191", "240:247=[63,0,0]:[0,0,0]" 
+	States {
+	Spawn:
+		PLSS AB 4 Bright
+		loop
+	Death:
+		PLSE A 0 A_SpawnItemEx("PulseBallSmokePuff", 0, 0, 0, 0, 0, 1, 0, 128, 0)
+		PLSE ABCDE 2 Bright 
+		stop
+	}
+}
+
+Actor PlasmaShotBlue : PlasmaShot {
+	translation ""
+	DamageType "LaserBlue"
+}
+
+actor PlasmaHeat : Ammo {
+	+IGNORESKILL
+	inventory.amount 0
+	inventory.maxamount 100
+	ammo.backpackamount 0
+	ammo.backpackmaxamount 100
+	states {
+	Spawn:
+		TNT1 A 0
+		stop
+	}
+}
+
+actor WarningChecker : Boolean {}
+
+ACTOR OverheatSmokeSpawner {
+	PROJECTILE
+	+CLIENTSIDEONLY
+	speed 25
+	States {
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx("PulseBallSmokePuff",0,0,-2,0,0,0.1*Random(0,10))
+		Stop
+	}
+}
