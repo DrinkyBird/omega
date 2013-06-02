@@ -14,28 +14,34 @@ actor GaussRifle : AOWWeapon 21049 {
 	decal "GaussScorch"
 	states {
 	Ready:
-		GAUS E 0 A_JumpIfInventory ("IsBlue", 1, "Ready.Blue")
+		GAUS E 0 A_JumpIfInventory ("IsBlue", 1, "ReadyBlue")
 		GAUS E 28 A_WeaponReady
 		GAUS ABCD 2 bright A_WeaponReady
 		goto Ready+1
-	Ready.Blue:
+	
+	ReadyBlue:
 		GAUB E 28 A_WeaponReady
 		GAUB ABCD 2 bright A_WeaponReady
 		loop
+	
 	Deselect:
-		GAUS E 0 A_JumpIfInventory ("IsBlue", 1, "Deselect.Blue")
+		GAUS E 0 A_JumpIfInventory ("IsBlue", 1, "DeselectBlue")
 		GAUS E 1 A_Lower
 		wait
-	Deselect.Blue:
+	
+	DeselectBlue:
 		GAUB E 1 A_Lower
 		wait
+	
 	Select:
-		GAUS E 0 A_JumpIfInventory ("IsBlue", 1, "Select.Blue")
+		GAUS E 0 A_JumpIfInventory ("IsBlue", 1, "SelectBlue")
 		GAUS E 1 A_Raise
 		wait
-	Select.Blue:
+	
+	SelectBlue:
 		GAUB E 1 A_Raise
 		wait
+	
 	Fire:
 		GAUS I 0 A_JumpIfInventory ("IsBlue", 1, "FireBlue")
 		GAUS E 3
@@ -59,6 +65,7 @@ actor GaussRifle : AOWWeapon 21049 {
 		GAUS F 3
 		GAUS EEEE 2
 		goto Ready
+	
 	FireBlue:
 		GAUB E 3
 		GAUB I 1 A_Light1
@@ -81,6 +88,7 @@ actor GaussRifle : AOWWeapon 21049 {
 		GAUB F 3
 		GAUB EEEE 2
 		goto Ready
+	
 	AltFire:
 		GAUS I 0 A_PlayWeaponSound ("Gauss/Select")
 		GAUS I 0 A_JumpIfInventory ("IsBlue", 1, "AltFire.Blue")
@@ -105,10 +113,11 @@ actor GaussRifle : AOWWeapon 21049 {
 		GAUS FGHGF 3
 		GAUS EEEE 2
 		goto Ready
+	
 	AltFire.Blue:
 		GAUB EFGH 2
 		GAUB I 1 A_Light1
-		GAUB J 0 bright A_FireBullets (0, 0, 1, 0, "AntiArmorPuffBlue", 0)
+		GAUB J 0 bright A_FireBullets (0, 0, 1, 0, "AntiArmorPuff", 0)
 		GAUB J 0 bright A_RailAttack (100, 4, 1, "11 11 88", white, 1, 0, "AntiArmorPuffBlue")
 		GAUB I 1 offset(1, 34) A_Light1
 		GAUB J 1 offset(2, 36) A_Light2
@@ -127,6 +136,7 @@ actor GaussRifle : AOWWeapon 21049 {
 		GAUB FGHGF 3
 		GAUB EEEE 2
 		goto Ready
+	
 	Spawn:
 		GAUS X -1
 		stop
@@ -143,12 +153,12 @@ actor GaussRifleAmmo : Ammo {
 actor GaussPuff : HHBulletPuff {
 	-ALLOWPARTICLES
 	+PUFFONACTORS
-	DamageType "LaserRed"
-	translation "192:207=169:189", "240:246=45:47", "80:111=169:189"
-	renderstyle Add
-	alpha 0.75
-	vspeed 0
-	states {
+	DamageType "Laser"
+	Translation "192:207=169:189", "240:246=45:47", "80:111=169:189"
+	RenderStyle Add
+	Alpha 0.75
+	
+	States {
 	Spawn:
 	Melee:
 	Crash:
@@ -158,9 +168,9 @@ actor GaussPuff : HHBulletPuff {
 }
 
 actor GaussPuffBlue : GaussPuff {
-	damagetype "LaserBlue"
-	translation ""
+	Translation ""
 }
 
-actor AntiArmorPuff : ExplosionPuff {damagetype "AntiArmorRed"}
-actor AntiArmorPuffBlue : ExplosionPuff {damagetype "AntiArmorBlue"}
+actor AntiArmorPuff : ExplosionPuff {
+	DamageType "AntiArmor"
+}

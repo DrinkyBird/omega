@@ -52,7 +52,6 @@ actor FragGrenade : AOWWeapon {
 		TNT1 A 4 A_GiveInventory("FragGrenadePower", 6)
 		TNT1 A 1 A_ReFire
 		TNT1 A 3 A_PlaySound("frag/voice")
-		FRGI A 0 A_JumpIfInventory("IsBlue",1,"HoldBlue")
 		TNT1 A 0 A_JumpIfInventory("FragGrenadePower",80,"Throw5")
 		TNT1 A 0 A_JumpIfInventory("FragGrenadePower",60,"Throw4")
 		TNT1 A 0 A_JumpIfInventory("FragGrenadePower",40,"Throw3")
@@ -97,48 +96,6 @@ actor FragGrenade : AOWWeapon {
 	FireBlue:
 		FRG2 D 2 A_FireCustomMissile("FragGrenadeThrown1Blue",-1,1,10,5)
 		FRG2 EFG 2
-		goto Ready
-	HoldBlue:
-		TNT1 A 0 A_JumpIfInventory("FragGrenadePower",80,"Throw5Blue")
-		TNT1 A 0 A_JumpIfInventory("FragGrenadePower",60,"Throw4Blue")
-		TNT1 A 0 A_JumpIfInventory("FragGrenadePower",40,"Throw3Blue")
-		TNT1 A 0 A_JumpIfInventory("FragGrenadePower",20,"Throw2Blue")
-		FRG2 AB 2
-		FRG2 C 2 A_PlayWeaponSound("frag/throw")
-		TNT1 A 0 A_TakeInventory("FragGrenadePower",100)
-		FRG2 D 2 A_FireCustomMissile("FragGrenadeThrown1Blue",-1,1,10,5)
-		FRG2 EFG 2
-		goto Ready
-	Throw2Blue:
-		FRG2 AB 2
-		FRG2 C 2 A_PlayWeaponSound("frag/throw")
-		TNT1 A 0 A_TakeInventory("FragGrenadePower",100)
-		FRG2 D 2 A_FireCustomMissile("FragGrenadeThrown2Blue",-1,1,10,5)
-		FRG2 EFG 2
-		goto Ready
-	Throw3Blue:
-		TNT1 A 2
-		TNT1 A 2 A_PlayWeaponSound("frag/throw")
-		TNT1 A 0 A_TakeInventory("FragGrenadePower",100)
-		FRG3 A 2 A_FireCustomMissile("FragGrenadeThrown3Blue",-1,1,10,15)
-		FRG3 BCD 2
-		TNT1 AA 2
-		goto Ready
-	Throw4Blue:
-		TNT1 A 2
-		TNT1 A 2 A_PlayWeaponSound("frag/throw")
-		TNT1 A 0 A_TakeInventory("FragGrenadePower",100)
-		FRG3 A 2 A_FireCustomMissile("FragGrenadeThrown4Blue",-1,1,10,15)
-		FRG3 BCD 2
-		TNT1 AA 2
-		goto Ready
-	Throw5Blue:
-		TNT1 A 2
-		TNT1 A 2 A_PlayWeaponSound("frag/throw")
-		TNT1 A 0 A_TakeInventory("FragGrenadePower",100)
-		FRG3 A 2 A_FireCustomMissile("FragGrenadeThrown5Blue",-1,1,10,15)
-		FRG3 BCD 2
-		TNT1 AA 2
 		goto Ready
 	Spawn:
 		TNT1 A 0
@@ -186,15 +143,16 @@ actor FragGrenadeThrown1 {
 	+CANBOUNCEWATER
 	+BOUNCEONACTORS
 	Scale 0.22
-	gravity 0.6
-	bouncefactor 0.5
-	damagetype "RifleRed"
-	reactiontime 1
-	states {
+	Gravity 0.6
+	BounceFactor 0.5
+	Damagetype "Rifle"
+	
+	States {
 	Spawn:
 		FRGX ABCDEFGHA 5
 		FRGX BB 5
-		FRGX BB 0 A_Countdown
+		goto Death
+	
 	Death:
 		TNT1 B 0 bright A_NoGravity
 		TNT1 A 0 bright A_StopSoundEx("Body")
@@ -219,9 +177,9 @@ actor FragGrenadeShrapnel {
 	Scale 0.3
 	Gravity 0.6
 	bouncecount 10
-	Damagetype "RifleRed"
-	states
-	{
+	DamageType "Rifle"
+	
+	States {
 	Spawn:
 		SHRA A 5 BRIGHT
 		SHRA A 4 A_Gravity
@@ -233,30 +191,8 @@ actor FragGrenadeShrapnel {
 	}
 }
 
-actor FragGrenadeShrapnelBlue : FragGrenadeShrapnel {damagetype "RifleBlue"}
-
 actor FragGrenadeDropped : FragGrenadeThrown1 {speed 10}
 actor FragGrenadeThrown2 : FragGrenadeThrown1 {speed 22}
 actor FragGrenadeThrown3 : FragGrenadeThrown1 {speed 29}
 actor FragGrenadeThrown4 : FragGrenadeThrown1 {speed 34}
 actor FragGrenadeThrown5 : FragGrenadeThrown1 {speed 46}
-
-actor FragGrenadeThrown1Blue : FragGrenadeThrown1 {
-	damagetype "RifleBlue"
-	states {
-	Death:
-		TNT1 A 0 A_NoGravity
-		TNT1 A 0 A_StopSoundEx("Body")
-		TNT1 A 5 A_Explode (190, 256)
-		TNT1 A 1 A_SpawnItemEx("FlameDecayBlue", random(-16,16), random(-16,16), 4, 0, 0, 0, 0, 0, 160)
-		TNT1 AAAAAAAA 0 A_CustomMissile("FragGrenadeShrapnelBlue",0,0,random(0,360),6,random(2,80))
-		TNT1 A 5 A_SpawnItem ("ExplosionMain")
-		stop
-	}
-}
-
-actor FragGrenadeDroppedBlue : FragGrenadeThrown1Blue {speed 10}
-actor FragGrenadeThrown2Blue : FragGrenadeThrown1Blue {speed 22}
-actor FragGrenadeThrown3Blue : FragGrenadeThrown1Blue {speed 29}
-actor FragGrenadeThrown4Blue : FragGrenadeThrown1Blue {speed 34}
-actor FragGrenadeThrown5Blue : FragGrenadeThrown1Blue {speed 46}

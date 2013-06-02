@@ -169,7 +169,8 @@ actor LaserRifleAmmo : Ammo {
 	inventory.maxamount 200
 	ammo.backpackamount 20
 	ammo.backpackmaxamount 200
-	states {
+	
+	States {
 	Spawn:
 		TNT1 A 0
 		stop
@@ -177,15 +178,16 @@ actor LaserRifleAmmo : Ammo {
 }
 
 actor LaserPuff : HHBulletPuff {
-	-ALLOWPARTICLES +PUFFONACTORS
-	scale 0.5
-	DamageType "LaserRed"
-	translation "192:207=169:189", "240:246=45:47", "80:111=169:189"
-	renderstyle Add
-	alpha 0.75
-	vspeed 0
-
-	states {
+	-ALLOWPARTICLES
+	+PUFFONACTORS
+	Scale 0.5
+	DamageType "Laser"
+	Translation "192:207=169:189", "240:246=45:47", "80:111=169:189"
+	RenderStyle Add
+	Alpha 0.75
+	VSpeed 0
+	
+	States {
 	Spawn:
 	Melee:
 	Crash:
@@ -195,7 +197,7 @@ actor LaserPuff : HHBulletPuff {
 }
 
 actor LaserPuffBlue : LaserPuff {
-	DamageType "LaserBlue"
+	DamageType "Laser"
 	translation ""
 }
 
