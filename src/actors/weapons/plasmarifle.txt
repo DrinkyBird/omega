@@ -100,14 +100,16 @@ actor PlasmaShot {
 	RenderStyle Add
 	Alpha 0.75
 	DeathSound "weapons/plasmax"
-	DamageType "LaserRed"
+	DamageType "Laser"
 	Decal PulseScorch
 	Obituary "%o was incinerated by %k's Plasma Rifle."
-	translation "192:207=169:191", "240:247=[63,0,0]:[0,0,0]" 
+	Translation "192:207=169:191", "240:247=[63,0,0]:[0,0,0]" 
+	
 	States {
 	Spawn:
 		PLSS AB 4 Bright
 		loop
+	
 	Death:
 		PLSE A 0 A_SpawnItemEx("PulseBallSmokePuff", 0, 0, 0, 0, 0, 1, 0, 128, 0)
 		PLSE ABCDE 2 Bright 
@@ -115,9 +117,8 @@ actor PlasmaShot {
 	}
 }
 
-Actor PlasmaShotBlue : PlasmaShot {
-	translation ""
-	DamageType "LaserBlue"
+actor PlasmaShotBlue : PlasmaShot {
+	Translation ""
 }
 
 actor PlasmaHeat : Ammo {
