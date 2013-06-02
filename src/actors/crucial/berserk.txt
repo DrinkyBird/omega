@@ -9,8 +9,7 @@ actor BerserkPlayer : Player {
 	player.forwardmove 1.0 // doomguy speed!
 	player.sidemove 1.0
 	player.morphweapon "BerserkFists"
-	damagefactor "ChemicalRed", 2.25 // aaahhh
-	damagefactor "ChemicalBlue", 2.25
+	DamageFactor "Chemical", 2.25 // aaahhh
 	
 	states {
 	Death:

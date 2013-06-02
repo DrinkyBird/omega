@@ -2,26 +2,19 @@
 actor Player : DoomPlayer {
 	+NOSKIN
 	-TELESTOMP
-	health 100
-	player.colorrange 112, 127
-	player.displayname "Commando"
-	player.crouchsprite "PLYC"
-	player.startitem "Unarmed", 1
-	player.forwardmove 0.875
-	player.sidemove 0.875
-	player.maxhealth 100
+	Player.DisplayName "Commando"
+	Player.CrouchSprite "PLYC"
+	Player.StartItem "Unarmed", 1
+	Player.ForwardMove 0.875
+	Player.SideMove 0.875
+	DamageFactor "Explosion",        0.3
+	DamageFactor "Chemical",         2.0
+	DamageFactor "AntiArmor",        0.1
+	DamageFactor "Disarm",           0.0 
+	DamageFactor "Deconstruction",   0.0
+	DamageFactor "MassDriver",       0.3
+	DeathSound "generic/death"
 	
-	damagefactor "ExplosionRed", 0.3
-	damagefactor "ExplosionBlue", 0.3
-	damagefactor "ChemicalRed", 2.0
-	damagefactor "ChemicalBlue", 2.0
-	damagefactor "AntiArmorRed", 0.1
-	damagefactor "AntiArmorBlue", 0.1
-	damagefactor "Disarm", 0.0 
-	damagefactor "Deconstruction", 0.0
-	damagefactor "MassDriverRed", 0.3
-	damagefactor "MassDriverBlue", 0.3
-	deathsound "generic/death"
 	States {
 	Spawn:
 		PLAY A -1

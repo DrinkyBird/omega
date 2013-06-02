@@ -14,15 +14,15 @@ actor BaseTerminalOutside {
 	Height 512
 	Mass 0x7FFFFFFF
 	PainChance 255
-	DamageFactor "FistBlue", 0.0
-	DamageFactor "BulletBlue", 0.0
-	DamageFactor "RifleBlue", 0.0
-	DamageFactor "ChemicalBlue", 0.0
+	DamageFactor "Fist", 0.0
+	DamageFactor "Bullet", 0.0
+	DamageFactor "Rifle", 0.0
+	DamageFactor "Chemical", 0.0
 	DamageFactor "ChemicalSpecial", 0.0
-	DamageFactor "LaserBlue", 0.0
-	DamageFactor "RazorWireBlue", 0.0
-	DamageFactor "AntiArmorBlue", 0.0
-	DamageFactor "TimeBlue", 0.0
+	DamageFactor "Laser", 0.0
+	DamageFactor "RazorWire", 0.0
+	DamageFactor "AntiArmor", 0.0
+	DamageFactor "Time", 0.0
 	DamageFactor "Disarm", 0.0
 	DamageFactor "Mechstomp", 0.0
 	DamageFactor "Monster", 0.0

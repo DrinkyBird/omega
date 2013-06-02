@@ -186,11 +186,9 @@ actor AOWPainElemental : PainElemental replaces PainElemental {
 actor AOWFatso : Fatso replaces Fatso {
 	damagefactor "Disarm", 0.0
 	damagefactor "Deconstruction", 0.0
-	damagefactor "FireRed", 0.0
-	damagefactor "FireBlue", 0.0
+	damagefactor "Fire", 0.0
 	damagefactor "FireSpecial", 0.0
-	damagefactor "ChemicalBlue", 1.5
-	damagefactor "ChemicalRed", 1.5
+	damagefactor "Chemical", 1.5
 	damagefactor "ChemicalSpecial", 1.5
 	
 	states {

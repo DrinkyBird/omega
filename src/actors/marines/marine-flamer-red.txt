@@ -35,36 +35,14 @@ Actor RedFlamerDude
 
 //AOW Base DamageFactoring-----------------------------------------------------------------------
 
-	damagefactor "FistRed", 0.0
-	damagefactor "FistBlue", 1.0
-	damagefactor "BulletRed", 0.0
-	damagefactor "BulletBlue", 1.0
-	damagefactor "RifleRed", 0.0
-	damagefactor "RifleBlue", 1.0
-	damagefactor "ExplosionRed", 0.0
-	damagefactor "ExplosionBlue", 0.3
-	damagefactor "Terrorist", 2.0
-	damagefactor "Suicide", 1.0
-	damagefactor "FireRed", 0.0
-	damagefactor "FireBlue", 1.0
-	damagefactor "ChemicalRed", 0.0
-	damagefactor "ChemicalBlue", 2.0
-	damagefactor "ChemicalSpecial", 0.0
-	damagefactor "LaserRed", 0.0
-	damagefactor "LaserBlue", 1.0
-	damagefactor "RazorWireRed", 0.0
-	damagefactor "RazorWireBlue", 1.0
-	damagefactor "AntiArmorRed", 0.0
-	damagefactor "AntiArmorBlue", 0.1
-	damagefactor "TimeRed", 0.0
-	damagefactor "TimeBlue", 1.0
-	damagefactor "Repair", 0.0
-	damagefactor "Disarm", 0.0
-	damagefactor "Deconstruction", 0.0
-	damagefactor "MassDriverRed", 0.0
-	damagefactor "MassDriverBlue", 0.3
-	damagefactor "Mechstomp", 0.0
-	damagefactor "Monster", 1.0
+	DamageFactor "Explosion",        0.3
+	DamageFactor "Chemical",         2.0
+	DamageFactor "AntiArmor",        0.1
+	DamageFactor "Disarm",           0.0 
+	DamageFactor "Deconstruction",   0.0
+	DamageFactor "MassDriver",       0.3
+	DesignatedTeam 1
+
 //-----------------------------------------------------------------------
 
 

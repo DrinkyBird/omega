@@ -63,9 +63,6 @@ actor NukageBarrel : ExplosiveBarrel replaces ExplosiveBarrel {
 
 actor Mine 21419
 {
-  damagefactor "ChemicalSpecial", 0.0
-  damagefactor "ChemicalRed", 0.0
-  damagefactor "ChemicalBlue", 0.0
   hitobituary "%o tripped over a mine."
   obituary "%o tripped over a mine."
   health 5000
@@ -79,15 +76,10 @@ actor Mine 21419
   meleedamage 4
   meleerange 70
   painchance 255
-  damagefactor "Fist", 1.0
-  damagefactor "Bullet", 1.0
-  damagefactor "Rifle", 1.0
-  damagefactor "Explosion", 1.0
-  damagefactor "Terrorist", 1.0
-  damagefactor "Suicide", 1.0
   damagefactor "Fire", 0.0
+  damagefactor "FireSpecial", 0.0
+  damagefactor "ChemicalSpecial", 0.0
   damagefactor "Chemical", 0.0
-  damagefactor "Laser", 1.0
   damagefactor "Disarm", 0.0
   states
   {
