@@ -1101,21 +1101,14 @@ actor Utility_Ammo : Ammo {
 
 actor Utility_TurretBase {
 	damagefactor "Disarm", 0.0
-	damagefactor "RazorWireRed", 0.0
-	damagefactor "RazorWireBlue", 0.0
-	damagefactor "FistRed", 0.5
-	damagefactor "FistBlue", 0.5
+	damagefactor "RazorWire", 0.0
+	damagefactor "Fist", 0.5
 	damagefactor "Mechstomp", 0.0
-	damagefactor "ExplosionBlue", 1.5
-	damagefactor "ExplosionRed", 1.5
-	damagefactor "ExplosionMechBlue", 2.5
-	damagefactor "ExplosionMechRed", 2.5
-	damagefactor "FireBlue", 0.6
-	damagefactor "FireRed", 0.6
-	damagefactor "ChemicalBlue", 0.6
-	damagefactor "ChemicalRed", 0.6
-	painchance "LaserRed", 255
-	painchance "LaserBlue", 255
+	damagefactor "Explosion", 1.5
+	damagefactor "AntiArmor", 2.5
+	damagefactor "Fire", 0.6
+	damagefactor "Chemical", 0.6
+	painchance "Laser", 255
 	radius 24
 	height 56
 	scale 0.75
@@ -1141,7 +1134,7 @@ actor Utility_TurretBase {
 	}
 }
 
-// [NF] This actor is used to clear places like War Factory hanger doors, teleport
+// This actor is used to clear places like War Factory hanger doors, teleport
 // destinations and the like from utility items
 actor AntiUtilityExplosion {
 	+NOGRAVITY +NOBLOCKMAP

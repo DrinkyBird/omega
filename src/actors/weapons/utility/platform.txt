@@ -6,11 +6,8 @@ actor FloatingPlatform : InvisibleBridge {
 	health 2000
 	mass 0x7FFFFFFF
 	damagefactor "Disarm", 0.0
-	damagefactor "Flash", 0.0
-	damagefactor "RazorWireRed", 0.0
-	damagefactor "RazorWireBlue", 0.0
-	damagefactor "FistRed", 0.5
-	damagefactor "FistBlue", 0.5
+	damagefactor "RazorWire", 0.0
+	damagefactor "Fist", 0.5
 	damagefactor "Mechstomp", 0.0
 	
 	states {

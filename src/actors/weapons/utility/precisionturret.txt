@@ -8,10 +8,8 @@ actor Utility_PrecisionTurretRed : Utility_TurretBase
   //seesound "turret/sight"
   attacksound "rifle/fire"
   activesound "turret/sight"
-  damagefactor "ExplosionRed", 0.75
-  damagefactor "ExplosionBlue", 0.75
-  damagefactor "MassDriverRed", 0.75
-  damagefactor "MassDriverBlue", 0.75
+  damagefactor "Explosion", 0.75
+  damagefactor "MassDriver", 0.75
   states
   {
   Spawn:
@@ -87,10 +85,8 @@ actor Utility_PrecisionTurretBlue : Utility_TurretBase
   //seesound "turret/sight"
   attacksound "rifle/fire"
   activesound "turret/sight"
-  damagefactor "ExplosionRed", 0.75
-  damagefactor "ExplosionBlue", 0.75
-  damagefactor "MassDriverRed", 0.75
-  damagefactor "MassDriverBlue", 0.75
+  damagefactor "Explosion", 0.75
+  damagefactor "MassDriver", 0.75
   states
   {
   Spawn:

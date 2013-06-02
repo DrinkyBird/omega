@@ -21,24 +21,25 @@ actor Utility_MiniRefCacheRed {
 	scale 0.1875
 	mass 0x7FFFFFFF
 	painchance 255
-	damagetype ChemicalSpecial
-	damagefactor "FistRed", 0.0		damagefactor "FistBlue", 0.2
-	damagefactor "BulletRed", 0.0		damagefactor "BulletBlue", 0.5
-	damagefactor "RifleRed", 0.0		damagefactor "RifleBlue", 0.5
-	damagefactor "ExplosionRed", 0.0	damagefactor "ExplosionBlue", 0.75
-	damagefactor "FireRed", 0.0		damagefactor "FireBlue", 0.6
-	damagefactor "ChemicalRed", 0.0		damagefactor "ChemicalBlue", 0.0
-	damagefactor "LaserRed", 0.0		damagefactor "LaserBlue", 1.0
-	damagefactor "RazorWireRed", 0.0	damagefactor "RazorWireBlue", 0.0
-	damagefactor "ExplosionMechRed", 0.0	damagefactor "ExplosionMechBlue", 0.25
-	damagefactor "TimeRed", 0.0		damagefactor "TimeBlue", 1.0
-	damagefactor "Disarm", 0.0		damagefactor "Flash", 0.0
-	damagefactor "Superweapon", 0.0		damagefactor "SuperweaponIon", 1.0
-	damagefactor "MassDriverRed", 0.0	damagefactor "MassDriverBlue", 0.75
-	damagefactor "ChemicalSpecial", 0.0
-	damagefactor "Deconstruction",	1.0
-	damagefactor "Mechstomp", 0.0
-	damagefactor "Monster", 0.0
+	DamageType ChemicalSpecial
+	DamageFactor "Fist",             0.2
+	DamageFactor "Bullet",           0.5
+	DamageFactor "Rifle",            0.5
+	DamageFactor "Explosion",        0.75
+	DamageFactor "Fire",             0.6
+	DamageFactor "Chemical",         0.0
+	DamageFactor "Laser"             1.0
+	DamageFactor "Time",             1.0
+	DamageFactor "MassDriver",       0.75
+	DamageFactor "AntiArmor",        1.0
+	DamageFactor "RazorWire",        1.0
+	DamageFactor "Superweapon",      1.0
+	DamageFactor "FireSpecial",      1.0
+	DamageFactor "ChemicalSpecial",  1.0
+	DamageFactor "Mechstomp",        1.0
+	DamageFactor "Monster",          0.0
+	DesignatedTeam 1
+	
 	States {
 	Spawn:
 		MREF AA 0 Thing_ChangeTID(0,900)
@@ -79,19 +80,9 @@ actor Utility_MiniRefCacheRed {
 }
 
 ACTOR Utility_MiniRefCacheBlue : Utility_MiniRefCacheRed {
-	obituary "%o ventured too close to the \cNBlue Mini-Refinery\c-."
-	damagefactor "FistRed", 0.2		damagefactor "FistBlue", 0.0
-	damagefactor "BulletRed", 0.5		damagefactor "BulletBlue", 0.0
-	damagefactor "RifleRed", 0.5		damagefactor "RifleBlue", 0.0
-	damagefactor "ExplosionRed", 0.75	damagefactor "ExplosionBlue", 0.0
-	damagefactor "FireRed", 0.6		damagefactor "FireBlue", 0.0
-	damagefactor "LaserRed", 1.0		damagefactor "LaserBlue", 0.0
-	damagefactor "RazorWireRed", 0.0	damagefactor "RazorWireBlue", 0.0
-	damagefactor "ExplosionMechRed", 0.25	damagefactor "ExplosionMechBlue", 0.0
-	damagefactor "TimeRed", 1.0		damagefactor "TimeBlue", 0.0
-	damagefactor "Superweapon", 1.0		damagefactor "SuperweaponIon", 0.0
-	damagefactor "MassDriverRed", 0.75	damagefactor "MassDriverBlue", 0.0
-	states {
+	DesignatedTeam 0
+	Obituary "%o ventured too close to the \cNBlue Mini-Refinery\c-."
+	States {
 	Spawn:
 		MREF AA 0 Thing_ChangeTID(0,901)
 		MREF AAAAAAAAAA 3 A_FadeIn(0.1)
