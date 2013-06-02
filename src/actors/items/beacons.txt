@@ -366,7 +366,7 @@ actor NukeBeaconThrown : IonBeaconThrown {
 
 // NOTE: DEBUG ACTORS
 actor IonMissile : Rocket {
-	damagetype "SuperweaponIon"
+	damagetype "Superweapon"
 	states {
 	Death:
 		BEAC D 0 A_SpawnItemEx("BlueStrike")

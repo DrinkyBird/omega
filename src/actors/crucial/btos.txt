@@ -52,22 +52,18 @@ actor BaseTerminalOutside {
 		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 1)
 		goto Idle
 	
-	Pain.FireRed:
-	Pain.FireBlue:
+	Pain.Fire:
 		TNT1 A 0
 		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], random(0, 1))
 		goto Idle
 	
-	Pain.MassDriverRed:
-	Pain.MassDriverBlue:
-	Pain.ExplosionRed:
-	Pain.ExplosionBlue:
+	Pain.MassDriver:
+	Pain.Explosion:
 		TNT1 A 0
 		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 30)
 		goto Idle
 	
 	Pain.Superweapon:
-	Pain.SuperweaponIon:
 		TNT1 A 0
 		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 3000)
 		goto Idle
