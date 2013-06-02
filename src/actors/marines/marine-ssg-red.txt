@@ -1197,15 +1197,13 @@ Actor RedSuperShotgunner	//Red SSGer
 		PLA9 W -1
 		stop
 
-	Death.ExplosionRed:
-	Death.ExplosionBlue:
+	Death.Explosion:
 		PLA9 H 1
 		PLA9 H 0 A_Jump(128,"Death")
 		goto XDeath
 
 	Death.FireSpecial:
-	Death.FireRed:
-	Death.FireBlue:
+	Death.Fire:
 		// stop all sound channels
 		PLA9 A 0 A_StopSound (0) PLA9 A 0 A_StopSound (4)
 		PLA9 A 0 A_StopSound (1) PLA9 A 0 A_StopSound (5)
@@ -1218,8 +1216,7 @@ Actor RedSuperShotgunner	//Red SSGer
 		stop
 
 	Death.ChemicalSpecial:
-	Death.ChemicalRed:
-	Death.ChemicalBlue:
+	Death.Chemical:
 		// stop all sound channels
 		PLA9 A 0 A_StopSound (0) PLA9 A 0 A_StopSound (4)
 		PLA9 A 0 A_StopSound (1) PLA9 A 0 A_StopSound (5)

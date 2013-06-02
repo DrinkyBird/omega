@@ -678,15 +678,13 @@ Actor MBase : PlayerPawn	//Basic unarmed marine.
 		PLAY V -1
 		stop
 
-	Death.ExplosionRed:
-	Death.ExplosionBlue:
+	Death.Explosion:
 		PLAY H 1
 		PLAY H 0 A_Jump(128,"Death")
 		goto XDeath
 
 	Death.FireSpecial:
-	Death.FireRed:
-	Death.FireBlue:
+	Death.Fire:
 		// stop all sound channels
 		TNT1 A 0 A_StopSound (0) TNT1 A 0 A_StopSound (4)
 		TNT1 A 0 A_StopSound (1) TNT1 A 0 A_StopSound (5)
@@ -699,8 +697,7 @@ Actor MBase : PlayerPawn	//Basic unarmed marine.
 		stop
 
 	Death.ChemicalSpecial:
-	Death.ChemicalRed:
-	Death.ChemicalBlue:
+	Death.Chemical:
 		// stop all sound channels
 		TNT1 A 0 A_StopSound (0) TNT1 A 0 A_StopSound (4)
 		TNT1 A 0 A_StopSound (1) TNT1 A 0 A_StopSound (5)

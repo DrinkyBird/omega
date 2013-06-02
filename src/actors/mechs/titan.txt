@@ -65,7 +65,7 @@ actor Titan : MechPlayer_Base {
 		Stop
 	Death.IonExplosion:
 		ROB3 A 0
-		ROB3 A 0 A_JumpIfInventory ("IsBlue", 1, "Death.NukeExplosion")
+		ROB3 A 0 A_JumpIfInventory ("IsRed", 1, "Death.NukeExplosion")
 		ROB3 A 0 A_SpawnItemEx ("BlueStrikeKamikaze", 0, 0, 32)
 		goto DeathGo
 	Death.NukeExplosion:

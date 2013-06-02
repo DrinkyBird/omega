@@ -908,15 +908,13 @@ Actor RedFlamerDude
 		PFLM W -1
 		stop
 
-	Death.ExplosionRed:
-	Death.ExplosionBlue:
+	Death.Explosion:
 		PFLM H 1
 		PFLM H 0 A_Jump(128,"Death")
 		goto XDeath
 
 	Death.FireSpecial:
-	Death.FireRed:
-	Death.FireBlue:
+	Death.Fire:
 		// stop all sound channels
 		PFLM A 0 A_StopSound (0) PFLM A 0 A_StopSound (4)
 		PFLM A 0 A_StopSound (1) PFLM A 0 A_StopSound (5)
@@ -929,8 +927,7 @@ Actor RedFlamerDude
 		stop
 
 	Death.ChemicalSpecial:
-	Death.ChemicalRed:
-	Death.ChemicalBlue:
+	Death.Chemical:
 		// stop all sound channels
 		PFLM A 0 A_StopSound (0) PFLM A 0 A_StopSound (4)
 		PFLM A 0 A_StopSound (1) PFLM A 0 A_StopSound (5)

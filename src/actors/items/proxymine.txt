@@ -103,8 +103,7 @@ actor ProxyMineRed {
 		TNT1 A 1
 		stop
 	
-	Death.LaserRed:
-	Death.LaserBlue:
+	Death.Laser:
 	Death.Deconstruction:
 	Death.Disarm:
 		PC4T A 18 A_PlaySound("c4/disarm")

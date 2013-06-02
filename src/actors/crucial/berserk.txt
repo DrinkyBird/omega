@@ -1,26 +1,23 @@
-// [NF] See weapons/fists.txt for Berserk Fist code
 actor BerserkPlayer : Player {
 	+NOSKIN
 	-PICKUP
-	health 200
-	player.maxhealth 200
-	player.displayName "Berserker"
-	player.startitem "BerserkFists", 1
-	player.forwardmove 1.0 // doomguy speed!
-	player.sidemove 1.0
-	player.morphweapon "BerserkFists"
+	Health 200
+	Player.MaxHealth 200
+	Player.DisplayName "Berserker"
+	Player.StartItem "BerserkFists", 1
+	Player.ForwardMove 1.0 // doomguy speed!
+	Player.SideMove 1.0
+	Player.MorphWeapon "BerserkFists"
 	DamageFactor "Chemical", 2.25 // aaahhh
 	
-	states {
+	// Go splat in every death
+	States {
 	Death:
-	Death.ChemicalBlue:
-	Death.ChemicalRed:
+	Death.Chemical:
 	Death.ChemicalSpecial:
-	Death.FireBlue:
-	Death.FireRed:
+	Death.Fire:
 	Death.FireSpecial:
-	Death.TimeRed:
-	Death.TimeBlue:
+	Death.Time:
 		goto XDeathGo
 	}
 }
