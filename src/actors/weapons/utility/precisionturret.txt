@@ -130,7 +130,7 @@ actor Utility_PrecisionTurretBlue : Utility_TurretBase
     CIGN F 0 A_CPosRefire
     CIGN B 0 A_JumpIfInventory("MechReloading",6,"Pain")
     CIGN B 0 A_PlayWeaponSound("rifle/fire")
-    CIGN B 0 A_CustomMissile("PrecisionTurretProjectileBlue",48,0,random(-2,2))
+    CIGN B 0 A_CustomMissile("PrecisionTurretProjectile",48,0,random(-2,2))
     CIGN B 0 //A_CustomBulletAttack(2,2,1,15,"RiflePuff",4000)
     CIGN B 0 A_SpawnItemEx("Flash",0,0,0,0,0,0,0,128,0)
     CIGN B 0 A_FaceTarget
@@ -165,32 +165,10 @@ actor PrecisionTurretProjectile : FastProjectile
   Projectile
   -RANDOMIZE
   Obituary "%o died."
-  DamageType "RifleRed"
+  DamageType "Rifle"
   Scale 0.0
   States
   { 
-  Spawn:
-    TNT1 A 35
-    loop
-  Death:
-    TNT1 A 5 A_SpawnItemEx("BulletPuff",0,0,0,0,0,0,0,128,0)
-    stop
-  }
-}
-
-actor PrecisionTurretProjectileBlue : FastProjectile
-{
-  Radius 5
-  Height 5
-  Speed 550
-  Damage (18)
-  Projectile
-  -RANDOMIZE
-  Obituary "%o died."
-  DamageType "RifleBlue"
-  Scale 0.0
-  States
-  {
   Spawn:
     TNT1 A 35
     loop

@@ -435,14 +435,15 @@ actor TimeGunWeakenBlue : TimeGunBoostRed {
 actor GoldenBall1 : PlasmaShot {
 	+FORCEXYBILLBOARD
 	+SEEKERMISSILE
-	obituary "%o was blasted out of timestream by %k's time gun."
-	translation "192:207=160:167", "240:246=232:235", "80:111=160:167"
-	damagetype "TimeRed"
-	damage (4*random(2,3)) // 8 or 12 per shot
-	speed 25
-	renderstyle add
-	alpha 0.75
-	states {
+	Obituary "%o was blasted out of timestream by %k's time gun."
+	Translation "192:207=160:167", "240:246=232:235", "80:111=160:167"
+	DamageType "Time"
+	Damage (10)
+	Speed 25
+	RenderStyle add
+	Alpha 0.75
+	
+	States {
 	Spawn:
 		PLSS AB 4 BRIGHT A_Tracer2
 		loop
@@ -452,23 +453,20 @@ actor GoldenBall1 : PlasmaShot {
 actor GoldenBall2 : DoomImpBall {
 	+FORCEXYBILLBOARD
 	+SEEKERMISSILE
-	obituary "%o was blasted out of timestream by %k's time gun."
-	translation "176:191=160:167", "208:223=160:167", "16:47=160:167"
-	damagetype "TimeRed"
-	damage (4*random(2,3)) // 8 or 12 per shot
-	speed 25
-	fastspeed 25
-	renderstyle add
-	alpha 0.75
-	states {
+	Obituary "%o was blasted out of timestream by %k's time gun."
+	Translation "176:191=160:167", "208:223=160:167", "16:47=160:167"
+	DamageType "Time"
+	Damage (10)
+	Speed 25
+	FastSpeed 25
+	RenderStyle add
+	Alpha 0.75
+	States {
 	Spawn:
-		BAL1 AB 4 BRIGHT // A_Tracer2
+		BAL1 AB 4 BRIGHT
 		loop
 	}
 }
-
-actor GoldenBall1Blue : GoldenBall1 {damagetype "TimeBlue"}
-actor GoldenBall2Blue : GoldenBall2 {damagetype "TimeBlue"}
 
 // ===================================================
 // -------------------------------------- EFFECT PUFFS
@@ -479,10 +477,11 @@ actor GoldenPuff {
 	+NOGRAVITY
 	+BLOODLESSIMPACT
 	+PUFFGETSOWNER
-	renderstyle Add
-	alpha 0.75
-	translation "192:207=160:167", "240:246=232:235", "80:111=160:167"
-
+	RenderStyle Add
+	Alpha 0.75
+	Translation "192:207=160:167", "240:246=232:235", "80:111=160:167"
+	DamageType "Time"
+	
 	states {
 	Spawn:
 	Melee:
@@ -493,7 +492,6 @@ actor GoldenPuff {
 }
 
 actor BoostPuffRed : GoldenPuff {
-	damagetype "TimeRed"
 	states {
 	Spawn:
 	Melee:
@@ -506,7 +504,6 @@ actor BoostPuffRed : GoldenPuff {
 }
 
 actor BoostPuffBlue : GoldenPuff {
-	damagetype "TimeBlue"
 	states {
 	Spawn:
 	Melee:
@@ -519,7 +516,6 @@ actor BoostPuffBlue : GoldenPuff {
 }
 
 actor FloatPuffRed : GoldenPuff {
-	damagetype "TimeRed"
 	states {
 	Spawn:
 	Melee:
@@ -532,7 +528,6 @@ actor FloatPuffRed : GoldenPuff {
 }
 
 actor FloatPuffBlue : GoldenPuff {
-	damagetype "TimeBlue"
 	states {
 	Spawn:
 	Melee:
@@ -545,7 +540,6 @@ actor FloatPuffBlue : GoldenPuff {
 }
 
 actor SlowPuffRed : GoldenPuff {
-	damagetype "TimeRed"
 	states {
 	Spawn:
 	Melee:
@@ -558,7 +552,6 @@ actor SlowPuffRed : GoldenPuff {
 }
 
 actor SlowPuffBlue : GoldenPuff {
-	damagetype "TimeBlue"
 	states {
 	Spawn:
 	Melee:
@@ -571,7 +564,6 @@ actor SlowPuffBlue : GoldenPuff {
 }
 
 actor WeakenPuffRed : GoldenPuff {
-	damagetype "TimeRed"
 	states {
 	Spawn:
 	Melee:
@@ -584,7 +576,6 @@ actor WeakenPuffRed : GoldenPuff {
 }
 
 actor WeakenPuffBlue : GoldenPuff {
-	damagetype "TimeBlue"
 	states {
 	Spawn:
 	Melee:
