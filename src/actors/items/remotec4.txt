@@ -170,8 +170,8 @@ actor RemoteC4Armed {
 	damagefactor "LaserBlue", 0.0
 	damagefactor "RazorWireRed", 0.0
 	damagefactor "RazorWireBlue", 0.0
-	damagefactor "ExplosionMechRed", 0.0
-	damagefactor "ExplosionMechBlue", 0.0
+	damagefactor "AntiArmorRed", 0.0
+	damagefactor "AntiArmorBlue", 0.0
 	damagefactor "TimeRed", 0.0
 	damagefactor "TimeBlue", 0.0
 	damagefactor "MassDriverRed", 0.0

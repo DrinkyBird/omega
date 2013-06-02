@@ -5,6 +5,7 @@
 // to the fact that all the sprites are small so the 'heavy' is in fact, rather simplistic. like very.
 // the sounds are from ZPack, AMB04 and 06 respectively since i cant remember who the credit goes too ATM...
 
+// [Dusk] ... O_O
 
 actor BoilingOrangeSpawner 10770 // Lava Boiling without the bright sprites, for normal Non GLdefs Glowing flats.
 {

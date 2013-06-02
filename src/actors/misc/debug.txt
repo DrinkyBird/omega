@@ -70,11 +70,11 @@ actor DamageTypeIndicator {
 	Pain.RazorWireBlue:
 		PPCX A 0 A_Print ("Damage type indicator hit with RazorWireBlue")
 		goto Spawn
-	Pain.ExplosionMechRed:
-		PPCX A 0 A_Print ("Damage type indicator hit with ExplosionMechRed")
+	Pain.AntiArmorRed:
+		PPCX A 0 A_Print ("Damage type indicator hit with AntiArmorRed")
 		goto Spawn
-	Pain.ExplosionMechBlue:
-		PPCX A 0 A_Print ("Damage type indicator hit with ExplosionMechBlue")
+	Pain.AntiArmorBlue:
+		PPCX A 0 A_Print ("Damage type indicator hit with AntiArmorBlue")
 		goto Spawn
 	Pain.TimeRed:
 		PPCX A 0 A_Print ("Damage type indicator hit with TimeRed")

@@ -15,8 +15,8 @@ actor Player : DoomPlayer {
 	damagefactor "ExplosionBlue", 0.3
 	damagefactor "ChemicalRed", 2.0
 	damagefactor "ChemicalBlue", 2.0
-	damagefactor "ExplosionMechRed", 0.1
-	damagefactor "ExplosionMechBlue", 0.1
+	damagefactor "AntiArmorRed", 0.1
+	damagefactor "AntiArmorBlue", 0.1
 	damagefactor "Disarm", 0.0 
 	damagefactor "Deconstruction", 0.0
 	damagefactor "MassDriverRed", 0.3

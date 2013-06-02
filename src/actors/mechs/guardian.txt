@@ -291,7 +291,7 @@ actor GuardianShell : ArtilleryShell80mm {
 	obituary "$OB_GUARDIAN"
 	speed 70
 	damage (210)
-	damagetype "ExplosionMechRed"
+	damagetype "AntiArmorRed"
 	scale 0.8
 	states {
 	Death:
@@ -307,7 +307,7 @@ actor GuardianShell : ArtilleryShell80mm {
 
 actor GuardianShellBlue : GuardianShell {
 	translation "112:120=200:207", "121:127=241:247"
-	damagetype "ExplosionMechBlue"
+	damagetype "AntiArmorBlue"
 	states {
 	Death:
 		TNT1 A 0 bright A_NoGravity
@@ -440,7 +440,7 @@ actor ShortRangeMissile : LongRangeMissile {
 	speed 35
 	damage (38)
 	deathsound "weapons/rocklx"
-	damagetype "ExplosionMechRed"
+	damagetype "AntiArmorRed"
 	scale 0.8
 	states {
 	Spawn:
@@ -456,7 +456,7 @@ actor ShortRangeMissile : LongRangeMissile {
 	}
 }
 actor ShortRangeMissileBlue : ShortRangeMissile {
-	damagetype "ExplosionMechBlue"
+	damagetype "AntiArmorBlue"
 	states {
 	Death:
 		TNT1 A 0 A_StopSound (CHAN_BODY)

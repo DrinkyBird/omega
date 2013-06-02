@@ -226,7 +226,7 @@ actor ArtilleryShell80mm : ArtilleryShell {
 	translation "112:127=176:191", "80:111=104:111"
 	speed 50
 	damage (50)
-	damagetype "ExplosionMechRed"
+	damagetype "AntiArmorRed"
 	scale 0.7
 	states {
 	Death:
@@ -261,7 +261,7 @@ actor ArtilleryShell80mmBlue : ArtilleryShell {
 	translation "112:120=200:207", "121:127=241:247", "80:111=104:111"
 	speed 50
 	damage (50)
-	damagetype "ExplosionMechBlue"
+	damagetype "AntiArmorBlue"
 	scale 0.7
 	states {
 	Death:

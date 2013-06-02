@@ -377,8 +377,8 @@ actor PowerTimeGunWeaken : PowerDamage {
 	damagefactor "LaserBlue", 0.7
 	damagefactor "RazorWireRed", 0.7
 	damagefactor "RazorWireBlue", 0.7
-	damagefactor "ExplosionMechRed", 0.7
-	damagefactor "ExplosionMechBlue", 0.7
+	damagefactor "AntiArmorRed", 0.7
+	damagefactor "AntiArmorBlue", 0.7
 	damagefactor "TimeRed", 0.7
 	damagefactor "TimeBlue", 0.7
 	damagefactor "Disarm", 0.7

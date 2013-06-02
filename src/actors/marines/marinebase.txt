@@ -41,8 +41,8 @@ Actor MBase : PlayerPawn	//Basic unarmed marine.
 	damagefactor "LaserBlue", 1.0
 	damagefactor "RazorWireRed", 1.0
 	damagefactor "RazorWireBlue", 1.0
-	damagefactor "ExplosionMechRed", 0.1
-	damagefactor "ExplosionMechBlue", 0.1
+	damagefactor "AntiArmorRed", 0.1
+	damagefactor "AntiArmorBlue", 0.1
 	damagefactor "TimeRed", 1.0
 	damagefactor "TimeBlue", 1.0
 	damagefactor "Repair", 0.0

@@ -86,8 +86,8 @@ actor GaussRifle : AOWWeapon 21049 {
 		GAUS I 0 A_JumpIfInventory ("IsBlue", 1, "AltFire.Blue")
 		GAUS EFGH 2
 		GAUS I 1 A_Light1
-		GAUS J 0 bright A_FireBullets (0, 0, 1, 0, "ExplosionMechPuff", 0)
-		GAUS J 0 bright A_RailAttack (100, 4, 1, "AA 00 00", "FF FF FF", 1, 0, "ExplosionMechPuff")
+		GAUS J 0 bright A_FireBullets (0, 0, 1, 0, "AntiArmorPuff", 0)
+		GAUS J 0 bright A_RailAttack (100, 4, 1, "AA 00 00", "FF FF FF", 1, 0, "AntiArmorPuff")
 		GAUS I 1 offset(1, 34) A_Light1
 		GAUS J 1 offset(2, 36) A_Light2
 		GAUS J 1 offset(4, 40) A_Light2
@@ -108,8 +108,8 @@ actor GaussRifle : AOWWeapon 21049 {
 	AltFire.Blue:
 		GAUB EFGH 2
 		GAUB I 1 A_Light1
-		GAUB J 0 bright A_FireBullets (0, 0, 1, 0, "ExplosionMechPuffBlue", 0)
-		GAUB J 0 bright A_RailAttack (100, 4, 1, "11 11 88", white, 1, 0, "ExplosionMechPuffBlue")
+		GAUB J 0 bright A_FireBullets (0, 0, 1, 0, "AntiArmorPuffBlue", 0)
+		GAUB J 0 bright A_RailAttack (100, 4, 1, "11 11 88", white, 1, 0, "AntiArmorPuffBlue")
 		GAUB I 1 offset(1, 34) A_Light1
 		GAUB J 1 offset(2, 36) A_Light2
 		GAUB J 1 offset(4, 40) A_Light2
@@ -162,5 +162,5 @@ actor GaussPuffBlue : GaussPuff {
 	translation ""
 }
 
-actor ExplosionMechPuff : ExplosionPuff {damagetype "ExplosionMechRed"}
-actor ExplosionMechPuffBlue : ExplosionPuff {damagetype "ExplosionMechBlue"}
+actor AntiArmorPuff : ExplosionPuff {damagetype "AntiArmorRed"}
+actor AntiArmorPuffBlue : ExplosionPuff {damagetype "AntiArmorBlue"}

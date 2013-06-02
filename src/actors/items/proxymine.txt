@@ -63,7 +63,7 @@ actor ProxyMineRed {
 	damagefactor "TimeRed",		0.0	damagefactor "TimeBlue",	0.0
 	damagefactor "Superweapon",	0.0	damagefactor "SuperweaponIon",	0.0
 	damagefactor "MassDriverRed",	0.0	damagefactor "MassDriverBlue",	0.0
-	damagefactor "ExplosionMechRed", 0.0	damagefactor "ExplosionMechBlue", 0.0
+	damagefactor "AntiArmorRed", 0.0	damagefactor "AntiArmorBlue", 0.0
 	damagefactor "FireSpecial",	0.0
 	damagefactor "ChemicalSpecial",	0.0
 	damagefactor "Disarm",		1.0

@@ -17,8 +17,8 @@ actor MechPlayer_Base : PlayerPawn {
 	damagefactor "LaserBlue", 1.0
 	damagefactor "RazorWireRed", 1.0
 	damagefactor "RazorWireBlue", 1.0
-	damagefactor "ExplosionMechRed", 2.0
-	damagefactor "ExplosionMechBlue", 2.0
+	damagefactor "AntiArmorRed", 2.0
+	damagefactor "AntiArmorBlue", 2.0
 	damagefactor "TimeRed", 1.0
 	damagefactor "TimeBlue", 1.0
 	damagefactor "Disarm", 0.0
