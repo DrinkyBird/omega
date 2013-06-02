@@ -5,8 +5,8 @@ actor MissileLauncher : AOWWeapon {
 	Obituary "$OB_MISSILELAUNCHER"
 	Weapon.SelectionOrder 13
 	Weapon.AmmoType "MissileAmmo"
-	Weapon.AammoUse 1
-	Weapon.mmoGive 2
+	Weapon.AmmoUse 1
+	Weapon.AmmoGive 2
 	Weapon.PreferredSkin "MarineRockets"
 	
 	States {

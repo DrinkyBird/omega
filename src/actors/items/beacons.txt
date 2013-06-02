@@ -65,7 +65,7 @@ actor IonCannonPlaced {
 	DamageFactor "Explosion",        0.0
 	DamageFactor "Fire",             0.0
 	DamageFactor "Chemical",         0.0
-	DamageFactor "Laser"             0.0
+	DamageFactor "Laser",            0.0
 	DamageFactor "Time",             0.0
 	DamageFactor "MassDriver",       0.0
 	DamageFactor "AntiArmor",        0.0

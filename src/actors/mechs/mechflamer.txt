@@ -124,3 +124,7 @@ actor FlameWallDecay : FlameDecay {
 		loop
 	}
 }
+
+actor FastFlameShot : FlameShot {
+	Speed 40
+}

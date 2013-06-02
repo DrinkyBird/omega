@@ -451,8 +451,6 @@ Generator MiniNuke NukeScorch
 Generator IonBomb NukeScorch
 Generator FlameThrowerFire FlameScorch
 Generator ChemicalShot ChemScorch
-Generator FlameThrowerFireBlue FlameScorch
-Generator ChemicalShotBlue ChemScorch
 
 Generator PlasmaCannonBall PCLightningRed
 Generator PlasmaCannonBallSmall PC2LightningRed

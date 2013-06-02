@@ -37,7 +37,6 @@ actor RemoteC4 : AOWWeapon {
 		RC4G B 0 A_Raise
 		loop
 	SelectFull:
-		RC4G A 0 A_TakeInventory ("RemoteC4Detonator", 1)
 		RC4G A 1 A_Raise
 		RC4G A 0 A_Raise
 		goto SelectFull+1
@@ -206,16 +205,12 @@ actor RemoteC4Armed {
 
 actor RemoteC4ArmedBlue : RemoteC4Armed {
 	Translation "16:47=196:207", "168:191=196:207"
+	
 	States {
 	Spawn:
 		RC4T A 0
 		RC4T A 0 A_GiveInventory ("IsBlue", 1)
 		goto Idle
-	
-	DeathFinish:
-		TNT1 A 0 A_SpawnItemEx("FlameWallDecayBlue", random(-48,48), random(-48,48), 4, 0, 0, 0, 0, 0, 160)
-		TNT1 A 5
-		stop
 	}
 }
 

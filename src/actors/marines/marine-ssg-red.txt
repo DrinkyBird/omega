@@ -59,7 +59,6 @@ Actor RedSuperShotgunner	//Red SSGer
 	Spawn:
 		PLA9 A 0
 		PLA9 A 0 A_GiveInventory("IsRed", 1)
-		PLA9 A 0 A_GiveInventory("PowerRedTeamArmor")
 		PLA9 A 0 A_ChangeFlag("Friendly", 0)//Execute ACS script(s) here.
 		PLA9 A 0 ACS_ExecuteAlways (985, 0, 1, ARMOD_NONE)
 		PLA9 A 0 ACS_ExecuteAlways (SC_MARINE_INIT, 0)

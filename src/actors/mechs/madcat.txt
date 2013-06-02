@@ -162,8 +162,8 @@ actor MadCatWeapons : AOWWeapon {
 		MHUD C 0 A_PlayWeaponSound("ppc/fire")
 		MHUD A 0 ACS_ExecuteAlways(319, 0, 2, 5) // reload
 		MHUD C 0 A_GunFlash
-		MHUD A 0 A_FireCustomMissile("ShockCannonBallRed", 0, 0, 64, 0)
-		MHUD A 0 A_FireCustomMissile("ShockCannonBallRed", 0, 0, -64, 0)
+		MHUD A 0 A_FireCustomMissile("ShockCannonBall", 0, 0, 64, 0)
+		MHUD A 0 A_FireCustomMissile("ShockCannonBall", 0, 0, -64, 0)
 		MHUD D 15 BRIGHT
 		MHUD C 35
 		MHUD C 2 A_Refire

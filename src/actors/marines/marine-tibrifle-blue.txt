@@ -59,7 +59,6 @@ Actor BlueTiberiumRifleman	//Blue Tiberium Rifleman
 	Spawn:
 		MGMR A 0 //Dummy frame needed.
 		MGMR A 0 A_GiveInventory("IsBlue", 1)
-		MGMR A 0 A_GiveInventory("PowerBlueTeamArmor")
 		MGMR A 0 A_ChangeFlag("Friendly", 0)//Execute ACS script(s) here.
 		MGMR A 0 ACS_ExecuteAlways (985, 0, 1, ARMOD_HALFCHEM)
 		MGMR A 0 ACS_ExecuteAlways (SC_MARINE_INIT, 0)
@@ -614,7 +613,7 @@ Actor BlueTiberiumRifleman	//Blue Tiberium Rifleman
 		MGMR E 0 A_JumpIfInventory("TE21CallAmmoAI", 6, "Reload")
 		MGMR E 0 A_FaceTarget
 		MGMR E 0 A_PlayWeaponSound("toxin/fire")
-		MGMR E 0 A_CustomMissile("TiberiumDartBlue", 36, 10)//1
+		MGMR E 0 A_CustomMissile("TiberiumDart", 36, 10)//1
 		MGMR E 0 NoiseAlert (0, 0)
 		MGMR E 0 A_GiveInventory("TE21CallAmmoAI")
 		MGMR E 1 A_Recoil (-0.368856)
@@ -640,7 +639,7 @@ Actor BlueTiberiumRifleman	//Blue Tiberium Rifleman
 		MGMR E 0 A_JumpIfInventory("TE21CallAmmoAI", 6, "Reload")
 		MGMR E 0 A_FaceTarget
 		MGMR E 0 A_PlayWeaponSound("toxin/fire")
-		MGMR E 0 A_CustomMissile("TiberiumDartBlue", 36, 10)//2
+		MGMR E 0 A_CustomMissile("TiberiumDart", 36, 10)//2
 		MGMR E 0 NoiseAlert (0, 0)
 		MGMR E 0 A_GiveInventory("TE21CallAmmoAI")
 		MGMR E 1 Bright A_Recoil (-0.368856)
@@ -666,7 +665,7 @@ Actor BlueTiberiumRifleman	//Blue Tiberium Rifleman
 		MGMR E 0 A_JumpIfInventory("TE21CallAmmoAI", 6, "Reload")
 		MGMR E 0 A_FaceTarget
 		MGMR E 0 A_PlayWeaponSound("toxin/fire")
-		MGMR E 0 A_CustomMissile("TiberiumDartBlue", 36, 10)//3
+		MGMR E 0 A_CustomMissile("TiberiumDart", 36, 10)//3
 		MGMR E 0 NoiseAlert (0, 0)
 		MGMR E 0 A_GiveInventory("TE21CallAmmoAI")
 		MGMR E 1 A_Recoil (-0.368856)
@@ -692,7 +691,7 @@ Actor BlueTiberiumRifleman	//Blue Tiberium Rifleman
 		MGMR E 0 A_JumpIfInventory("TE21CallAmmoAI", 6, "Reload")
 		MGMR E 0 A_FaceTarget
 		MGMR E 0 A_PlayWeaponSound("toxin/fire")
-		MGMR E 0 A_CustomMissile("TiberiumDartBlue", 36, 10)//4
+		MGMR E 0 A_CustomMissile("TiberiumDart", 36, 10)//4
 		MGMR E 0 NoiseAlert (0, 0)
 		MGMR E 0 A_GiveInventory("TE21CallAmmoAI")
 		MGMR E 1 A_Recoil (-0.368856)
@@ -718,7 +717,7 @@ Actor BlueTiberiumRifleman	//Blue Tiberium Rifleman
 		MGMR E 0 A_JumpIfInventory("TE21CallAmmoAI", 6, "Reload")
 		MGMR E 0 A_FaceTarget
 		MGMR E 0 A_PlayWeaponSound("toxin/fire")
-		MGMR E 0 A_CustomMissile("TiberiumDartBlue", 36, 10)//5
+		MGMR E 0 A_CustomMissile("TiberiumDart", 36, 10)//5
 		MGMR E 0 NoiseAlert (0, 0)
 		MGMR E 0 A_GiveInventory("TE21CallAmmoAI")
 		MGMR E 1 A_Recoil (-0.368856)
@@ -744,7 +743,7 @@ Actor BlueTiberiumRifleman	//Blue Tiberium Rifleman
 		MGMR E 0 A_JumpIfInventory("TE21CallAmmoAI", 6, "Reload")
 		MGMR E 0 A_FaceTarget
 		MGMR E 0 A_PlayWeaponSound("toxin/fire")
-		MGMR E 0 A_CustomMissile("TiberiumDartBlue", 36, 10)//6
+		MGMR E 0 A_CustomMissile("TiberiumDart", 36, 10)//6
 		MGMR E 0 NoiseAlert (0, 0)
 		MGMR E 0 A_GiveInventory("TE21CallAmmoAI")
 		MGMR E 1 A_Recoil (-0.368856)
@@ -876,7 +875,7 @@ Actor BlueTiberiumRifleman	//Blue Tiberium Rifleman
 		MGMR E 0 A_JumpIfInventory("TE21CallAmmoAI", 6, "ReloadR")
 		MGMR E 0 A_FaceTarget
 		MGMR E 0 A_PlayWeaponSound("toxin/fire")
-		MGMR E 0 A_CustomMissile("TiberiumDartBlue", 36, 10)//1
+		MGMR E 0 A_CustomMissile("TiberiumDart", 36, 10)//1
 		MGMR E 0 NoiseAlert (0, 0)
 		MGMR E 0 A_GiveInventory("TE21CallAmmoAI")
 		MGMR E 1 A_Recoil (-0.368856)
@@ -902,7 +901,7 @@ Actor BlueTiberiumRifleman	//Blue Tiberium Rifleman
 		MGMR E 0 A_JumpIfInventory("TE21CallAmmoAI", 6, "ReloadR")
 		MGMR E 0 A_FaceTarget
 		MGMR E 0 A_PlayWeaponSound("toxin/fire")
-		MGMR E 0 A_CustomMissile("TiberiumDartBlue", 36, 10)//2
+		MGMR E 0 A_CustomMissile("TiberiumDart", 36, 10)//2
 		MGMR E 0 NoiseAlert (0, 0)
 		MGMR E 0 A_GiveInventory("TE21CallAmmoAI")
 		MGMR E 1 Bright A_Recoil (-0.368856)
@@ -928,7 +927,7 @@ Actor BlueTiberiumRifleman	//Blue Tiberium Rifleman
 		MGMR E 0 A_JumpIfInventory("TE21CallAmmoAI", 6, "ReloadR")
 		MGMR E 0 A_FaceTarget
 		MGMR E 0 A_PlayWeaponSound("toxin/fire")
-		MGMR E 0 A_CustomMissile("TiberiumDartBlue", 36, 10)//3
+		MGMR E 0 A_CustomMissile("TiberiumDart", 36, 10)//3
 		MGMR E 0 NoiseAlert (0, 0)
 		MGMR E 0 A_GiveInventory("TE21CallAmmoAI")
 		MGMR E 1 A_Recoil (-0.368856)
@@ -954,7 +953,7 @@ Actor BlueTiberiumRifleman	//Blue Tiberium Rifleman
 		MGMR E 0 A_JumpIfInventory("TE21CallAmmoAI", 6, "ReloadR")
 		MGMR E 0 A_FaceTarget
 		MGMR E 0 A_PlayWeaponSound("toxin/fire")
-		MGMR E 0 A_CustomMissile("TiberiumDartBlue", 36, 10)//4
+		MGMR E 0 A_CustomMissile("TiberiumDart", 36, 10)//4
 		MGMR E 0 NoiseAlert (0, 0)
 		MGMR E 0 A_GiveInventory("TE21CallAmmoAI")
 		MGMR E 1 A_Recoil (-0.368856)
@@ -980,7 +979,7 @@ Actor BlueTiberiumRifleman	//Blue Tiberium Rifleman
 		MGMR E 0 A_JumpIfInventory("TE21CallAmmoAI", 6, "ReloadR")
 		MGMR E 0 A_FaceTarget
 		MGMR E 0 A_PlayWeaponSound("toxin/fire")
-		MGMR E 0 A_CustomMissile("TiberiumDartBlue", 36, 10)//5
+		MGMR E 0 A_CustomMissile("TiberiumDart", 36, 10)//5
 		MGMR E 0 NoiseAlert (0, 0)
 		MGMR E 0 A_GiveInventory("TE21CallAmmoAI")
 		MGMR E 1 A_Recoil (-0.368856)
@@ -1006,7 +1005,7 @@ Actor BlueTiberiumRifleman	//Blue Tiberium Rifleman
 		MGMR E 0 A_JumpIfInventory("TE21CallAmmoAI", 6, "ReloadR")
 		MGMR E 0 A_FaceTarget
 		MGMR E 0 A_PlayWeaponSound("toxin/fire")
-		MGMR E 0 A_CustomMissile("TiberiumDartBlue", 36, 10)//2
+		MGMR E 0 A_CustomMissile("TiberiumDart", 36, 10)//2
 		MGMR E 0 NoiseAlert (0, 0)
 		MGMR E 0 A_GiveInventory("TE21CallAmmoAI")
 		MGMR E 1 A_Recoil (-0.368856)

@@ -59,7 +59,6 @@ Actor BlueFlamerDude
 	Spawn:
 		PFLM A 0 //Dummy frame needed.
 		PFLM A 0 A_GiveInventory("IsBlue", 1)
-		PFLM A 0 A_GiveInventory("PowerBlueTeamArmor")
 		PFLM A 0 A_ChangeFlag("Friendly", 0)//Execute ACS script(s) here.
 		PFLM A 0 ACS_ExecuteAlways (985, 0, 1, ARMOD_FIRE)
 		PFLM A 0 ACS_ExecuteAlways (SC_MARINE_INIT, 0)
@@ -616,7 +615,7 @@ Actor BlueFlamerDude
 		Goto AlternateChase
 		PFLM E 0 A_FaceTarget
 		PFLM E 0 A_PlayWeaponSound("flamer2/fire")
-		PFLM E 0 A_CustomMissile("FlamethrowerFireBlue", random(38,42), 5, random(-2,2))//36, 10)//1
+		PFLM E 0 A_CustomMissile("FlamethrowerFire", random(38,42), 5, random(-2,2))//36, 10)//1
 		PFLM E 0 NoiseAlert (0, 0)
 		PFLM E 1 A_Recoil (-0.368856)
 		PFLM E 0 ThrustThing (angle*256/360-192, 1, 0, 0)
@@ -625,7 +624,7 @@ Actor BlueFlamerDude
 		PFLM E 0 ThrustThing (angle*256/360-192, 1, 0, 0)
 		PFLM E 0 A_FaceTarget
 		PFLM E 0 A_PlayWeaponSound("flamer2/fire")
-		PFLM E 0 A_CustomMissile("FlamethrowerFireBlue", random(38,42), 5, random(-2,2))
+		PFLM E 0 A_CustomMissile("FlamethrowerFire", random(38,42), 5, random(-2,2))
 		PFLM E 0 NoiseAlert (0, 0)
 		PFLM E 1 A_Recoil (-0.368856)
 		PFLM E 0 ThrustThing (angle*256/360-192, 1, 0, 0)
@@ -710,7 +709,7 @@ Actor BlueFlamerDude
 		Goto AlternateChase
 		PFLM E 0 A_FaceTarget
 		PFLM E 0 A_PlayWeaponSound("flamer2/fire")
-		PFLM E 0 A_CustomMissile("FlamethrowerFireBlue", random(38,42), 5, random(-2,2))
+		PFLM E 0 A_CustomMissile("FlamethrowerFire", random(38,42), 5, random(-2,2))
 		PFLM E 0 NoiseAlert (0, 0)
 		PFLM E 1 A_Recoil (-0.368856)
 		PFLM E 0 ThrustThing (angle*256/360-64, 1, 0, 0)
@@ -719,7 +718,7 @@ Actor BlueFlamerDude
 		PFLM E 0 ThrustThing (angle*256/360-64, 1, 0, 0)
 		PFLM E 0 A_FaceTarget
 		PFLM E 0 A_PlayWeaponSound("flamer2/fire")
-		PFLM E 0 A_CustomMissile("FlamethrowerFireBlue", random(38,42), 5, random(-2,2))
+		PFLM E 0 A_CustomMissile("FlamethrowerFire", random(38,42), 5, random(-2,2))
 		PFLM E 0 NoiseAlert (0, 0)
 		PFLM E 1 A_Recoil (-0.368856)
 		PFLM E 0 ThrustThing (angle*256/360-64, 1, 0, 0)

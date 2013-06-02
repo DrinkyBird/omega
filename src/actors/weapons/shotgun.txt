@@ -9,20 +9,23 @@ actor Boomstick : AOWWeapon {
 	weapon.ammogive 5
 	weapon.preferredskin "MarineShotgun"
 	attacksound "weapons/shotgf"
-	states {
+	
+	States {
 	Ready:
 		SHTG A 1 A_WeaponReady
 		wait
+	
 	Deselect:
 		SHTG A 1 A_Lower
 		wait
+	
 	Select:
 		SHTG A 1 A_Raise
 		wait
+	
 	Fire:
 		SHTG A 3
 		SHTG A 0 A_GunFlash
-		SHTG A 0 A_JumpIfInventory("IsBlue",1,"FireBlue")
 		SHTG A 0 Bright A_FireBullets (5.5, 5.5, 2, 6, "HandgunPuff",0,350)
 		SHTG A 2 Bright A_FireBullets (5.5, 5.5, 6, 4, "HandgunPuff",1,1000)
 		SHTG A 3 Bright
@@ -32,15 +35,13 @@ actor Boomstick : AOWWeapon {
 		SHTG A 3
 		SHTG A 7 A_ReFire
 		goto Ready
-	FireBlue:
-		SHTG A 0 Bright A_FireBullets (5.5, 5.5, 2, 6, "HandgunPuffBlue",0,350)
-		SHTG A 2 Bright A_FireBullets (5.5, 5.5, 6, 4, "HandgunPuffBlue",1,1000)
-		goto Fire+5
+	
 	Flash:
 		SHTF A 2 Bright A_Light1
 		SHTF B 3 Bright A_Light2
 		SHTF B 0 A_Light0
 		stop
+	
 	Spawn:
 		SHOT A -1
 		stop

@@ -6,7 +6,7 @@ actor MechPlayer_Base : PlayerPawn {
 	DamageFactor "Explosion",        1.25
 	DamageFactor "Fire",             1.25
 	DamageFactor "Chemical",         1.75
-	DamageFactor "Laser"             1.0
+	DamageFactor "Laser",            1.0
 	DamageFactor "Time",             1.0
 	DamageFactor "MassDriver",       0.9
 	DamageFactor "AntiArmor",        2.0
@@ -57,8 +57,6 @@ actor MechDeathSmoke {
 		stop
 	}
 }
-
-actor MechStepSmokePuffLarge : MechStepSmokePuff {scale 2.5}
 
 actor MechStepDamageWeak {
 	RenderStyle None

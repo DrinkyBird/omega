@@ -6,46 +6,45 @@ actor AdminPistol : AOWWeapon {
 	Obituary "%o was smitten by %k's administrative power."
 	Weapon.SelectionOrder 85
 	Weapon.PreferredSkin "MarineAdmin"
+	
 	States {
 	Spawn:
 		TNT1 A 0 
 		stop
+	
 	Ready: 
 		GPIS A 1 A_WeaponReady
 		wait
+	
 	Deselect:
 		TNT1 A 1 A_Lower 
 		loop
+	
 	Select: 
 		GPIS A 1 A_Raise
 		Loop
+	
 	Fire:
 		GPIS B 0 A_JumpIfInventory ("AdminPistolRotation", 2, "Fire.Deconstruction")
 		GPIS B 0 A_JumpIfInventory ("AdminPistolRotation", 1, "Fire.Repair")
 		goto Fire.Normal
+	
 	Fire.Normal:
 		GPIS B 0 A_GunFlash
 		GPIS B 0 A_PlayWeaponSound ("pistol/fire")
 		GPIS B 0 A_FireBullets (0, 0, 1, 10000, "ExplosionPuff")
-		GPIS B 0 A_FireBullets (0, 0, 1, 10000, "ExplosionPuffBlue")
-		GPIS B 0 A_FireBullets (0, 0, 1, 100000, "HandgunPuff")
-		GPIS B 2 A_FireBullets (0, 0, 1, 100000, "HandgunPuffBlue")
+		GPIS B 2 A_FireBullets (0, 0, 1, 100000, "HandgunPuff")
 		GPIS C 0 A_FireBullets (0, 0, 1, 10000, "ExplosionPuff")
-		GPIS C 0 A_FireBullets (0, 0, 1, 10000, "ExplosionPuffBlue")
-		GPIS C 0 A_FireBullets (0, 0, 1, 100000, "HandgunPuff")
-		GPIS C 2 A_FireBullets (0, 0, 1, 100000, "HandgunPuffBlue")
+		GPIS C 2 A_FireBullets (0, 0, 1, 100000, "HandgunPuff")
 		GPIS B 0 A_GunFlash
 		GPIS B 0 A_PlayWeaponSound ("pistol/fire")
 		GPIS B 0 A_FireBullets (0, 0, 1, 10000, "ExplosionPuff")
-		GPIS B 0 A_FireBullets (0, 0, 1, 10000, "ExplosionPuffBlue")
-		GPIS B 0 A_FireBullets (0, 0, 1, 100000, "HandgunPuff")
-		GPIS B 2 A_FireBullets (0, 0, 1, 100000, "HandgunPuffBlue")
+		GPIS B 2 A_FireBullets (0, 0, 1, 100000, "HandgunPuff")
 		GPIS C 0 A_FireBullets (0, 0, 1, 10000, "ExplosionPuff")
-		GPIS C 0 A_FireBullets (0, 0, 1, 10000, "ExplosionPuffBlue")
-		GPIS C 0 A_FireBullets (0, 0, 1, 100000, "HandgunPuff")
-		GPIS C 2 A_FireBullets (0, 0, 1, 100000, "HandgunPuffBlue")
+		GPIS C 2 A_FireBullets (0, 0, 1, 100000, "HandgunPuff")
 		GPIS A 0 A_Refire
 		goto Ready
+	
 	Fire.Repair:
 		GPIS A 0 A_GunFlash
 		GPIS A 0 A_PlayWeaponSound ("repairgun/fire")
@@ -61,6 +60,7 @@ actor AdminPistol : AOWWeapon {
 		GPIS B 2 BRIGHT A_FireBullets (0, 0, 2, 500, "DisarmPuff") // disarm
 		GPIS A 0 A_ReFire
 		goto Ready
+	
 	Fire.Deconstruction:
 		GPIS A 0 A_GunFlash
 		GPIS A 0 A_PlayWeaponSound ("repairgun/fire")
@@ -72,15 +72,17 @@ actor AdminPistol : AOWWeapon {
 		GPIS B 1 A_FireBullets (0, 0, 2, 500, "DeconstructionPuff")
 		GPIS A 0 A_ReFire
 		goto Ready
+	
 	AltFire:
 		GPIS B 0 A_PlayWeaponSound ("switch/shotgun")
 		GPIS B 4 ACS_ExecuteAlways (402, 0, 13)
 		GPIS C 5
 		goto Ready
+	
 	Flash:
 		PISF A 1 Bright A_Light2
 		PISF B 1 Bright A_Light1
-    		Goto LightDone
+		goto LightDone
 	} 
 }
 

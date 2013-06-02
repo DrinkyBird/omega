@@ -126,7 +126,7 @@ actor OrcaWeapons : AOWWeapon {
 		Goto Ready
 	
 	FireBlue:
-		MHUD B 3 BRIGHT A_FireBullets (2.2, 2.2, -1, 7, "RiflePuffBlue", 1, 3000)
+		MHUD B 3 BRIGHT A_FireBullets (2.2, 2.2, -1, 7, "RiflePuff", 1, 3000)
 		MHUD A 2 A_Refire
 		Goto Ready
 	
@@ -235,11 +235,6 @@ actor OrcaFlash : OrcaFlame {
 		FLMX ABCD 1 bright A_Fadeout(0.25)
 		stop
 	}
-}
-
-actor OrcaSmokePuff : PulseBallSmokePuff {
-	alpha 0.25
-	scale 2.0
 }
 
 actor EjectedOrcaSpawner {

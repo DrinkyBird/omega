@@ -28,7 +28,7 @@ actor Utility_MiniRefCacheRed {
 	DamageFactor "Explosion",        0.75
 	DamageFactor "Fire",             0.6
 	DamageFactor "Chemical",         0.0
-	DamageFactor "Laser"             1.0
+	DamageFactor "Laser",            1.0
 	DamageFactor "Time",             1.0
 	DamageFactor "MassDriver",       0.75
 	DamageFactor "AntiArmor",        1.0

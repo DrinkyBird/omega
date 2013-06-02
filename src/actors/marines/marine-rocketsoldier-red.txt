@@ -56,7 +56,6 @@ Actor RedRocketSoldier	//Blue Rocket Soldier
 	Spawn:
 		PLA5 A 0 //Dummy frame needed.
 		PLA5 A 0 A_GiveInventory("IsRed", 1)
-		PLA5 A 0 A_GiveInventory("PowerRedTeamArmor")
 		PLA5 A 0 A_ChangeFlag("Friendly", 0)//Execute ACS script(s) here.
 		PLA5 A 0 ACS_ExecuteAlways (985, 0, 1, ARMOD_EXPLO)
 		PLA5 A 0 ACS_ExecuteAlways (SC_MARINE_INIT, 0)
