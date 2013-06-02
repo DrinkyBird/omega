@@ -2,9 +2,9 @@
 // damage to the terminal, allowing buildings to be destroyed from the outside.
 
 actor BaseTerminalOutside {
-	health 99999
-	radius 0
-	height 512
+	Health 99999
+	Radius 0
+	Height 512
 	damagefactor "FistRed", 0.0
 	damagefactor "FistBlue", 0.0
 	damagefactor "BulletRed", 0.0
