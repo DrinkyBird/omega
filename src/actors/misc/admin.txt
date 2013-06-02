@@ -85,8 +85,6 @@ actor AdminPistol : AOWWeapon {
 }
 
 actor AdminPistolRotation : Inventory {inventory.maxamount 2}
-actor TimePuff : HHBulletPuff {DamageType "TimeRed"}
-actor TimePuffBlue : HHBulletPuff {DamageType "TimeBlue"}
 
 actor Administrator : Player {
 	Health 200

@@ -12,35 +12,38 @@ actor Flamer : AOWWeapon 21047 {
 	weapon.ammotype2 "PhosphorusGrenadeAmmo"
 	weapon.ammouse2 1
 	weapon.ammogive2 0
-	decal BulletChip
+	Decal BulletChip
 	Weapon.PreferredSkin "MarineFlamer"
-	states {
+	
+	States {
 	Ready:
 		FLMR B 0
 		FLMR BCDBCDBCDBCDBCDBCDBCDBCDBCDBCDBCDBCD 2 A_WeaponReady
 		FLMR B 0 A_StopSound (CHAN_WEAPON)
 		loop
+	
 	Deselect:
 		FLMR A 0 A_StopSound (CHAN_WEAPON)
-	DeselectLoop:
 		FLMR A 1 A_Lower
-		loop
+		wait
+	
 	Select:
 		FLMR A 1 A_Raise
 		Loop
+	
 	Fire:
 		TNT1 A 0 A_JumpIfInventory("IsInSpawnRoom",1,"Ready")
 		FLMR A 2 A_PlaySound ("flamer2/up", CHAN_WEAPON)
 		FLMR A 2
 		FLMR A 0 A_GunFlash
 		FLMR A 0 A_PlaySound ("flamer2/fire", CHAN_WEAPON, 1.0, true)
-		FLMR A 0 A_JumpIfInventory("IsBlue",1,"FireBlue")
 		FLMR A 2 bright offset (1, 32) A_FireCustomMissile ("FlamethrowerFire", random(-2,2), 1, 5, random(2, 6))
 		FLMR A 2 bright offset (2, 33) A_FireCustomMissile ("FlamethrowerFire", random(-2,2), 0, 5, random(2, 6))
 		FLMR A 1 A_ReFire
 		FLMR A 1
 		FLMR A 2 A_PlaySound ("flamer2/down", CHAN_WEAPON)
 		goto Ready
+	
 	Hold:
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
 		FLMR A 0 A_GunFlash
@@ -52,22 +55,7 @@ actor Flamer : AOWWeapon 21047 {
 		FLMR A 1 offset (2, 33)
 		FLMR A 2 A_PlaySound ("flamer2/down", CHAN_WEAPON)
 		goto Ready
-	FireBlue:
-		FLMR A 2 bright offset (1, 32) A_FireCustomMissile ("FlamethrowerFireBlue", random(-2,2), 1, 5, random(2, 6))
-		FLMR A 2 bright offset (2, 33) A_FireCustomMissile ("FlamethrowerFireBlue", random(-2,2), 0, 5, random(2, 6))
-		FLMR A 1 A_ReFire
-		FLMR A 1 offset (2, 33)
-		FLMR A 1 offset (1, 32)
-		FLMR A 2 A_PlaySound ("flamer2/down", CHAN_WEAPON)
-		goto Ready
-	HoldBlue:
-		FLMR A 2 bright offset (4, 35) A_FireCustomMissile ("FlamethrowerFireBlue", random(-2,2), 1, 5, random(2, 6))
-		FLMR A 2 bright offset (5, 36) A_FireCustomMissile ("FlamethrowerFireBlue", random(-2,2), 0, 5, random(2, 6))
-		FLMR A 1 A_ReFire
-		FLMR A 1 offset (4, 35)
-		FLMR A 1 offset (2, 33)
-		FLMR A 2 A_PlaySound ("flamer2/down", CHAN_WEAPON)
-		goto Ready
+	
 	AltFire:
 		TNT1 A 0 A_JumpIfInventory("IsInSpawnRoom",1,"Ready")
 		TNT1 A 0 A_JumpIfNoAmmo ("AltRejected")
@@ -76,9 +64,7 @@ actor Flamer : AOWWeapon 21047 {
 		FLMR A 0 A_JumpIfInventory("IsBlue", 1, "AltFireBlue")
 		FLMR A 1 offset (0, 32) A_FireCustomMissile ("PhosphorusGrenade", 2, 1, 10, 0)
 		goto AltReload
-	AltFireBlue:
-		FLMR A 1 offset (0, 32) A_FireCustomMissile ("PhosphorusGrenadeBlue", 2, 1, 10, 0)
-		goto AltReload
+	
 	AltReload:
 		FLMR A 1 offset (5, 35)
 		FLMR A 1 offset (10, 38)
@@ -135,42 +121,26 @@ actor PhosphorusGrenadeAmmo : Ammo {
 actor FlameThrowerFire {
 	PROJECTILE
 	+FORCEXYBILLBOARD
+	Obituary "$OB_FLAMER"
+	RenderStyle Add
+	Alpha 0.9
+	Radius 4
+	Height 4
+	Speed 25
+	Damage (0)
+	DamageType "Fire"
 	
-	obituary "$OB_FLAMER"
-	renderstyle Add
-	alpha 0.9
-	radius 4
-	height 4
-	speed 25
-	damage (0)
-	damagetype "FireRed"
-	states {
+	States {
 	Spawn:
 		FLMX A 4
 		FLMX ABCDEFGHIJK 2 bright A_Explode(2,128,0)
 		TNT1 A 0 A_SpawnItemEx("FlameDecay", random(-16,16), random(-16,16), 4, 0, 0, 0, 0, 0, 240)
 		FLMX LMNOPQ 2 bright A_FadeOut(0.15)
 		stop
+	
 	Death:
 		TNT1 A 0 A_Explode(8,128)
 		TNT1 A 0 A_SpawnItemEx("FlameDecay", random(-16,16), random(-16,16), 4, 0, 0, 0, 0, 0, 240)
-		TNT1 AAA 1 A_SpawnItemEx("FlameThrowerFireRemains", random(0,1), 0, random(0,8), random(0,1), 0, random(0,3), random(0,12)*30, 0, 32)
-		stop
-	}
-}
-
-actor FlameThrowerFireBlue : FlameThrowerFire {
-	DamageType "FireBlue"
-	states {
-	Spawn:
-		FLMX A 4
-		FLMX ABCDEFGHIJK 2 bright A_Explode(2,128,0)
-		TNT1 A 0 A_SpawnItemEx("FlameDecayBlue", random(-16,16), random(-16,16), 4, 0, 0, 0, 0, 0, 240)
-		FLMX LMNOPQ 2 bright A_FadeOut(0.15)
-		stop
-	Death:
-		TNT1 A 0 A_Explode(8,128)
-		TNT1 A 0 A_SpawnItemEx("FlameDecayBlue", random(-16,16), random(-16,16), 4, 0, 0, 0, 0, 0, 240)
 		TNT1 AAA 1 A_SpawnItemEx("FlameThrowerFireRemains", random(0,1), 0, random(0,8), random(0,1), 0, random(0,3), random(0,12)*30, 0, 32)
 		stop
 	}
@@ -213,7 +183,7 @@ actor PhosphorusGrenade {
 	speed 35
 	damage (30)
 	deathsound "weapons/rocklx"
-	damagetype "FireRed"
+	damagetype "Fire"
 	decal "Scorch"
 	translation "80:111=163:167"
 	states {
@@ -226,20 +196,6 @@ actor PhosphorusGrenade {
 		TNT1 A 5 A_SpawnItem ("ExplosionMain")
 		TNT1 A 0 A_SpawnItem ("FlameDecay")
 		TNT1 AAAAAAAA 70 A_SpawnItem ("FlameDecay")
-		TNT1 A 0
-		stop
-	}
-}
-
-actor PhosphorusGrenadeBlue : PhosphorusGrenade {
-	damagetype "FireBlue"
-	states {
-	Death:
-		TNT1 A 0 A_Gravity
-		TNT1 A 0 A_Explode (120, 128, 1)
-		TNT1 A 5 A_SpawnItem ("ExplosionMain")
-		TNT1 A 0 A_SpawnItem ("FlameDecayBlue")
-		TNT1 AAAAAAAA 70 A_SpawnItem ("FlameDecayBlue")
 		TNT1 A 0
 		stop
 	}

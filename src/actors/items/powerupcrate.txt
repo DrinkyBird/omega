@@ -48,7 +48,7 @@ actor NukeKamikaze {
 	+NOINTERACTION
 	+FORCERADIUSDMG
 	obituary "$OB_KAMIKAZE" // "%k make %o go boom!"
-	damagetype "ExplosionRed"
+	damagetype "Explosion"
 	states {
 	Spawn:
 		TNT1 A 0
@@ -59,7 +59,7 @@ actor NukeKamikaze {
 }
 
 actor BlueStrikeKamikaze : NukeKamikaze {
-	damagetype "ExplosionBlue"
+	damagetype "Explosion"
 	states {
 	Spawn:
 		TNT1 A 0

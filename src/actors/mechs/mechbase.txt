@@ -43,24 +43,24 @@ actor MechPlayer_Base : PlayerPawn {
 	bloodcolor "White"
 }
 
-
 actor MechDeathSmoke {
 	PROJECTILE
 	-RANDOMIZE
 	-NOGRAVITY
-	radius 11
-	height 8
-	speed 1
-	damage (15)
-	gravity 0.3
-	scale 0.03
-	damagetype "ExplosionRed"
-	obituary "%o was blown up by %k's junk!"
-	states {
+	Radius 11
+	Height 8
+	Speed 1
+	Damage (15)
+	Gravity 0.3
+	Scale 0.03
+	DamageType "Explosion"
+	Obituary "%o was blown up by %k's junk!"
+	States {
 	Spawn:
 		TNT1 A 6 
 		TNT1 A 2 A_SpawnItemEx("PulseBallSmokePuff", 0, 0, 0, 0, 0, 1)
 		wait
+	
 	Death:
 		TNT1 A 0 A_PlaySound ("mech/explode/junk")
 		TNT1 A 0 A_Explode (35, 128, 1)
@@ -185,19 +185,21 @@ actor LongRangeMissile {
 	PROJECTILE
 	-RANDOMIZE
 	+ROCKETTRAIL
-	radius 11
-	height 8
-	speed 45
-	damage (30)
-	deathsound "weapons/rocklx"
-	damagetype "ExplosionRed"
-	decal "Scorch"
-	scale 0.8
+	Radius 11
+	Height 8
+	Speed 45
+	Damage (30)
+	DeathSound "weapons/rocklx"
+	DamageType "Explosion"
+	Decal "Scorch"
+	Scale 0.8
+	
 	States {
 	Spawn:
 		MISL AA 0 A_PlaySound ("ambient/rocket", CHAN_BODY, 1.0, 1)
 		MISL A -1 bright
 		stop
+	
 	Death:
 		TNT1 A 0 A_StopSound (CHAN_BODY)
 		TNT1 A 0 A_Explode (30, 128, 0)
@@ -207,18 +209,6 @@ actor LongRangeMissile {
 	}
 }
 
-
-actor LongRangeMissileBlue : LongRangeMissile {
-	DamageType "ExplosionBlue"
-	States {
-	Death:
-		TNT1 A 0 A_StopSound (CHAN_BODY)
-		TNT1 A 0 A_Explode (30, 128, 0)
-		TNT1 A 0 A_SpawnItemEx ("FlameDecayBlue", random (-16,16), random (-16,16), 4, 0, 0, 0, 0, 0, 160)
-		TNT1 A 5 A_SpawnItemEx ("ExplosionMain")
-		stop
-	}
-}
 
 // Ammo types
 actor ShortRangeMissileAmmo : Ammo {

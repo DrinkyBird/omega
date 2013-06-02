@@ -1,42 +1,6 @@
 // TERMINALS
 actor BaseTerminal {
-	damagefactor "FistRed", 0.0
-	damagefactor "FistBlue", 0.2
-	damagefactor "BulletRed", 0.0
-	damagefactor "BulletBlue", 0.5
-	damagefactor "RifleRed", 0.0
-	damagefactor "RifleBlue", 0.5
-	damagefactor "ExplosionRed", 0.0
-	damagefactor "ExplosionBlue", 0.75
-	damagefactor "FireRed", 0.0
-	damagefactor "FireBlue", 0.6
-	damagefactor "FireSpecial", 0.0
-	damagefactor "ChemicalRed", 0.0
-	damagefactor "ChemicalBlue", 0.75
-	damagefactor "ChemicalSpecial", 0.0
-	damagefactor "LaserRed", 0.0
-	damagefactor "LaserBlue", 1.0
-	damagefactor "RazorWireRed", 0.0
-	damagefactor "RazorWireBlue", 0.0
-	damagefactor "AntiArmorRed", 0.0
-	damagefactor "AntiArmorBlue", 0.25
-	damagefactor "TimeRed", 0.0
-	damagefactor "TimeBlue", 1.0
-	damagefactor "Disarm", 0.0
-	damagefactor "Flash", 0.0
-	damagefactor "Superweapon", 0.0
-	damagefactor "SuperweaponIon", 1.0
-	damagefactor "Slime", 0.0 //Mines
-	damagefactor "MassDriverRed", 0.0
-	damagefactor "MassDriverBlue", 0.25
-	damagefactor "Mechstomp", 0.0
-	damagefactor "Monster", 0.0
-	damagefactor "Deconstruction", 0.0
-	height 120
-	mass 0x7FFFFFFF
-	speed 100 // used for base hud health percentages! DON'T TOUCH IT
 	+FULLVOLACTIVE
-	-SOLID
 	+SHOOTABLE
 	+NOBLOOD
 	+DONTGIB
@@ -45,57 +9,77 @@ actor BaseTerminal {
 	+NEVERRESPAWN
 	+GHOST
 	
-	damagetype "ExplosionRed"
-	obituary "%o got killed with a \cGRed\c- building."
-	radius 16
-	deathsound "grenade/explode"
-	painchance 255
+	Height 120
+	Mass 0x7FFFFFFF
+	Speed 100 // used for base hud health percentages! DON'T TOUCH IT
+	DamageType "Explosion"
+	Obituary "%o went down with a \cGRed\c- building."
+	Radius 16
+	DeathSound "grenade/explode"
+	PainChance 255
+	DesignatedTeam 1
 	
-	states {
+	DamageFactor "Fist", 0.2
+	DamageFactor "Bullet", 0.5
+	DamageFactor "Rifle", 0.5
+	DamageFactor "Explosion", 0.75
+	DamageFactor "Fire", 0.6
+	DamageFactor "FireSpecial", 0.0
+	DamageFactor "Chemical", 0.75
+	DamageFactor "ChemicalSpecial", 0.0
+	DamageFactor "Laser", 1.0
+	DamageFactor "RazorWire", 0.0
+	DamageFactor "AntiArmor", 0.25
+	DamageFactor "Time", 1.0
+	DamageFactor "Disarm", 0.0
+	DamageFactor "Superweapon", 1.0
+	DamageFactor "MassDriver", 0.25
+	DamageFactor "Mechstomp", 0.0
+	DamageFactor "Monster", 0.0
+	DamageFactor "Deconstruction", 0.0
+	
+	States {
 	Spawn:
 		TNT1 A 0
-		TNT1 A 0 A_GiveInventory ("IsMCT", 1)    // Needed for turrets in exp pack
+		TNT1 A 0 A_GiveInventory ("IsMCT", 1)
 		TNT1 A -1
-		loop
+		stop
+	
 	Idle:
 		TNT1 A -1
 		stop
+	
 	SpawnDone:
 		TNT1 A 0
-		TNT1 A 0 A_ChangeFlag("ISMONSTER",1)
+		TNT1 A 0 A_ChangeFlag ("ISMONSTER", 1)
 		TNT1 A 0 A_ClearTarget
 		TNT1 A -1 A_Stop
 		stop
-	Death.Disarm:
-		TNT1 A 0
-		TNT1 A 0 A_Print("*** FLUKE! *** Red Terminal was destroyed by disarm")
-		goto Death
-	Death.MechStomp:
-		TNT1 A 0
-		TNT1 A 0 A_Print("*** FLUKE! *** Red Terminal was destroyed by mechstomp")
-		goto Death
+	
 	Pain:
 		goto Spawn
+	
 	Pain.Chemical:
 	Pain.Fire:
 		goto Pain+1
+	
 	Death:
 		TNT1 A 5 A_Scream
 		TNT1 A 5 A_Scream
 		TNT1 A 0 bright A_PlayWeaponSound("weapons/rocklx")
 		TNT1 A 0 A_SpawnItemEx ("TerminalExplosion")
-		TNT1 A 0 A_SpawnItemEx("ExplosionMainLarge", 0, 0, 0, 0, 0, 0, 0, 128, 0)
+		TNT1 A 0 A_SpawnItemEx ("ExplosionMainLarge")
 		TNT1 A 5 A_Scream
 		TNT1 A 0 bright A_Scream
 		TNT1 A 0 A_SpawnItemEx ("TerminalExplosion")
 		TNT1 A 0 bright A_PlayWeaponSound("weapons/rocklx")
 		TNT1 A 0 A_SpawnItemEx ("TerminalExplosion")
-		TNT1 A 0 A_SpawnItemEx("ExplosionMainLarge", 0, 0, 0, 0, 0, 0, 0, 128, 0)
+		TNT1 A 0 A_SpawnItemEx("ExplosionMainLarge")
 		TNT1 A 5 A_Scream
 		TNT1 A 5 A_Scream
 		TNT1 A 0 bright A_PlayWeaponSound("weapons/rocklx")
 		TNT1 A 0 A_SpawnItemEx ("TerminalExplosion")
-		TNT1 A 0 A_SpawnItemEx("ExplosionMainLarge", 0, 0, 0, 0, 0, 0, 0, 128, 0)
+		TNT1 A 0 A_SpawnItemEx ("ExplosionMainLarge")
 		TNT1 A 5 A_Scream
 		TNT1 A 5 A_Scream
 		TNT1 A 0 bright A_Scream
@@ -106,48 +90,16 @@ actor BaseTerminal {
 }
 
 actor BaseTerminalBlue : BaseTerminal {
-	damagefactor "FistRed", 0.2
-	damagefactor "FistBlue", 0.0
-	damagefactor "BulletRed", 0.5
-	damagefactor "BulletBlue", 0.0
-	damagefactor "RifleRed", 0.5
-	damagefactor "RifleBlue", 0.0
-	damagefactor "ExplosionRed", 0.75
-	damagefactor "ExplosionBlue", 0.0
-	damagefactor "FireRed", 0.6
-	damagefactor "FireBlue", 0.0
-	damagefactor "FireSpecial", 0.0
-	damagefactor "ChemicalRed", 0.75
-	damagefactor "ChemicalBlue", 0.0
-	damagefactor "ChemicalSpecial", 0.0
-	damagefactor "LaserRed", 1.0
-	damagefactor "LaserBlue", 0.0
-	damagefactor "RazorWireRed", 0.0
-	damagefactor "RazorWireBlue", 0.0
-	damagefactor "AntiArmorRed", 0.25
-	damagefactor "AntiArmorBlue", 0.0
-	damagefactor "TimeRed", 1.0
-	damagefactor "TimeBlue", 0.0
-	damagefactor "Disarm", 0.0
-	damagefactor "Flash", 0.0
-	damagefactor "Superweapon", 1.0
-	damagefactor "SuperweaponIon", 0.0
-	damagefactor "Slime", 0.0 //Mines
-	damagefactor "MassDriverRed", 0.25
-	damagefactor "MassDriverBlue", 0.0
-	damagefactor "Mechstomp", 0.0
-	damagefactor "Monster", 0.0
-	damagefactor "Deconstruction", 0.0
-	
-	damagetype "ExplosionBlue"
-	obituary "%o was killed with a \cHBlue\c- building."
+	DesignatedTeam 0
+	Obituary "%o was killed with a \cHBlue\c- building."
 }
 
 actor TerminalExplosion {
 	PROJECTILE
-	speed 0
-	damagetype "Monster"
-	states {
+	Speed 0
+	DamageType "Monster"
+	
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 A_Explode (60, 128)
@@ -156,112 +108,117 @@ actor TerminalExplosion {
 }
 
 actor BarracksTerminalBlue : BaseTerminalBlue 21100 {
-	health 20000
-	states {
+	Health 20000
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 Thing_ChangeTID (0, 101)
 		TNT1 A 0 Thing_SetSpecial (0, 80, 101, 0, 0)
 		goto SpawnDone
+	
 	Pain:
 		TNT1 A 0
 		TNT1 A 0 ACS_ExecuteAlways (930, 0, BUILDING_BARRACKS, TEAM_BLUE)
-		TNT1 A 0 ACS_Execute(97,0,1,1)
+		TNT1 A 0 ACS_Execute (97, 0, 1, 1)
 		goto Spawn
 	}
 }
 
 actor RefineryTerminalBlue : BaseTerminalBlue 21102 {
-	health 30000
-	states {
+	Health 30000
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 Thing_ChangeTID (0, 103)
 		TNT1 A 0 Thing_SetSpecial (0, 80, 102, 0, 0)
 		goto SpawnDone
+	
 	Pain:
 		TNT1 A 0 
 		TNT1 A 0 ACS_ExecuteAlways (930, 0, BUILDING_REFINERY, TEAM_BLUE)
-		TNT1 A 0 ACS_Execute(97,0,2,1)
+		TNT1 A 0 ACS_Execute (97, 0, 2, 1)
 		goto Idle
 	}
 }
 
 actor PowerPlantTerminalBlue : BaseTerminalBlue 21103 {
-	health 20000
-	states {
+	Health 20000
+	
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 Thing_ChangeTID (0, 105)
 		TNT1 A 0 Thing_SetSpecial (0, 80, 103, 0, 0)
 		goto SpawnDone
+	
 	Pain:
 		TNT1 A 0 
 		TNT1 A 0 ACS_ExecuteAlways (930, 0, BUILDING_RESCENTRE, TEAM_BLUE)
-		TNT1 A 0 ACS_Execute(97,0,3,1)
+		TNT1 A 0 ACS_Execute (97, 0, 3, 1)
 		goto Idle
 	}
 }
 
 actor WarFactoryTerminalBlue : BaseTerminalBlue 21104 {
-	health 30000
-	states {
+	Health 30000
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 Thing_ChangeTID (0, 107)
 		TNT1 A 0 Thing_SetSpecial (0, 80, 104, 0, 0)
 		goto SpawnDone
+	
 	Pain:
 		TNT1 A 0 
 		TNT1 A 0 ACS_ExecuteAlways (930, 0, BUILDING_FACTORY, TEAM_BLUE)
-		TNT1 A 0 ACS_Execute(97,0,4,1)
+		TNT1 A 0 ACS_Execute (97, 0, 4, 1)
 		goto Idle
 	}
 }
 
 actor ObeliskTerminalBlue : BaseTerminalBlue 21111 {
-	health 15000
-	states {
+	Health 15000
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 Thing_ChangeTID (0, 114)
 		TNT1 A 0 Thing_SetSpecial (0, 80, 114, 0, 0)
 		goto SpawnDone
-	Pain.Chemical:
-	Pain.Fire:
-		goto Pain+1
+	
 	Pain:
 		TNT1 A 0
 		TNT1 A 0 ACS_ExecuteAlways (930, 0, BUILDING_OBELISK, TEAM_BLUE)
-		TNT1 A 0 ACS_Execute(97,0,6,1)
+		TNT1 A 0 ACS_Execute (97, 0, 6, 1)
 		goto Idle
 	}
 }
 
 actor BarracksTerminalRed : BaseTerminal 21105 {
-	health 20000
-	states {
+	Health 20000
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 Thing_ChangeTID (0, 201)
 		TNT1 A 0 Thing_SetSpecial (0, 80, 201, 0, 0)
 		goto SpawnDone
+	
 	Pain:
 		TNT1 A 0
 		TNT1 A 0 ACS_ExecuteAlways (930, 0, BUILDING_BARRACKS, TEAM_RED)
-		TNT1 A 0 ACS_Execute(97, 0, 1)
+		TNT1 A 0 ACS_Execute (97, 0, 1)
 		goto Idle
 	}
 }
 
 actor RefineryTerminalRed : BaseTerminal 21106 {
-	health 30000
-	states {
+	Health 30000
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 Thing_ChangeTID (0, 203)
 		TNT1 A 0 Thing_SetSpecial (0, 80, 202, 0, 0)
 		goto SpawnDone
+	
 	Pain:
 		TNT1 A 0
 		TNT1 A 0 ACS_ExecuteAlways (930, 0, BUILDING_REFINERY, TEAM_RED)
@@ -271,13 +228,14 @@ actor RefineryTerminalRed : BaseTerminal 21106 {
 }
 
 actor PowerPlantTerminalRed : BaseTerminal 21107 {
-	health 20000
-	states {
+	Health 20000
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 Thing_ChangeTID (0, 205)
 		TNT1 A 0 Thing_SetSpecial (0, 80, 203, 0, 0)
 		goto SpawnDone
+	
 	Pain:
 		TNT1 A 0
 		TNT1 A 0 ACS_ExecuteAlways (930, 0, BUILDING_RESCENTRE, TEAM_RED)
@@ -287,14 +245,14 @@ actor PowerPlantTerminalRed : BaseTerminal 21107 {
 }
 
 actor WarFactoryTerminalRed : BaseTerminal 21108 {
-	health 30000
-	states
-	{
+	Health 30000
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 Thing_ChangeTID (0, 207)
 		TNT1 A 0 Thing_SetSpecial (0, 80, 204, 0, 0)
 		goto SpawnDone
+	
 	Pain:
 		TNT1 A 0
 		TNT1 A 0 ACS_ExecuteAlways (930, 0, BUILDING_FACTORY, TEAM_RED)
@@ -304,34 +262,37 @@ actor WarFactoryTerminalRed : BaseTerminal 21108 {
 }
 
 actor ObeliskTerminalRed : BaseTerminal 21112 {
-	health 15000
-	states {
+	Health 15000
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 Thing_ChangeTID (0, 214)
 		TNT1 A 0 Thing_SetSpecial (0, 80, 214, 0, 0)
 		goto SpawnDone
+	
 	Pain:
 		TNT1 A 0
 		TNT1 A 0 ACS_ExecuteAlways (930, 0, BUILDING_OBELISK, TEAM_RED)
-		TNT1 A 0 ACS_Execute(97,0,6,0)
+		TNT1 A 0 ACS_Execute (97, 0, 6, 0)
 		goto Idle
 	}
 }
 
 // REPAIR TERMINAL
 actor RepairTerminalRed : BaseTerminal 21110 {
-	radius 145
-	height 8
-	deathsound "grenade/explode"
-	painchance 255
-	health 15000
-	states {
+	Radius 145
+	Height 8
+	DeathSound "grenade/explode"
+	PainChance 255
+	Health 15000
+	
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 Thing_ChangeTID (0, 209)
 		TNT1 A 0 Thing_SetSpecial (0, 80, 205, 0, 0)
 		goto SpawnDone
+	
 	Pain:
 		TNT1 A 0 ACS_ExecuteAlways (930, 0, BUILDING_REPAIR, TEAM_RED)
 		TNT1 A 0 
@@ -340,17 +301,19 @@ actor RepairTerminalRed : BaseTerminal 21110 {
 }
 
 actor RepairTerminalBlue : BaseTerminalBlue 21109 {
-	radius 145
-	height 8
-	deathsound "grenade/explode"
-	painchance 255
-	health 15000
-	states {
+	Radius 145
+	Height 8
+	DeathSound "grenade/explode"
+	PainChance 255
+	Health 15000
+	
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 Thing_ChangeTID (0, 109)
 		TNT1 A 0 Thing_SetSpecial (0, 80, 105, 0, 0)
 		goto SpawnDone
+	
 	Pain:
 		TNT1 A 0 ACS_ExecuteAlways (930, 0, BUILDING_REPAIR, TEAM_BLUE)
 		TNT1 A 0

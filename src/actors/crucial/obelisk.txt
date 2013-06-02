@@ -265,50 +265,37 @@ actor ObeliskCharged : Inventory
 		inventory.maxamount 15
 }
 
-actor ObeliskShotRed : FastProjectile
-{
-	radius 13
-	height 8
-	speed 2000
-	damage (250)
-	renderstyle Add
-	alpha 0.75
-	PROJECTILE
-	-RANDOMIZE
-	+NOEXTREMEDEATH
-	+THRUGHOST
-	Scale 1.0
-	DamageType "ExplosionRed"
+actor ObeliskShotRed : FastProjectile {
+	Radius 13
+	Height 8
+	Speed 2000
+	Damage (250)
 	translation "192:207=169:189", "240:246=45:47", "112:127=176:191"
-	states
-	{
+	
+	States {
 	Spawn:
 		TNT1 A 1 bright A_SpawnItemEx("PlasmaFlameTail", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
 		loop
 	Death:
-		PLE1 C 0 A_SpawnItemEx ("PlasmaFlameCluster", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
+		TNT1 A 0 A_SpawnItemEx ("PlasmaFlameCluster", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
 		TNT1 A 3 bright A_Explode(250,256)
 		stop
 	}
 }
 
-actor ObeliskShotRedInfantry : FastProjectile
-{
-	radius 13
-	height 8
-	speed 2000
-	damage (40)
-	renderstyle Add
-	alpha 0.75
+actor ObeliskShotRedInfantry : FastProjectile {
 	PROJECTILE
 	-RANDOMIZE
 	+NOEXTREMEDEATH
 	+THRUGHOST
-	Scale 1.0
+	Radius 13
+	Height 8
+	Speed 2000
+	Damage (40)
 	DamageType "Superweapon"
-	translation "192:207=169:189", "240:246=45:47", "112:127=176:191"
-	states
-	{
+	Translation "192:207=169:189", "240:246=45:47", "112:127=176:191"
+	
+	States {
 	Spawn:
 		TNT1 A 1 bright A_SpawnItemEx("PlasmaFlameTail", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
 		loop
@@ -319,58 +306,12 @@ actor ObeliskShotRedInfantry : FastProjectile
 	}
 }
 
-actor ObeliskShotBlue : FastProjectile
-{
-	radius 13
-	height 8
-	speed 2000
-	damage (250)
-	renderstyle Add
-	alpha 0.75
-	PROJECTILE
-	-RANDOMIZE
-	+NOEXTREMEDEATH
-	+THRUGHOST
-	Scale 1.0
-	DamageType "ExplosionBlue"
-	translation "112:120=200:207", "121:127=241:247"
-	states
-	{
-	Spawn:
-		TNT1 A 1 bright A_SpawnItemEx("PlasmaFlameTail", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
-		loop
-	Death:
-		PLE1 C 0 A_SpawnItemEx ("PlasmaFlameCluster", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
-		TNT1 A 3 bright A_Explode(250,256)
-		stop
-	}
+actor ObeliskShotBlue : ObeliskShotRed {
+	Translation "112:120=200:207", "121:127=241:247"
 }
 
-actor ObeliskShotBlueInfantry : FastProjectile
-{
-	radius 13
-	height 8
-	speed 2000
-	damage (40)
-	renderstyle Add
-	alpha 0.75
-	PROJECTILE
-	-RANDOMIZE
-	+NOEXTREMEDEATH
-	+THRUGHOST
-	Scale 1.0
-	DamageType "SuperweaponIon"
-	translation "112:120=200:207", "121:127=241:247"
-	states
-	{
-	Spawn:
-		TNT1 A 1 bright A_SpawnItemEx("PlasmaFlameTail", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
-		loop
-	Death:
-		PLE1 C 0 A_SpawnItemEx ("PlasmaFlameCluster", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
-		TNT1 A 3 bright A_Explode(50,256)
-		stop
-	}
+actor ObeliskShotBlueInfantry : ObeliskShotRedInfantry {
+	Translation "112:120=200:207", "121:127=241:247"
 }
 
 // ------------------------

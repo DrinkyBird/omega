@@ -8,7 +8,7 @@ actor BombPack : AOWWeapon {
 	weapon.ammotype "Bomb-PackAmmo"
 	weapon.ammouse 1
 	weapon.ammogive 1
-        weapon.preferredskin "MarineBackpack"
+	weapon.preferredskin "MarineBackpack"
 	+NOEXTREMEDEATH
 	+WEAPON.CHEATNOTWEAPON
 	states {
@@ -71,7 +71,7 @@ actor KamikazeExplosion {
 	PROJECTILE
 	+NOGRAVITY +NOINTERACTION
 	damage 100
-	damagetype "ExplosionRed"
+	damagetype "Explosion"
 	states {
 	Spawn:
 		TNT1 A 0
@@ -83,7 +83,6 @@ actor KamikazeExplosion {
 	}
 }
 
-actor KamikazeExplosionBlue : KamikazeExplosion {damagetype "ExplosionBlue"}
 actor KamikazeExplosionFX {
 	+CLIENTSIDEONLY +NOINTERACTION +NOGRAVITY
 	states {

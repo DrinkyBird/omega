@@ -2,41 +2,6 @@
 // damage to the terminal, allowing buildings to be destroyed from the outside.
 
 actor BaseTerminalOutside {
-	Health 99999
-	Radius 0
-	Height 512
-	damagefactor "FistRed", 0.0
-	damagefactor "FistBlue", 0.0
-	damagefactor "BulletRed", 0.0
-	damagefactor "BulletBlue", 0.0
-	damagefactor "RifleRed", 0.0
-	damagefactor "RifleBlue", 0.0
-	damagefactor "ExplosionRed", 0.0
-	damagefactor "ExplosionBlue", 0.3
-	damagefactor "FireRed", 0.0
-	damagefactor "FireBlue", 0.2
-	damagefactor "ChemicalRed", 0.0
-	damagefactor "ChemicalBlue", 0.0
-	damagefactor "ChemicalSpecial", 0.0
-	damagefactor "LaserRed", 0.0
-	damagefactor "LaserBlue", 0.0
-	damagefactor "RazorWireRed", 0.0
-	damagefactor "RazorWireBlue", 0.0
-	damagefactor "AntiArmorRed", 0.0
-	damagefactor "AntiArmorBlue", 0.0
-	damagefactor "TimeRed", 0.0
-	damagefactor "TimeBlue", 0.0
-	damagefactor "Disarm", 0.0
-	damagefactor "Flash", 0.0
-	damagefactor "Superweapon", 0.0
-	damagefactor "SuperweaponIon", 0.5
-	damagefactor "Slime", 0.0 //Mines
-	damagefactor "MassDriverRed", 0.0
-	damagefactor "MassDriverBlue", 0.3
-	damagefactor "Mechstomp", 0.0
-	damagefactor "Monster", 0.0
-	damagefactor "Deconstruction", 0.0
-	-SOLID
 	+SHOOTABLE
 	+NOBLOOD
 	+DONTGIB
@@ -44,41 +9,63 @@ actor BaseTerminalOutside {
 	+GHOST
 	+NOTARGET
 	+QUICKTORETALIATE
+	Health 99999
+	Radius 0
+	Height 512
 	Mass 0x7FFFFFFF
-	painchance 255
+	PainChance 255
+	DamageFactor "FistBlue", 0.0
+	DamageFactor "BulletBlue", 0.0
+	DamageFactor "RifleBlue", 0.0
+	DamageFactor "ChemicalBlue", 0.0
+	DamageFactor "ChemicalSpecial", 0.0
+	DamageFactor "LaserBlue", 0.0
+	DamageFactor "RazorWireBlue", 0.0
+	DamageFactor "AntiArmorBlue", 0.0
+	DamageFactor "TimeBlue", 0.0
+	DamageFactor "Disarm", 0.0
+	DamageFactor "Mechstomp", 0.0
+	DamageFactor "Monster", 0.0
+	DamageFactor "Deconstruction", 0.0
+	DesignatedTeam 1
 	
-	states {
+	States {
 	Death:
 		TNT1 A 10
-		TNT1 A 0 A_PlayWeaponSound("weapons/rocklx")
-		TNT1 A 0 A_SpawnItemEx("ExplosionMainLarge")
+		TNT1 A 0 A_PlayWeaponSound ("weapons/rocklx")
+		TNT1 A 0 A_SpawnItemEx ("ExplosionMainLarge")
 		TNT1 A 10
-		TNT1 A 0 A_PlayWeaponSound("weapons/rocklx")
-		TNT1 A 0 A_SpawnItemEx("ExplosionMainLarge")
+		TNT1 A 0 A_PlayWeaponSound ("weapons/rocklx")
+		TNT1 A 0 A_SpawnItemEx ("ExplosionMainLarge")
 		TNT1 A 10
-		TNT1 A 0 A_PlayWeaponSound("weapons/rocklx")
-		TNT1 A 0 A_SpawnItemEx("ExplosionMainLarge")
+		TNT1 A 0 A_PlayWeaponSound ("weapons/rocklx")
+		TNT1 A 0 A_SpawnItemEx ("ExplosionMainLarge")
 		TNT1 A -1
 		stop
+	
 	Idle:
 		TNT1 A -1
 		stop
+	
 	Pain:
 		TNT1 A 0
 		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 1)
 		goto Idle
+	
 	Pain.FireRed:
 	Pain.FireBlue:
 		TNT1 A 0
-		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], random(0,1))
+		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], random(0, 1))
 		goto Idle
+	
 	Pain.MassDriverRed:
 	Pain.MassDriverBlue:
 	Pain.ExplosionRed:
 	Pain.ExplosionBlue:
 		TNT1 A 0
-		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], random(20,40))
+		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 30)
 		goto Idle
+	
 	Pain.Superweapon:
 	Pain.SuperweaponIon:
 		TNT1 A 0
@@ -88,14 +75,7 @@ actor BaseTerminalOutside {
 }
 
 actor BaseTerminalOutsideBlue : BaseTerminalOutside {
-	damagefactor "ExplosionRed", 0.3
-	damagefactor "ExplosionBlue", 0.0
-	damagefactor "FireRed", 0.2
-	damagefactor "FireBlue", 0.0
-	damagefactor "Superweapon", 0.5
-	damagefactor "SuperweaponIon", 0.0
-	damagefactor "MassDriverRed", 0.3
-	damagefactor "MassDriverBlue", 0.0
+	DesignatedTeam 0
 }
 
 actor BTOBarracksBlue : BaseTerminalOutsideBlue 21201 {
@@ -199,7 +179,6 @@ actor BTOFactoryRed : BaseTerminalOutside 21208 {
 }
 
 actor BTOObeliskRed : BaseTerminalOutside 21212 {
-	damagefactor "Superweapon", 0.0
 	states {
 	Spawn:
 		TNT1 A 0
@@ -210,5 +189,10 @@ actor BTOObeliskRed : BaseTerminalOutside 21212 {
 	}
 }
 
-actor ShortBTOObeliskBlue : BTOObeliskBlue 21311 {height 256}
-actor ShortBTOObeliskRed : BTOObeliskRed 21312 {height 256}
+actor ShortBTOObeliskBlue : BTOObeliskBlue 21311 {
+	Height 256
+}
+
+actor ShortBTOObeliskRed : BTOObeliskRed 21312 {
+	Height 256
+}
