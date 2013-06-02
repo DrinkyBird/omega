@@ -775,8 +775,7 @@ Actor RedPlasmaGunner	//Red Tiberium Rifleman
 		PLA6 G 0 ACS_ExecuteAlways(320, 0, 1)
 		PLA6 G 0 ACS_ExecuteAlways(310, 0, 2)
 		Goto DisablePushablePreAlternatePainBackOff
-	Pain.FireRed:
-	Pain.FireBlue:
+	Pain.Fire:
 		PLA6 G 0 ACS_ExecuteAlways(320, 0, 1)
 		PLA6 G 0 ACS_ExecuteAlways(360, 0)
 		PLA6 G 0 ACS_ExecuteAlways(310, 0, 2)
@@ -785,8 +784,7 @@ Actor RedPlasmaGunner	//Red Tiberium Rifleman
 		PLA6 G 0 ACS_ExecuteAlways(320, 0, 2)
 		PLA6 G 0 ACS_ExecuteAlways(310, 0, 2)
 		Goto DisablePushablePreAlternatePainBackOff
-	Pain.ChemicalRed:
-	Pain.ChemicalBlue:
+	Pain.Chemical:
 		PLA6 G 0 ACS_ExecuteAlways(320, 0, 2)
 		PLA6 G 0 ACS_ExecuteAlways(361, 0)
 		PLA6 G 0 ACS_ExecuteAlways(310, 0, 2)

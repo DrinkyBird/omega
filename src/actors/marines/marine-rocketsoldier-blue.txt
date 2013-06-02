@@ -1323,8 +1323,7 @@ Actor BlueRocketSoldier		//Blue Rocket Soldier
 		PLA5 G 0 ACS_ExecuteAlways(320, 0, 1)
 		PLA5 G 0 ACS_ExecuteAlways(310, 0, 2)
 		Goto DisablePushablePreAlternatePainBackOff
-	Pain.FireRed:
-	Pain.FireBlue:
+	Pain.Fire:
 		PLA5 G 0 ACS_ExecuteAlways(320, 0, 1)
 		PLA5 G 0 ACS_ExecuteAlways(360, 0)
 		PLA5 G 0 ACS_ExecuteAlways(310, 0, 2)
@@ -1333,8 +1332,7 @@ Actor BlueRocketSoldier		//Blue Rocket Soldier
 		PLA5 G 0 ACS_ExecuteAlways(320, 0, 2)
 		PLA5 G 0 ACS_ExecuteAlways(310, 0, 2)
 		Goto DisablePushablePreAlternatePainBackOff
-	Pain.ChemicalRed:
-	Pain.ChemicalBlue:
+	Pain.Chemical:
 		PLA5 G 0 ACS_ExecuteAlways(320, 0, 2)
 		PLA5 G 0 ACS_ExecuteAlways(361, 0)
 		PLA5 G 0 ACS_ExecuteAlways(310, 0, 2)
@@ -1427,8 +1425,7 @@ Actor BlueRocketSoldier		//Blue Rocket Soldier
 		goto XDeath
 
 	Death.FireSpecial:
-	Death.FireRed:
-	Death.FireBlue:
+	Death.Fire:
 		// stop all sound channels
 		PLA5 A 0 A_StopSound (0) PLA5 A 0 A_StopSound (4)
 		PLA5 A 0 A_StopSound (1) PLA5 A 0 A_StopSound (5)
@@ -1441,8 +1438,7 @@ Actor BlueRocketSoldier		//Blue Rocket Soldier
 		stop
 
 	Death.ChemicalSpecial:
-	Death.ChemicalRed:
-	Death.ChemicalBlue:
+	Death.Chemical:
 		// stop all sound channels
 		PLA5 A 0 A_StopSound (0) PLA5 A 0 A_StopSound (4)
 		PLA5 A 0 A_StopSound (1) PLA5 A 0 A_StopSound (5)
