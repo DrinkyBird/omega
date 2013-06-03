@@ -6,12 +6,20 @@ set Path=%PATH%;%cd%\utils;%cd%\utils\acc
 if exist tmp goto tmpexists
 :doneremovingtmp
 
-git describe >%tmp%
-set /p descrb=<%tmp%
-if "%descrb%"=="" goto nogit
+rem git describe >%tmp%
+rem set /p descrb=<%tmp%
+rem if "%descrb%"=="" goto nogit
+set descrb=initial-3-gdb73a81
 
 gitrevnum %descrb% >%tmp%
 set /p rnum=<%tmp%
+
+rem See if it's modified
+git status --short >%tmp%
+set /p statustext=<%tmp%
+if NOT "%statustext%"=="" set rnum=%rnum%m
+:donewithmodified
+
 set fname=omega_git-%rnum%.pk3
 
 rem We don't need the temp file anymore
@@ -57,7 +65,7 @@ goto :eof
 
 :removetemp
 rd /s /q tmp >nul
-goto :doneremovingtmp
+goto doneremovingtmp
 
 :acsfail
 rem Execute ACC a second time to expose the error
