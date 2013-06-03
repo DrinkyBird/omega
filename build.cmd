@@ -48,7 +48,7 @@ pause
 goto :eof
 
 :tmpexists
-set /p yesreallydelete=directory named tmp already eixsts, remove it? (Y/N)
+set /p yesreallydelete=directory named tmp already exists, remove it? (Y/N)
 if "%yesreallydelete%"=="y" goto removetemp
 if "%yesreallydelete%"=="Y" goto removetemp
 echo aborting operations
