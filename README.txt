@@ -1,6 +1,6 @@
 MAKE SURE YOU HAVE ACTUAL GIT FROM http://git-scm.com/ INSTALLED, AND NOT JUST THE WINDOWS GUI.
 
-Place these in your git.exe root folder.
+Mark down what your git.exe root folder is.
 
 For Windows 7 64-bit (like me): C:\Program Files (x86)\Git\cmd
 
