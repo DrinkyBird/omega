@@ -100,9 +100,6 @@ script 599 OPEN {
 	if (!GetCVAR ("sv_itemrespawn")) ConsoleCommand ("sv_itemrespawn 1");
 	if (!GetCVAR ("compat_limited_airmovement")) ConsoleCommand ("compat_limited_airmovement 1");
 	
-	// [Dusk] the engine assumes that players stay dead for at least a second
-	if (GetCVAR ("compat_instantrespawn")) ConsoleCommand ("compat_instantrespawn 0");
-	
 	// [Dusk] enforce no pointlimit until game is considered over. Pointlimit is used
 	// to end the game when needed. We don't want this script to conflict it at any
 	// given time.
@@ -210,29 +207,18 @@ script 4 OPEN {
 
 //Setting Player scripts
 script 10 RESPAWN {
-	if (StartTime[PlayerNumber()] == 0) InitPlayer();
-
-	GiveInventory("Ingame",1);
-	GiveInventory("IsInSpawnRoom", 1);
-	if(PlayerTeam() == TEAM_BLUE) {
-		GiveInventory ("BlueTeamArmor",1);
-		GiveInventory ("IsBlue",1);
-		TakeInventory ("RedTeamArmor",1);
-		TakeInventory ("IsRed",1);
-	}
-	else if(PlayerTeam() == TEAM_RED)
-	{
-		GiveInventory ("RedTeamArmor",1);
-		GiveInventory ("IsRed",1);
-		TakeInventory ("BlueTeamArmor",1);
-		TakeInventory ("IsBlue",1);
-	}
+	if (StartTime[PlayerNumber()] == 0)
+		InitPlayer();
 	
-	Thing_ChangeTID (0, PlayerNumber()+3800);
-
-	if(GetPlayerInfo(PlayerNumber(),PLAYERINFO_GENDER) == 1) {
-		SetActorProperty(0,APROP_DeathSound,"female/death");
-		GiveInventory("IsFemale",1);
+	GiveInventory ("Ingame", 1);
+	GiveInventory ("IsInSpawnRoom", 1);
+	SetInventory ("IsBlue", PlayerTeam () == TEAM_BLUE);
+	SetInventory ("IsRed", PlayerTeam () == TEAM_RED);
+	Thing_ChangeTID (0, PlayerNumber () + 3800);
+	
+	if (GetPlayerInfo (PlayerNumber (), PLAYERINFO_GENDER) == 1) {
+		SetActorProperty (0, APROP_DeathSound, "female/death");
+		GiveInventory ("IsFemale", 1);
 	}
 	
 	ACS_ExecuteAlways (97, 0);
@@ -240,23 +226,14 @@ script 10 RESPAWN {
 }
 
 script 11 ENTER {
-	delay(5);
+	delay (5);
 	InitPlayer();
-
-	GiveInventory("Ingame",1);
-	GiveInventory("IsInSpawnRoom", 1);
-	if(PlayerTeam() == TEAM_BLUE)
-	{
-		GiveInventory("BlueTeamArmor",1);
-		GiveInventory("IsBlue",1);
-	}
-	else if(PlayerTeam() == TEAM_RED)
-	{
-		GiveInventory("RedTeamArmor",1);
-		GiveInventory("IsRed",1);
-	}
-
-	Thing_ChangeTID(0,PlayerNumber()+3800);
+	
+	GiveInventory ("Ingame", 1);
+	GiveInventory ("IsInSpawnRoom", 1);
+	SetInventory ("IsBlue", PlayerTeam () == TEAM_BLUE);
+	SetInventory ("IsRed", PlayerTeam () == TEAM_RED);
+	Thing_ChangeTID (0, PlayerNumber () + 3800);
 
 	if(GetPlayerInfo(PlayerNumber(),PLAYERINFO_GENDER) == 1)
 	{
@@ -285,21 +262,19 @@ script 301 ENTER CLIENTSIDE {
 }
 
 Script 8 (int Gone) DISCONNECT {
-	IsAdmin[Gone] = false;
-	SetCreditsSilent(Credits[Gone+1], 0);
-	Experience[Gone] = 0;
-	Rank[Gone] = RANK_PRIVATE;
-	Surrender[Gone] = 0;
-	PlasmaCooldown[Gone] = 0;
-	StartTime[Gone] = 0;
+	IsAdmin[gone] = false;
+	Experience[gone] = 0;
+	Rank[gone] = RANK_PRIVATE;
+	Surrender[gone] = 0;
+	PlasmaCooldown[gone] = 0;
+	StartTime[gone] = 0;
 	
-	if (MechGetter[0] == Gone && GettingMech[0])
-		GettingMech[0] = 0;
-	else if (MechGetter[1] == Gone && GettingMech[1])
-		GettingMech[1] = 0;
+	for (int i = 0; i < 2; ++i)
+		if (MechGetter[i] == Gone && GettingMech[i])
+			GettingMech[i] = 0;
 	
-	if (Surrender[Gone]) {
-		Surrender[Gone] = false;
+	if (Surrender[gone]) {
+		Surrender[gone] = false;
 		if (PlayersTeam[Gone] == TEAM_RED) {
 			HudMessageBold (s:"\cD", d:SurrenderCount (TEAM_RED), s:"\cQ/\cD", d:RedCount(), s:" ",
 				s:"\cJof \cARed Team\cJ\n have voted to surrender";
@@ -311,9 +286,8 @@ Script 8 (int Gone) DISCONNECT {
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		}
-	}
-	else // % of players surrendering could now be higher. Al demands a recount!
-		ACS_Execute(751, 0);
+	} else // % of players surrendering could now be higher. Al demands a recount!
+		ACS_Execute (751, 0);
 }
 
 script 303 OPEN {
@@ -327,7 +301,7 @@ script 303 OPEN {
 }
 
 function void InitPlayer (void) {
-	SetCreditsSilent(Credits[PlayerNumber()+1], StartCredits);
+	SetCredits (PlayerNumber(), StartCredits);
 	Experience[PlayerNumber()] = 0;
 	Rank[PlayerNumber()] = RANK_PRIVATE;
 	Surrender[PlayerNumber()] = False;

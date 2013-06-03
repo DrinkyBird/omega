@@ -114,7 +114,7 @@ script 942 (void) NET {
 	AddExperience (score*50);
 	delay (35);
 	LocalAmbientSound ("powerup/credsound", 255);
-	AwardCredits (-1, score*200);
+	AwardCredits (score * 200);
 }
 
 // This allows players to sell weapons. Kinda like partial resign.

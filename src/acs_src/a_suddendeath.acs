@@ -52,17 +52,8 @@ script 997 (void) {
 
 	Log(s:"=== Sudden Death begins ===");
 
-	if (!TournamentMode) {
-		for (int n = 0; n < MAXPLAYERS; n++) {
-			if (!PlayerInGame(n)) 
-				continue;
-			
-			if (GetPlayerInfo (n, PLAYERINFO_TEAM) == TEAM_RED)
-				GiveActorInventory (3800+n, "NuclearStrikeBeacon", 1);
-			else 
-				GiveActorInventory (3800+n, "IonCannonBeacon", 1);
-		}
-	}
+	if (!TournamentMode)
+		GiveToAll ("BeaconItem", 1);
 
 	SetFont("BIGFONT");
 	HudMessageBold (s:"\cgSUDDEN DEATH!\n\nNo more repairs can be done\nEvery death counts!";

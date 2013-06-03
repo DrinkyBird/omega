@@ -78,7 +78,8 @@ script 994 DEATH {
 	int n0 = PlayerNumber();
 	int t0 = PlayerTeam();
 	SetActivatorToTarget (0);
-	if ((ActivatorTID () < 3800 || ActivatorTID () > 3831) && ActivatorTID () != 9999) terminate;
+	if ((ActivatorTID () < 3800 || ActivatorTID () > 3831) && ActivatorTID () != 9999)
+		terminate;
 	
 	int n1 = PlayerNumber();
 	int t1 = PlayerTeam();
@@ -158,7 +159,7 @@ script 923 (void) {
 Script 947 (int Amount) {
 	if (ActivatorTID() >= 3800 && ActivatorTID() <= 3831) {
 		LocalAmbientSound("game/boink",255);
-		AddExperience(10 * Amount);
-		AddCredits(Credits[PlayerNumber()+1], 15 * Amount);
+		AwardCredits (15 * Amount);
+		AddExperience (10 * Amount);
 	}
 }

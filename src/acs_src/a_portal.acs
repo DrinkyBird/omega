@@ -125,7 +125,7 @@ script SC_PORTAL_INIT (void) {
 			break;
 		}
 		delay (3*35);
-		RefundCredits (Credits[PlayerNumber()+1], 175);
+		RefundCredits (175);
 		terminate;
 	}
 	
@@ -191,7 +191,7 @@ script SC_PORTAL_FUNCTION (int idx) {
 		// teamkilling should not yield a reward...
 		if (idx >= 2 && PlayerTeam () == TEAM_BLUE || idx < 2 && PlayerTeam () == TEAM_RED) {
 			ACS_ExecuteAlways (324, 0, 1); // 50xp
-			AddCredits (Credits[PlayerNumber () + 1], 200);
+			AwardCredits (200);
 		}
 		
 		Portals[idx] = false;

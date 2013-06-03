@@ -188,17 +188,18 @@ script SC_MARINE_COMPENSATION (int team) {
 
 // AI marine bounty
 script SC_MARINE_DEATH (int i) {
-	// no matter what happened to the marine, the slot needs to
+	// No matter what happened to the marine, the slot needs to
 	// be cleared now that it's dead. save it's team first,
 	// we can't get it after the slot's clear
 	int AITeam = AI_GetTeam (i);
 	AI_ClearMarine (i);
 	
-	if (ActivatorTID() < 3800 || ActivatorTID() > 3831) terminate;
-	if (PlayerTeam() == AITeam) terminate;
+	if (ActivatorTID() < 3800 || ActivatorTID() > 3831 || PlayerTeam() == AITeam)
+		terminate;
+	
 	LocalAmbientSound ("game/boink", 127);
 	AddExperience (50);
-	AddCredits (Credits[PlayerNumber()+1], CreditFragAward);
+	AwardCredits (CreditFragAward);
 	TakeTickets (AITeam, 1);
 	
 	Team_GivePoints (PlayerTeam(), 2, false);

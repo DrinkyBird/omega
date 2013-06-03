@@ -124,7 +124,7 @@ script 80 (int mech) {
 	GiveInventory (ammo, 1);
 	SetThingSpecial (0, ACS_ExecuteAlways, 317, 0, PlayerTeam());
 	
-	SpendCredits(Credits[PlayerNumber()+1], cost);
+	SpendCredits (cost);
 	DisplayTick();
 	SetFont ("BIGFONT");
 	HudMessage(s:"You are now a \cF", s:nicename, s:"!";

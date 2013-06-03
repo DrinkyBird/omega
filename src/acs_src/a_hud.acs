@@ -28,7 +28,7 @@ script 5 RESPAWN {
 
 function void ShowStatus(void) {
 	SetFont ("SMALLFONT");
-	HudMessage(s:"\cNCredits: \cQ$\cD", d:Credits[PlayerNumber()+1],
+	HudMessage(s:"\cNCredits: \cQ$\cD", d:GetCredits (PlayerNumber ()),
 		s:"\n", s:"\cNExperience: \cD",d:Experience[PlayerNumber()], s:"\cQ/\cD",d:GetExpNeed(), s:" XP",
 		s:"\n", s:RankTitles[Rank[PlayerNumber()]];
 		HUDMSG_PLAIN, 50+PlayerNumber(), CR_WHITE, -0.685, -0.805, 1.5);

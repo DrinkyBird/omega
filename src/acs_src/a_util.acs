@@ -101,7 +101,7 @@ script 344 (int Type, int DoneByUtilGun)
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			SetActorState (900, "Disapproved");
 			delay (3*35);
-			RefundCredits(Credits[PlayerNumber()+1], 1500);
+			RefundCredits (1500);
 		}
 		if (PlayerTeam() == TEAM_BLUE && ThingCountSector(T_NONE,901,18) >= 1) {
 			SetFont("SMALLFONT");
@@ -124,7 +124,7 @@ script 344 (int Type, int DoneByUtilGun)
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			SetActorState (901, "Disapproved");
 			delay (3*35);
-			RefundCredits(Credits[PlayerNumber()+1], 1500);		
+			RefundCredits (1500);		
 		}
 	}
 	if(Type == 4)
@@ -161,7 +161,7 @@ script 344 (int Type, int DoneByUtilGun)
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			SetActorState (902, "Disapproved");
 			delay (3*35);
-			RefundCredits(Credits[PlayerNumber()+1], 1500);		
+			RefundCredits (1500);		
 			terminate;
 		}
 		
@@ -172,7 +172,7 @@ script 344 (int Type, int DoneByUtilGun)
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			SetActorState (903, "Disapproved");
 			delay (3*35);
-			RefundCredits(Credits[PlayerNumber()+1], 1500);		
+			RefundCredits (1500);		
 			terminate;
 		}
 
@@ -201,7 +201,7 @@ script 344 (int Type, int DoneByUtilGun)
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			delay (3*35);
-			RefundCredits(Credits[PlayerNumber()+1], 2250);	
+			RefundCredits (2250);	
 		}
 		
 		if (PlayerTeam() == TEAM_BLUE && ThingCount(T_NONE,903) == 1) {
@@ -229,7 +229,7 @@ script 344 (int Type, int DoneByUtilGun)
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			delay (3*35);
-			RefundCredits(Credits[PlayerNumber()+1], 2250);
+			RefundCredits (2250);
 		}
 	}
 	if(Type == 7)
@@ -260,7 +260,7 @@ script 344 (int Type, int DoneByUtilGun)
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			SetActorState (904, "Disapproved");
 			delay (3*35);
-			RefundCredits(Credits[PlayerNumber()+1], 1500);		
+			RefundCredits (1500);		
 			terminate;
 		}
 		if (PlayerTeam() == TEAM_BLUE && DoneByUtilGun == 1 && ThingCountSector(T_NONE,905,13) == 0 &&  ThingCount(T_NONE,905) == 1) {
@@ -270,7 +270,7 @@ script 344 (int Type, int DoneByUtilGun)
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			SetActorState (905, "Disapproved");
 			delay (3*35);
-			RefundCredits(Credits[PlayerNumber()+1], 1500);		
+			RefundCredits (1500);		
 			terminate;
 		}
 
@@ -299,7 +299,7 @@ script 344 (int Type, int DoneByUtilGun)
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			delay (3*35);
-			RefundCredits(Credits[PlayerNumber()+1], 2250);	
+			RefundCredits (2250);	
 		}
 		
 		if (PlayerTeam() == TEAM_BLUE && ThingCount(T_NONE,905) == 1) {
@@ -327,7 +327,7 @@ script 344 (int Type, int DoneByUtilGun)
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			delay (3*35);
-			RefundCredits(Credits[PlayerNumber()+1], 2250);
+			RefundCredits (2250);
 		}
 	}
 	if(Type == 9)
@@ -356,7 +356,7 @@ script 345 (int Type, int Team)
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
-		AddCredits(Credits[PlayerNumber()+1], 200);	
+		AddCredits(GetCredits (PlayerNumber()), 200);	
 		Log(n:0, s:" destroys Red Mini-Ref.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_RED);
@@ -369,7 +369,7 @@ script 345 (int Type, int Team)
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
-		AddCredits(Credits[PlayerNumber()+1], 200);	
+		AddCredits(GetCredits (PlayerNumber()), 200);	
 		Log(n:0, s:" destroys Blue Mini-Ref.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_BLUE);
@@ -382,7 +382,7 @@ script 345 (int Type, int Team)
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
-		AddCredits(Credits[PlayerNumber()+1], 200);	
+		AddCredits(GetCredits (PlayerNumber()), 200);	
 		Log(n:0, s:" destroys Red Health Regen Cache.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_RED);
@@ -395,7 +395,7 @@ script 345 (int Type, int Team)
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
-		AddCredits(Credits[PlayerNumber()+1], 200);	
+		AddCredits(GetCredits (PlayerNumber()), 200);	
 		Log(n:0, s:" destroys Blue Health Regen Cache.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_RED);
@@ -408,7 +408,7 @@ script 345 (int Type, int Team)
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
-		AddCredits(Credits[PlayerNumber()+1], 200);	
+		AddCredits(GetCredits (PlayerNumber()), 200);	
 		Log(n:0, s:" destroys Red Ammo Regen Cache.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_RED);
@@ -422,7 +422,7 @@ script 345 (int Type, int Team)
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
-		AddCredits(Credits[PlayerNumber()+1], 200);	
+		AddCredits(GetCredits (PlayerNumber()), 200);	
 		Log(n:0, s:" destroys Blue Ammo Regen Cache.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_BLUE);
@@ -564,7 +564,7 @@ script 695 (int Type)
 	
 	if(Type == 0) //TURRET
 	{
-		if(Credits[PlayerNumber()+1] < ACS_ExecuteWithResult(330,50,0,0))
+		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,50,0,0))
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -573,13 +573,13 @@ script 695 (int Type)
 		}
 		else
 		{
-			SpendCredits(Credits[PlayerNumber()+1], 50);
+			SpendCredits (50);
 			SetResultValue(1);
 		}	
 	}
 	if(Type == 1) //POWERUP CACHE
 	{
-		if(Credits[PlayerNumber()+1] < ACS_ExecuteWithResult(330,250,0,0))
+		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,250,0,0))
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -588,13 +588,13 @@ script 695 (int Type)
 		}
 		else
 		{
-			SpendCredits(Credits[PlayerNumber()+1], 250);
+			SpendCredits (250);
 			SetResultValue(1);
 		}	
 	}
 	if(Type == 2) //MINI REFINERY
 	{
-		if(Credits[PlayerNumber()+1] < ACS_ExecuteWithResult(330,2250,0,0))
+		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,2250,0,0))
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -603,13 +603,13 @@ script 695 (int Type)
 		}
 		else
 		{
-			SpendCredits(Credits[PlayerNumber()+1], 2250);
+			SpendCredits (2250);
 			SetResultValue(1);
 		}	
 	}
 	if(Type == 3) //ANTI-MECH TURRET
 	{
-		if(Credits[PlayerNumber()+1] < ACS_ExecuteWithResult(330,80,0,0))
+		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,80,0,0))
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -618,13 +618,13 @@ script 695 (int Type)
 		}
 		else
 		{
-			SpendCredits(Credits[PlayerNumber()+1], 80);
+			SpendCredits (80);
 			SetResultValue(1);
 		}	
 	}
 	if(Type == 4) //MINES
 	{
-		if(Credits[PlayerNumber()+1] < ACS_ExecuteWithResult(330,80,0,0))
+		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,80,0,0))
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -633,13 +633,13 @@ script 695 (int Type)
 		}
 		else
 		{
-			SpendCredits(Credits[PlayerNumber()+1], 80);
+			SpendCredits (80);
 			SetResultValue(1);
 		}	
 	}
 	if(Type == 5) //REPAIR TURRET
 	{
-		if(Credits[PlayerNumber()+1] < ACS_ExecuteWithResult(330,125,0,0))
+		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,125,0,0))
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -648,13 +648,13 @@ script 695 (int Type)
 		}
 		else
 		{
-			SpendCredits(Credits[PlayerNumber()+1], 125);
+			SpendCredits (125);
 			SetResultValue(1);
 		}	
 	}
 	if(Type == 6) //ADVANCED/KLAXON TURRET
 	{
-		if(Credits[PlayerNumber()+1] < ACS_ExecuteWithResult(330,100,0,0))
+		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,100,0,0))
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -663,13 +663,13 @@ script 695 (int Type)
 		}
 		else
 		{
-			SpendCredits(Credits[PlayerNumber()+1], 100);
+			SpendCredits (100);
 			SetResultValue(1);
 		}	
 	}
 	if(Type == 7) //REGENERATION CACHE
 	{
-		if(Credits[PlayerNumber()+1] < ACS_ExecuteWithResult(330,2250,0,0))
+		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,2250,0,0))
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -678,13 +678,13 @@ script 695 (int Type)
 		}
 		else
 		{
-			SpendCredits(Credits[PlayerNumber()+1], 2250);
+			SpendCredits (2250);
 			SetResultValue(1);
 		}	
 	}
 	if(Type == 8) //RAVEN MECH
 	{
-		if(Credits[PlayerNumber()+1] < ACS_ExecuteWithResult(330,1400,0,0))
+		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,1400,0,0))
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -693,13 +693,13 @@ script 695 (int Type)
 		}
 		else
 		{
-			SpendCredits(Credits[PlayerNumber()+1], 1400);
+			SpendCredits (1400);
 			SetResultValue(1);
 		}	
 	}
 	if(Type == 9) //RAVEN COMPANION
 	{
-		if(Credits[PlayerNumber()+1] < ACS_ExecuteWithResult(330,150,0,0))
+		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,150,0,0))
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -708,13 +708,13 @@ script 695 (int Type)
 		}
 		else
 		{
-			SpendCredits(Credits[PlayerNumber()+1], 150);
+			SpendCredits (150);
 			SetResultValue(1);
 		}	
 	}
 	if(Type == 10) //MISSILE TURRET
 	{
-		if(Credits[PlayerNumber()+1] < ACS_ExecuteWithResult(330,200,0,0))
+		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,200,0,0))
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -723,13 +723,13 @@ script 695 (int Type)
 		}
 		else
 		{
-			SpendCredits(Credits[PlayerNumber()+1], 200);
+			SpendCredits (200);
 			SetResultValue(1);
 		}	
 	}
 	if(Type == 11) //WOLVERINE MECH
 	{
-		if(Credits[PlayerNumber()+1] < ACS_ExecuteWithResult(330,1600,0,0))
+		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,1600,0,0))
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -738,7 +738,7 @@ script 695 (int Type)
 		}
 		else
 		{
-			SpendCredits(Credits[PlayerNumber()+1], 1600);
+			SpendCredits (1600);
 			SetResultValue(1);
 		}	
 	}
@@ -751,10 +751,10 @@ script 694 (int amount) {
 		terminate;
 	}
 	
-	if(Credits[PlayerNumber()+1] < ACS_ExecuteWithResult(330, amount, 0, 0)) {
+	if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330, amount, 0, 0)) {
 		SetResultValue(0);			
 	} else {
-		SpendCredits(Credits[PlayerNumber()+1], amount);
+		SpendCredits (amount);
 		SetResultValue(1);
 	}
 }

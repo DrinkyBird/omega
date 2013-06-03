@@ -51,12 +51,12 @@ function int CheckCredits(int price) {
 	if (IsAdmin[PlayerNumber()]) return 1;
 	price = ACS_ExecuteWithResult (330, price);
 	
-	if(Credits[PlayerNumber()+1] < price) {
+	if (GetCredits (PlayerNumber()) < price) {
 		TakeInventory("PurchaseToken",1);
 		LocalAmbientSound("misc/funds",255);
 		DisplayCross();
 		SETFONT("BigFont");
-		HudMessage(s:"You need \cQ$\cD", d:price-Credits[PlayerNumber()+1], s:"\c- more to purchase this!";
+		HudMessage(s:"You need \cQ$\cD", d:price - GetCredits (PlayerNumber()), s:"\c- more to purchase this!";
 			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
 		
 		if (GetLevelInfo (LEVELINFO_LEVELNUM) == 20 || GetLevelInfo (LEVELINFO_LEVELNUM) == 21)
@@ -198,13 +198,11 @@ function int CheckPlasmaCooldown (void) {
 	return 1;
 }
 
-function void GiveInventoryBold (str what, int amount) {
-	for (int i = 3800; i < 3800+PlayerCount(); i++) {
-		GiveActorInventory (i, what, amount);
-	}
+function void GiveToAll (str what, int amount) {
+	for (int i = 0; i < MAXPLAYERS; i++)
+		GiveActorInventory (3800 + i, what, amount);
 }
 
-// [Dusk] not really a function but I don't know where else to categorize this o_O
 script 356 (void)
 {
 	if(PlayerTeam() == TEAM_RED)
@@ -232,9 +230,9 @@ script 336 (int Invert) {
 
 function bool MitigateDoublePress(void)
 {
-	if ( Timer() - LastMenu[PlayerNumber()+1] < 5 )
+	if ( Timer() - LastMenu[PlayerNumber()] < 5 )
 		return true; // [SP] This is to fix the "double cost" bug
-	LastMenu[PlayerNumber()+1] = Timer();
+	LastMenu[PlayerNumber()] = Timer();
 	return false;
 }
 

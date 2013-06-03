@@ -19,32 +19,14 @@ script 888 ENTER {
 	if (!GotPlant[Team]) max = 8;
 	if (!GotBarracks[Team]) max = 2;
 	
-	// PrintBold (n:0, s:"\c-: I have \cQ$\cD", d:Credits[PlayerNumber()+1]);
+	// PrintBold (n:0, s:"\c-: I have \cQ$\cD", d:GetCredits (PlayerNumber()));
 	
 	// [Dusk]  save some computing time - see if we can only afford an ssg
-	if (Credits[PlayerNumber()+1] < 400) {
-		if (Credits[PlayerNumber()+1] >= 200)
-			i = 2;
-		else
-			i = 0; // if not, pick gunman
-	} else {
-		while (x < 5) {
-			i = random(0, max);
-			if ((GotBarracks[Team] || !BotClassBarDependencies[i]) &&
-				(GotPlant[Team] || !BotClassPlantDependencies[i]) &&
-				Credits[PlayerNumber()+1] >= BotClassCosts[i])
-				break;
-			x++;
-		}
-		
-		// [Dusk] can't decide? simple logic solves the problem.
-		if (x == 5) {
-			if (Credits[PlayerNumber()+1] >= 200)
-				i = 2;
-			else
-				i = 0;
-		}
-	}
+	do {
+		i = random(0, max);
+	} while ((!GotBarracks[Team] && BotClassBarDependencies[i]) ||
+			(!GotPlant[Team] && BotClassPlantDependencies[i]) ||
+			(GetCredits (PlayerNumber ()) < BotClassCosts[i]));
 	
 	ACS_ExecuteAlways (BotClassNumbers[i], 0, team);
 }

@@ -212,7 +212,7 @@ script 324 (int n) {
 Script 328 (int team) {
 	if (PlayerTeam() != team) {
 		AddExperience (10);
-		AddCredits (Credits[PlayerNumber()+1], 75);
+		AddCredits (GetCredits (PlayerNumber()), 75);
 		Team_GivePoints (PlayerTeam(), 2, false);
 		LocalAmbientSound ("c4/use", 127);
 	}
@@ -224,7 +224,7 @@ Script 350 (int team) {
 	
 	ACS_ExecuteAlways(324,0,3,0,0);			//150 XP
 	Team_GivePoints (PlayerTeam(), 10, false);
-	AddCredits(Credits[PlayerNumber()+1], 250);		//250 credits
+	AddCredits(GetCredits (PlayerNumber()), 250);		//250 credits
 	Log(n:0, s:" disarms beacon.");
 }
 

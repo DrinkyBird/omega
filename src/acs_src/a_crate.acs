@@ -104,13 +104,13 @@ script 309 (int Crate, int Override) {
 	case 5:
 	case 16:
 		SetFont("SMALLFONT");
-		HudMessage (s:"You got extra \cQ$\cD", d:CreditAwardAmount, s:"!";
+		HudMessage (s:"Bonus credits! \cQ$\cD", d:CreditAwardAmount, s:"!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		LocalAmbientSound("powerup/cred",255);
 		Delay(4);
 		LocalAmbientSound("powerup/credsound",255);
-		AddCreditsSilent(Credits[PlayerNumber()+1], CreditAwardAmount);
+		IncrCredits (PlayerNumber (), CreditAwardAmount);
 		Log(n:0, s:" gets Bonus Credits Crate.");
 		break;
 	case 6:
@@ -297,13 +297,13 @@ script 309 (int Crate, int Override) {
 	case 14:
 	case 28:
 		SetFont("SMALLFONT");
-		HudMessage (s:"\cJYou lost \cQ$\cD", d:CreditAwardAmount;
+		HudMessage (s:"\cACredits stolen! (\cQ$\cD)", d:CreditAwardAmount;
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		LocalAmbientSound("powerup/stol",255);
 		Delay(4);
 		LocalAmbientSound("powerup/stolsound",255);
-		TakeCreditsSilent(Experience[PlayerNumber()+1], CreditAwardAmount);
+		DecrCredits (PlayerNumber (), CreditAwardAmount);
 		Log(n:0, s:" gets Credits Stolen.");
 		break;
 	case 15:

@@ -11,17 +11,13 @@
 int Donor[MAXPLAYERS];
 
 Function int DonateCredits (int Player, int NewCredits) {
-	Credits[PlayerNumber()+1] -= NewCredits;
-	if(Credits[PlayerNumber()+1] < 0)
-		Credits[PlayerNumber()+1] = 0;
-
-	Credits[CheckInventory("DonationName")+1] += NewCredits;
+	DecrCredits (PlayerNumber (), NewCredits);
+	IncrCredits (CheckInventory ("DonationName"), NewCredits);
 	
-	// int donor = PlayerNumber()+1;
 	LocalAmbientSound("powerup/stolsound",255);
 	
 	SETFONT("SMALLFONT");
-	HudMessage(s:"You have donated \cf$",d:NewCredits,s:"\cd to ", n:CheckInventory("DonationName")+1;
+	HudMessage(s:"You have donated \cf$",d:NewCredits,s:"\cd to ", n:CheckInventory("DonationName");
 		HUDMSG_FADEOUT, 480+PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0);
 	
 	Donor[CheckInventory("DonationName")] = PlayerNumber(); // used in the message to the donatee
@@ -45,7 +41,7 @@ function void ShowCurrentDonationMenu (void)
 	HudMessage(s:"\cJ== Make a donation!",
 	s:"\n\cFChange Name \cK-> \cI", k:"DonationName",
 	s:"\n\cFDonate \cQ$\cD100 \cK-> \cI", k:"DonationGive",
-	s:"\n\n", n:DonationName+1, s:"\n\cKCredits: \cQ$\cD", d:Credits[DonationName+1],
+	s:"\n\n", n:DonationName+1, s:"\n\cKCredits: \cQ$\cD", d:Credits[DonationName],
 	s:"\n\cKHealth: ", d:GetActorHealth (3800+DonationName), s:" / ", d:GetActorSpawnHealth (3800+DonationName),
 	s:"\n\cK", s:DisplayName (DonationName);
 		HUDMSG_PLAIN, 6000+PlayerNumber(), color, -0.65, 0.65, 1.15);
@@ -104,7 +100,7 @@ script 334 (int Which) NET {
 			terminate;
 		}
 		
-		if (Credits[PlayerNumber()+1] < 100) {
+		if (Credits[PlayerNumber()] < 100) {
 			SETFONT("BigFont");
 			HudMessage(s:"You can't afford this!";
 				HUDMSG_FADEOUT, 480+PlayerNumber(), CR_DarkRed, 0.5, 0.55, 2.0, 1.0);

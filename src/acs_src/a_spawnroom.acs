@@ -57,20 +57,26 @@ script 95 (int unused, int force) {
 	SetActorProperty(0,APROP_RenderStyle,STYLE_Normal);
 	SetActorProperty(0,APROP_Alpha,1.0);
 	
-	RefundCredits(Credits[PlayerNumber()+1], CheckInventory("Refunds"));
-	TakeInventory("Refunds", 10000);
+	RefundCredits (CheckInventory ("Refunds"));
+	SetInventory ("Refunds", 0);
 	if (CheckInventory ("JumpjetSwitch")) GiveInventory ("JumpjetDeactivate", 1);
 	if (CheckInventory ("PlasmaCannon")) bool HasPlasma = True;
 	if (CheckInventory ("ArtilleryCannon")) bool HasArtillery = True;
 	if (CheckInventory ("TiberiumAutorifleWeak")) bool HasTiberiumAutorifle = True;
 	if (CheckInventory ("IonCannonBeacon") || CheckInventory("NuclearStrikeBeacon")) bool HasSuperWeapon = True;
-	if (CheckInventory ("PowerInvulnerable")) bool HasIronCurtain = True;
-	if (CheckInventory ("PowerBerserk")) bool HasBerserk = True;
 	if (CheckInventory ("EagerBeaver")) bool HasChainsaw = True;
 	if (CheckInventory ("BombPack")) bool HasKamikaze = True;
+	
+	// ClearInventory doesn't reset the fade, hack around it
 	if (CheckInventory ("PowerTimeGunFloat") || CheckInventory ("PowerTimeGunBoost") || CheckInventory ("IsTeleporting"))
 		bool HasTimeGunPositiveEffect = 1;
-	if (CheckInventory ("PowerTimeGunWeaken") || CheckInventory ("PowerTimeGunSlow")) bool HasTimeGunNegativeEffect = 1;
+	if (CheckInventory ("PowerTimeGunWeaken") || CheckInventory ("PowerTimeGunSlow"))
+		bool HasTimeGunNegativeEffect = 1;
+	if (CheckInventory ("PowerInvulnerable"))
+		bool HasIronCurtain = True;
+	if (CheckInventory ("PowerBerserk"))
+		bool HasBerserk = True;
+	
 	TakeInventory ("PowerTimeGunBoost", 1);
 	SetActorProperty (0, APROP_Alpha, 1.0);
 	SetPlayerProperty (0, 0, PROP_FLY);
