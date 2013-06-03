@@ -303,7 +303,7 @@ script 652 (int tid, int damage) {
 
 function void AwardBuildingDestruction (int team, int small) {
 	int activator = ActivatorTID();
-	for (int k = 0; k <= 31; k++) {
+	for (int k = 0; k < MAXPLAYERS; k++) {
 		if (PlayerInGame(k) && GetPlayerInfo(k,PLAYERINFO_TEAM) == Team) {
 			SetActivator(3800+k);
 			ACS_ExecuteAlways (318,0);

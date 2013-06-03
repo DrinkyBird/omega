@@ -204,30 +204,30 @@ int BodycountTimelimit;
 
 int Flags[3];
 
-int Credits[33];
-int Experience[32];
-int Rank[32];
+int Credits[MAXPLAYERS];
+int Experience[MAXPLAYERS];
+int Rank[MAXPLAYERS];
 str RankTitles[8];
-int PlayersTeam[33];
-bool IsAdmin[33];
-bool Surrender[32];
-int LastSurrenderTime[32];
+int PlayersTeam[MAXPLAYERS];
+bool IsAdmin[MAXPLAYERS];
+bool Surrender[MAXPLAYERS];
+int LastSurrenderTime[MAXPLAYERS];
 
 int FirstBlood;
 
 // [SP] Keep track of when player joins game for purposes of team balance
-int StartTime[33];
+int StartTime[MAXPLAYERS];
 int PlayerNeedsSwitched;
 
 // [SP] Plasma cannon tracking
-int LastPurchasedCannon[33];
+int LastPurchasedCannon[MAXPLAYERS];
 int LastPurchasedBeacon[3];
 int NumPlasmaCannons[3];
 int MaxCannonsPerTeam;
 int CannonPurchaseDelay;
 
 // [SP] Time Cop tracking
-int LastPurchasedTimeCop[33];
+int LastPurchasedTimeCop[MAXPLAYERS];
 int NumTimeCops[3];
 int MaxTimeCopsPerTeam;
 
@@ -238,9 +238,9 @@ int UsePortals = 1;
 // a portal is considered inactive when it has no destinaton
 int Portals[4] = {0};
 // used to determine when a player has teleported in the last 18 tics. prevents teleporting multiple times.
-int HasTeleported[32];
+int HasTeleported[MAXPLAYERS];
 
-int LastMenu[33] = {0}; // [SP] This is to fix double-pressing on mech switches, causing a huge cost to the buyer.
+int LastMenu[MAXPLAYERS] = {0}; // [SP] This is to fix double-pressing on mech switches, causing a huge cost to the buyer.
 
 // [SP] Current Console Player IDX (client-side only)
 // Defaults to -1, this will be the "server" - anytime ConsolePlayer is -1
@@ -316,19 +316,19 @@ int GameOver;
 
 bool CrateTime = True;
 
-int PlayerSpeeds[32];
+int PlayerSpeeds[MAXPLAYERS];
 int MechGetter[2]; // which player is in the hanger?
 
 int PlasmaCooldownTime; // plasma cannon cooldown time (CVar)
-int PlasmaCooldown[32]; // same for plasma cannon (internal)
+int PlasmaCooldown[MAXPLAYERS]; // same for plasma cannon (internal)
 
 int MaxRazorWire = 20;
 int MaxProxy = 50;
 int MaxMechs = 5; // mini-ravens
 int MaxCrates = 15;
 
-int RepairBonus[32];
-int MedicBonus[32];
+int RepairBonus[MAXPLAYERS];
+int MedicBonus[MAXPLAYERS];
 int MedicBonusNeed;
 int AIMarines[2] = {0}; // compensation-spawned only
 

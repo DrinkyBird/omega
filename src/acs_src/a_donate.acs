@@ -8,7 +8,7 @@
  * of this and call it your own. Thanks!
  */
 
-int Donor[32];
+int Donor[MAXPLAYERS];
 
 Function int DonateCredits (int Player, int NewCredits) {
 	Credits[PlayerNumber()+1] -= NewCredits;
@@ -33,12 +33,13 @@ Function int DonateCredits (int Player, int NewCredits) {
 function void ShowCurrentDonationMenu (void)
 {
 	int DonationName = CheckInventory("DonationName");
-
-	if (DonationName > 31)
-		TakeInventory("DonationName", 31);
+	
+	if (DonationName >= MAXPLAYERS)
+		TakeInventory ("DonationName", MAXPLAYERS - 1);
 	
 	int color = CR_BLUE;
-	if (PlayerTeam() == TEAM_RED) color = CR_RED;
+	if (PlayerTeam() == TEAM_RED)
+		color = CR_RED;
 	
 	SETFONT("DoomFont");
 	HudMessage(s:"\cJ== Make a donation!",
@@ -82,7 +83,7 @@ script 334 (int Which) NET {
 				GiveInventory("DonationName",1);
 			else
 				CheckValid = 0;
-			if ( CheckInventory("DonationName") > 32 )
+			if ( CheckInventory("DonationName") > MAXPLAYERS )
 				TakeInventory("DonationName",100);
 		}
 		ShowCurrentDonationMenu();
@@ -139,8 +140,8 @@ script 335 (void) NET
 				GiveInventory("DonationName", 1);
 			else
 				CheckValid = 0;
-			if (CheckInventory("DonationName") > 31)
-				TakeInventory("DonationName", 31);
+			if (CheckInventory("DonationName") >= MAXPLAYERS)
+				TakeInventory("DonationName", MAXPLAYERS - 1);
 		}
 		ShowCurrentDonationMenu();
 		ACS_ExecuteAlways(333, 0);

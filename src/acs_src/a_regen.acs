@@ -1,7 +1,7 @@
 //REGENERATION
 script 343 OPEN {
 	int n, r;
-	for (n = 0; n <= 31; n++) {
+	for (n = 0; n < MAXPLAYERS; n++) {
 		if (!PlayerInGame (n))
 			continue;
 		

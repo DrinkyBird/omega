@@ -37,7 +37,7 @@ script 110 (int Team) {
 	int amount = 75;
 	if (EnhancedRefining[Team]) amount = 225;
 	
-	for (int i = 0; i < 32; i++) {
+	for (int i = 0; i < MAXPLAYERS; i++) {
 		if (PlayerInGame(i) && GetPlayerInfo (i, PLAYERINFO_TEAM) == PlayerTeam()) {
 			GiveCredits (i, amount);
 			SetActivator (3800+i);

@@ -1,7 +1,7 @@
 // Clientside effects and designation actors
-int ChemSmokers[32];
+int ChemSmokers[MAXPLAYERS];
 
-script 943 OPEN CLIENTSIDE {	
+script 943 OPEN CLIENTSIDE {
 	// [SP] This script allows clients to keep track of what player# they are
 	ConsoleCommand ("puke 944");
 	
@@ -38,13 +38,13 @@ script 366 (void) NET CLIENTSIDE {
 		SpawnSpotForced ("TiberiumChemSmoke", 402, 0, 0);
 		
 		// display smoke on tib-carrying players
-		for (i = 0; i <= 31; i++) {
+		for (i = 0; i < MAXPLAYERS; i++) {
 			if (CheckActorInventory (3800+i, "TiberiumCrystal") && !ChemSmokers[i])
 				ACS_ExecuteAlways (355, 0, i, 0);
 		}
 		
 		// see friendly stealths
-		for (i = 0; i <= 31; i++) {
+		for (i = 0; i < MAXPLAYERS; i++) {
 			teammate = GetPlayerInfo (i, PLAYERINFO_TEAM) == GetPlayerInfo (ConsolePlayer, PLAYERINFO_TEAM);
 			if (!PlayerInGame (ConsolePlayer)) teammate = 1; // spects
 			if (CheckActorProperty (3800+i, APROP_RenderStyle, STYLE_None) && teammate && i != ConsolePlayer)
@@ -52,7 +52,7 @@ script 366 (void) NET CLIENTSIDE {
 		}
 		
 		// jumpjet fire
-		for (i = 0; i <= 31; i++) {
+		for (i = 0; i < MAXPLAYERS; i++) {
 			if (CheckActorInventory (3800+i, "JumpjetSwitch") && !ChemSmokers[i])
 				ACS_ExecuteAlways (355, 0, i, 2);
 		}
@@ -76,6 +76,7 @@ script 355 (int i, int what) CLIENTSIDE {
 		}
 		ChemSmokers[i] = 0;
 		break;
+	
 	case 1:
 		// visible friendly stealths
 		SetActorProperty (3800+i, APROP_RenderStyle, STYLE_Translucent);
@@ -89,6 +90,7 @@ script 355 (int i, int what) CLIENTSIDE {
 		SetActorProperty (3800+i, APROP_RenderStyle, STYLE_None);
 		SetActorProperty (3800+i, APROP_Alpha, 0.0);
 		break;
+	
 	case 2:
 		// jumpjet fire
 		// ChemSmokers[] is used here as well - no conflicts can happen since no

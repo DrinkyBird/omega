@@ -240,7 +240,7 @@ function bool MitigateDoublePress(void)
 
 function int SurrenderCount (int team) {
 	int count = 0;
-	for (int i = 0; i <= 31; i++) {
+	for (int i = 0; i < MAXPLAYERS; i++) {
 		if (PlayerInGame(i) && GetPlayerInfo (i, PLAYERINFO_TEAM) == team && Surrender[i]) count++;
 	}
 	return count;
@@ -248,7 +248,7 @@ function int SurrenderCount (int team) {
 
 // freezes all players
 function void FreezeBold (void) {
-	for (int i = 0; i <= 31; i++) {
+	for (int i = 0; i < MAXPLAYERS; i++) {
 		if (PlayerInGame(i) && !IsAdmin[i]) {
 			SetPlayerProperty (i, PROP_TOTALLYFROZEN, true);
 			SetActorProperty (3800+i, APROP_Invulnerable, true);
@@ -258,7 +258,7 @@ function void FreezeBold (void) {
 
 // reverse action for above
 function void DefrostBold (void) {
-	for (int i = 0; i <= 31; i++) {
+	for (int i = 0; i < MAXPLAYERS; i++) {
 		if (PlayerInGame(i) && !IsAdmin[i]) {
 			SetPlayerProperty (i, PROP_TOTALLYFROZEN, false);
 			SetActorProperty (3800+i, APROP_Invulnerable, false);
@@ -269,7 +269,7 @@ function void DefrostBold (void) {
 // refreshes time cop limit
 function void RecountTimeCops (void) {
 	NumTimeCops[0] = 0; NumTimeCops[1] = 0;
-	for (int i = 0; i <= 31; i++) {
+	for (int i = 0; i < MAXPLAYERS; i++) {
 		if (!PlayerInGame(i)) continue;
 		if (CheckActorInventory(3800+i, "TimeGun")) {
 			if (GetPlayerInfo (i, PLAYERINFO_TEAM) == TEAM_RED)
@@ -283,7 +283,7 @@ function void RecountTimeCops (void) {
 // refreshes plasma limit
 function void RecountPlasma (void) {
 	NumPlasmaCannons[0] = 0; NumPlasmaCannons[1] = 0;
-	for (int i = 0; i <= 31; i++) {
+	for (int i = 0; i < MAXPLAYERS; i++) {
 		if (!PlayerInGame(i)) continue;
 		if (CheckActorInventory(3800+i, "PlasmaCannon")) {
 			if (GetPlayerInfo (i, PLAYERINFO_TEAM) == TEAM_RED)
@@ -461,7 +461,7 @@ function int SetActorInventory (int tid, str item, int count) {
 // [Dusk] counts how many guardians you have
 function int GuardianCount (void) {
 	int n;
-	for (int i = 0; i <= 31; i++) {
+	for (int i = 0; i < MAXPLAYERS; i++) {
 		if (GetPlayerInfo (i, PLAYERINFO_TEAM) == PlayerTeam() &&
 		CheckActorInventory (3800+i, "PowerGuardian"))
 			n++;

@@ -8,7 +8,7 @@ script 556 OPEN
 		NumPlasmaCannons[1] = 0;
 		NumTimeCops[0] = 0;
 		NumTimeCops[1] = 0;
-		while (Counter<32)
+		while (Counter<MAXPLAYERS)
 		{
 			if ( PlayerInGame(Counter) )
 			{

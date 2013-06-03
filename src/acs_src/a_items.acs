@@ -100,30 +100,31 @@ script 951 (int action, int team) {
 #define HEALRAD_RANGE 128
 #define HEALRAD_AMOUNT 10
 #define HEALRAD_DELAY 5
-int IsBeingHealed[32];
+int IsBeingHealed[MAXPLAYERS];
 script 952 (int action, int i) {
-	int shp;
-	int n;
+	int shp, n;
+	
 	switch (action) {
 	case 0:
-		for (i = 0; i <= 31; i++) {
-			if (GetActorHealth (3800+i) < GetActorSpawnHealth (3800+i) && !CheckActorInventory (3800+i, "IsMech")) {
+		for (i = 0; i < MAXPLAYERS; i++)
+			if (GetActorHealth (3800+i) < GetActorSpawnHealth (3800+i) && !CheckActorInventory (3800+i, "IsMech"))
 				if (CheckActorDistance (0, 3800+i, HEALRAD_RANGE))
 					ACS_ExecuteAlways (952, 0, 1, i);
-			}
-		}
 		break;
+	
 	case 1:
 		if (IsBeingHealed[i]) terminate;
 		IsBeingHealed[i] = true;
 		shp = GetActorSpawnHealth (3800+i);
 		n = GetActorHealth (3800+i);
+		
 		while (n < shp && n > 0 && CheckActorDistance (0, 3800+i, HEALRAD_RANGE)) {
 			n += HEALRAD_AMOUNT; if (n > shp) n = shp;
 			SetActorHealth (3800+i, n);
 			delay (HEALRAD_DELAY);
 			n = GetActorHealth (3800+i);
 		}
+		
 		IsBeingHealed[i] = false;
 		break;
 	}

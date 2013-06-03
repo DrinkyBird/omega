@@ -75,7 +75,7 @@ Script 326 OPEN {
 	
 	delay(35*60*CreditAwardTime);
 	
-	for (int i = 0; i <= 31; i++) {
+	for (int i = 0; i < MAXPLAYERS; i++) {
 		if (PlayerInGame(i) && !IsAdmin[i])
 			Credits[i+1] += CreditAwardAmount;
 	}
