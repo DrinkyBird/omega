@@ -44,4 +44,7 @@ pushd src >/dev/null
 	echo "Building $fname..."
 	zip -r1 ../$fname acs * >/dev/null
 popd >/dev/null
+
+rm -rf ./tmp
+
 echo "done!"
