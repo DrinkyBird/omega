@@ -3,7 +3,7 @@ actor AdminPistol : AOWWeapon {
 	+NOAUTOFIRE
 	+NOAUTOAIM
 	Inventory.PickupMessage "If you see this message, you are \cgHACKING."
-	Obituary "%o was smitten by %k's administrative power."
+	Obituary "$OB_ADMIN"
 	Weapon.SelectionOrder 85
 	Weapon.PreferredSkin "MarineAdmin"
 	

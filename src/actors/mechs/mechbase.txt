@@ -43,7 +43,7 @@ actor MechDeathSmoke {
 	Gravity 0.3
 	Scale 0.03
 	DamageType "Explosion"
-	Obituary "%o was blown up by %k's junk!"
+	Obituary "$OB_MECHJUNK"
 	States {
 	Spawn:
 		TNT1 A 6 
@@ -206,9 +206,10 @@ actor ShortRangeMissileAmmo : Ammo {
 }
 
 actor MechExplosionSmall {
-	obituary "%o was blown up by %k's mech."
-	damagetype "Monster"
-	states {
+	Obituary "$OB_MECHEXPLOSION"
+	DamageType "Rifle"
+	
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 A_PlaySound ("mech/explode/medium1", 1)
@@ -224,14 +225,12 @@ actor MechExplosionSmall {
 		TNT1 A 8 A_SpawnItemEx ("ExplosionMainLarge", 14, 32, 96)
 		TNT1 A 8 A_SpawnItemEx ("ExplosionMainLarge", 26, 48, 128)
 		TNT1 A 5
-		Stop
+		stop
 	}
 }
 
-actor MechExplosionLarge {
-	obituary "%o was blown up by %k's big mech."
-	damagetype "Monster"
-	states {
+actor MechExplosionLarge : MechExplosionSmall {
+	States {
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 A_PlaySound ("mech/explode/large1", 1)
@@ -248,6 +247,6 @@ actor MechExplosionLarge {
 		TNT1 A 8 A_SpawnItemEx ("ExplosionMainLarge", 26, 48, 128)
 		TNT1 A 8 A_SpawnItemEx ("ExplosionMainLarge", 38, 72, 160)
 		TNT1 A 8 A_SpawnItemEx ("ExplosionMainLarge", 50, 96, 192)
-		Stop
+		stop
 	}
 }

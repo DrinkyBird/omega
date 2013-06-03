@@ -1,22 +1,30 @@
 [enu default]
+// =============================================================================
 OB_FALLING = "%o should've watched %p step.";
 OB_FRIENDLY1 = "%o became a traitor.";
 OB_FRIENDLY2 = "%o is colorblind.";
 OB_FRIENDLY3 = "%o is killing friendlies for money!";
 OB_FRIENDLY4 = "%o is LOSING HIS F#%@ING MIND!!!";
 OB_CRUSH = "%o was flattened.";
+OB_WATER = "%o swam like a brick."; // Psychic
+OB_FALLING = "%o butted heads with gravity.";
 
+// =============================================================================
+OB_ADMIN = "%o was taught discipline by %k.";
 OB_ARTILLERYCANNON = "%o was demolished by %k's artillery cannon.";
+OB_BFG2704 = "%o was recognized posthumously by the UAC for %p contributions to %k's unauthorized BFG 2704 testing.";
 OB_BOMBPACK = "%o \cIwas wiped off the face of Earth by %k.";
 OB_DOUBLESHOTGUN = "%o was splattered by %k's double shotgun.";
 OB_CHAINSAW = "%o was shredded by %k's chainsaw.";
-OB_CHAINSAW_ALT = "%o was dismembered by %k's flying chainsaw!";
+OB_CHAINSAW_ALT = "%o\cG was mutilated to bits by %k\cG's thrown chainsaw!";
+OB_CHEMSPRAYER = "%o took a sniff of %k's chemicals.";
+OB_CHEMSPRAYER_GRENADE = "%o was mutated by %k's chemical grenade.";
 OB_FIREDECAY = "%o burns in %k's firestorm.";
 OB_FLAMER = "%o was cooked by %k's flamethrower.";
-OB_FLAMER_GRENADE = "%o was set ablaze by %k's phosphorus grenade.";
+OB_FLAMER_GRENADE = "%o was flash-fried by %k's phosphorus grenade.";
 OB_GATLING = "%o was drilled by %k's gatling gun.";
 OB_GATLING_JET = "%o was drilled by a flying %k's gatling gun.";
-OB_GAUSS = "%o had %p torso busted by %k's gauss rifle.";
+OB_GAUSS = "%o was busted by %k's gauss rifle.";
 OB_GRENADE = "%o gulped down %k's grenade.";
 OB_GRENADE_ALT = "%o played catch with %k's grenade.";
 OB_IONCANNON = "%o was obliterated by %k's \chIon Cannon.";
@@ -28,9 +36,11 @@ OB_MINIRAVEN_RED = "%o was pecked by a \cgRed\c- Mini-Raven.";
 OB_MINIRAVEN_BLUE = "%o was pecked by a \chBlue\c- Mini-Raven.";
 OB_MISSILELAUNCHER = "%o was blown out of %p boots by %k's missile.";
 OB_MINE = "%o played living minesweeper.";
+OB_MINEBARREL = "%o was mined down into the ground by %k.";
 OB_NUKE = "%o was disintegrated by %k's \cgNuclear Strike.";
 OB_OBELISK_BLUE = "%o was vaporized by the \chBlue Obelisk\c-.";
 OB_OBELISK_RED = "%o was vaporized by the \cgRed Obelisk\c-.";
+OB_PLASMARIFLE = "%o was liquified by %k's plasma gun.";
 OB_PLASMACANNON_RED = "%o was annihilated by %k's \caplasma cannon.";
 OB_PLASMACANNON_BLUE = "%o was annihilated by %k's \cnplasma cannon.";
 OB_PLASMACANNON_ALT_RED = "%o couldn't escape %k's \caplasma cannon.";
@@ -40,20 +50,22 @@ OB_SEEKERMISSILE = "%o was sought and found by %k's seeker missile.";
 OB_SNIPER = "%o found %k's bullet in %p head.";
 OB_SUBBY = "%o was tickled by %k's sub-machinegun.";
 
+// =============================================================================
+// Mech obits
 OB_ORCA = "%o was pinned down by %k's Orca.";
 OB_RAVEN = "%o was pecked by %k's Raven.";
-OB_MADCAT = "%o was destroyed by %k's Mad Cat.";
+OB_MADCAT = "%o was surged by %k's Mad Cat.";
 OB_TITAN = "%o was crushed by %k's Titan.";
 OB_GUARDIAN = "%o couldn't get past %k's Guardian.";
 
+OB_MECHJUNK = "%o was caught playing with %k's junk.";
+OB_MECHEXPLOSION = "%o chose the wrong day to inspect %k's mech.";
+
+// =============================================================================
+// AI marine obits
 OB_MARINE_ROCKET_BLUE = "%o nearly dodged a \chBlue marine's\c- rocket.";
 OB_MARINE_ROCKET_RED = "%o nearly dodged a \cgRed marine's\c- rocket.";
 OB_MARINE_SSG_BLUE = "%o was splattered by a \chBlue marine's\c- double shotgun.";
 OB_MARINE_SSG_RED = "%o was splattered by a \cgRed marine's\c- double shotgun.";
 OB_MARINE_TIBRIFLE_BLUE = "%o was skewered by a \chBlue marine's\c- tiberium autorifle";
-OB_MARINE_TIBRIFLE_RED = "%o was skewered by a \cgRed marine's\c- tiberium autorifle";
-
-OB_HEALRAD = "%o couldn't operate a healing radius.";
-
-// these aren't actually meant to show up, but turrets...
-OB_BOMBPACK_WTF = "%o couldn't stand %k running around screaming.";
+OB_MARINE_TIBRIFLE_RED = "%o was skewered by a \cgRed marine's\c- tiberium autorifle";=
