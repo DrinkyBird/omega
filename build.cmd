@@ -1,5 +1,5 @@
 @echo off
-setlocal enableextensions disabledelayedexpansion
+setlocal enableExtensions enableDelayedExpansion
 set tmp=TEMPFILE
 set Path=%PATH%;%cd%\utils;%cd%\utils\acc
 
@@ -8,15 +8,26 @@ if exist tmp goto tmpexists
 
 git describe >%tmp%
 set /p descrb=<%tmp%
-if "%descrb%"=="" goto nogit
+if "%descrb%"=="" (	
+	echo no git installed
+	pause
+	goto :eof
+)
 
 gitrevnum %descrb% >%tmp%
 set /p rnum=<%tmp%
 
-rem See if it's modified
+rem Run git status --short to see if it's modified
 git status --short >%tmp%
-set /p statustext=<%tmp%
-if NOT "%statustext%"=="" set rnum=%rnum%m
+set /p stat=<%tmp%
+
+rem Replace newlines in %stat%, if doesn't like them:
+set ^"stat2=!stat:^
+
+= !"
+
+rem Now do the checking
+if "%stat2%" NEQ "" set rnum=%rnum%m
 
 set fname=omega_git-%rnum%.pk3
 
@@ -34,24 +45,19 @@ pushd tmp
 	
 	zip -r1 ..\%fname% acs >nul
 popd
+rmdir tmp /s /q >nul
 
 echo Creating %fname%
 pushd src
 zip -r1 ..\%fname% * >nul
-popd src
+popd
 
-rmdir tmp /s /q >nul
 echo done!
 pause
 goto :eof
 
 rem ===============================================================================
 rem State tags
-:nogit
-echo no git installed
-pause
-goto :eof
-
 :tmpexists
 echo tmp already exists, need to remove it to continue
 rmdir /s tmp
