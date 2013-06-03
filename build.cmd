@@ -6,10 +6,9 @@ set Path=%PATH%;%cd%\utils;%cd%\utils\acc
 if exist tmp goto tmpexists
 :doneremovingtmp
 
-rem git describe >%tmp%
-rem set /p descrb=<%tmp%
-rem if "%descrb%"=="" goto nogit
-set descrb=initial-1-ga438f5b
+git describe >%tmp%
+set /p descrb=<%tmp%
+if "%descrb%"=="" goto nogit
 
 gitrevnum %descrb% >%tmp%
 set /p rnum=<%tmp%
