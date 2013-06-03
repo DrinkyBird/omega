@@ -45,6 +45,6 @@ pushd src >/dev/null
 	zip -r1 ../$fname acs * >/dev/null
 popd >/dev/null
 
-rm -rf ./tmp
+rm -rf ./tmp/
 
 echo "done!"
