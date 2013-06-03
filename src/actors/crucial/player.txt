@@ -7,6 +7,7 @@ actor Player : DoomPlayer {
 	Player.StartItem "Unarmed", 1
 	Player.ForwardMove 0.875
 	Player.SideMove 0.875
+	Player.MaxHealth 100
 	DamageFactor "Explosion",        0.3
 	DamageFactor "Chemical",         2.0
 	DamageFactor "AntiArmor",        0.1
