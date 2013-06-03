@@ -119,10 +119,6 @@ actor SniperRifleWeak : SniperRifle 21081 {
 	Fire:
 		SNIE AA 0 A_JumpIfInventory ("IsZoomed", 1, "FireZoomed")
 		SNIP F 0 A_GunFlash
-		SNIF F 0 A_JumpIfInventory("IsBlue",1,"FireBlue")
-		SNIF F 0 A_FireBullets (7.2, 7.2, -1, 17, "RiflePuff")
-		goto Reload
-	FireBlue:
 		SNIF F 0 A_FireBullets (7.2, 7.2, -1, 17, "RiflePuff")
 		goto Reload
 	FireZoomed:

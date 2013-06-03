@@ -27,7 +27,6 @@ actor Unarmed : AOWWeapon {
 		goto Select+2
 	
 	Fire:
-		PUNG B 0 A_JumpIfInventory("IsBlue",1,"FireBlue")
 		PUNG B 2 A_JumpIfInventory("FistSwitch",1,6)
 		PUNG C 2
 		PUNG B 0 A_GiveInventory("FistSwitch",1)
