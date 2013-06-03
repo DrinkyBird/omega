@@ -6,13 +6,14 @@ set Path=%PATH%;%cd%\utils;%cd%\utils\acc
 if exist tmp goto tmpexists
 :doneremovingtmp
 
-git rev-parse HEAD >%tmp%
-set /p longhash=<%tmp%
-if "%longhash%"=="" goto nogit
+rem git describe >%tmp%
+rem set /p descrb=<%tmp%
+rem if "%descrb%"=="" goto nogit
+set descrb=initial-1-ga438f5b
 
-trim %longhash% 8 >%tmp%
-set /p hash=<%tmp%
-set fname=omega_%hash%.pk3
+gitrevnum %descrb% >%tmp%
+set /p rnum=<%tmp%
+set fname=omega_git-%rnum%.pk3
 
 rem We don't need the temp file anymore
 del %tmp%
@@ -29,7 +30,7 @@ pushd tmp
 	zip -r1 ..\%fname% acs >nul
 popd
 
-echo Creating pk3 bulk
+echo Creating %fname%
 pushd src
 zip -r1 ..\%fname% * >nul
 popd src

@@ -10,11 +10,11 @@ if [ -z "$(which acc)" ]; then
 	exit 1
 fi
 
-hash=$(git rev-parse HEAD |head -c 8)
-fname="omega_$hash.pk3"
+revnum=$(git describe |sed "s/-/ /g" |awk '{printf $2}')
+fname="omega_git-$revnum.pk3"
 
 if [ -e tmp ]; then
-	echo -n "tmp exists, delete it? "
+	echo "tmp exists, delete it?"
 	rm -rI tmp
 	
 	if [ -e tmp ]; then
