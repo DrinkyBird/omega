@@ -17,7 +17,6 @@ rem See if it's modified
 git status --short >%tmp%
 set /p statustext=<%tmp%
 if NOT "%statustext%"=="" set rnum=%rnum%m
-:donewithmodified
 
 set fname=omega_git-%rnum%.pk3
 
@@ -41,8 +40,7 @@ pushd src
 zip -r1 ..\%fname% * >nul
 popd src
 
-rd /s /q tmp >nul
-del /a /f tmp >nul
+rmdir tmp /s /q >nul
 echo done!
 pause
 goto :eof
@@ -55,15 +53,9 @@ pause
 goto :eof
 
 :tmpexists
-set /p yesreallydelete=directory named tmp already exists, remove it? (Y/N)
-if "%yesreallydelete%"=="y" goto removetemp
-if "%yesreallydelete%"=="Y" goto removetemp
-echo aborting operations
-pause
-goto :eof
-
-:removetemp
-rd /s /q tmp >nul
+echo tmp already exists, need to remove it to continue
+rmdir /s tmp
+if exist tmp goto abort
 goto doneremovingtmp
 
 :acsfail
@@ -71,5 +63,9 @@ rem Execute ACC a second time to expose the error
 acc -I ..\..\utils\acc ..\..\src\acs_src\aow2scrp.acs aow2scrp.o
 
 echo ACS failed to compile, aborting
+goto abort
+
+:abort
+echo stop
 pause
 goto :eof
