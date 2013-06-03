@@ -20,7 +20,7 @@ map AOW01 "Mining Site" {
 
 map AOW02 "Barrens" {
 	next = "AOW03"
-	sky1 = "STSKY2"
+	sky1 = "SKY15"
 	music = "D_AOW02"
 	levelnum = 2
 }
