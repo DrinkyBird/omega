@@ -68,4 +68,4 @@ OB_MARINE_ROCKET_RED = "%o nearly dodged a \cgRed marine's\c- rocket.";
 OB_MARINE_SSG_BLUE = "%o was splattered by a \chBlue marine's\c- double shotgun.";
 OB_MARINE_SSG_RED = "%o was splattered by a \cgRed marine's\c- double shotgun.";
 OB_MARINE_TIBRIFLE_BLUE = "%o was skewered by a \chBlue marine's\c- tiberium autorifle";
-OB_MARINE_TIBRIFLE_RED = "%o was skewered by a \cgRed marine's\c- tiberium autorifle";=
+OB_MARINE_TIBRIFLE_RED = "%o was skewered by a \cgRed marine's\c- tiberium autorifle";
