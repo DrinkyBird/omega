@@ -1,7 +1,7 @@
 @echo off
 setlocal enableExtensions enableDelayedExpansion
 set tmp=TEMPFILE
-set Path=%PATH%;%cd%\utils;%cd%\utils\acc
+set Path=%PATH%;%cd%\utils;%cd%\utils\acc;C:\Program Files\Git\cmd;C:\Program Files (x86)\Git\cmd
 
 if exist tmp goto tmpexists
 :doneremovingtmp
