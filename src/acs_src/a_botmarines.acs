@@ -1,24 +1,24 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * All Out War 2 AI marine scripts
  * Credit to VoltlocK for originally creating the engine
- * With modifications by Eruanna, Dusk and the Omega Team
+ * With modifications by the Omega Team
  *
  * You may use portions of this script in your project as long as you give
  * credit where credit is due. Please don't be lame and just copy-paste any
  * of this and call it your own. Thanks!
  */
 
-/* Get a free slot ID. Make sure you actually spawn one marine with the tid
+// ============================================================================
+/* [Dusk] Get a free slot ID. Make sure you actually spawn one marine with the tid
  * (and ONLY one) when you do this! Marines will, however, call this by
  * themselves if you do not do so beforehand.
  */
 function int AI_RequestID (void) {
-	int tid;
-	int i = 0;
-	while (Bots[i] && i < MAX_MARINES)
-		i++;
+	// Find a free slot
+	for (int i = 0; Bots[i] && i < MAX_MARINES; i++);
 	
 	if (i >= MAX_MARINES) {
+		// Uh oh.
 		Log (s:"AI_RequestID: Too many AI marines!");
 		return -1;
 	}
@@ -28,6 +28,8 @@ function int AI_RequestID (void) {
 	return i;
 }
 
+// ============================================================================
+// [Dusk] Remove a marine from game
 function bool AI_ClearMarine (int i) {
 	if (!Bots[i]) {
 		Log (s:"AI_ClearMarine: Marine ", d:i, s:" doesn't exist.");
@@ -37,175 +39,188 @@ function bool AI_ClearMarine (int i) {
 	AIMarineCount--;
 	Bots[i] = false;
 	
-	// death script calls this as well
+	// Send to Dismiss state if it's still alive. This makes it
+	// look like as if the marine teleports away from the game.
 	if (GetActorHealth (TID_MARINE + i) > 0)
 		SetActorState (TID_MARINE + i, "Dismiss");
 	
-	// clear the TID
+	// Clear the TID
 	Thing_ChangeTID (TID_MARINE + i, 0);
 	return true;
 }
 
-// What team is a marine on?
-function int AI_GetTeam (int i) {
-	if (!Bots[i]) {
-		Log (s:"AI_GetTeam: Tried to get the team of non-existant marine #", d:i, s:"!");
-		return -1;
-	}
-	
-	return CheckActorInventory (TID_MARINE + i, "IsRed");
-}
-
-// Was the marine spawned by compensation?
-function int AI_IsCompensation (int i) {
-	if (!Bots[i]) {
-		Log (s:"AI_GetCompensation: Tried to get the compensation status of non-existant marine #", d:i, s:"!");
-		return -1;
-	}
-	
-	return CheckActorInventory (TID_MARINE + i, "IsCompensationMarine");
-}
-
-// Init a marine
+// ============================================================================
+// [Dusk] Init a marine
 script SC_MARINE_INIT (void) {
 	GiveInventory ("IsAIMarine", 1);
 	
-	// if we haven't got an ID already, get one
-	if (ActivatorTID() == 0) {
+	// If we haven't got an ID already, get one
+	if (ActivatorTID () == 0) {
 		int i = AI_RequestID ();
 		if (i != -1)
 			Thing_ChangeTID (0, TID_MARINE + i);
 		else
-			Thing_Remove (0); // oh gn0 we hit the limit!
+			Thing_Remove (0);
 	}
 	
-	SetThingSpecial (0, ACS_ExecuteAlways, SC_MARINE_DEATH, 0, ActivatorTID()-TID_MARINE);
+	// Set proper special
+	SetThingSpecial (0, ACS_ExecuteAlways, SC_MARINE_DEATH, 0, ActivatorTID () - TID_MARINE);
 }
 
-// ==== TEAM UNBALANCE COMPENSATION
+// ============================================================================
+// ==== MARINE COMPENSATION
 // [Dusk] There are clearly unbalanced teams, and the game has already started. Even despite
 // we try balance teams via the switcher, surplus remains. Therefore, the weaker team is
 // put on on compensation and give them AI marines. We keep doing this until teams are
 // balanced out.
-function void AI_ManageCompensation (void) {
-	if (Timer() <= 5*30*35 || GetCVar ("aow_nocompensation")) return;
-	int n;
+script SC_MARINE_COMPENSATION OPEN {
+	int n, rc, bc, team;
 	
-	// recalculate AI marine needs
-	if (RedCount() > BlueCount() + 1 + (RedCount() > 7) && BlueCount() != 0)
-		AIMarines[TEAM_BLUE] = RedCount() - (BlueCount() + 1 + (RedCount() > 7));
-	else if (AIMarines[TEAM_BLUE] > 0)
-		AIMarines[TEAM_BLUE] = 0;
-	
-	if (BlueCount() > RedCount() + 1 + (BlueCount() > 7) && RedCount() != 0)
-		AIMarines[TEAM_RED] = BlueCount() - RedCount() + 1 + (BlueCount() > 7);
-	else if (AIMarines[TEAM_RED] > 0)
-		AIMarines[TEAM_RED] = 0;
-	
-	// make sure teams have the right amount of marines
-	ACS_ExecuteAlways (SC_MARINE_COMPENSATION, 0, TEAM_BLUE);
-	ACS_ExecuteAlways (SC_MARINE_COMPENSATION, 0, TEAM_RED);
-}
-
-script SC_MARINE_COMPENSATION (int team) {
-	int AICount;
-	int AISpawner;
-	int spottid;
-	
-	for (int i = 0; i < MAX_MARINES; i++) {
-		if (!Bots[i]) continue;
-		if (AI_GetTeam (i) == team && AI_IsCompensation (i)) AICount++;
-	}
-	
-	if (team == TEAM_BLUE)
-		spottid = TID_REPAIR_BLUE;
-	else
-		spottid = TID_REPAIR_RED;
-	
-	int delta = AICount - AIMarines[team];
-	i = 0;
-	if (delta == 0)
-		terminate;
-	else if (delta > 0) {
-		// Too many marines - send one of them home
-		log (s:"Compensation: Removing ", d:delta, s:" marines from ", s:TeamNames[team], s:".");
-		while (i < MAX_MARINES && delta > 0) {
-			if (!Bots[i]) {
-				i++;
-				continue;
-			}
+	while (true) {
+		delay (35 * 5);
+		if (!GetCVar ("aow_debugmarines") && (Timer () < 5 * MINUTETICS || GetCVar ("aow_nocompensation")))
+			continue;
+		
+		// Calculate AI marine needs
+		if (GetCVar ("aow_debugmarines") > 0) {
+			// Debug CVAR to override these counts.
+			AIMarines[TEAM_BLUE] = GetCVar ("aow_debugmarines");
+			AIMarines[TEAM_RED] = GetCVar ("aow_debugmarines");
+		} else {
+			rc = GetTeamProperty (TEAM_RED, TPROP_NumPlayers);
+			bc = GetTeamProperty (TEAM_BLUE, TPROP_NumPlayers);
 			
-			if (AI_IsCompensation (i) && AI_GetTeam (i) == team) {
-				// found one!
-				AI_ClearMarine (i);
-				delta--;
-			}
+			if (rc > bc + 1 + (rc > 7) && bc != 0)
+				AIMarines[TEAM_BLUE] = rc - (bc + 1 + (rc > 7));
+			else if (AIMarines[TEAM_BLUE] > 0)
+				AIMarines[TEAM_BLUE] = 0;
 			
-			i++;
-		}
-	} else {
-		while (AICount < AIMarines[team]) {
-			i = AI_RequestID ();
-			if (i == -1) break;
-			
-			int spawned = 0;
-			int tries = 5;
-			int fail = 1;
-			while (tries > 0 && !spawned) {
-				// spawn the marine initially onto the repair facility
-				spawned = SpawnSpotForced (AISpawner, spottid, TID_MARINE + i, 0);
-				if (spawned) {
-					AICount += spawned;
-					
-					delay (1);
-					
-					// flag the marine as compensation
-					GiveActorInventory (TID_MARINE + i, "IsCompensationMarine", 1);
-					
-					// move the newly-spawned bot to a random spawn in the base, but
-					// only spawn fog at the destination. don't want teleport fogs
-					// to randomly appear in the repair facility
-					TeleportOther (TID_MARINE + i, team+1, false);
-					SpawnSpotForced ("TeleportFog", TID_MARINE + i, 0, 0);
-				} else {
-					fail = 0;
-					tries--;
-				}
-				
-				delay (35);
-			}
-			
-			// something's seriously wrong...
-			if (fail) {
-				Log (s:"Compensation: Couldn't spawn marines to ", s:TeamNames[team], s:"!");
-				terminate;
-			}
+			if (bc > rc + 1 + (bc > 7) && rc != 0)
+				AIMarines[TEAM_RED] = bc - (rc + 1 + (bc > 7));
+			else if (AIMarines[TEAM_RED] > 0)
+				AIMarines[TEAM_RED] = 0;
 		}
 		
-		log (s:"Compensation: ", d:-delta, s:" marines spawned for ", s:TeamNames[team], s:".");
+		// Make sure teams have the right amount of marines
+		for (team = TEAM_BLUE; team <= TEAM_RED; team++) {
+			int AICount = 0;
+			int spottid;
+			
+			str AIClass = "BlueRandomMarine";
+			if (team == TEAM_RED)
+				AIClass = "RedRandomMarine";
+			
+			// Count how many AI marines the specified team has
+			for (int i = 0; i < MAX_MARINES; i++) {
+				if (!Bots[i])
+					continue;
+				
+				if (CheckActorInventory (TID_MARINE + i, "IsRed") == team &&
+					CheckActorInventory (TID_MARINE + i, "IsCompensationMarine"))
+				{
+					AICount++;
+				}
+			}
+			
+			// Determine initial spawn spot
+			if (team == TEAM_BLUE)
+				spottid = TID_REPAIR_BLUE;
+			else
+				spottid = TID_REPAIR_RED;
+			
+			// Determine delta, which is counted marines minus assigned marines.
+			// If this is positive, there's too many marines, if negative, there's
+			// not enough.
+			int delta = AICount - AIMarines[team];
+			
+			if (delta > 0) {
+				// Positive delta, too many AI marines - send one of them home
+				Log (s:"Compensation: Removing ", d:delta,
+					s:" marines from ", s:TeamNames[team], s:".");
+				for (i = 0; i < MAX_MARINES && delta > 0; i++) {
+					// Find a marine that we can send home.
+					if (!Bots[i])
+						continue; // free slot
+					
+					if (!CheckActorInventory (TID_MARINE + i, "IsCompensationMarine"))
+						continue; // not compensation (e.g. marine beacon, don't touch them)
+					
+					if (CheckActorInventory (TID_MARINE + i, "IsRed") != team)
+						continue; // wrong team
+					
+					AI_ClearMarine (i);
+					delta--;
+				}
+			} else if (delta < 0) {
+				// Negative delta, team needs more marines.
+				Log (s:"Compensation: Adding ", d:-delta,
+					s:" marines to ", s:TeamNames[team], s:".");
+				
+				while (AICount < AIMarines[team]) {
+					// Get a free ID
+					i = AI_RequestID ();
+					
+					if (i == -1)
+						break; // no free IDs, can't do anything
+					
+					int spawned = 0;
+					int tries = 5;
+					while (tries > 0 && !spawned) {
+						// Spawn the marine initially onto the repair facility
+						spawned = SpawnSpotForced (AIClass, spottid, TID_MARINE + i, 0);
+						if (spawned) {
+							AICount += spawned;
+							
+							delay (1);
+							
+							// Flag the marine as compensation
+							GiveActorInventory (TID_MARINE + i, "IsCompensationMarine", 1);
+							
+							// Move the newly-spawned bot to a random spawn in the base, but
+							// only spawn fog at the destination. We don't want teleport fogs
+							// to randomly appear in the repair facility.
+							TeleportOther (TID_MARINE + i, team+1, false);
+							SpawnSpotForced ("TeleportFog", TID_MARINE + i, 0, 0);
+						} else
+							tries--;
+						
+						delay (35);
+					}
+					
+					if (!spawned) {
+						// Something's seriously wrong if we get here
+						Log (s:"WARNING: Couldn't spawn compensation marines to ", s:TeamNames[team],
+							s:"!\nSomething is going haywire here!");
+						terminate;
+					}
+				}
+				
+				Log (s:"Done adding marines for ", s:TeamNames[team]);
+			}
+		}
 	}
 }
 
-// AI marine bounty
+// ============================================================================
+// [Dusk] AI marine bounty
 script SC_MARINE_DEATH (int i) {
 	// No matter what happened to the marine, the slot needs to
-	// be cleared now that it's dead. save it's team first,
-	// we can't get it after the slot's clear
-	int AITeam = AI_GetTeam (i);
+	// be cleared now that it's dead. Save its team first,
+	// we can't get it after the slot is cleared.
+	int AITeam = CheckActorInventory (TID_MARINE + i, "IsRed");
 	AI_ClearMarine (i);
 	
-	if (ActivatorTID() < 3800 || ActivatorTID() > 3831 || PlayerTeam() == AITeam)
-		terminate;
-	
-	LocalAmbientSound ("game/boink", 127);
-	AddExperience (50);
-	AwardCredits (CreditFragAward);
-	TakeTickets (AITeam, 1);
-	
-	Team_GivePoints (PlayerTeam(), 2, false);
+	// Give the killer a bounty if he was an enemy player
+	if (PlayerNumber() != -1 && PlayerTeam() != AITeam) {
+		LocalAmbientSound ("game/boink", 127);
+		AddExperience (100);
+		AwardCredits (GetCVar ("aow_creditfrag"));
+		TakeTickets (AITeam, 1);
+		Team_GivePoints (PlayerTeam(), 2, false);
+	}
 }
 
-// Dumps known information about AI marines
+// [Dusk] Dumps known information about AI marines. Not a lot here at the moment..
 script SC_MARINE_STATS (void) {
 	for (int i = 0; i < MAX_MARINES; i++) {
 		if (!Bots[i]) {
@@ -214,8 +229,9 @@ script SC_MARINE_STATS (void) {
 		}
 		
 		int compensation = "";
-		if (AI_IsCompensation (i)) {compensation = " (compensation)";}
+		if (CheckActorInventory (TID_MARINE + i, "IsCompensationMarine"))
+			compensation = " (compensation)";
 		
-		Log (s:"Marine ", d:i, s:": ", s:TeamNames[AI_GetTeam (i)], s:compensation);
+		Log (s:"Marine ", d:i, s:": ", s:TeamNames[CheckActorInventory (TID_MARINE + i, "IsRed")], s:compensation);
 	}
 }
