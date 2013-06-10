@@ -380,6 +380,7 @@ function int GetActorSpeed (int tid) {return GetActorProperty (tid, APROP_SPEED)
 function void SetActorSpeed (int tid, int value) {SetActorProperty (tid, APROP_SPEED, value);}
 function int LevelNumber (void) {return GetLevelInfo (LEVELINFO_LEVELNUM);}
 function void GivePoints (int p) {Team_GivePoints (PlayerTeam(), p, false);}
+function int GetPlayerTeam (int p) { return GetPlayerInfo (p, PLAYERINFO_TEAM); }
 
 // returns the `display name` of the player with id pn
 // NOTE: this function must cater for client-side acs!
@@ -474,3 +475,10 @@ function void Error (str text) {
 }
 
 function void ReddenSector (int tag) {Sector_SetColor (tag, 255, 150, 150);}
+
+function int cond (int a, int b, int c) {
+	if (a)
+		return b;
+	
+	return c;
+}

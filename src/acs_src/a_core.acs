@@ -226,6 +226,9 @@ script 10 RESPAWN {
 }
 
 script 11 ENTER {
+	// This player's joining might throw off team balance, so check that now.
+	CheckTeamBalance ();
+	
 	delay (5);
 	InitPlayer();
 	
@@ -288,6 +291,9 @@ Script 8 (int Gone) DISCONNECT {
 		}
 	} else // % of players surrendering could now be higher. Al demands a recount!
 		ACS_Execute (751, 0);
+	
+	// Check teams for possible imbalance
+	CheckTeamBalance ();
 }
 
 script 303 OPEN {

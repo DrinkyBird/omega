@@ -18,6 +18,8 @@
 
 #define TEAM_NONE 255
 #define MAXPLAYERS 64
+#define TICRATE 35
+#define MINUTETICS (60 * 35)
 
 // [Dusk] intel HudMessage coords
 #define INTEL_XPOS 0.5
