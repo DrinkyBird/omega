@@ -28,7 +28,6 @@ actor Utility_GlobalMedicCacheRed {
 	DesignatedTeam 1
 	radius 8
 	height 64
-	speed 100 // used for base hud!
 	health 10000
 	renderstyle Translucent
 	alpha 0.0

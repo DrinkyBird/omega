@@ -11,7 +11,6 @@ actor BaseTerminal {
 	
 	Height 120
 	Mass 0x7FFFFFFF
-	Speed 100 // used for base hud health percentages! DON'T TOUCH IT
 	DamageType "Explosion"
 	Obituary "%o went down with a \cGRed\c- building."
 	Radius 16
@@ -96,7 +95,6 @@ actor BaseTerminalBlue : BaseTerminal {
 
 actor TerminalExplosion {
 	PROJECTILE
-	Speed 0
 	DamageType "Monster"
 	
 	States {
