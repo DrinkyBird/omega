@@ -34,7 +34,7 @@ pushd tmp >/dev/null
 	pushd acs >/dev/null
 		acc_args="-I ../../utils/acc ../../src/acs_src/aow2scrp.acs aow2scrp.o"
 		echo "Compiling ACS..."
-		acc $acc_args >/dev/null 2>&1
+		acc $acc_args # >/dev/null 2>&1
 		
 		if [ ! -e aow2scrp.o ]; then
 			acc $acc_args

@@ -11,6 +11,8 @@
 script 999 OPEN {
 	delay (1);
 	
+	InitClasses ();
+	
 	RankTitles[0] = "Private";
 	RankTitles[1] = "Corporal";
 	RankTitles[2] = "Sergeant";

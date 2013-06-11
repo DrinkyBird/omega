@@ -76,6 +76,7 @@
 #define CLASS_TIMECOP 27
 #define CLASS_HARVESTER 28
 #define CLASS_ADVHARVESTER 29
+#define NUM_CLASSES 30
 
 // mech ids
 #define MECH_ORCA 0

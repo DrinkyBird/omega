@@ -5,73 +5,179 @@
 // You may use portions of this script in your project as long as you give credit where credit is
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
+int Classes[NUM_CLASSES][64];
+
+// Keys to the Classes array
+#define CK_NAME         0
+#define CK_COST         1
+#define CK_SPEED        2
+#define CK_DEP          3
+#define CK_C4           4
+#define CK_GERNADES     5
+#define CK_ARMORNUM     6
+#define CK_ARMORMOD     7
+#define CK_FLAGS        8
+#define CK_NUMITEMS     9 // last key - item info follows
+
+// CK_FLAGS
+#define CF_ENHANCEDC4   (1 << 0)
+#define CF_SUPPORT      (1 << 1)
+
+// CK_DEP
+#define DEP_NONE        0
+#define DEP_BARRACKS    1
+#define DEP_CENTRE      2
+
+function void AddClassItem (int class, str item, int amount) {
+	// Get the amount of current items, from this we can figure
+	// where in the array do we insert the new item
+	int n = Classes[class][CK_NUMITEMS];
+	int p = CK_NUMITEMS + 1 + (n * 2);
+	
+	// Add in the stuff
+	Classes[class][p] = item;
+	Classes[class][p + 1] = amount;
+	Classes[class][CK_NUMITEMS]++;
+}
+
+function str GetClassItemName (int class, int inum) {
+	int p = CK_NUMITEMS + 1 + (inum * 2);
+	return Classes[class][p];
+}
+
+function int GetClassItemAmount (int class, int inum) {
+	int p = CK_NUMITEMS + 1 + (inum * 2);
+	return Classes[class][p + 1];
+}
+
+function void InitClasses (void) {
+	int c;
+	
+	// Init C4 and grenades to 1 globally
+	for (c = 0; c < NUM_CLASSES; c++) {
+		Classes[c][CK_C4] = 1;
+		Classes[c][CK_GERNADES] = 1;
+	}
+	
+	// Begin class definitions
+	c = CLASS_GUNMAN;
+	Classes[c][CK_NAME] = "Gunman";
+	Classes[c][CK_SPEED] = 1.0;
+	AddClassItem (c, "SubMachineGun", 1);
+	
+	c = CLASS_ENGINEER;
+	Classes[c][CK_NAME] = "Engineer";
+	Classes[c][CK_SPEED] = 0.8;
+	Classes[c][CK_FLAGS] = (CF_SUPPORT | CF_ENHANCEDC4);
+	AddClassItem (c, "RepairGun", 1);
+}
+
+function void PurchaseClass (int c) {
+	int team = PlayerTeam ();
+	int cost = Classes[c][CK_COST];
+	
+	// [SP] This is to fix the "double cost" bug
+	if (Timer() - LastMenu[PlayerNumber()] < 5)
+		return;
+	
+	LastMenu[PlayerNumber()] = Timer();
+	
+	if (CheckInventory ("HasClass")) {
+		Error ("You need to resign first!");
+		
+		if (GetLevelInfo (LEVELINFO_LEVELNUM) == 20 || GetLevelInfo (LEVELINFO_LEVELNUM) == 21)
+			ThrustThing((VectorAngle(GetActorVelX(0), GetActorVelY(0)) >> 8) + 128, 25, 0, 0);
+		
+		return;
+	}
+	
+	// Show class information on the first press.
+	if ((GetLevelInfo (LEVELINFO_LEVELNUM) != 20 && GetLevelInfo (LEVELINFO_LEVELNUM) != 21)) {
+		if (!CheckInventory("PurchaseToken")) {
+			ACS_ExecuteWithResult (330, cost);
+			SetFont ("CLSS01");
+			HudMessage(s:"a";
+				HUDMSG_FADEOUT, 2100+PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0);
+			ACS_ExecuteAlways (956, 0);
+			return;
+		} else {
+			// [Dusk] Clear the card out once the class is purchased
+			HudMessage(s:""; HUDMSG_PLAIN, 2100+PlayerNumber(), CR_UNTRANSLATED, 0.0, 0.0, 0.01);
+		}
+	}
+	
+	// Check monies
+	if (!CheckCredits (cost))
+		return;
+	
+	// Check dependencies
+	int dep = Classes[c][CK_DEP];
+	if (!IsAdmin[PlayerNumber()] && (dep == DEP_BARRACKS || dep == DEP_CENTRE)) {
+		if (!GotBarracks[Team]) {
+			Error ("Your \cFbarracks\c- has been destroyed!");
+			return;
+		}
+		
+		if (dep == DEP_CENTRE && !GotPlant[Team]) {
+			Error ("Your \cFresearch centre\c- has been destroyed!");
+			return;
+		}
+	}
+	
+	int cflags = Classes[c][CK_FLAGS];
+	
+	TakeInventory ("PurchaseToken",1);
+	DisplayTick ();
+	SpendCredits (0);
+	SetFont ("BigFont");
+	HudMessage (s:"You are a \cf", s:Classes[c][CK_NAME], s:"!";
+		HUDMSG_FADEOUT, 1800, CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	
+	// The essentials
+	SetActorProperty (0, APROP_SPEED, Classes[c][CK_SPEED]);
+	GiveInventory ("HasClass", 1);
+	GiveInventory ("NewClipAmmo", 160);
+	GiveInventory ("Handgun", 1);
+	GiveInventory ("SpawnInvulnerability", 1);
+	GiveInventory ("ClassID", c);
+	
+	if (Classes[c][CK_C4] > 0) {
+		GiveInventory ("TimedC4", 1);
+		GiveInventory ("TimedC4Count", Classes[c][CK_C4]);
+		
+		if (cflags & CF_ENHANCEDC4)
+			GiveInventory ("EnhancedTimedC4", 1);
+	}
+	
+	SetFragGrenades (Classes[c][CK_GERNADES]);
+	
+	// Item list
+	log (d:Classes[c][CK_NUMITEMS], s:" items");
+	for (int i = 0; i < Classes[c][CK_NUMITEMS]; ++i) {
+		str itemname = GetClassItemName (c, i);
+		int itemamount = GetClassItemAmount (c, i);
+		log (d:itemamount, s:" of ", s:itemname);
+		GiveInventory (itemname, itemamount);
+		
+		// First item defined is the primary weapon, set it:
+		if (i == 0)
+			SetWeapon (itemname);
+	}
+	
+	ACS_ExecuteAlways (91, 0);
+	ACS_ExecuteAlways (961, 0, Team);
+	PlayerSpeeds[PlayerNumber()] = Classes[c][CK_SPEED];
+	Log(n:0, s:" becomes ", s:Classes[c][CK_NAME]);
+}
+
 //---------------------------GUNMAN
 script 20 (int Team) {
-	int cost = 0; int speed = 1.0;
-	if (MitigateDoublePress()) terminate;
-	if (!IsResigned()) terminate;
-	if (!IsSecondPress("CLSS01", cost)) terminate;
-
-	TakeInventory("PurchaseToken",1);
-	DisplayTick();
-	SpendCredits (0);
-	SETFONT("BigFont");
-	HudMessage(s:"You are a \cfgunman!";
-		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-	
-	//Set Statistics
-	SetActorProperty(0,APROP_SPEED,speed);
-	GiveInventory("HasClass",1);
-	GiveInventory("NewClipAmmo",160);
-	GiveInventory("Handgun",1);
-	GiveInventory ("TimedC4", 1);
-	GiveInventory ("TimedC4Count", 1);
-	SetFragGrenades (1);
-	GiveInventory("SubMachineGun",1);
-	SetWeapon("SubMachineGun");
-	ACS_ExecuteAlways(91, 0);
-	
-	GiveInventory("SpawnInvulnerability",1);
-	GiveInventory ("ClassID", CLASS_GUNMAN);
-	
-	ACS_ExecuteAlways (961, 0, Team);
-	PlayerSpeeds[PlayerNumber()] = speed;
-	Log(n:0, s:" becomes Gunman.");
+	PurchaseClass (CLASS_GUNMAN);
 }
 
 //---------------------------ENGINEER
 script 21 (int Team) {
-	int cost = 0; int speed = 0.8;
-	if (MitigateDoublePress()) terminate;
-	if (!IsResigned()) terminate;
-	if (!IsSecondPress("CLSS02", cost)) terminate;
-	
-	TakeInventory("PurchaseToken",1);
-	DisplayTick();
-	SpendCredits (0);
-	SETFONT("BigFont");
-	HudMessage(s:"You are an \cfEngineer!";
-		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-	
-	//Set Statistics
-	SetActorProperty(0,APROP_SPEED,speed);
-	GiveInventory("HasClass",1);
-	GiveInventory("NewClipAmmo",120);
-	GiveInventory("Handgun",1);
-	SetFragGrenades (1);
-	GiveInventory ("EnhancedTimedC4",1);
-	GiveInventory ("TimedC4",1);
-	GiveInventory ("TimedC4Count",1);
-	GiveInventory("RepairGun",1);
-	SetWeapon("RepairGun");
-	ACS_ExecuteAlways(91, 0);
-	
-	GiveInventory("SpawnInvulnerability",1);
-	GiveInventory ("ClassID", CLASS_ENGINEER);
-	
-	ACS_ExecuteAlways (961, 0, Team);
-	PlayerSpeeds[PlayerNumber()] = speed;
-	Log(n:0, s:" becomes Engineer.");
+	PurchaseClass (CLASS_ENGINEER);
 }
 
 //---------------------------MINIGUNNER
@@ -1651,25 +1757,28 @@ script 64 (int Team) {
 script 961 (int team) {
 	int tries, i;
 	bool failed = true;
+	
 	if (GetLevelInfo (LEVELINFO_LEVELNUM) == 20 || GetLevelInfo (LEVELINFO_LEVELNUM) == 21) {
 		for (i = 0; i <= 9; i++) {
-			if (Teleport_NoStop (1+(1-team), 0)) {
+			if (Teleport_NoStop (1 + team, 0)) {
 				failed = false;
 				break;
 			}
 		}
 	} else {
 		for (i = 0; i <= 9; i++) {
-			if (Teleport (1+(1-team))) {
+			if (Teleport (1 + team)) {
 				failed = false;
 				break;
 			}
 		}
 	}
+	
 	if (failed) {
 		HudMessage (s:"In-field teleportation \cAfailed\cJ - use the\n\cDTeleport back to Field\cJ -terminal";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 5.0, 1.0);
 			terminate;
-	} else TakeInventory ("IsInSpawnRoom", 1);
+	} else
+		TakeInventory ("IsInSpawnRoom", 1);
 }
