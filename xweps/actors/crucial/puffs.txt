@@ -1,0 +1,56 @@
+actor HHBulletPuff : BulletPuff replaces BulletPuff {
+	+CLIENTSIDEONLY
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+FORCEXYBILLBOARD
+	+PUFFGETSOWNER
+	+PUFFONACTORS
+	-ALLOWPARTICLES
+	states {
+	Spawn:
+		PUFF A 0 bright
+		//PUFF A 0 A_SpawnItemEx("DebrisSpawner",0,0,0,random(-3,3),random(-3,3),random(2,8),0,128,228)
+		PUFF AAAAA 0 bright A_SpawnItemEx("PuffSpark", 0, 0, 0, random(-14,14)*0.5, random(-14,14)*0.5, random(-80,70)*0.0825, 0, 128, 78)
+		PUFF A 0 A_SpawnItemEx("PulseBallSmokePuff", 0, 0, 0, 0, 0, 1, 0, 128, 220)
+		PUFF A 4 bright A_PlaySound("bullet/ricochet")
+		PUFF B 4 
+	Melee:
+		PUFF CD 4
+		stop
+	}
+}
+
+actor BulletPuffTrail {
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	+FORCEXYBILLBOARD
+	renderstyle add
+	alpha 0.5
+	scale 0.5
+	states {
+	Spawn:
+		PUFF A 1 bright A_FadeOut
+		wait
+	}
+}
+
+actor HHMetalHit : BulletPuff {
+	+CLIENTSIDEONLY
+	+NOBLOCKMAP
+	+FORCEXYBILLBOARD
+	+NOGRAVITY
+	-ALLOWPARTICLES
+	bloodcolor "White"
+	states {
+	Spawn:
+		PUFF A 0 
+		PUFF A 0 A_PlaySound("bullet/metal")
+		//PUFF A 0 A_SpawnItemEx("DebrisSpawner",0,0,0,random(-3,3),random(-3,3),random(2,8),0,128,228)
+		PUFF AAAAA 0 bright A_SpawnItemEx("PuffSpark", 0, 0, 0, random(-14,14)*0.5, random(-14,14)*0.5, random(-80,70)*0.0825, 0, 128, 32)
+		PUFF A 4 Bright A_SpawnItemEx("PulseBallSmokePuff", 0, 0, 0, 0, 0, 1, 0, 128, 192)
+		PUFF B 4
+	Melee:
+		PUFF CD 4
+		stop
+	}
+}
