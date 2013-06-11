@@ -5,7 +5,6 @@
 // You may use portions of this script in your project as long as you give credit where credit is
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
-// NOTE: AGF_ADDITIVE means subtractive if n < 0!
 #define NOCHANGE 255
 #define ARMOD_NOCHANGE 0
 #define ARMOD_FIRE 1
@@ -17,6 +16,19 @@
 #define AGF_ADDITIVE 8
 #define AGF_DONTSUBTRACT 16
 #define AGF_DONTADD 32
+
+function str ArmorModifierName (int mod) {
+	switch (mod) {
+	case ARMOD_FIRE:   return "\cGFire";
+	case ARMOD_CHEM:   return "\cDChem";
+	case ARMOD_EXPLO:  return "\cFExplo";
+	case ARMOD_LASER:  return "\cNLaser";
+	case ARMOD_BULLET: return "\cUFlak";
+	}
+	
+	return "";
+}
+
 function int GetArmorGrade (void) {
 	if (CheckInventory ("PowerGrade5Armor")) return 5;
 	if (CheckInventory ("PowerGrade4Armor")) return 4;
@@ -189,34 +201,18 @@ script 981 (void) NET CLIENTSIDE {
 }
 
 script 920 (int modtype) {
+	TakeInventory ("ArmorChangeProgress", 175);
 	GiveInventory ("IsChangingArmor", 1);
-	ACS_ExecuteAlways (922, 0, modtype);
 	
-	int n = 5;
-	
-	while (n > 0) {
-		if (GetHealth() <= 0) terminate;
-		delay (35);
-		n--;
+	for (int n = 20; n > 0; n--) {
+		if (GetHealth() <= 0)
+			terminate;
+		
+		GiveInventory ("ArmorChangeProgress", 9);
+		delay (9);
 	}
 	
 	TakeInventory ("IsChangingArmor", 1);
 	ActivatorSound ("misc/armor_pkup", 127);
 	SetArmorGrade (NOCHANGE, modtype);
-}
-
-script 922 (int modtype) CLIENTSIDE {
-	if (PlayerNumber() != ConsolePlayer) terminate;
-	
-	TakeInventory ("ArmorChangeProgress", 175);
-	
-	int n = 175;
-	while (n > 0) {
-		if (GetHealth() <= 0) terminate;
-		GiveInventory ("ArmorChangeProgress", 1);
-		delay (1);
-		n--;
-	}
-	
-	TakeInventory ("ArmorChangeProgress", 175);
 }

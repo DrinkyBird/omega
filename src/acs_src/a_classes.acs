@@ -70,9 +70,7 @@ function void PurchaseClass (int c) {
 	if ((GetLevelInfo (LEVELINFO_LEVELNUM) != 20 && GetLevelInfo (LEVELINFO_LEVELNUM) != 21)) {
 		if (!CheckInventory("PurchaseToken")) {
 			ACS_ExecuteWithResult (330, cost);
-			SetFont ("CLSS01");
-			HudMessage(s:"a";
-				HUDMSG_FADEOUT, 2100+PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0);
+			DrawClassInfoText (c);
 			ACS_ExecuteAlways (956, 0);
 			return;
 		} else {
@@ -911,4 +909,49 @@ script 961 (int team) {
 			terminate;
 	} else
 		TakeInventory ("IsInSpawnRoom", 1);
+}
+
+function str GetSpeedMeter (int c) {
+	int speed = Classes[c][CK_SPEED];
+	str msg = strparam (s:"\cU[", s:FractionColor (speed - 0.5, 0.5));
+	bool darkened = false;
+	
+	for (int i = 0; i < 10; ++i) {
+		int step = 0.5 + (i * 0.05);
+		if (step > Classes[c][CK_SPEED] && !darkened) {
+			msg = strparam (s:msg, s:"\cM");
+			darkened = true;
+		}
+		
+		msg = strparam (s:msg, s:"I");
+	}
+	
+	msg = strparam (s:msg, s:"\cU]");
+	return msg;
+}
+
+function void DrawClassInfoText (int c) {
+	int cflags = Classes[c][CK_FLAGS];
+	int cspeed = Classes[c][CK_SPEED];
+	
+	SetFont ("BIGFONT");
+	HUDMessage (s:Classes[c][CK_NAME];
+		HUDMSG_FADEOUT, 1090, CR_WHITE, -0.3, -0.3, 5.0, 1.0);
+	
+	SetFont ("SMALLFONT");
+	str body = strparam (s:"Cost: \cQ$\cD", d:Classes[c][CK_COST],
+		s:"\nSpeed: ", s:GetSpeedMeter (c), s:" ", s:FractionColor (cspeed - 0.5, 0.5), d:(cspeed * 100) >> 16, s:"\cJ%",
+		s:"\nArmor: Grade ", d:Classes[c][CK_ARMORNUM], s:" ", s:ArmorModifierName (Classes[c][CK_ARMORMOD]),
+		s:"\nC4: ", d:Classes[c][CK_C4], s:cond (cflags & CF_ENHANCEDC4, "+", ""),
+		s:"\nGrenades: ", d:Classes[c][CK_GERNADES], s:"\n");
+	
+	for (int i = 0; i < Classes[c][CK_NUMITEMS]; ++i) {
+		str item = GetClassItemName (c, i);
+		int amount = GetClassItemAmount (c, i);
+		
+		body = strparam (s:body, s:"\n- ", d:amount, s:"x ", s:item);
+	}
+	
+	HUDMessage (s:body;
+		HUDMSG_FADEOUT, 1091, CR_WHITE, -0.3, -0.35, 5.0, 1.0);
 }
