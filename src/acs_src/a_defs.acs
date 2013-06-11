@@ -1,0 +1,33 @@
+function void LoadClassDefinitions (void) {
+	int c;
+	
+	c = CLASS_GUNMAN;
+	Classes[c][CK_NAME] = "Gunman";
+	Classes[c][CK_SPEED] = 1.0;
+	AddClassItem (c, "SubMachineGun", 1);
+	
+	c = CLASS_ENGINEER;
+	Classes[c][CK_NAME] = "Engineer";
+	Classes[c][CK_SPEED] = 0.8;
+	Classes[c][CK_FLAGS] = (CF_SUPPORT | CF_ENHANCEDC4);
+	AddClassItem (c, "RepairGun", 1);
+	
+	c = CLASS_MINIGUNNER;
+	Classes[c][CK_NAME] = "Minigunner";
+	Classes[c][CK_COST] = 400;
+	Classes[c][CK_SPEED] = 0.7;
+	Classes[c][CK_ARMORNUM] = 1;
+	Classes[c][CK_GERNADES] = 2;
+	AddClassItem (c, "GatlingGun", 1);
+	AddClassItem (c, "MachineGunAmmo", 400);
+	
+	c = CLASS_TECHNICIAN;
+	Classes[c][CK_NAME] = "Technician";
+	Classes[c][CK_COST] = 200;
+	Classes[c][CK_SPEED] = 0.8;
+	Classes[c][CK_ARMORNUM] = 1;
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_FLAGS] = (CF_SUPPORT | CF_ENHANCEDC4);
+	AddClassItem (c, "RepairGun", 1);
+	AddClassItem (c, "RepairGunUpgrade", 1);
+}

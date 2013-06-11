@@ -5,29 +5,6 @@
 // You may use portions of this script in your project as long as you give credit where credit is
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
-int Classes[NUM_CLASSES][64];
-
-// Keys to the Classes array
-#define CK_NAME         0
-#define CK_COST         1
-#define CK_SPEED        2
-#define CK_DEP          3
-#define CK_C4           4
-#define CK_GERNADES     5
-#define CK_ARMORNUM     6
-#define CK_ARMORMOD     7
-#define CK_FLAGS        8
-#define CK_NUMITEMS     9 // last key - item info follows
-
-// CK_FLAGS
-#define CF_ENHANCEDC4   (1 << 0)
-#define CF_SUPPORT      (1 << 1)
-
-// CK_DEP
-#define DEP_NONE        0
-#define DEP_BARRACKS    1
-#define DEP_CENTRE      2
-
 function void AddClassItem (int class, str item, int amount) {
 	// Get the amount of current items, from this we can figure
 	// where in the array do we insert the new item
@@ -59,17 +36,7 @@ function void InitClasses (void) {
 		Classes[c][CK_GERNADES] = 1;
 	}
 	
-	// Begin class definitions
-	c = CLASS_GUNMAN;
-	Classes[c][CK_NAME] = "Gunman";
-	Classes[c][CK_SPEED] = 1.0;
-	AddClassItem (c, "SubMachineGun", 1);
-	
-	c = CLASS_ENGINEER;
-	Classes[c][CK_NAME] = "Engineer";
-	Classes[c][CK_SPEED] = 0.8;
-	Classes[c][CK_FLAGS] = (CF_SUPPORT | CF_ENHANCEDC4);
-	AddClassItem (c, "RepairGun", 1);
+	LoadClassDefinitions ();
 }
 
 function void PurchaseClass (int c) {
@@ -140,6 +107,7 @@ function void PurchaseClass (int c) {
 	GiveInventory ("Handgun", 1);
 	GiveInventory ("SpawnInvulnerability", 1);
 	GiveInventory ("ClassID", c);
+	GiveInventory ("Refunds", cost / 2);
 	
 	if (Classes[c][CK_C4] > 0) {
 		GiveInventory ("TimedC4", 1);
@@ -182,84 +150,12 @@ script 21 (int Team) {
 
 //---------------------------MINIGUNNER
 script 22 (int Team) {
-	int cost = 400; int speed = 0.7;
-	if (MitigateDoublePress()) terminate;
-	if (!IsResigned()) terminate;
-	if (!IsSecondPress("CLSS03", cost)) terminate;
-	if (!CheckCredits(cost)) terminate;
-	
-	TakeInventory("PurchaseToken",1);
-	SpendCredits (cost);
-	DisplayTick();
-	SETFONT("BigFont");
-	HudMessage(s:"You are a \cfMinigunner!"; HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-	SetFont ("SMALLFONT");
-	HudMessage(s:"Use \cfAlt-Fire\cd for \cjAnti-Mech attack\cd!";
-		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.6, 3.0, 1.0);
-	
-	//Set Statistics
-	SetActorProperty(0,APROP_SPEED,speed);
-	GiveInventory("HasClass",1);
-	GiveInventory("Refunds", cost/2);
-	SetArmorGrade (1, ARMOD_NOCHANGE);
-	GiveInventory("NewClipAmmo",90);
-	GiveInventory("Handgun",1);
-	GiveInventory("SubMachineGun",1);
-	GiveInventory("TimedC4",1);
-	GiveInventory("TimedC4Count",1);
-	SetFragGrenades (2);
-	GiveInventory("GatlingGun",1);
-	GiveInventory("MachineGunAmmo",400);
-	SetWeapon("GatlingGun");
-	ACS_ExecuteAlways(91, 0);
-	
-	GiveInventory("SpawnInvulnerability",1);
-	GiveInventory ("ClassID", CLASS_MINIGUNNER);
-	
-	ACS_ExecuteAlways (961, 0, Team);
-	PlayerSpeeds[PlayerNumber()] = speed;
-	Log(n:0, s:" becomes minigunner.");
+	PurchaseClass (CLASS_MINIGUNNER);
 }
 
 //---------------------------TECHNICIAN
 script 23 (int Team) {
-	int cost = 200; int speed = 0.8;
-	if (MitigateDoublePress()) terminate;
-	if (!IsResigned()) terminate;
-	if (!IsSecondPress("CLSS04", cost)) terminate;
-	if (!CheckCredits(cost)) terminate;
-
-	TakeInventory("PurchaseToken",1);
-	SpendCredits (cost);
-	DisplayTick();
-	SETFONT("BigFont");
-	HudMessage(s:"You are a \cfTechnician!";
-		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-	
-	//Set Statistics
-	SetActorProperty(0, APROP_SPEED, 0.8);
-	SetArmorGrade (1, ARMOD_NOCHANGE);
-	GiveInventory("HasClass",1);
-	GiveInventory("Refunds",cost/2);
-	GiveInventory("NewClipAmmo",90);
-	GiveInventory("Handgun",1);
-	GiveInventory("EnhancedTimedC4",1);
-	GiveInventory("TimedC4",2);
-	GiveInventory("TimedC4Count",2);
-	GiveInventory ("ProxyMine", 4);
-	GiveInventory ("ProxyMineCount", 4);
-	SetFragGrenades (2);
-	GiveInventory("SubMachineGun",1);
-	GiveInventory("RepairGunUpgrade",1);
-	GiveInventory("RepairGun",1);
-	SetWeapon("RepairGun");
-	ACS_ExecuteAlways(91, 0);
-	
-	GiveInventory("SpawnInvulnerability",1);
-	GiveInventory ("ClassID", CLASS_TECHNICIAN);
-	ACS_ExecuteAlways (961, 0, Team);
-	PlayerSpeeds[PlayerNumber()] = speed;
-	Log(n:0, s:" becomes Technician.");
+	PurchaseClass (CLASS_TECHNICIAN);
 }
 
 //---------------------------FLAMER

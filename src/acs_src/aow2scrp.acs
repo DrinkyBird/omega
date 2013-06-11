@@ -339,6 +339,31 @@ int AIMarineCount = 0; // how many AI marines are there overall?
 
 int CrateNumber = 0; // crate logic
 
+// =============================================================================
+int Classes[NUM_CLASSES][64];
+
+// Keys to the Classes array
+#define CK_NAME         0
+#define CK_COST         1
+#define CK_SPEED        2
+#define CK_DEP          3
+#define CK_C4           4
+#define CK_GERNADES     5
+#define CK_ARMORNUM     6
+#define CK_ARMORMOD     7
+#define CK_FLAGS        8
+#define CK_NUMITEMS     9 // last key - item info follows
+
+// CK_FLAGS
+#define CF_ENHANCEDC4   (1 << 0)
+#define CF_SUPPORT      (1 << 1)
+
+// CK_DEP
+#define DEP_NONE        0
+#define DEP_BARRACKS    1
+#define DEP_CENTRE      2
+
+// =============================================================================
 str NormalWeaponNames[MAX_NORMAL_WEAPONS] = {
 	"ArtilleryCannon",
 	"ChemicalSprayer",
@@ -364,6 +389,7 @@ str NormalWeaponNames[MAX_NORMAL_WEAPONS] = {
 	"TimeGun"
 };
 
+#include "a_defs.acs"
 #include "a_functions.acs"
 #include "a_armor.acs"
 #include "a_monies.acs"
