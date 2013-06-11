@@ -1,47 +1,63 @@
 // Shotgun
-actor Boomstick : AOWWeapon {
-	obituary "%o was smacked down by %k's shotgun."
-	inventory.pickupmessage "You got the shotgun!"
-	weapon.selectionorder 17
-	weapon.kickback 80
-	weapon.ammotype "ShotgunAmmo"
-	weapon.ammouse 1
-	weapon.ammogive 5
-	weapon.preferredskin "MarineShotgun"
-	attacksound "weapons/shotgf"
-	
+actor Boomstick : AOWWeapon replaces Shotgun 21080 {
+	//$Category Weapons
+	Tag "Shotgun"
+	Obituary "$OB_SHOTGUN"
+	Inventory.PickupMessage "You got the shotgun!"
+	Weapon.SelectionOrder 17
+	Weapon.KickBack 80
+	Weapon.AmmoType "ShotgunAmmo"
+	Weapon.AmmoUse 1
+	Weapon.AmmoGive 5
+	Weapon.PreferredSkin "MarineShotgun"
 	States {
 	Ready:
 		SHTG A 1 A_WeaponReady
 		wait
-	
 	Deselect:
 		SHTG A 1 A_Lower
 		wait
-	
 	Select:
 		SHTG A 1 A_Raise
 		wait
-	
 	Fire:
-		SHTG A 3
-		SHTG A 0 A_GunFlash
-		SHTG A 0 Bright A_FireBullets (5.5, 5.5, 2, 6, "HandgunPuff",0,350)
-		SHTG A 2 Bright A_FireBullets (5.5, 5.5, 6, 4, "HandgunPuff",1,1000)
-		SHTG A 3 Bright
-		SHTG BC 4
-		SHTG D 4 A_SpawnItemEx("ShotgunShellCasing",0,0,32,random(1,3),random(0,1),0,random(45,60),128)
-		SHTG CB 4
-		SHTG A 3
-		SHTG A 7 A_ReFire
+		SHTG A 0 Bright A_PlaySound ("weapons/shotgf", CHAN_WEAPON)
+		SHTG A 0 Bright A_GunFlash
+		SHTG A 0 Bright Radius_Quake (3, random (3, 5), 0, 1, 0)
+		SHTG A 0 Bright A_FireBullets (5.5, 5.5, 2, 6, "HandgunPuff", 0, 350)
+		SHTG A 1 Bright A_FireBullets (5.5, 5.5, 6, 4, "HandgunPuff", 1, 1000)
+		SHTG A 1 Bright Offset (0, 41)
+		SHTG A 1 Bright Offset (0, 45)
+		SHTG A 1 Bright Offset (0, 49)
+		SHTG A 1 Offset (0, 45)
+		SHTG A 1 Offset (0, 41)
+		SHTG A 1 Offset (0, 38)
+		SHTG A 1 Offset (0, 35)
+		SHTG B 1 Offset (-24, 31)
+		SHTG B 1 Offset (-42, 30)
+		SHTG B 1 Offset (-56, 29)
+		SHTG C 1 Offset (-60, 31) // A_PlaySound ("shotgun/pump", 5)
+		SHTG C 2 Offset (-84, 32)
+		SHTG C 1 Offset (-84, 36)
+		SHTG D 1 Offset (-84, 40)
+		SHTG D 3 Offset (-84, 46) A_SpawnItemEx ("ShotgunShellCasing", 12, 9, 33,
+			random (-2, -4), random (2, 3), random (1, 2), random (45, 60))
+		SHTG D 1 Offset (-84, 40)
+		SHTG D 1 Offset (-84, 36)
+		SHTG C 2 Offset (-84, 32)
+		SHTG C 1 Offset (-70, 31)
+		SHTG C 1 Offset (-56, 30)
+		SHTG B 1 Offset (-42, 29)
+		SHTG B 1 Offset (-28, 30)
+		SHTG B 1 Offset (-14, 31)
+		SHTG A 4 Offset ( -1, 32)
+		SHTG A 0 A_ReFire
 		goto Ready
-	
 	Flash:
-		SHTF A 2 Bright A_Light1
-		SHTF B 3 Bright A_Light2
+		SHTF A 1 Bright A_Light1
+		SHTF B 1 Bright A_Light2
 		SHTF B 0 A_Light0
 		stop
-	
 	Spawn:
 		SHOT A -1
 		stop
@@ -53,25 +69,4 @@ actor ShotgunAmmo : Ammo {
 	inventory.maxamount 50
 	ammo.backpackamount 5
 	ammo.backpackmaxamount 50
-}
-
-actor ShotgunPickup : CustomInventory replaces Shotgun 21080 {
-	inventory.pickupmessage "You got the shotgun!"
-	inventory.maxamount 0
-	inventory.respawntics 2100
-	inventory.pickupsound "misc/w_pkup"
-	states {
-	Spawn:
-		SHOT A -1
-		stop
-	Pickup:
-		TNT1 AA 0 A_JumpIfInventory ("Boomstick", 1, "Failure")
-		TNT1 A 0 A_GiveInventory ("Boomstick", 1)
-		TNT1 A 0 A_GiveInventory ("ShotgunAmmo", 5)
-		TNT1 A 0 A_GiveInventory ("Refunds", 20)
-		stop
-	Failure:
-		TNT1 A 0
-		fail
-	}
 }
