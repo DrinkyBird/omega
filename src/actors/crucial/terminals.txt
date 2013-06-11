@@ -320,3 +320,7 @@ actor RepairTerminalBlue : BaseTerminalBlue 21109 {
 		goto Idle
 	}
 }
+
+actor TerminalLastHealth : Inventory {
+	Inventory.MaxAmount 0x7FFFFFFF
+}

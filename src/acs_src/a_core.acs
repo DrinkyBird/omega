@@ -9,6 +9,8 @@
  */
 
 script 999 OPEN {
+	delay (1);
+	
 	RankTitles[0] = "Private";
 	RankTitles[1] = "Corporal";
 	RankTitles[2] = "Sergeant";
@@ -51,12 +53,12 @@ script 999 OPEN {
 
 	SetLineSpecial(159,80,342,0,0,0,0);
 	
-	delay (5);
+	// Draw initial building HUD
+	DrawBuildingHud ();
 	
 	SpawnSpotForced ("CrateMapMarker", TID_CRATE, 0, 0);
 	SpawnSpotForced ("TiberiumMapMarker", TID_TIBERIUM, 0, 0);
 	
-	delay (5);
 	// wf unavailability
 	if (!ThingCount (T_NONE, 107) && !ThingCount (T_NONE, 207)) {
 		GotFactory[0] = 0;

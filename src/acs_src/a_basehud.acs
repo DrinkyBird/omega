@@ -1,209 +1,90 @@
 // BUILDING HUD CODE
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *  [Dusk] This script has been vastly changed, no longer does it govern
- *  building healths but instead updates the speed properties of terminals
- *  and yells at clients to update when needed. The old system was just
- *  redundancy galore.
- *
- *  It could be improved even further to not use copy/paste code but that's 
- *  something for a later date...
- */
-
 script 930 (int what, int team) {
-	int LastHealth, perc;
-	int tid, maxhp, exists;
-	int u = false;
-	int a = (what == BUILDING_ALL);
-
-	if (what == BUILDING_BARRACKS || a) {
-		tid = TID_BARRACKS_BLUE + team*100;
-		LastHealth = GetActorSpeed (tid);
-		perc = GetActorHealth (tid) * 99 / HP_BARRACKS + GotBarracks[1-team];
-		if (perc < 0) perc = 0;
-		if (perc != LastHealth) {SetActorSpeed (tid, perc); u = true;}
-	}
+	if (ActivatorTID () == 0)
+		terminate;
 	
-	if (what == BUILDING_REFINERY || a) {
-		tid = TID_REFINERY_BLUE + team*100;
-		LastHealth = GetActorSpeed (tid);
-		perc = GetActorHealth (tid) * 99 / HP_REFINERY + GotRefinery[1-team];
-		if (perc < 0) perc = 0;
-		if (perc != LastHealth) {SetActorSpeed (tid, perc); u = true;}
-	}
+	int update = false;
 	
-	if (what == BUILDING_RESCENTRE || a) {
-		tid = TID_RESCENTRE_BLUE + team*100;
-		LastHealth = GetActorSpeed (tid);
-		perc = GetActorHealth (tid) * 99 / HP_PLANT + GotPlant[1-team];
-		if (perc < 0) perc = 0;
-		if (perc != LastHealth) {SetActorSpeed (tid, perc); u = true;}
-	}
+	// Check did the health percentage change.
+	int LastHealth = CheckInventory ("TerminalLastHealth");
+	int perc = BuildingHealth (ActivatorTID ());
 	
-	if (what == BUILDING_FACTORY || a) {
-		tid = TID_FACTORY_BLUE + team*100;
-		LastHealth = GetActorSpeed (tid);
-		perc = GetActorHealth (tid) * 99 / HP_FACTORY + GotFactory[1-team];
-		if (perc < 0) perc = 0;
-		if (perc != LastHealth) {SetActorSpeed (tid, perc); u = true;}
-	}
+	if (perc == LastHealth)
+		terminate;
 	
-	if (what == BUILDING_REPAIR || a) {
-		tid = TID_REPAIR_BLUE + team*100;
-		LastHealth = GetActorSpeed (tid);
-		perc = GetActorHealth (tid) * 99 / HP_REPAIR + GotRepair[1-team];
-		if (perc < 0) perc = 0;
-		if (perc != LastHealth) {SetActorSpeed (tid, perc); u = true;}
-	}
+	// Store the new "last health"
+	SetInventory ("TerminalLastHealth", perc);
 	
-	if (what == BUILDING_OBELISK || a) {
-		tid = TID_OBELISK_BLUE + team*100;
-		LastHealth = GetActorSpeed (tid);
-		perc = GetActorHealth (tid) * 99 / HP_OBELISK + GotObelisk[1-team];
-		if (perc < 0) perc = 0;
-		if (perc != LastHealth) {SetActorSpeed (tid, perc); u = true;}
-	}
-	
-	if (what == BUILDING_MINIREF || a) {
-		tid = TID_MINIREF_BLUE - team;
-		LastHealth = GetActorSpeed (tid);
-		perc = GetActorHealth (tid) * 99 / HP_MINIREF + MiniRefinery[1-team];
-		if (perc < 0) perc = 0;
-		if (perc != LastHealth) {SetActorSpeed (tid, perc); u = true;}
-	}
-	
-	if (what == BUILDING_HEALTHREGEN || a) {
-		tid = TID_HEALTHREGEN_BLUE - team;
-		LastHealth = GetActorSpeed (tid);
-		perc = GetActorHealth (tid) * 99 / HP_REGENS + GlobalMedic[1-team];
-		if (perc < 0) perc = 0;
-		if (perc != LastHealth) {SetActorSpeed (tid, perc); u = true;}
-	}
-	
-	if (what == BUILDING_AMMOREGEN || a) {
-		tid = TID_AMMOREGEN_BLUE - team;
-		LastHealth = GetActorSpeed (tid);
-		perc = GetActorHealth (tid) * 99 / HP_REGENS + GlobalAmmo[1-team];
-		if (perc < 0) perc = 0;
-		if (perc != LastHealth) {SetActorSpeed (tid, perc); u = true;}
-	}
-	
-	if (what == BUILDING_PORTAL || a) {
-		// [Dusk] we can't tell from the building index which
-		// portal end is changing. Update both.
-		for (int i = 0; i <= 1; i++) {
-			int idx = i + 2*team;
-			
-			tid = TID_PORTAL_BLUE1 + idx;
-			LastHealth = GetActorSpeed (tid);
-			perc = GetActorHealth (tid) * 99 / HP_PORTAL + Portals[idx];
-			if (perc < 0) perc = 0;
-			if (perc != LastHealth) {SetActorSpeed (tid, perc); u = true;}
-		}
-	}
-	
-	if (u) ACS_ExecuteAlways (931, 0); // tell clients to update the hud
+	DrawBuildingHud ();
 }
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * This part of the code actually causes the HUD to show up. As clients are
- * not aware of mobjs' healths, the above script sets the speed properties to
- * desired percentage values - these are used instead.
- *
- * Script 945 is a daemon script executed by the client-side script 943 - see
- * a_clientfx.acs for these scripts. Script 931 is called by the server to
- * tell clients to update the HUD. This way, updates to the hud are instant.
- */
-
-script 931 (void) NET CLIENTSIDE BaseHUDUpdate = 1;
-script 945 (void) NET CLIENTSIDE {
-	delay (5);
-	
-	// for the first three seconds, update the hud every second
-	// the speed information of terminals doesn't travel instantly...
-	DisplayBuildingHud ();
-	for (int i = 0; i <= 2; i++) {
-		delay (35);
-		DisplayBuildingHud ();
-	}
-	
-	// begin idle loop. whenever we are told to update
-	// the hud, do so.
-	while (1) {
-		if (BaseHudUpdate) {
-			DisplayBuildingHud ();
-			BaseHudUpdate = false;
-		}
-		delay (1);
-	}
-	restart;
-}
-
-function void DisplayBuildingHud (void) {
+function void DrawBuildingHud (void) {
 	SetFont ("SMALLFONT");
 	HudMessageBold (s:ExistsBuilding (101), s:"Barracks\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (101)), d:GetActorSpeed (101), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (101)), d:BuildingHealth (101), s:"\cc%\n",
 		s:ExistsBuilding (103), s:"Refinery\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (103)), d:GetActorSpeed (103), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (103)), d:BuildingHealth (103), s:"\cc%\n",
 		s:ExistsBuilding (105), s:"Research Centre\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (105)), d:GetActorSpeed (105), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (105)), d:BuildingHealth (105), s:"\cc%\n",
 		s:ExistsBuilding (107), s:"War Factory\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (107)), d:GetActorSpeed (107), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (107)), d:BuildingHealth (107), s:"\cc%\n",
 		s:ExistsBuilding (114), s:"Obelisk of Light\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (114)), d:GetActorSpeed (114), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (114)), d:BuildingHealth (114), s:"\cc%\n",
 		s:ExistsBuildingGreen (109), s:"++", s:ExistsBuilding (109), s:"Repair Facility\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (109)), d:GetActorSpeed (109), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (109)), d:BuildingHealth (109), s:"\cc%\n",
 		s:ExistsBuildingGreen (903), s:"++", s:ExistsBuilding (903), s:"HP Regen\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (903)), d:GetActorSpeed (903), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (903)), d:BuildingHealth (903), s:"\cc%\n",
 		s:ExistsBuildingGreen (905), s:"++", s:ExistsBuilding (905), s:"Ammo Regen\cc: ",
-		s:ColorCodeHealth (GetActorSpeed (905)), d:GetActorSpeed (905), s:"\cc%\n",
+		s:ColorCodeHealth (BuildingHealth (905)), d:BuildingHealth (905), s:"\cc%\n",
 		s:ExistsBuildingGreen(901), s:"++", s:ExistsBuilding (901), s:"Mini Refinery\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (901)), d:GetActorSpeed (901), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (901)), d:BuildingHealth (901), s:"\cc%\n",
 		s:PortalLinkColor (TEAM_BLUE, 0), s:"++", s:PortalLinkColor (TEAM_BLUE, 1), s:"Portal\cc: ",
-		s:ColorCodeHealth(PortalHealth (TID_PORTAL_BLUE1)), d:PortalHealth (TID_PORTAL_BLUE1), s:"\cc% / ",
-		s:ColorCodeHealth(PortalHealth (TID_PORTAL_BLUE2)), d:PortalHealth (TID_PORTAL_BLUE2), s:"\cc%";
+		s:ColorCodeHealth(BuildingHealth (TID_PORTAL_BLUE1)), d:BuildingHealth (TID_PORTAL_BLUE1), s:"\cc% / ",
+		s:ColorCodeHealth(BuildingHealth (TID_PORTAL_BLUE2)), d:BuildingHealth (TID_PORTAL_BLUE2), s:"\cc%";
 		HUDMSG_PLAIN, 8850, CR_BLUE, 0.012, 0.52, 0.0);
 	
 	HudMessageBold (s:ExistsBuilding (201), s:"Barracks\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (201)), d:GetActorSpeed (201), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (201)), d:BuildingHealth (201), s:"\cc%\n",
 		s:ExistsBuilding (203), s:"Refinery\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (203)), d:GetActorSpeed (203), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (203)), d:BuildingHealth (203), s:"\cc%\n",
 		s:ExistsBuilding (205), s:"Research Centre\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (205)), d:GetActorSpeed (205), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (205)), d:BuildingHealth (205), s:"\cc%\n",
 		s:ExistsBuilding (207), s:"War Factory\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (207)), d:GetActorSpeed (207), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (207)), d:BuildingHealth (207), s:"\cc%\n",
 		s:ExistsBuilding (214), s:"Obelisk of Light\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (214)), d:GetActorSpeed (214), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (214)), d:BuildingHealth (214), s:"\cc%\n",
 		s:ExistsBuildingGreen (209), s:"++", s:ExistsBuilding (209), s:"Repair Facility\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (209)), d:GetActorSpeed (209), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (209)), d:BuildingHealth (209), s:"\cc%\n",
 		s:ExistsBuildingGreen (902), s:"++", s:ExistsBuilding (902), s:"HP Regen\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (902)), d:GetActorSpeed (902), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (902)), d:BuildingHealth (902), s:"\cc%\n",
 		s:ExistsBuildingGreen (904), s:"++", s:ExistsBuilding (904), s:"Ammo Regen\cc: ",
-		s:ColorCodeHealth (GetActorSpeed (904)), d:GetActorSpeed (904), s:"\cc%\n",
+		s:ColorCodeHealth (BuildingHealth (904)), d:BuildingHealth (904), s:"\cc%\n",
 		s:ExistsBuildingGreen(900), s:"++", s:ExistsBuilding (900), s:"Mini Refinery\cc: ",
-		s:ColorCodeHealth(GetActorSpeed (900)), d:GetActorSpeed (900), s:"\cc%\n",
+		s:ColorCodeHealth(BuildingHealth (900)), d:BuildingHealth (900), s:"\cc%\n",
 		s:PortalLinkColor (TEAM_RED, 0), s:"++", s:PortalLinkColor (TEAM_RED, 1), s:"Portal\cc: ",
-		s:ColorCodeHealth(PortalHealth (TID_PORTAL_RED1)), d:PortalHealth (TID_PORTAL_RED1), s:"\cc% / ",
-		s:ColorCodeHealth(PortalHealth (TID_PORTAL_RED2)), d:PortalHealth (TID_PORTAL_RED2), s:"\cc%";
+		s:ColorCodeHealth(BuildingHealth (TID_PORTAL_RED1)), d:BuildingHealth (TID_PORTAL_RED1), s:"\cc% / ",
+		s:ColorCodeHealth(BuildingHealth (TID_PORTAL_RED2)), d:BuildingHealth (TID_PORTAL_RED2), s:"\cc%";
 		HUDMSG_PLAIN, 8851, CR_RED, 0.012, 0.74, 0.0);
 	
-	int bluelives = GetActorSpeed (TID_TICKETCOUNTER_BLUE);
-	int redlives = GetActorSpeed (TID_TICKETCOUNTER_RED);
-	if (GetCVar ("aow_forcelivehud") || bluelives || redlives) {
-		int startlives = GetActorAngle (TID_TICKETCOUNTER_BLUE);	
+	if (SuddenDeath || TicketPool) {
 		SetFont ("SMALLFONT");
 		HudMessageBold (
-			s:"\cHLives\cC: ", s:FractionColor (bluelives, startlives), d:bluelives,
-			s:"\n\cGLives\cC: ", s:FractionColor (redlives, startlives), d:redlives;
+			s:"\cHLives\cC: ", s:FractionColor (Tickets[TEAM_BLUE], StartingTickets), d:Tickets[TEAM_BLUE],
+			s:"\n\cGLives\cC: ", s:FractionColor (Tickets[TEAM_RED], StartingTickets), d:Tickets[TEAM_RED];
 			HUDMSG_PLAIN, 8852, CR_BLUE, 0.012, 0.4, 0.0);
 	}
 }
 
-function int PortalHealth (int t) {
-	if (!ThingCount (T_NONE, t)) return 0;
-	int s = GetActorSpeed (t);
-	if (s < 0) return 0;
-	return s;
+function int BuildingHealth (int tid) {
+	if (ThingCount (T_NONE, tid) == 0)
+		return 0;
+	
+	int p = ((GetActorHealth (tid) * 99) / GetActorSpawnHealth (tid)) + 1;
+	
+	if (p < 0)
+		p = 0;
+	
+	return p;
 }
 
 function str PortalLinkColor (int team, int teamcolor) {
