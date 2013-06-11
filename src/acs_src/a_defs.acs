@@ -181,7 +181,7 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_GERNADES] = 4;
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_C4] = 2;
-	Classes[c][CK_FLAGS] = (CF_WARNING | CF_ENHANCEDC4 | CF_CANTPILOT);
+	Classes[c][CK_FLAGS] = (CF_ENHANCEDC4 | CF_CANTPILOT);
 	Classes[c][CK_DEP] = DEP_CENTRE;
 	AddClassItem (c, "GaussRifle", 1);
 	AddClassItem (c, "GaussRifleAmmo", 15);
@@ -204,7 +204,7 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_COST] = 1750;
 	Classes[c][CK_C4] = 0;
 	Classes[c][CK_GERNADES] = 0;
-	Classes[c][CK_FLAGS] = (CF_WARNING | CF_CANTPILOT);
+	Classes[c][CK_FLAGS] = (CF_CANTPILOT);
 	AddClassItem (c, "BombPack", 1);
 	
 	c = CLASS_SNIPER;
