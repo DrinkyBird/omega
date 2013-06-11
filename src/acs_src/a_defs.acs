@@ -105,6 +105,7 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_GERNADES] = 4;
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_ARMORMOD] = ARMOD_EXPLO;
+	Classes[c][CK_DEP] = DEP_BARRACKS;
 	AddClassItem (c, "GrenadeLauncher", 1);
 	AddClassItem (c, "GrenadeAmmo", 40);
 	AddClassItem (c, "Rifle", 1);
@@ -118,9 +119,78 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_GERNADES] = 2;
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_ARMORMOD] = ARMOD_EXPLO;
+	Classes[c][CK_DEP] = DEP_BARRACKS;
 	AddClassItem (c, "MissileLauncher", 1);
 	AddClassItem (c, "MissileAmmo", 40);
 	AddClassItem (c, "Rifle", 1);
 	AddClassItem (c, "RifleAmmo", 20);
 	AddClassItem (c, "RifleGrenadeAmmo", 2);
+	
+	c = CLASS_STEALTH;
+	Classes[c][CK_NAME] = "Stealth Trooper";
+	Classes[c][CK_COST] = 600;
+	Classes[c][CK_SPEED] = 0.95;
+	Classes[c][CK_GERNADES] = 1;
+	Classes[c][CK_ARMORNUM] = -1;
+	Classes[c][CK_ARMORMOD] = ARMOD_LASER;
+	AddClassItem (c, "StealthLaserRifle", 1);
+	AddClassItem (c, "LaserRifleAmmo", 200);
+	AddClassItem (c, "Knife", 1);
+	
+	c = CLASS_GAUSSGUNNER;
+	Classes[c][CK_NAME] = "Gauss Gunner";
+	Classes[c][CK_COST] = 600;
+	Classes[c][CK_SPEED] = 0.8;
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_ARMORNUM] = 2;
+	Classes[c][CK_ARMORMOD] = ARMOD_LASER;
+	Classes[c][CK_DEP] = DEP_BARRACKS;
+	AddClassItem (c, "GaussRifle", 1);
+	AddClassItem (c, "Rifle", 1);
+	AddClassItem (c, "RifleAmmo", 40);
+	AddClassItem (c, "RifleGrenadeAmmo", 0);
+	AddClassItem (c, "GaussRifleAmmo", 50);
+	
+	c = CLASS_CHEMWARRIOR;
+	Classes[c][CK_NAME] = "Chem Warrior";
+	Classes[c][CK_COST] = 550;
+	Classes[c][CK_SPEED] = 0.7;
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_ARMORNUM] = 2;
+	Classes[c][CK_ARMORMOD] = ARMOD_CHEM;
+	Classes[c][CK_DEP] = DEP_BARRACKS;
+	AddClassItem (c, "ChemicalSprayer", 1);
+	AddClassItem (c, "ChemicalAmmo", 200);
+	AddClassItem (c, "ChemicalGrenadeAmmo", 4);
+	AddClassItem (c, "SubMachineGun", 1);
+	
+	c = CLASS_SHOCKTROOPER;
+	Classes[c][CK_NAME] = "Shock Trooper";
+	Classes[c][CK_COST] = 600;
+	Classes[c][CK_SPEED] = 0.7;
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_ARMORNUM] = 2;
+	Classes[c][CK_ARMORMOD] = ARMOD_LASER;
+	Classes[c][CK_DEP] = DEP_CENTRE;
+	AddClassItem (c, "ShockRifle", 1);
+	AddClassItem (c, "GeneporiumCharge", 400);
+	
+	c = CLASS_COMMANDO;
+	Classes[c][CK_NAME] = "Commando";
+	Classes[c][CK_COST] = 1000;
+	Classes[c][CK_SPEED] = 0.85;
+	Classes[c][CK_GERNADES] = 4;
+	Classes[c][CK_ARMORNUM] = 2;
+	Classes[c][CK_C4] = 2;
+	Classes[c][CK_FLAGS] = (CF_WARNING | CF_ENHANCEDC4);
+	Classes[c][CK_DEP] = DEP_CENTRE;
+	AddClassItem (c, "GaussRifle", 1);
+	AddClassItem (c, "GaussRifleAmmo", 15);
+	AddClassItem (c, "MissileLauncher", 1);
+	AddClassItem (c, "MissileAmmo", 15);
+	AddClassItem (c, "GatlingGun", 1);
+	AddClassItem (c, "MachineGunAmmo", 200);
+	AddClassItem (c, "Rifle", 1);
+	AddClassItem (c, "RifleAmmo", 20);
+	AddClassItem (c, "RifleGrenadeAmmo", 4);
 }

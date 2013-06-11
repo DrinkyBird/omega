@@ -37,7 +37,7 @@ pushd tmp >/dev/null
 		acc $acc_args # >/dev/null 2>&1
 		
 		if [ ! -e aow2scrp.o ]; then
-			acc $acc_args
+			# acc $acc_args
 			exit 1
 		fi
 	popd >/dev/null

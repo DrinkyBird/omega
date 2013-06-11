@@ -4,7 +4,10 @@
 
 // You may use portions of this script in your project as long as you give credit where credit is
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
+// [Dusk] Rewritten pretty much entirely
 
+// -----------------------------------------------------------------------------
+// [Dusk] Adds an item to a class definition and bumps up CK_NUMITEMS
 function void AddClassItem (int class, str item, int amount) {
 	// Get the amount of current items, from this we can figure
 	// where in the array do we insert the new item
@@ -17,16 +20,19 @@ function void AddClassItem (int class, str item, int amount) {
 	Classes[class][CK_NUMITEMS]++;
 }
 
+// -----------------------------------------------------------------------------
 function str GetClassItemName (int class, int inum) {
 	int p = CK_NUMITEMS + 1 + (inum * 2);
 	return Classes[class][p];
 }
 
+// -----------------------------------------------------------------------------
 function int GetClassItemAmount (int class, int inum) {
 	int p = CK_NUMITEMS + 1 + (inum * 2);
 	return Classes[class][p + 1];
 }
 
+// -----------------------------------------------------------------------------
 function void InitClasses (void) {
 	int c;
 	
@@ -39,6 +45,7 @@ function void InitClasses (void) {
 	LoadClassDefinitions ();
 }
 
+// -----------------------------------------------------------------------------
 function void PurchaseClass (int c) {
 	int team = PlayerTeam ();
 	int cost = Classes[c][CK_COST];
@@ -133,278 +140,84 @@ function void PurchaseClass (int c) {
 			SetWeapon (itemname);
 	}
 	
+	if (cflags & CF_WARNING) {
+		if (PlayerTeam () == TEAM_RED)
+			HudMessageBold (s:"\cGWarning: \cARed\cJ ", s:Classes[c][CK_NAME], s:" in-field!";
+				HUDMSG_FADEOUT, 15000, CR_WHITE,
+				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		else
+			HudMessageBold (s:"\cGWarning: \cNBlue\cJ ", s:Classes[c][CK_NAME], s:" in-field!";
+				HUDMSG_FADEOUT, 15000, CR_WHITE,
+				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	}
+	
+	// Class-specific exceptions:
+	switch (c) {
+	case CLASS_STEALTH:
+		// Stealth trooper sounds
+		SetActorProperty (0, APROP_DeathSound, "stealth/death");
+		ACS_ExecuteAlways (918, 0, 0);
+		break;
+	
+	case CLASS_CHEMWARRIOR:
+		ACS_ExecuteAlways (918, 0, 1);
+		break;
+	
+	case CLASS_SHOCKTROOPER:
+		ACS_ExecuteAlways (918, 0, 2);
+		break;
+	
+	case CLASS_COMMANDO:
+		ACS_ExecuteAlways (918, 0, 3);
+		break;
+	}
+	
 	ACS_ExecuteAlways (91, 0);
 	ACS_ExecuteAlways (961, 0, Team);
 	PlayerSpeeds[PlayerNumber()] = Classes[c][CK_SPEED];
-	Log(n:0, s:" becomes ", s:Classes[c][CK_NAME]);
+	Log (n:0, s:" becomes ", s:Classes[c][CK_NAME]);
 }
 
-script 20 (int Team) { PurchaseClass (CLASS_GUNMAN); }
-script 21 (int Team) { PurchaseClass (CLASS_ENGINEER); }
-script 22 (int Team) { PurchaseClass (CLASS_MINIGUNNER); }
-script 23 (int Team) { PurchaseClass (CLASS_TECHNICIAN); }
-script 24 (int Team) { PurchaseClass (CLASS_FLAMER); }
-script 25 (int Team) { PurchaseClass (CLASS_RIFLEMAN); }
-script 26 (int Team) { PurchaseClass (CLASS_MACHINEGUNNER); }
-script 27 (int Team) { PurchaseClass (CLASS_GRENADIER); }
-script 28 (int Team) { PurchaseClass (CLASS_ROCKETEER); }
-
-//---------------------------STEALTH TROOPER
-script 29 (int Team) {
-	int cost = 600; int speed = 0.95;
-	if (MitigateDoublePress()) terminate;
-	if (!IsResigned()) terminate;
-	if (!IsSecondPress("CLSS10", cost)) terminate;
-	if (!CheckCredits(cost)) terminate;
-
-	TakeInventory("PurchaseToken",1);
-	SpendCredits (cost);
-	DisplayTick();
-	SETFONT("BigFont");
-	HudMessage(s:"You are a \cfStealth Trooper!";
-		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-	HudMessage(s:"Use Alt-Fire to toggle \ccStealth.";
-		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0);
+// -----------------------------------------------------------------------------
+// [Dusk] Delayed class sounds - in a script since functions cannot have latency.
+// These sounds are only played locally now.
+script 918 (int n) {
+	delay (6 * TICRATE);
 	
-	//Set Statistics
-	SetArmorGrade (-1, ARMOD_NOCHANGE);
-	GiveInventory("HasClass",1);
-	GiveInventory("Refunds", cost/2);
-	SetActorProperty(0,APROP_SPEED,speed);
-	SetActorProperty(0,APROP_DeathSound,"stealth/death");
-	GiveInventory("NewClipAmmo",60);
-	GiveInventory("Handgun",1);
-	GiveInventory("TimedC4",1);
-	GiveInventory("TimedC4Count",1);
-	GiveInventory("LaserRifleAmmo",200);
-	GiveInventory("FragGrenade",1);
-	GiveInventory("FragGrenadeAmmo",1);
-	GiveInventory("StealthLaserRifle",1);
-	GiveInventory("Knife",1);
-	ACS_ExecuteAlways(91, 0);
+	switch (n) {
+	case 0:
+		LocalAmbientSound ("misc/stealth", 127);
+		break;
 	
-	GiveInventory("SpawnInvulnerability",1);
-	GiveInventory ("ClassID", CLASS_STEALTH);
-				
-	ACS_ExecuteAlways (961, 0, Team);
+	case 1:
+		LocalAmbientSound ("misc/chem", 127);
+		break;
 	
-	// [Dusk] workaround for stealth knife sound..
-	delay (1);
-	SetWeapon("StealthLaserRifle");
+	case 2:
+		LocalAmbientSound ("misc/volt", 127);
+		break;
 	
-	PlayerSpeeds[PlayerNumber()] = speed;
-	Log(n:0, s:" becomes stealth trooper.");
-	
-	Delay(35*6);
-	ActivatorSound("misc/stealth",255);
+	case 3:
+		LocalAmbientSound ("misc/commando", 127);
+		break;
+	}
 }
 
-//---------------------------GAUSS GUNNER
-script 33 (int Team) {
-	int cost = 600; int speed = 0.8;
-	if (MitigateDoublePress()) terminate;
-	if (!CheckBarracks(Team)) terminate;
-	if (!IsResigned()) terminate;
-	if (!IsSecondPress("CLSS11", cost)) terminate;
-	if (!CheckCredits(cost)) terminate;
-	
-	TakeInventory("PurchaseToken",1);
-	SpendCredits (cost);
-	DisplayTick();
-	SETFONT("BigFont");
-	HudMessage(s:"You are a \cfGauss Gunner!";
-		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-	SetFont ("SMALLFONT");
-	HudMessage(s:"Use \cfAlt-Fire\cd for \cjAnti-Mech attack\cd!";
-		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_GREEN, 0.5, 0.6, 3.0, 1.0);
-	
-	//Set Statistics
-	SetActorProperty(0,APROP_SPEED,speed);
-	SetArmorGrade (2, ARMOD_LASER);
-	GiveInventory("HasClass", 1);
-	GiveInventory("Refunds", cost/2);
-	GiveInventory("NewClipAmmo",60);
-	GiveInventory("Handgun",1);
-	GiveInventory("TimedC4",1);
-	GiveInventory("TimedC4Count",1);
-	GiveInventory("Rifle",1);
-	GiveInventory("RifleAmmo",40);
-	GiveInventory("RifleGrenadeAmmo",0);
-	GiveInventory("GaussRifleAmmo",50);
-	GiveInventory("FragGrenade",1);
-	SetAmmoCapacity("FragGrenadeAmmo",2);
-	GiveInventory("FragGrenadeAmmo",2);
-	GiveInventory("GaussRifle",1);
-	SetWeapon("GaussRifle");
-
-	ACS_ExecuteAlways(91, 0);
-	
-	GiveInventory("SpawnInvulnerability",1);
-	GiveInventory ("ClassID", CLASS_GAUSSGUNNER);
-		
-	ACS_ExecuteAlways (961, 0, Team);
-	
-	PlayerSpeeds[PlayerNumber()] = speed;
-	Log(n:0, s:" becomes gauss gunner.");
-}
-
-//---------------------------CHEM WARRIOR
-script 34 (int Team) {
-	int cost = 550; int speed = 0.7;
-	if (MitigateDoublePress()) terminate;
-	if (!CheckBarracks(Team)) terminate;
-	if (!IsResigned()) terminate;
-	if (!IsSecondPress("CLSS12", cost)) terminate;
-	if (!CheckCredits(cost)) terminate;
-
-	GiveInventory("HasClass",1);
-	GiveInventory("Refunds",275);
-	TakeInventory("PurchaseToken",1);
-	SpendCredits (cost);
-	DisplayTick();
-	SETFONT("BigFont");
-	HudMessage(s:"You are a \cfChem Warrior!";
-		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-	
-	//Set Statistics
-	SetActorProperty(0,APROP_SPEED,speed);
-	SetArmorGrade (2, ARMOD_CHEM);
-	GiveInventory("NewClipAmmo",90);
-	GiveInventory("Handgun",1);
-	GiveInventory("TimedC4",1);
-	GiveInventory("TimedC4Count",1);
-	GiveInventory("SubMachineGun",1);
-	GiveInventory("ChemicalAmmo",200);
-	GiveInventory("ChemicalGrenadeAmmo",4);
-	GiveInventory("FragGrenade",1);
-	SetAmmoCapacity("FragGrenadeAmmo",2);
-	GiveInventory("FragGrenadeAmmo",2);
-	ACS_ExecuteAlways (91,0);
-	GiveInventory("ChemicalSprayer",1);
-	SetWeapon("ChemicalSprayer");
-	
-	GiveInventory("SpawnInvulnerability",1);
-	GiveInventory ("ClassID", CLASS_CHEMWARRIOR);
-	
-	ACS_ExecuteAlways (961, 0, Team);
-	PlayerSpeeds[PlayerNumber()] = speed;
-	Log(n:0, s:" becomes Chem warrior.");
-	Delay(35*6);
-	ActivatorSound("misc/chem",255);
-}
-
-//---------------------------SHOCK TROOPER
-script 35 (int Team) {
-	int cost = 600; int speed = 0.7;
-	if (MitigateDoublePress()) terminate;
-	if (!CheckBarracks(Team)) terminate;
-	if (!CheckPlant(Team)) terminate;
-	if (!IsResigned()) terminate;
-	if (!IsSecondPress("CLSS13", cost)) terminate;
-	if (!CheckCredits(cost)) terminate;
-
-	GiveInventory("HasClass",1);
-	GiveInventory("Refunds",300);
-	TakeInventory("PurchaseToken",1);
-	SpendCredits (cost);
-	
-	DisplayTick();
-	SETFONT("BigFont");
-	HudMessage(s:"You are a \cfShock Trooper!";
-		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-	
-	//Set Statistics
-	SetActorProperty(0,APROP_SPEED,speed);
-	SetArmorGrade (2, ARMOD_LASER);
-	GiveInventory("NewClipAmmo",60);
-	GiveInventory("Handgun",1);
-	GiveInventory("SubMachineGun",1);
-	GiveInventory("TimedC4",1);
-	GiveInventory("TimedC4Count",1);
-	GiveInventory("FragGrenade",1);
-	SetAmmoCapacity("FragGrenadeAmmo",2);
-	GiveInventory("FragGrenadeAmmo",2);
-	GiveInventory("ShockRifle",1);
-	GiveInventory("GeneporiumCharge",400);
-	SetWeapon("ShockRifle");
-	//Check for RANK to give awards
-	ACS_ExecuteAlways(91, 0);
-	
-	GiveInventory("SpawnInvulnerability",1);
-	GiveInventory ("ClassID", CLASS_SHOCKTROOPER);
-	
-	ACS_ExecuteAlways (961, 0, Team);
-	PlayerSpeeds[PlayerNumber()] = speed;
-	Log(n:0, s:" becomes Shock Trooper.");
-	Delay(35*6);
-	ActivatorSound("misc/volt", 255);
-}
-
-//---------------------------COMMANDO
-script 36 (int Team) {
-	int cost = 1000; int speed = 0.85;
-	if (MitigateDoublePress()) terminate;
-	if (!CheckBarracks(Team)) terminate;
-	if (!CheckPlant(Team)) terminate;
-	if (!IsResigned()) terminate;
-	if (!IsSecondPress("CLSS14", cost)) terminate;
-	if (!CheckCredits(cost)) terminate;
-	
-	TakeInventory("PurchaseToken",1);
-	SpendCredits (cost);
-	
-	DisplayTick();
-	SETFONT("BigFont");
-	HudMessage(s:"You are the \cfCommando!";
-		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-	
-	SETFONT ("SMALLFONT");
-	if(Team == 0)
-		HudMessageBold (s:"\cGWarning: \cARed\cJ Commando in-field!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-	else
-		HudMessageBold (s:"\cGWarning: \cNBlue\cJ Commando in-field!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-	
-	//Set Statistics
-	SetActorProperty(0,APROP_SPEED,speed);
-	GiveInventory("HasClass",1);
-	
-	CheckAndRemove ("HasArmorUpgrade");
-	GiveInventory ("HighUpgrade", 1);
-	GiveInventory("IsCommando",1);
-	GiveInventory("Refunds",cost/2);
-	SetArmorGrade (2, ARMOD_NOCHANGE);
-	GiveInventory("NewClipAmmo",120);
-	GiveInventory("Handgun",1);
-	GiveInventory("EnhancedTimedC4",1);
-	GiveInventory("TimedC4", 2);
-	GiveInventory("TimedC4Count", 2);
-	GiveInventory("MissileLauncher",1);
-	GiveInventory("MissileAmmo",15);			
-	GiveInventory("GatlingGun",1);
-	GiveInventory("MachineGunAmmo",200);
-	GiveInventory("Rifle",1);
-	GiveInventory("RifleAmmo",20);			
-	GiveInventory("RifleGrenadeAmmo",4);
-	GiveInventory("GaussRifle",1);
-	GiveInventory("GaussRifleAmmo",15);
-	SetFragGrenades (4);
-	GiveInventory("SpawnInvulnerability",1);
-	GiveInventory ("ClassID", CLASS_COMMANDO);
-	ACS_ExecuteAlways(91,0,0,0,0);
-	
-	SetWeapon("GaussRifle");
-				
-	ACS_ExecuteAlways (961, 0, Team);
-	
-	PlayerSpeeds[PlayerNumber()] = speed;
-	Log(n:0, s:" becomes Commando.");
-	Delay(35*6);
-	ActivatorSound("misc/commando",255);
-}
+// -----------------------------------------------------------------------------
+script 20 (int Team) PurchaseClass (CLASS_GUNMAN);
+script 21 (int Team) PurchaseClass (CLASS_ENGINEER);
+script 22 (int Team) PurchaseClass (CLASS_MINIGUNNER);
+script 23 (int Team) PurchaseClass (CLASS_TECHNICIAN);
+script 24 (int Team) PurchaseClass (CLASS_FLAMER);
+script 25 (int Team) PurchaseClass (CLASS_RIFLEMAN);
+script 26 (int Team) PurchaseClass (CLASS_MACHINEGUNNER);
+script 27 (int Team) PurchaseClass (CLASS_GRENADIER);
+script 28 (int Team) PurchaseClass (CLASS_ROCKETEER);
+script 29 (int Team) PurchaseClass (CLASS_STEALTH);
+script 33 (int Team) PurchaseClass (CLASS_GAUSSGUNNER);
+script 34 (int Team) PurchaseClass (CLASS_CHEMWARRIOR);
+script 35 (int Team) PurchaseClass (CLASS_SHOCKTROOPER);
+script 36 (int Team) PurchaseClass (CLASS_COMMANDO);
 
 //---------------------------PLASMA CANNON
 script 37 (int Team)
