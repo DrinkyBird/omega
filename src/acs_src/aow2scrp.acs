@@ -1,7 +1,7 @@
 /****************************************************************************************************
  ** All Out War 2: The Second Coming ACS script                                                    **
- ** Credit to VoltlocK for originally creating the engine                                         **
- ** With modifications by Eruanna, Dusk and the Omega team                                    **
+ ** Credit to VoltlocK for originally creating the engine                                          **
+ ** With modifications by Eruanna, Dusk and the Omega team                                         **
  **                                                                                                **
  ** You may use portions of this script in your project as long as you give credit where credit is **
  ** due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!        **
@@ -373,8 +373,8 @@ str NormalWeaponNames[MAX_NORMAL_WEAPONS] = {
 #include "a_bases.acs"
 #include "a_botmarines.acs"
 #include "a_bots.acs"
-#include "a_clientfx.acs"
-#include "a_clssc.acs"
+#include "a_client.acs"
+#include "a_classes.acs"
 #include "a_core.acs"
 #include "a_crate.acs"
 #include "a_death.acs"
@@ -391,7 +391,7 @@ str NormalWeaponNames[MAX_NORMAL_WEAPONS] = {
 #include "a_regen.acs"
 #include "a_repfac.acs"
 #include "a_repair.acs"
-#include "a_respc.acs"
+#include "a_research.acs"
 #include "a_spawnroom.acs"
 #include "a_stealth.acs"
 #include "a_surrender.acs"
