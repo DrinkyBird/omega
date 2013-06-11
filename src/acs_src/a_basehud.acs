@@ -116,12 +116,12 @@ function str ColorCodeHealth(int Percentage)
 
 function str ExistsBuilding (int tid) {
 	if (tid <= 199 || (tid >= 900 && tid % 2 == 1)) {
-		if (GetActorSpeed (tid) > 0)
+		if (ThingCount (T_NONE, tid) > 0)
 			return "\cH";
 		else
 			return "\cM";
 	} else {
-		if (GetActorSpeed (tid) > 0)
+		if (ThingCount (T_NONE, tid) > 0)
 			return "\cG";
 		else
 			return "\cM";
@@ -131,7 +131,8 @@ function str ExistsBuilding (int tid) {
 }
 
 function str ExistsBuildingGreen (int tid) {
-	if (GetActorSpeed (tid) > 0)
+	if (ThingCount (T_NONE, tid))
 		return "\cD";
+	
 	return "\cM";
 }
