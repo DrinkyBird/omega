@@ -131,7 +131,7 @@ actor PlasmaCannonBall {
 	translation "192:207=169:189", "240:246=45:47", "112:127=176:191"
 	states {
 	Spawn:
-		PLS1 AABB 1 bright A_SpawnItemEx ("PlasmaFlameTail", 0,0,0,0,0,0,0, SXF_TRANSFERTRANSLATION)
+		PLS3 AABB 1 bright A_SpawnItemEx ("PlasmaFlameTail", 0,0,0,0,0,0,0, SXF_TRANSFERTRANSLATION)
 		loop
 	Death:
 		PLE1 A 4
@@ -157,10 +157,10 @@ actor PlasmaCannonBallSmall : PlasmaCannonBall {
 	Scale 0.9
 	states {
 	Spawn:
-		PLS1 A 0 bright A_Tracer2
-		PLS1 ABA 1 bright A_SpawnItemEx("PlasmaFlameTailSmall", 0,0,0,0,0,0,0, SXF_TRANSFERTRANSLATION)
-		PLS1 B 0 bright A_Tracer2
-		PLS1 BAB 1 bright A_SpawnItemEx("PlasmaFlameTailSmall", 0,0,0,0,0,0,0, SXF_TRANSFERTRANSLATION)
+		PLS3 A 0 bright A_Tracer2
+		PLS3 ABA 1 bright A_SpawnItemEx("PlasmaFlameTailSmall", 0,0,0,0,0,0,0, SXF_TRANSFERTRANSLATION)
+		PLS3 B 0 bright A_Tracer2
+		PLS3 BAB 1 bright A_SpawnItemEx("PlasmaFlameTailSmall", 0,0,0,0,0,0,0, SXF_TRANSFERTRANSLATION)
 		loop
 	Death:
 		PLE1 A 3

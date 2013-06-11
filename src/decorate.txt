@@ -42,6 +42,7 @@
 #include "actors/items/proxymine.txt"
 #include "actors/items/remotec4.txt"
 #include "actors/items/timedc4.txt"
+#include "actors/weapons/bfg2704.txt"
 #include "actors/weapons/chainsaw.txt"
 #include "actors/weapons/chemsprayer.txt"
 #include "actors/weapons/doubleshotgun.txt"

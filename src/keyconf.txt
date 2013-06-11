@@ -8,7 +8,7 @@ setslot 4 SubMachineGun MachineGun GatlingGun JumpjetGatlingGun
 setslot 5 Grenade_Launcher MissileLauncher ArtilleryCannon
 setslot 6 Flamer ChemicalSprayer TiberiumAutorifleWeak TiberiumAutorifle
 setslot 7 LaserRifle LaserChaingun GaussRifle ShockRifle PlasmaGun StealthLaserRifle
-setslot 8 PlasmaCannon TimeGun UtilityGun CrateChooser
+setslot 8 PlasmaCannon TimeGun UtilityGun CrateChooser BFG2704
 
 clearplayerclasses
 addplayerclass Player
