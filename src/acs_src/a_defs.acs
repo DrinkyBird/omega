@@ -40,7 +40,6 @@ function void LoadClassDefinitions (void) {
 	
 	c = CLASS_GUNMAN;
 	Classes[c][CK_NAME] = "Gunman";
-	Classes[c][CK_SPEED] = 1.0;
 	AddClassItem (c, "SubMachineGun", 1);
 	
 	c = CLASS_ENGINEER;
@@ -182,7 +181,7 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_GERNADES] = 4;
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_C4] = 2;
-	Classes[c][CK_FLAGS] = (CF_WARNING | CF_ENHANCEDC4);
+	Classes[c][CK_FLAGS] = (CF_WARNING | CF_ENHANCEDC4 | CF_CANTPILOT);
 	Classes[c][CK_DEP] = DEP_CENTRE;
 	AddClassItem (c, "GaussRifle", 1);
 	AddClassItem (c, "GaussRifleAmmo", 15);
@@ -193,4 +192,92 @@ function void LoadClassDefinitions (void) {
 	AddClassItem (c, "Rifle", 1);
 	AddClassItem (c, "RifleAmmo", 20);
 	AddClassItem (c, "RifleGrenadeAmmo", 4);
+	
+	c = CLASS_SHOTGUNNER;
+	Classes[c][CK_NAME] = "Shotgunner";
+	Classes[c][CK_SPEED] = 0.8;
+	AddClassItem (c, "Boomstick", 1);
+	AddClassItem (c, "ShotgunAmmo", 50);
+	
+	c = CLASS_SUICIDEBOMBER;
+	Classes[c][CK_NAME] = "Suicide Bomber";
+	Classes[c][CK_COST] = 1750;
+	Classes[c][CK_C4] = 0;
+	Classes[c][CK_GERNADES] = 0;
+	Classes[c][CK_FLAGS] = (CF_WARNING | CF_CANTPILOT);
+	AddClassItem (c, "BombPack", 1);
+	
+	c = CLASS_SNIPER;
+	Classes[c][CK_NAME] = "Sniper";
+	Classes[c][CK_COST] = 750;
+	Classes[c][CK_SPEED] = 0.675;
+	Classes[c][CK_DEP] = DEP_CENTRE;
+	Classes[c][CK_ARMORNUM] = 1;
+	Classes[c][CK_GERNADES] = 2;
+	AddClassItem (c, "SniperRifle", 1);
+	AddClassItem (c, "SniperAmmo", 50);
+	
+	c = CLASS_UTILITYGUY;
+	Classes[c][CK_NAME] = "Utility Guy";
+	Classes[c][CK_COST] = 650;
+	Classes[c][CK_SPEED] = 0.75;
+	Classes[c][CK_FLAGS] = (CF_SUPPORT | CF_ENHANCEDC4 | CF_CANTPILOT);
+	Classes[c][CK_GERNADES] = 2; // why does a support class have two nades? :?
+	Classes[c][CK_ARMORNUM] = 2;
+	AddClassItem (c, "UtilityGun", 1);
+	AddClassItem (c, "Utility_Ammo", 75);
+	AddClassItem (c, "RepairGun", 1);
+	
+	c = CLASS_DEMOEXPERT;
+	Classes[c][CK_NAME] = "Demolitions Expert";
+	Classes[c][CK_COST] = 550;
+	Classes[c][CK_SPEED] = 0.75;
+	Classes[c][CK_FLAGS] = (CF_SUPPORT | CF_ENHANCEDC4 | CF_CANTPILOT);
+	Classes[c][CK_C4] = 4;
+	Classes[c][CK_GERNADES] = 4;
+	Classes[c][CK_ARMORNUM] = 2;
+	Classes[c][CK_ARMORMOD] = ARMOD_EXPLO;
+	AddClassItem (c, "BombSquadGun", 1);
+	AddClassItem (c, "ProxyMine", 6);
+	AddClassItem (c, "ProxyMineCount", 6);
+	AddClassItem (c, "RemoteC4", 1);
+	AddClassItem (c, "RemoteC4Ammo", 5);
+	AddClassItem (c, "Boomstick", 1);
+	AddClassItem (c, "ShotgunAmmo", 50);
+	
+	c = CLASS_MEDIC;
+	Classes[c][CK_NAME] = "Field Medic";
+	Classes[c][CK_COST] = 300;
+	Classes[c][CK_SPEED] = 0.85;
+	Classes[c][CK_FLAGS] = (CF_SUPPORT | CF_HEALTHREGEN);
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_ARMORNUM] = 2;
+	Classes[c][CK_ARMORMOD] = ARMOD_CHEM;
+	AddClassItem (c, "HealGun", 1);
+	AddClassItem (c, "HealingRadiusItem", 1);
+	AddClassItem (c, "HealingRadiusCount", 1);
+	AddClassItem (c, "TiberiumAutorifleWeak", 1);
+	AddClassItem (c, "TE21CalAmmo", 200);
+	
+	c = CLASS_LASERCHAINGUNNER;
+	Classes[c][CK_NAME] = "Laser Chaingunner";
+	Classes[c][CK_COST] = 750;
+	Classes[c][CK_SPEED] = 0.75;
+	Classes[c][CK_DEP] = DEP_CENTRE;
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_ARMORNUM] = 2;
+	Classes[c][CK_ARMORMOD] = ARMOD_LASER;
+	AddClassItem (c, "LaserChaingun", 1);
+	AddClassItem (c, "LaserChaingunAmmo", 400);
+	
+	c = CLASS_JUMPJET;
+	Classes[c][CK_NAME] = "Jet Trooper";
+	Classes[c][CK_COST] = 600;
+	Classes[c][CK_SPEED] = 0.65;
+	Classes[c][CK_DEP] = DEP_BARRACKS;
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_ARMORNUM] = 2;
+	AddClassItem (c, "JumpJetGatlingGun", 1);
+	AddClassItem (c, "MachineGunAmmo", 400);
+	AddClassItem (c, "JumpJetFuel", 100);
 }
