@@ -389,11 +389,11 @@ str NormalWeaponNames[MAX_NORMAL_WEAPONS] = {
 	"TimeGun"
 };
 
-#include "a_defs.acs"
 #include "a_functions.acs"
 #include "a_armor.acs"
 #include "a_monies.acs"
 #include "a_xp.acs"
+#include "a_defs.acs"
 
 #include "a_admin.acs"
 #include "a_basehud.acs"

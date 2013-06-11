@@ -1,3 +1,40 @@
+/*
+ * CLASS DEFINITIONS
+ * 
+ * Class identifiers are defined as a consecutive list of constants in aow2scrp.acs. 
+ * This function inits classes by setting values in the two-dimensional Classes
+ * array. The array is accessed using constant keys (CK_NAME et al)
+ * 
+ * The c variable is first init to set the class identifier (this way it doesn't have
+ * to be copied and changed every time properties are copied from one class to another)
+ * Technically this doesn't have to be done but it results in less gray hair.
+ * 
+ * To add items, the AddClassItem function is used. Don't alter CK_NUMITEMS directly under
+ * any circumstance! It will be set automagically. The first item added to the class defines
+ * the primary weapon - the default weapon the player will be holding after the class is
+ * purchased.
+ * 
+ * Class keys:
+ * - CK_NAME:     Name of the class, e.g. "Gunman"
+ * - CK_SPEED:    Speed factor of the class. 1.0 is default AOW player speed
+ * - CK_COST:     Price of the class, in credits. 0 means free.
+ * - CK_C4:       Amount of timed C4 bricks the class gets. Default: 1
+ * - CK_GERNADES: [sic] Amount of frag grenades the class gets. Default: 1
+ * - CK_DEP:      Building dependency: one of DEP_BARRACKS, DEP_REFINERY, DEP_CENTRE. Default: 0 (no dep)
+ * - CK_ARMORNUM: Armor grade of the class, default: 0
+ * - CK_ARMORMOD: Armor modifier: ARMOD_FIRE, ARMOD_CHEM, ARMOD_LASER, ARMOD_EXPLO, ARMOD_BULLET
+ * - CK_FLAGS:    Flag modifiers:
+ * ---- CF_ENHANCEDC4: Class gets enhanced C4
+ * ---- CF_SUPPORT:    Class is support and deals less damage.
+ * ---- (more to follow)
+ * - CK_NUMITEMS: Amount of items the class has (again, don't set this directly!)
+ * 
+ * After CK_NUMITEMS (which is the last key), the class definition in the table is continued with
+ * CK_NUMITEMS amount of name-and-amount pairs. The GetClassItemName and GetClassItemAmount functions
+ * should be used to access these item definitions. They take the class id and item number (which in turn
+ * ranges [0, CK_NUMITEMS - 1])
+ */
+
 function void LoadClassDefinitions (void) {
 	int c;
 	
@@ -30,4 +67,60 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_FLAGS] = (CF_SUPPORT | CF_ENHANCEDC4);
 	AddClassItem (c, "RepairGun", 1);
 	AddClassItem (c, "RepairGunUpgrade", 1);
+	
+	c = CLASS_FLAMER;
+	Classes[c][CK_NAME] = "Flamer";
+	Classes[c][CK_COST] = 450;
+	Classes[c][CK_SPEED] = 0.7;
+	Classes[c][CK_ARMORNUM] = 1;
+	Classes[c][CK_ARMORMOD] = ARMOD_FIRE;
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_DEP] = DEP_BARRACKS;
+	AddClassItem (c, "Flamer", 1);
+	AddClassItem (c, "FlamerAmmo", 400);
+	AddClassItem (c, "PhosphorusGrenadeAmmo", 4);
+	
+	c = CLASS_RIFLEMAN;
+	Classes[c][CK_NAME] = "Rifleman";
+	Classes[c][CK_COST] = 200;
+	Classes[c][CK_SPEED] = 0.9;
+	Classes[c][CK_ARMORNUM] = 1;
+	AddClassItem (c, "Rifle", 1);
+	AddClassItem (c, "RifleAmmo", 30);
+	AddClassItem (c, "RifleGrenadeAmmo", 4);
+	
+	c = CLASS_MACHINEGUNNER;
+	Classes[c][CK_NAME] = "Machinegunner";
+	Classes[c][CK_COST] = 300;
+	Classes[c][CK_SPEED] = 0.9;
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_ARMORNUM] = 1;
+	AddClassItem (c, "MachineGun", 1);
+	AddClassItem (c, "MachineGunAmmo", 400);
+	
+	c = CLASS_GRENADIER;
+	Classes[c][CK_NAME] = "Grenadier";
+	Classes[c][CK_COST] = 550;
+	Classes[c][CK_SPEED] = 0.8;
+	Classes[c][CK_GERNADES] = 4;
+	Classes[c][CK_ARMORNUM] = 2;
+	Classes[c][CK_ARMORMOD] = ARMOD_EXPLO;
+	AddClassItem (c, "GrenadeLauncher", 1);
+	AddClassItem (c, "GrenadeAmmo", 40);
+	AddClassItem (c, "Rifle", 1);
+	AddClassItem (c, "RifleAmmo", 20);
+	AddClassItem (c, "RifleGrenadeAmmo", 2);
+	
+	c = CLASS_ROCKETEER;
+	Classes[c][CK_NAME] = "Rocket Soldier";
+	Classes[c][CK_COST] = 500;
+	Classes[c][CK_SPEED] = 0.75;
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_ARMORNUM] = 2;
+	Classes[c][CK_ARMORMOD] = ARMOD_EXPLO;
+	AddClassItem (c, "MissileLauncher", 1);
+	AddClassItem (c, "MissileAmmo", 40);
+	AddClassItem (c, "Rifle", 1);
+	AddClassItem (c, "RifleAmmo", 20);
+	AddClassItem (c, "RifleGrenadeAmmo", 2);
 }
