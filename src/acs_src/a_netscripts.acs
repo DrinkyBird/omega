@@ -151,10 +151,10 @@ script 950 (void) NET {
 		if (WS_CheckClass (classid, CLASS_GAUSSGUNNER) || WS_CheckClass (classid, CLASS_COMMANDO)) terminate;
 		price = 150;
 		weapon = "GaussRifle";
-	} else if (CheckWeapon ("Grenade_Launcher")) {
+	} else if (CheckWeapon ("GrenadeLauncher")) {
 		if (WS_CheckClass (classid, CLASS_GRENADIER)) terminate;
 		price = 125;
-		weapon = "Grenade_Launcher";
+		weapon = "GrenadeLauncher";
 	} else if (CheckWeapon ("MissileLauncher")) {
 		if (WS_CheckClass (classid, CLASS_ROCKETEER) || WS_CheckClass (classid, CLASS_COMMANDO)) terminate;
 		price = 125;

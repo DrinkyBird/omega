@@ -5,7 +5,7 @@ setslot 1 Unarmed EagerBeaver FragGrenade RemoteC4 Knife
 setslot 2 Handgun Rifle SniperRifleWeak SniperRifle
 setslot 3 Boomstick DoubleShotgun
 setslot 4 SubMachineGun MachineGun GatlingGun JumpjetGatlingGun
-setslot 5 Grenade_Launcher MissileLauncher ArtilleryCannon
+setslot 5 GrenadeLauncher MissileLauncher ArtilleryCannon
 setslot 6 Flamer ChemicalSprayer TiberiumAutorifleWeak TiberiumAutorifle
 setslot 7 LaserRifle LaserChaingun GaussRifle ShockRifle PlasmaGun StealthLaserRifle
 setslot 8 PlasmaCannon TimeGun UtilityGun CrateChooser BFG2704

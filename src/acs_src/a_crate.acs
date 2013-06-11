@@ -641,7 +641,7 @@ script 309 (int Crate, int Override) {
 		CheckAndRemove ("DoubleShotgun");
 		CheckAndRemove ("Rifle");
 		CheckAndRemove ("GaussRifle");
-		CheckAndRemove ("Grenade_Launcher");
+		CheckAndRemove ("GrenadeLauncher");
 		CheckAndRemove ("StealthLaserRifle");
 		CheckAndRemove ("LaserRifle");
 		CheckAndRemove ("TimeGun");
