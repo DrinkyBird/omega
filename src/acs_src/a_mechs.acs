@@ -139,20 +139,6 @@ script 80 (int mech) {
 			HUDMSG_FADEOUT, 1860+PlayerNumber(), CR_WHITE, 0.45, 0.5, 2.0, 1.0);*/
 	MechGetter[PlayerTeam()] = PlayerNumber();
 	
-	// alert for heavy mechs
-	if (mech >= MECH_MADCAT && mech <= MECH_GUARDIAN) {
-		SetFont ("SMALLFONT");
-		if (PlayerTeam() == TEAM_RED) {
-			HudMessageBold (s:"\cGWarning: \cARed\cJ ", s:nicename, s:" in-field!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		} else {
-			HudMessageBold (s:"\cGWarning: \cNBlue\cJ ", s:nicename, s:" in-field!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		}
-	}
-	
 	Log (n:0, s:" pilots ", s:nicename, s:".");
 	
 	SetPlayerProperty (0, 1, PROP_TOTALLYFROZEN);

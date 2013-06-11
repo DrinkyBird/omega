@@ -146,17 +146,6 @@ function void PurchaseClass (int c) {
 			SetWeapon (itemname);
 	}
 	
-	if (cflags & CF_WARNING) {
-		if (PlayerTeam () == TEAM_RED)
-			HudMessageBold (s:"\cGWarning: \cARed\cJ ", s:Classes[c][CK_NAME], s:" in-field!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		else
-			HudMessageBold (s:"\cGWarning: \cNBlue\cJ ", s:Classes[c][CK_NAME], s:" in-field!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-	}
-	
 	if (cflags & CF_CANTPILOT)
 		GiveInventory ("HighUpgrade", 1);
 	
@@ -305,16 +294,6 @@ script 37 (int Team)
 	DisplayTick();
 	SetFont ("BIGFONT");
 	HudMessage(s:"You got \cnPlasma Cannon!"; HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-	
-	SetFont ("SMALLFONT");
-	if(Team == 0)
-		HudMessageBold (s:"\cGWarning: \cARed\cJ team has \cNPlasma Cannon!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-	else
-		HudMessageBold (s:"\cGWarning: \cNBlue\cJ team has \cNPlasma Cannon!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 	
 	GiveInventory("PlasmaCannon",1);
 	GiveInventory("PlasmaCannonAmmo",10);
@@ -548,10 +527,6 @@ script 55 (int Team) {
 	HudMessage(s:"it for \cU60 seconds\cJ for \cKcertain destruction!";
 		HUDMSG_FADEOUT, 1880+PlayerNumber(), CR_WHITE, 0.5, 0.625, 5.0, 1.0);
 	
-	HudMessageBold (s:"\cGWarning: \cNBlue\cJ player has \cNIon Cannon Beacon!!";
-		HUDMSG_FADEOUT, 15000, CR_WHITE,
-		INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-	
 	GiveInventory("IonCannonBeacon",1);
 	SetWeapon("IonCannonBeacon");
 	
@@ -611,9 +586,6 @@ script 56 (int Team) {
 		HUDMSG_FADEOUT, 1840+PlayerNumber(), CR_WHITE, 0.5, 0.6, 5.0, 1.0);
 	HudMessage(s:"it for \cU60 seconds\cJ for \cKcertain destruction!";
 		HUDMSG_FADEOUT, 1880+PlayerNumber(), CR_WHITE, 0.5, 0.625, 5.0, 1.0);
-	HudMessageBold (s:"\cGWarning: \cARed\cJ player has \cANuclear Strike Beacon!!";
-		HUDMSG_FADEOUT, 15000, CR_WHITE,
-		INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 	
 	GiveInventory ("NuclearStrikeBeacon", 1);
 	SetWeapon ("NuclearStrikeBeacon");
@@ -786,16 +758,6 @@ script 39 (int Team) {
 	SETFONT("BigFont");
 	HudMessage(s:"You are the \cFTime Cop!";
 		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-	
-	SETFONT ("SMALLFONT");
-	if(Team == 0)
-		HudMessageBold (s:"\cGWarning: \cARed\cJ TIME COP in-field!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-	else
-		HudMessageBold (s:"\cGWarning: \cNBlue\cJ TIME COP in-field!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 	
 	SetActorProperty (0, APROP_SPEED, speed);
 	SetArmorGrade (2, ARMOD_NOCHANGE);
