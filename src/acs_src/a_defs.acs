@@ -280,4 +280,84 @@ function void LoadClassDefinitions (void) {
 	AddClassItem (c, "JumpJetGatlingGun", 1);
 	AddClassItem (c, "MachineGunAmmo", 400);
 	AddClassItem (c, "JumpJetFuel", 100);
+	
+	c = CLASS_TIBRIFLE;
+	Classes[c][CK_NAME] = "Tiberium Gunner";
+	Classes[c][CK_COST] = 400;
+	Classes[c][CK_SPEED] = 0.8;
+	Classes[c][CK_DEP] = DEP_BARRACKS;
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_ARMORNUM] = 1;
+	Classes[c][CK_ARMORMOD] = ARMOD_CHEM;
+	AddClassItem (c, "TiberiumAutorifle", 1);
+	AddClassItem (c, "TE21CalAmmo", 200);
+	
+	c = CLASS_DOUBLESHOTGUNNER;
+	Classes[c][CK_NAME] = "Double Shotgunner";
+	Classes[c][CK_COST] = 200;
+	Classes[c][CK_SPEED] = 0.8;;
+	Classes[c][CK_ARMORNUM] = 1;
+	AddClassItem (c, "DoubleShotgun", 1);
+	AddClassItem (c, "ShotgunAmmo", 50);
+	
+	c = CLASS_PLASMAGUNNER;
+	Classes[c][CK_NAME] = "Plasma Gunner";
+	Classes[c][CK_COST] = 800;
+	Classes[c][CK_SPEED] = 0.7;
+	Classes[c][CK_DEP] = DEP_CENTRE;
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_ARMORNUM] = 2;
+	Classes[c][CK_ARMORMOD] = ARMOD_LASER;
+	Classes[c][CK_FLAGS] = (CF_ENHANCEDC4);
+	AddClassItem (c, "PlasmaGun", 1);
+	AddClassItem (c, "PlasmaRifleAmmo", 200);
+	
+	c = CLASS_ARTILLERY;
+	Classes[c][CK_NAME] = "Artillery Soldier";
+	Classes[c][CK_COST] = 600;
+	Classes[c][CK_SPEED] = 0.7;
+	Classes[c][CK_DEP] = DEP_BARRACKS;
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_ARMORNUM] = 2;
+	Classes[c][CK_ARMORMOD] = ARMOD_EXPLO;
+	AddClassItem (c, "ArtilleryCannon",1);
+	AddClassItem (c, "ArtilleryShellAmmo",30);
+	AddClassItem (c, "Rifle",1);
+	AddClassItem (c, "RifleAmmo",20);
+	AddClassItem (c, "RifleGrenadeAmmo",2);
+	
+	c = CLASS_TIMECOP;
+	Classes[c][CK_NAME] = "Time Cop";
+	Classes[c][CK_COST] = 2000;
+	Classes[c][CK_SPEED] = 0.9;
+	Classes[c][CK_DEP] = DEP_CENTRE;
+	Classes[c][CK_GERNADES] = 4;
+	Classes[c][CK_ARMORNUM] = 2;
+	Classes[c][CK_C4] = 2;
+	Classes[c][CK_FLAGS] = (CF_ENHANCEDC4);
+	AddClassItem (c, "TimeGun", 1);
+	AddClassItem (c, "TimeGunAmmo", 100);
+	AddClassItem (c, "MachineGun", 1);
+	AddClassItem (c, "MachineGunAmmo", 50);
+	
+	c = CLASS_ADVHARVESTER;
+	Classes[c][CK_NAME] = "Advanced Harvester";
+	Classes[c][CK_COST] = 750;
+	Classes[c][CK_SPEED] = 0.9;
+	Classes[c][CK_DEP] = DEP_REFINERY;
+	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_ARMORNUM] = 1;
+	Classes[c][CK_ARMORMOD] = ARMOD_CHEM;
+	Classes[c][CK_FLAGS] = (CF_HARVESTER | CF_SUPPORT);
+	AddClassItem (c, "MachineGun", 1);
+	AddClassItem (c, "MachineGunAmmo", 160);
+	AddClassItem (c, "SubMachineGun", 1);
+	
+	c = CLASS_HARVESTER;
+	Classes[c][CK_NAME] = "Tiberium Harvester";
+	Classes[c][CK_SPEED] = 0.65;
+	Classes[c][CK_DEP] = DEP_REFINERY;
+	Classes[c][CK_ARMORMOD] = ARMOD_CHEM;
+	Classes[c][CK_FLAGS] = (CF_HARVESTER | CF_SUPPORT);
+	AddClassItem (c, "SubMachineGun", 1);
 }
