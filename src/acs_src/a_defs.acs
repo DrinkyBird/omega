@@ -277,9 +277,13 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_DEP] = DEP_BARRACKS;
 	Classes[c][CK_GERNADES] = 2;
 	Classes[c][CK_ARMORNUM] = 2;
-	AddClassItem (c, "JumpJetGatlingGun", 1);
+	AddClassItem (c, "MachineGun", 1);
 	AddClassItem (c, "MachineGunAmmo", 400);
-	AddClassItem (c, "JumpJetFuel", 100);
+	AddClassItem (c, "Rifle", 1);
+	AddClassItem (c, "RifleAmmo", 30);
+	AddClassItem (c, "RifleGrenadeAmmo", 4);
+	AddClassItem (c, "Jetpack", 1);
+	AddClassItem (c, "JetpackFuel", 100);
 	
 	c = CLASS_TIBRIFLE;
 	Classes[c][CK_NAME] = "Tiberium Gunner";

@@ -163,6 +163,8 @@
 // 1520 - 1544
 
 // TODO: populate this list
+#define SC_JetpackToggle 907
+#define SC_CL_JetpackQuake 919
 #define SC_PORTAL_TIDREQUEST 935
 #define SC_PORTAL_INIT 936
 #define SC_PORTAL_FUNCTION 937
@@ -413,6 +415,7 @@ str NormalWeaponNames[MAX_NORMAL_WEAPONS] = {
 #include "a_donate.acs"
 #include "a_hud.acs"
 #include "a_items.acs"
+#include "a_jetpack.acs"
 #include "a_mechs.acs"
 #include "a_menu.acs"
 #include "a_misc.acs"

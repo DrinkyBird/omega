@@ -72,6 +72,12 @@ statusbar fullscreen, forcescaled, fullscreenoffsets {
 		drawbar "progbar1", "progbar2", ArmorChangeProgress, horizontal, 18, -30;
 	}
 	
+	// Jetpack fuel bar
+	InInventory Jetpack {
+		DrawImage "fuelicon", -65, -57;
+		DrawBar "progbr1o", "progbar2", JetpackFuel, horizontal, -50, -60;
+	}
+	
 	drawselectedinventory alwaysshowcounter, INDEXFONT, -85, -25, -87, -13, White, 0;
 }
 

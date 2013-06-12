@@ -103,6 +103,7 @@ script 599 OPEN {
 	if (!GetCVAR ("sv_weapondrop")) ConsoleCommand ("sv_weapondrop 1");
 	if (!GetCVAR ("sv_itemrespawn")) ConsoleCommand ("sv_itemrespawn 1");
 	if (!GetCVAR ("compat_limited_airmovement")) ConsoleCommand ("compat_limited_airmovement 1");
+	if (!GetCVAR ("compat_clientssendfullbuttoninfo")) ConsoleCommand ("compat_clientssendfullbuttoninfo 1");
 	
 	// [Dusk] enforce no pointlimit until game is considered over. Pointlimit is used
 	// to end the game when needed. We don't want this script to conflict it at any

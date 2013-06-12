@@ -673,10 +673,6 @@ texture wnukage, 64, 64 {
 	patch nukage1, 0, 0 {}
 }
 
-texture compred, 64, 64 {
-	patch n_cred01, 0, 0 {}
-}
-
 texture crate4, 64, 128 {
 	patch gcratel1, 0, 0 {}
 	patch gcrater1, 32, 0 {}
@@ -1340,16 +1336,26 @@ graphic progbar1, 128, 16 {
 	patch progbar1, 0, 0
 }
 
+graphic progbr1o, 128, 16 {
+	xscale 3.0 yscale 3.0
+	patch progbr1o, 0, 0
+}
+
 graphic progbar2, 128, 16 {
 	xscale 3.0 yscale 3.0
 	patch progbar2, 0, 0
 }
 
-// ==========================
-// FLAT22 fix aliases
-texture flat21, 64, 64 {patch dpad01bl, 0, 0}
-texture flat22, 64, 64 {patch dpad01bl, 0, 0}
-texture flat22r, 64, 64 {patch dpad01rd, 0, 0}
-texture flat24, 64, 64 {patch dpad01rd, 0, 0}
-texture nfft22rd, 64, 64 {patch dpad01rd, 0, 0}
-texture nfft22or, 64, 64 {patch dpad01or, 0, 0}
+graphic jeticon, 25, 29 {
+	XScale 2.0
+	YScale 2.0
+	Offset -7, -8
+	Patch jeticon, 0, 0
+}
+
+graphic fuelicon, 19, 28 {
+	XScale 2.2
+	YScale 2.2
+	Offset 8, 20
+	Patch fuelicon, 0, 0
+}
