@@ -2,14 +2,15 @@
 // ------------------------------------------ TIME GUN
 // ===================================================
 
-// [Dusk] time gun effect messages and altfire rotation (in one script o.O)
+// [Dusk] Time gun effect messages and altfire rotation (in one script o.O)
 // action == 0 => intel message
 // action == 1 => altfire rotation
-script 958 (int action, int type) {
+// action == 2 => reward check
+script SC_TIMEGUN (int action, int type) {
 	if (action == 1) {
-		// rotation
-		if (CheckInventory ("TimeGunRotation") == 5)
-			TakeInventory ("TimeGunRotation", 5);
+		// Rotation
+		if (CheckInventory ("TimeGunRotation") == 3)
+			TakeInventory ("TimeGunRotation", 3);
 		else
 			GiveInventory ("TimeGunRotation", 1);
 		
@@ -17,64 +18,96 @@ script 958 (int action, int type) {
 		terminate;
 	}
 	
+	if (action == 2) {
+		// [Dusk] {9/6/12} Check for a possible reward.
+		// Boosting teammates gives you 1 bonus,
+		// weakening enemies gets you 2 bonus.
+		int ttid = GetTargetInfo (TARGETINFO_TID);
+		if (ttid == ActivatorTID() || ttid < 3800 || ttid >= 3800 + MAXPLAYERS) {
+			// No valid target
+			terminate;
+		}
+		
+		int bonus = 1;
+		if (GetTargetInfo (TARGETINFO_Team) != PlayerTeam ())
+			bonus = 2;
+		
+		int pn = PlayerNumber ();
+		if (MedicBonus[pn] < MedicBonusNeed) {
+			MedicBonus[pn] += 40 * bonus;
+		} else {
+			MedicBonus[pn] = 0;
+			AddExperience (50);
+			LocalAmbientSound ("c4/use", 127);
+			GivePoints (1);
+		}
+		terminate;
+	}
+	
 	SetFont ("SMALLFONT");
 	switch (type) {
 	case 0: // boost
-		HudMessage (s:"\cIYou are turbo!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage ("\cIYou are turbo!", false);
 		break;
 	case 1: // float
-		HudMessage (s:"\cIYou feel lighter!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage ("\cIYou feel lighter!", false);
 		break;
 	case 2: // slow
-		HudMessage (s:"\cISomething pulls your legs...";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage ("\cISomething pulls your legs...", false);
 		break;
 	case 3: // weaken
-		HudMessage (s:"\cIYou hear something crack in your weapon...";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage ("\cIYou hear something crack in your weapon...", false);
 		break;
 	}
 }
 
 // ------------
 // Time gun HUD
-script 959 (void) NET CLIENTSIDE {
-	while (CheckWeapon ("TimeGun") && GetActorProperty (ActivatorTID(), APROP_HEALTH) >= 0) {
-		SetFont("SMALLFONT");
-		HudMessage(s:TimeHudColor(0), s:"BOOST (25)\n",
-			s:TimeHudColor(1), s:"FLOAT (25)\n",
-			s:TimeHudColor(2), s:"SLOW (25)\n",
-			s:TimeHudColor(3), s:"WEAKEN (25)\n",
-			s:TimeHudColor(4), s:"TELEPORT (100)\n",
-			s:TimeHudColor(5), s:"BURST (5+)";
+script SC_CL_TimeGunHUD (void) NET CLIENTSIDE {
+	while (CheckWeapon ("TimeGun") && GetHealth () >= 0) {
+		SetFont ("SMALLFONT");
+		HudMessage (s:TimeHUDColor(0, 0), s:"BOOST ", s:TimeHUDColor(0, 1), s:" / ", s:TimeHUDColor (0, 2), s:"SLOW\n",
+			s:TimeHUDColor(1, 0), s:"FLOAT ", s:TimeHUDColor(1, 1), s:" / ", s:TimeHUDColor (1, 2), s:"WEAKEN\n",
+			s:TimeHUDColor(2, 0), s:"TELEPORT\n",
+			s:TimeHUDColor(3, 0), s:"HYPERSPEED\n";
 			HUDMSG_PLAIN, 0, CR_WHITE, -0.8, -0.6, 0.2);
 		
 		delay (5);
 	}
 }
 
-function str TimeHudColor (int type) {
+function str TimeHUDColor (int type, int side) {
 	if (CheckInventory ("TimeGunRotation") == type) {
 		// selected
-		if (CheckInventory ("TimeGunCooldown")) return "\cU";
 		switch (type) {
-			case 0: case 1: return "\cD";
-			case 2: case 3: return "\cA";
-			case 4: case 5: return "\cF";
+			case 0:
+			case 1:
+				switch (side) {
+				case 0:
+					return "\cD";
+				case 1:
+					return "\cC";
+				}
+				return "\cG";
+			case 2:
+			case 3:
+				return "\cF";
 		}
 	} else {
 		// not selected
-		if (CheckInventory ("TimeGunCooldown")) return "\cM";
 		switch (type) {
-			case 0: case 1: return "\cQ";
-			case 2: case 3: return "\cG";
-			case 4: case 5: return "\cK";
+			case 0:
+			case 1:
+				switch (side) {
+				case 0:
+					return "\cQ";
+				case 1:
+					return "\cU";
+				}
+				return "\cR";
+			case 2:
+			case 3:
+				return "\cK";
 		}
 	}
 	return "";

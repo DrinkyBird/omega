@@ -162,16 +162,31 @@
 #define TID_MARINE 1520
 // 1520 - 1544
 
+#define TARGETINFO_X			0  // X-coordinate
+#define TARGETINFO_Y			1  // Y-coordinate
+#define TARGETINFO_Z			2  // Z-coordinate
+#define TARGETINFO_Health		3  // Health
+#define TARGETINFO_Angle		4  // Angle
+#define TARGETINFO_TID			5  // Thing ID
+#define TARGETINFO_PlayerNum	9  // Player number
+#define TARGETINFO_SpawnHealth	10 // Spawn health
+#define TARGETINFO_Team			11 // Affiliated team
+#define TARGETINFO_WeaponCheck	12 // for CheckTargetWeapon
+#define TARGETINFO_Name			13 // Name (akin to print (n:0))
+
 // TODO: populate this list
-#define SC_JetpackToggle 907
-#define SC_CL_JetpackQuake 919
-#define SC_PORTAL_TIDREQUEST 935
-#define SC_PORTAL_INIT 936
-#define SC_PORTAL_FUNCTION 937
-#define SC_MARINE_INIT 938
-#define SC_MARINE_COMPENSATION 939
-#define SC_MARINE_STATS 967
-#define SC_MARINE_DEATH 968
+#define SC_TargetInfo             899
+#define SC_JetpackToggle          907
+#define SC_CL_JetpackQuake        919
+#define SC_PORTAL_TIDREQUEST      935
+#define SC_PORTAL_INIT            936
+#define SC_PORTAL_FUNCTION        937
+#define SC_MARINE_INIT            938
+#define SC_MARINE_COMPENSATION    939
+#define SC_TimeGun                958
+#define SC_CL_TimeGunHUD          959
+#define SC_MARINE_STATS           967
+#define SC_MARINE_DEATH           968
 
 // how many points does researching stuff give you?
 // Also used for miniref and utility-built ammo/health regens

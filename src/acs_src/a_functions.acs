@@ -482,3 +482,78 @@ function int cond (int a, int b, int c) {
 	
 	return c;
 }
+
+// ============================================================================
+// Acquire target information. This is encapsulated in a script so
+// as not to interfere with the original script's activator.
+script SC_TargetInfo (int type, int value) {
+	SetActivatorToTarget (0);
+	SetResultValue (0);
+	
+	switch (type) {
+	case TARGETINFO_X:
+		SetResultValue (GetActorX (0));
+		break;
+	case TARGETINFO_Y:
+		SetResultValue (GetActorY (0));
+		break;
+	case TARGETINFO_Z:
+		SetResultValue (GetActorZ (0));
+		break;
+	case TARGETINFO_Health:
+		SetResultValue (GetHealth ());
+		break;
+	case TARGETINFO_Angle:
+		SetResultValue (GetActorAngle (0));
+		break;
+	case TARGETINFO_TID:
+		SetResultValue (ActivatorTID ());
+		break;
+	case TARGETINFO_PlayerNum:
+		SetResultValue (PlayerNumber ());
+		break;
+	case TARGETINFO_SpawnHealth:
+		SetResultValue (GetSpawnHealth ());
+		break;
+	case TARGETINFO_Team:
+		SetResultValue (PlayerTeam ());
+		break;
+	case TARGETINFO_WeaponCheck:
+		SetResultValue (CheckWeapon (value));
+		break;
+	case TARGETINFO_Name:
+		SetResultValue (strparam (n:0));
+		break;
+	}
+}
+
+function int GetTargetInfo (int type) {
+	return ACS_ExecuteWithResult (SC_TARGETINFO, type);
+}
+
+function int CheckTargetWeapon (str type) {
+	return ACS_ExecuteWithResult (SC_TARGETINFO, TARGETINFO_WeaponCheck, type);
+}
+// ============================================================================
+// [Dusk] {9/6/12} Generic intel message
+function void IntelMessage (str text, bool bold) {
+	// Check if it's multi-line
+	int multiline = false;
+	for (int c = 0; c < strlen (text) && !multiline; c++)
+		if (GetChar (text, c) == '\n')
+			multiline = true;
+	
+	// Determine y-pos
+	int ypos = INTEL_YPOS;
+	if (multiline)
+		ypos = INTEL_YPOS2;
+	
+	if (bold)
+		HudMessageBold (s:text;
+			HUDMSG_FADEOUT | HUDMSG_LOG, 15000, CR_WHITE,
+			INTEL_XPOS, ypos, 2.0, 1.0);
+	else
+		HudMessage (s:text;
+			HUDMSG_FADEOUT | HUDMSG_LOG, 15000, CR_WHITE,
+			INTEL_XPOS, ypos, 2.0, 1.0);
+}
