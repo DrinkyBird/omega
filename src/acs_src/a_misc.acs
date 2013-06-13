@@ -34,19 +34,18 @@ script 320 (int Which)
 }
 
 //Self heal health
-script 329 (void) {
-	int SelfHealCooldown = 30;
+script SC_SelfHealHealth (void) {
+	int cooldown = 30;
+	int i;
 	
-	if (GetHealth () <= 0) terminate;
-	SetHealth (GetHealth () + 50);
-	if (GetHealth () > GetSpawnHealth ()) SetHealth (GetSpawnHealth ());
-
-	while (SelfHealCooldown > 0 && GetHealth () > 0) {
-		SelfHealCooldown--;
-		delay(35);
+	// Give half the health now
+	HealThing (SELFHEALHEALTH / 2);
+	
+	// And then give the rest over time
+	for (i = 0; i < SELFHEALHEALTH / 2; ++i) {
+		HealThing (1);
+		delay (35);
 	}
-
-	TakeInventory ("SelfHealCooldown", 1);
 }
 
 // Jumpjet fuel drain

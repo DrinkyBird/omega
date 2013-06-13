@@ -21,6 +21,8 @@
 #define TICRATE 35
 #define MINUTETICS (60 * 35)
 
+#define SELFHEALHEALTH 50
+
 // [Dusk] intel HudMessage coords
 #define INTEL_XPOS 0.5
 #define INTEL_YPOS 0.055
@@ -175,6 +177,7 @@
 #define TARGETINFO_Name			13 // Name (akin to print (n:0))
 
 // TODO: populate this list
+#define SC_SelfHealHealth         816
 #define SC_TargetInfo             899
 #define SC_JetpackToggle          907
 #define SC_CL_JetpackQuake        919

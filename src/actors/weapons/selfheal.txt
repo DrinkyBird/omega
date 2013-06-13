@@ -54,7 +54,7 @@ actor SelfHeal : AOWWeapon {
 		INJE C 2 A_PlayWeaponSound ("weapons/syringe")
 		INJE D 2
 		INJE E 0 A_TakeInventory ("SelfHealItem", 1)
-		INJE E 2 ACS_ExecuteAlways(329, 0)
+		INJE E 2 ACS_ExecuteAlways (816, 0)
 		INJE EFGHIJKKKL 2
 		INJE M 8
 		INJE N 2

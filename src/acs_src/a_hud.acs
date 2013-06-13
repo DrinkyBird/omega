@@ -9,16 +9,6 @@
 script 5 RESPAWN {
 	while (PlayerInGame (PlayerNumber()) && GetHealth() > 0) {
 		ShowStatus();
-	
-		if (GetHealth () <= GetSpawnHealth ()-50 && !CheckInventory("IsMech") &&
-			!CheckInventory("SelfHealCooldown") && !CheckInventory("PowerBerserk")) {
-			GiveInventory ("SelfHealCooldown",1);
-			GiveInventory ("SelfHealItem",1);
-			SetFont ("SMALLFONT");
-			HudMessage (s:"\cKSelf-applied medical attention\cJ is available";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		}
 		
 		delay (35);
 		if (!CheckWeapon("StealthLaserRifle") && !CheckWeapon("Knife"))
