@@ -180,6 +180,7 @@
 #define SC_SelfHealHealth         816
 #define SC_TargetInfo             899
 #define SC_JetpackToggle          907
+#define SC_CL_SniperZoom          916
 #define SC_CL_JetpackQuake        919
 #define SC_PORTAL_TIDREQUEST      935
 #define SC_PORTAL_INIT            936

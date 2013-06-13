@@ -145,34 +145,16 @@ script 978 (int p) {
 	}
 }
 
-// A_SetPitch is not available, workaround:
-script 979 (int d, int n) NET CLIENTSIDE {
-	delay (1);
-	int newpitch;
-	while (n > 0) {
-		newpitch = GetActorPitch (0)+d;
-		if (newpitch < -0.15) {
-			SetActorPitch (0, -0.15);
-			terminate;
-		} else if (newpitch > 0.15) {
-			SetActorPitch (0, 0.15);
-			terminate;
-		} else {
-			SetActorPitch (0, newpitch);
-		}
-		
-		delay (1);
-		n--;
-	}
-}
-
-// Missile launcher targeter
+// [Dusk] Missile launcher targeter
 script 963 (void) CLIENTSIDE {
-	if (ActivatorTID () != 3800 + ConsolePlayer) terminate;
-	int mytid = 3800 + ConsolePlayer;
+	if (ActivatorTID () != 3800 + consoleplayer)
+		terminate;
+	
+	int mytid = 3800 + consoleplayer;
 	int t;
 	int team = PlayerTeam ();
-	while (CheckWeapon ("MissileLauncher") && GetActorProperty (0, APROP_Health) > 0) {
+	
+	while (CheckWeapon ("MissileLauncher") && GetHealth () > 0) {
 		SetActivatorToTarget (0);
 		t = ActivatorTID ();
 		
@@ -185,7 +167,23 @@ script 963 (void) CLIENTSIDE {
 			AmbientSound ("missilelauncher/see", 127);
 			delay (4);
 		}
+		
 		SetActivator (mytid);
 		delay (1);
 	}
+}
+
+// [Dusk] Sniper rifle zoom effect
+script SC_CL_SniperZoom (void) CLIENTSIDE {
+	// Fade in
+	FadeTo (0, 0, 0, 1.0, 0.1);
+	delay ((0.1 * 35) >> 16);
+	
+	delay (5);
+	
+	// Fade out
+	if (CheckInventory ("IsZoomed"))
+		FadeTo (255, 0, 0, 0.2, 0.3);
+	else
+		FadeTo (0, 0, 0, 0, 0.3);
 }
