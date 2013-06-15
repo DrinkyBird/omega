@@ -113,6 +113,12 @@ script 599 OPEN {
 	// ==================================
 	// CUSTOM CVARS
 	// w/ sanity checks
+	if (GetCVAR ("aow_economy_mode") < 0) ConsoleCommand ("set aow_economy_mode 0");
+	if (GetCVAR ("aow_economy_mode") > 1) ConsoleCommand ("set aow_economy_mode 1");
+	if (GetCVAR ("aow_harvestbonus") <= 0) ConsoleCommand ("set aow_harvestbonus 10");
+	if (GetCVAR ("aow_enharvestbonus") <= 0) ConsoleCommand ("set aow_enharvestbonus 20");
+	if (GetCVAR ("aow_harvestbonusadv") <= 0) ConsoleCommand ("set aow_harvestbonusadv 25");
+	if (GetCVAR ("aow_enharvestbonusadv") <= 0) ConsoleCommand ("set aow_enharvestbonusadv 50");
 	if (!GetCVAR ("aow_credflow")) ConsoleCommand ("set aow_credflow 4");
 	if (GetCVAR ("aow_startcredits") <= 0) ConsoleCommand ("set aow_startcredits 300");
 	if (GetCVAR ("aow_creditfrag") <= 0) ConsoleCommand ("set aow_creditfrag 50");	
