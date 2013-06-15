@@ -8,7 +8,7 @@ function int IncrCredits (int p, int amount) {
 	if (Credits[p] > GetCVAR ("aow_creditlimit") && GetCVAR ("aow_creditlimit") > 0)
 	{
 		Credits[p] = GetCVAR ("aow_creditlimit");
-		if(!CheckInventory("IsInSpawnRoom") && GetTeamProperty (PlayerTeam (), TPROP_NumPlayers) > 4)
+		if(!CheckInventory("IsInSpawnRoom") && GetTeamProperty (PlayerTeam (), TPROP_NumPlayers) > 4 && GetCVAR ("aow_greedkill") >= 1)
 		{
 			SetFont("BigFont");
 			Hudmessage(s:"DONATE YOU GREEDY BASTARD!"; HUDMSG_FADEOUT, 480+PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0);
