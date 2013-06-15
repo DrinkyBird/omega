@@ -1,0 +1,107 @@
+// Repair Turret
+actor Utility_RepairGunTurretRed : Utility_TurretBase {
+	obituary "%o somehow died from repair gun turret."
+	health 500
+	gravity 10000
+	painchance 50
+	//seesound "turret/sight"
+	attacksound "repairgun/fire"
+	activesound "turret/sight"
+	+NOINFIGHTING
+	+LOOKALLAROUND
+	states {
+	Spawn:
+		CIGN A 0
+		CIGN A 2 Thing_SetSpecial (0, 84, 345, 0, TEAM_RED)
+		goto Idle
+	Idle:
+		CIGN AAAA 5 A_LookEx (LOF_NOSOUNDCHECK, 0, 256)
+		
+		// signify that we can't see anything to repair
+		CIGN A 0 A_SpawnItemEx ("RepairTurretError", 0,0,64, 0,0,0, 0, SXF_NOCHECKPOSITION|SXF_SETMASTER)
+		CIGN A 5 A_LookEx (LOF_NOSOUNDCHECK, 0, 256)
+		wait
+	See:
+		// don't target any players
+		CIGN A 0 A_JumpIfInTargetInventory ("IsRed", 1 ,"Recheck")
+		CIGN A 0 A_JumpIfInTargetInventory ("IsBlue", 1, "Recheck")
+		CIGN A 0 A_RemoveChildren (1)
+		CIGN A 1 A_Chase
+		wait
+	Recheck:
+		CIGN A 10
+		CIGN A 0 A_ClearTarget
+		goto Idle
+	HoldIt:
+		CIGN A 35 A_ClearTarget
+		goto Spawn
+	Missile:
+		CIGN A 0 A_JumpIfInventory ("SDReplace", 1, "NoMoreMrNiceGuy")
+		CIGN A 35 A_JumpIf (ACS_ExecuteWithResult (651) == 1, "MissileGo")
+		CIGN A 0 A_SpidRefire
+		loop
+	MissileGo:
+		// NOTE: actual repairing was done at script 651. This is
+		// only animation + disarming
+		CIGN A 0 A_Jump (250, 2)
+		CIGN A 0 A_ActiveSound
+		CIGN E 0 A_FaceTarget
+		CIGN E 2 BRIGHT A_CustomBulletAttack (0, 0, 1, 2, "RepairDisarmPuff")
+		CIGN A 2 A_SpidRefire
+		goto Missile
+	Pain:
+		CIGN A 3
+		goto Idle
+	Death:
+		TNT1 A 0
+		TNT1 A 0 A_RemoveChildren (1) // remove the sign
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx ("ExplosionMain", 0, 0, 32)
+		TNT1 A 0 A_PlaySound("weapons/rocklx")
+		TNT1 A 4 bright
+		stop
+	NoMoreMrNiceGuy:
+		TNT1 A 0 A_RemoveChildren (1) // remove the sign
+		TNT1 A 0 A_SpawnItemEx ("Utility_KlaxonRed", 0,0,0,0,0,0,0, SXF_NOCHECKPOSITION)
+		TNT1 A 5 A_SpawnItemEx ("TeleportFog", 0,0,0,0,0,0,0, SXF_NOCHECKPOSITION)
+		stop
+	}
+}
+
+actor SDReplace : Boolean {}
+
+actor Utility_RepairGunTurretBlue : Utility_RepairGunTurretRed {
+	states {
+	Spawn:
+		CIGN A 0
+		CIGN A 2 Thing_SetSpecial (0, 84, 345, 0, TEAM_BLUE)
+		goto Idle
+	NoMoreMrNiceGuy:
+		TNT1 A 0 A_SpawnItemEx ("Utility_KlaxonBlue", 0,0,0,0,0,0,0, SXF_NOCHECKPOSITION)
+		TNT1 A 5 A_SpawnItemEx ("TeleportFog", 0,0,0,0,0,0,0, SXF_NOCHECKPOSITION)
+		stop
+	}
+}
+
+actor RepairTurretSymbol {
+	+NOINTERACTION
+	+ISMONSTER
+	+CLIENTSIDEONLY
+	renderstyle add
+	alpha 0.6
+	scale 0.02
+	states {
+	Spawn:
+		RNCH A -1
+		stop
+	}
+}
+
+actor RepairTurretError : RepairTurretSymbol {
+	scale 0.2
+	states {
+	Spawn:
+		WUTH A -1
+		stop
+	}
+}

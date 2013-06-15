@@ -15,7 +15,7 @@ actor Titan : MechPlayer_Base {
 	Spawn:
 		RAVN I 0
 		RAVN A 0 SetPlayerProperty(0,0,3)
-		ROB3 A 0 ACS_ExecuteAlways (SC_STEALTH, 0, STEALTH_FORCEOFF)
+		ROB3 A 0 ACS_ExecuteAlways (310, 0, 3)
 		RAVN I 0 ACS_Execute(315,0,0,0,0)
 		RAVN I 0 A_GiveInventory("MechEjectButton",1)
 		RAVN I 0 A_GiveInventory("IsMech",1)
@@ -56,6 +56,7 @@ actor Titan : MechPlayer_Base {
 		TNT1 A 0 A_JumpIfInventory("IsKamikaze",1,"Death.IonExplosion")
 		TNT1 A 0 A_JumpIfInventory("IsBombCrate", 1, "Death.BombExplosion")
 	DeathGo:
+		ROB3 A 0 A_TakeInventory("Ingame",1)
 		ROB3 A 10 A_NoBlocking
 		ROB3 A 0 A_StopSoundEx("SoundSlot5")
 		ROB3 A 0 A_StopSoundEx("Weapon")
@@ -64,7 +65,7 @@ actor Titan : MechPlayer_Base {
 		Stop
 	Death.IonExplosion:
 		ROB3 A 0
-		ROB3 A 0 A_JumpIfInventory ("IsBlue", 1, "Death.NukeExplosion")
+		ROB3 A 0 A_JumpIfInventory ("IsRed", 1, "Death.NukeExplosion")
 		ROB3 A 0 A_SpawnItemEx ("BlueStrikeKamikaze", 0, 0, 32)
 		goto DeathGo
 	Death.NukeExplosion:
@@ -104,33 +105,38 @@ actor TitanSwitchPickup : CustomInventory {
 }
 
 actor TitanWeapons : AOWWeapon {
+	+WEAPON.CHEATNOTWEAPON
+	+WEAPON.DONTBOB
 	Weapon.SelectionOrder 1
 	Weapon.AmmoUse 0
 	Weapon.AmmoGive 40
 	Weapon.AmmoType "Titan-80mmAmmo"
+	Weapon.PreferredSkin "TitanMech"
 	Obituary "$OB_TITAN"
-	+WEAPON.CHEATNOTWEAPON
-	+WEAPON.DONTBOB
-	weapon.preferredskin "TitanMech"
+	
 	States {
 	Ready:
 		MHUD C 1 A_WeaponReady
 		wait
+	
 	Deselect:
 		MHUD A 0 A_JumpIfHealthLower(1,1)
 		goto Ready
 		MHUD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 0 A_Lower
 		TNT1 A 1 A_Lower
 		wait
+	
 	Select:
 		MHUD C 0
 		MHUD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 0 A_Raise
 		MHUD C 1 A_Raise
 		goto Select+31
+	
 	WaitReload:
 		MHUD A 2
 		MHUD A 2 A_ReFire
 		Goto Ready
+	
 	Fire:
 		MHUD A 0 A_JumpIfInventory("Wolverine-WhatWeapon",2,"Fire.Missiles")
 		MHUD A 0 A_JumpIfInventory("Wolverine-WhatWeapon",1,"Fire.Flamer")
@@ -138,7 +144,7 @@ actor TitanWeapons : AOWWeapon {
 		MHUD A 0 A_StopSound (6)
 		MHUD A 0 A_JumpIfInventory("Reload-80mm",1,"Fire.Missiles")
 		MHUD A 10 A_JumpIfInventory("Titan-80mmAmmo",1,1)
-		Goto NoAmmo
+		Goto AltFire
 		MHUD A 0 A_PlayWeaponSound ("100mm/fire")
 		MHUD B 0 Radius_Quake (4,10,0,1,0)
 		MHUD A 0 A_TakeInventory ("Titan-80mmAmmo",1)
@@ -148,9 +154,10 @@ actor TitanWeapons : AOWWeapon {
 		MHUD A 35
 		MHUD A 2 A_Refire
 		goto Ready
+	
 	Fire.Flamer:
 		MHUD A 0 A_JumpIfInventory ("Titan-FlamerAmmo", 10, 1)
-		Goto NoAmmo
+		goto AltFire
 		MHUD A 0 A_TakeInventory ("Titan-FlamerAmmo", 10)
 		MHUD A 0 A_PlaySound ("flamer2/fire", 6, 1.0, 1)
 		MHUD A 0 bright A_GunFlash
@@ -192,13 +199,14 @@ actor TitanWeapons : AOWWeapon {
 		MHUD A 0 Bright A_Refire 
 		MHUD B 3 Bright A_PlaySound ("flamer2/down", 6)
 		MHUD A 3
-		goto Ready
+		Goto Ready
+	
 	Fire.Missiles:
 		//Continue firing Rockets
 		MHUD A 0 A_StopSound (6)
 		MHUD A 0 A_JumpIfInventory("Reload-LRM",1,"Fire.Flamer")
 		MHUD A 10 A_JumpIfInventory("MechRocketAmmo",20,1)
-		Goto NoAmmo
+		Goto AltFire
 		MHUD A 2 A_PlayWeaponSound("lrm/fire")
 		MHUD B 0 Radius_Quake(2,70,0,1,0)
 		MHUD A 0 A_TakeInventory("MechRocketAmmo",20)
@@ -208,6 +216,7 @@ actor TitanWeapons : AOWWeapon {
 		MHUD A 35
 		MHUD A 2 A_Refire
 		goto Ready
+	
 	Flash:
 		TNT1 A 1 Bright A_Light2
 		TNT1 A 2 Bright A_Light1
@@ -217,9 +226,6 @@ actor TitanWeapons : AOWWeapon {
 		MHUD B 35 ACS_ExecuteAlways (314, 0)
 		MHUD A 18
 		Goto Ready
-	NoAmmo:
-		MHUD A 10 A_WeaponReady (WRF_NOPRIMARY)
-		goto Ready
 	Spawn:
 		TNT1 A 0 
 		stop
@@ -252,6 +258,7 @@ actor TitanShell {
 	obituary "$OB_TITAN"
 	damagetype "Explosion"
 	gravity 0.05
+	translation "112:127=176:191", "80:111=104:111"
 	decal "BiggerScorch"
 	States {
 	Spawn:
@@ -287,6 +294,7 @@ actor Titan-RocketAmmo : Ammo {
 	ammo.backpackamount 20
 	ammo.backpackmaxamount 480
 }
+
 
 actor DamagedTitan {
 	Health 300

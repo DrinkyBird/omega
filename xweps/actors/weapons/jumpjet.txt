@@ -20,8 +20,7 @@ actor JetpackStartup : Inventory {}
 actor JetpackActive : Inventory {}
 
 actor JumpJetCount : Inventory {
-    inventory.amount 0
-    inventory.maxamount 25
+	Inventory.MaxAmount 25
 }
 
 actor JetpackFuel : Inventory {

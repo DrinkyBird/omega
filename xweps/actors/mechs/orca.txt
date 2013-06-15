@@ -1,4 +1,4 @@
-// Orca
+// 
 actor Orca : MechPlayer_Base {
 	Radius 58
 	Height 128
@@ -21,7 +21,7 @@ actor Orca : MechPlayer_Base {
 	Spawn:
 		ORCV A 0
 		ORCV A 0 SetPlayerProperty (0, 1, 3)
-		ORCV A 0 ACS_ExecuteAlways (SC_STEALTH, 0, STEALTH_FORCEOFF)
+		ORCV A 0 ACS_ExecuteAlways (310, 0, 3)
 		ORCV A 0 ACS_Execute (315, 0)
 		ORCV A 0 A_GiveInventory ("MechEjectButton", 1)
 		ORCV I 0 A_GiveInventory ("IsMech", 1)
@@ -58,6 +58,7 @@ actor Orca : MechPlayer_Base {
 		TNT1 A 0 A_JumpIfInventory("IsKamikaze", 1, "Death.IonExplosion")
 		TNT1 A 0 A_JumpIfInventory("IsBombCrate", 1, "Death.BombExplosion")
 	DeathGo:
+		TNT1 A 0 A_TakeInventory("Ingame",1)
 		TNT1 A 0 A_StopSound (5)
 		TNT1 A 0 A_StopSound (CHAN_WEAPON)
 		TNT1 A 0 A_NoBlocking
@@ -86,6 +87,8 @@ actor OrcaSwitch : PermanentPowerup {Powerup.Type "Orca"}
 actor PowerOrca : AOWMorph {powermorph.playerclass "Orca"}
 
 actor OrcaWeapons : AOWWeapon {
+	+WEAPON.CHEATNOTWEAPON
+	+WEAPON.DONTBOB
 	Weapon.SelectionOrder 1
 	Weapon.AmmoUse 1
 	Weapon.AmmoGive 600
@@ -93,70 +96,62 @@ actor OrcaWeapons : AOWWeapon {
 	Weapon.AmmoUse2 1
 	Weapon.AmmoGive2 60
 	Weapon.AmmoType2 "Orca-RocketAmmo"
-	obituary "$OB_ORCA" // "%o was pinned down by %k's Orca."
-	+WEAPON.CHEATNOTWEAPON
-	+WEAPON.DONTBOB
-	states {
+	Obituary "$OB_ORCA"
+	
+	States {
 	Ready:
 		MHUD A 1 A_WeaponReady
 		wait
+	
 	Deselect:
 		MHUD A 0 A_JumpIfHealthLower(1,1)
 		goto Ready
 		MHUD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 0 A_Lower
 		TNT1 A 1 A_Lower
 		wait
+	
 	Select:
-		MHUD A 0 ACS_ExecuteAlways (963, 0) // init targeter
 		MHUD C 0
 		MHUD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 0 A_Raise
 		TNT1 A 1 A_Raise
 		wait
+	
 	Fire:
 		MHUD B 0 A_PlayWeaponSound("orca/fire")
 		MHUD B 0 A_GunFlash
 		MHUD B 0 A_FireCustomMissile ("OrcaFlash", 0, 0, 0, -32)
-		MHUD B 3 BRIGHT A_FireBullets (2.2, 2.2, -1, 6, "RiflePuff", 1, 3000)
+		MHUD B 0 A_JumpIfInventory ("IsBlue", 1, "FireBlue")
+		MHUD B 3 BRIGHT A_FireBullets (2.2, 2.2, -1, 7, "RiflePuff", 1, 3000)
 		MHUD A 2 A_Refire
 		Goto Ready
+	
+	FireBlue:
+		MHUD B 3 BRIGHT A_FireBullets (2.2, 2.2, -1, 7, "RiflePuff", 1, 3000)
+		MHUD A 2 A_Refire
+		Goto Ready
+	
 	AltFire:
-		MHUD A 0 A_JumpIfInventory("Orca-RocketAmmo",10,1)
-		goto Ready
-		MHUD A 0 A_GunFlash
-		MHUD A 0 A_JumpIfInventory ("GrenadeSwitch", 1, "AltFire2")
-		MHUD A 0 A_PlaySound ("orca/fire2")
-		MHUD A 0 A_FireCustomMissile ("OrcaFireFlame", 0, 0, 32, -16)
-		MHUD A 0 A_JumpIfTargetInLOS ("AltFire.Homing")
-		MHUD A 18 A_FireCustomMissile ("OrcaRocket", 0, 1, 32, -16)
-		MHUD A 18 BRIGHT A_GiveInventory("GrenadeSwitch",1)
+		MHUD B 0 A_PlayWeaponSound("orca/fire2")
+		MHUD B 0 A_GunFlash
+		MHUD B 0 A_JumpIfInventory ("GrenadeSwitch", 1, "AltFire2")
+		MHUD B 0 A_FireCustomMissile("OrcaFireFlame",0,0,-32,-16)
+		MHUD B 12 BRIGHT A_FireCustomMissile("OrcaRocket",0,1,-32,-16)
+		MHUD A 12 BRIGHT A_GiveInventory("GrenadeSwitch",1)
 		MHUD A 2 A_Refire
-		Goto Ready	
+		Goto Ready
+	
 	AltFire2:
-		MHUD A 0 A_JumpIfInventory("Orca-RocketAmmo",10,1)
-		goto Ready
-		MHUD A 0 A_PlaySound ("orca/fire2")
-		MHUD A 0 A_JumpIfTargetInLOS ("AltFire2.Homing")
-		MHUD A 0 A_FireCustomMissile ("OrcaFireFlame", 0, 0, -32, -16)
-		MHUD A 18 A_FireCustomMissile ("OrcaRocket", 0, 1, -32, -16)
-		MHUD A 18 BRIGHT A_TakeInventory ("GrenadeSwitch",1)
+		MHUD B 0 A_FireCustomMissile ("OrcaFireFlame",0,0,32,-16)
+		MHUD B 12 BRIGHT A_FireCustomMissile ("OrcaRocket",0,1,32,-16)
+		MHUD A 12 BRIGHT A_TakeInventory ("GrenadeSwitch",1)
 		MHUD A 2 A_Refire
 		Goto Ready
-	AltFire.Homing:
-		MHUD A 0 A_FireCustomMissile ("OrcaFireFlame", 0, 0, 32, -16)
-		MHUD B 17 A_FireCustomMissile ("OrcaHomingRocket", 0, 1, 32, -16)
-		MHUD B 17 BRIGHT A_GiveInventory("GrenadeSwitch",1)
-		MHUD A 2 A_Refire
-		Goto Ready	
-	AltFire2.Homing:
-		MHUD A 0 A_FireCustomMissile ("OrcaFireFlame", 0, 0, -32, -16)
-		MHUD B 17 A_FireCustomMissile ("OrcaHomingRocket", 0, 1, -32, -16)
-		MHUD A 17 BRIGHT A_TakeInventory ("GrenadeSwitch",1)
-		MHUD A 2 A_Refire
-		Goto Ready
+	
 	Flash:
 		TNT1 A 1 Bright A_Light2
 		TNT1 A 2 Bright A_Light1
 		Goto LightDone
+	
 	Spawn:
 		TNT1 A 0 
 		stop
@@ -164,51 +159,44 @@ actor OrcaWeapons : AOWWeapon {
 }
 
 actor Orca-RocketAmmo : Ammo {
-	inventory.amount 2
-	inventory.maxamount 20
-	ammo.backpackamount 2
-	ammo.backpackmaxamount 20
+	inventory.amount 4
+	inventory.maxamount 60
+	ammo.backpackamount 4
+	ammo.backpackmaxamount 60
 }
 
 actor Orca-MinigunAmmo : Ammo {
-	inventory.amount 40
-	inventory.maxamount 400
-	ammo.backpackamount 40
-	ammo.backpackmaxamount 400
+	inventory.amount 50
+	inventory.maxamount 600
+	ammo.backpackamount 50
+	ammo.backpackmaxamount 600
 }
 
-actor OrcaRocket : HeavyMissile {
+actor OrcaRocket {
 	PROJECTILE
 	-RANDOMIZE
+	+ROCKETTRAIL
 	Radius 11
 	Height 8
 	obituary "$OB_ORCA"
-	Speed 32
-	Damage (50)
+	Speed 40
+	Damage (60)
 	DeathSound "weapons/rocklx"
 	DamageType "Explosion"
-	states {
+	States {
 	Spawn:
-		MISR A 2 bright A_ScaleVelocity (1.5)
-		MISR A -1 bright A_PlaySoundEx("ambient/rocket","Body",1,-1)
+		MISL A 2 bright
+		MISL A -1 bright A_PlaySoundEx("ambient/rocket","Body",1,-1)
 		loop
+	
 	Death:
-		TNT1 A 0 A_SpawnItemEx ("FlameDecay", random(-16,16), random(-16,16), 4, 0, 0, 0, 0, 0, 160)
-		TNT1 A 0 A_StopSound (CHAN_BODY)
-		TNT1 A 0 A_Explode (24, 256)
-		TNT1 A 0 A_Explode (24, 256)
-		TNT1 A 0 A_Explode (24, 256)
-		TNT1 A 0 A_Explode (24, 256)
-		TNT1 A 0 A_SpawnItemEx ("HeavyMissileQuake")
-		TNT1 A 5 A_SpawnItemEx ("ExplosionMain")
+		TNT1 A 0 A_PlaySoundEx("blanksnd","Body",0)
+		TNT1 A 0 A_Explode (80, 128)
+		TNT1 A 0 A_SpawnItemEx("FlameDecay", random(-16,16), random(-16,16), 4, 0, 0, 0, 0, 0, 160)
+		TNT1 A 5 A_SpawnItemEx("ExplosionMain")
 		stop
 	}
 }
-
-actor OrcaHomingRocket : HeavyHomingMissile {
-	Speed 24
-	obituary "$OB_ORCA"
-	}
 
 
 actor OrcaFlame {
@@ -221,17 +209,17 @@ actor OrcaFlame {
 	damage 0
 	renderstyle Add
 	alpha 1.0
-	scale 0.6
+	scale 2.0
 	states {
 	Spawn:
 		TNT1 A 0
-		FLMX AABCDEFGHIJK 1 bright A_Fadeout(0.1)
+		FLMX ABCDEFGH 1 bright A_Fadeout(0.125)
 		stop
 	}
 }
 
 actor OrcaFireFlame : OrcaFlame {
-	scale 0.8
+	scale 1.0
 	states {
 	Spawn:
 		TNT1 AA 0 A_SpawnItemEx("OrcaSmokePuff", 0, 0, 0, 0, 0, 1, 0, 128, 0)
@@ -240,7 +228,7 @@ actor OrcaFireFlame : OrcaFlame {
 }
 
 actor OrcaFlash : OrcaFlame {
-	scale 0.66
+	scale 0.5
 	states {
 	Spawn:
 		TNT1 A 0

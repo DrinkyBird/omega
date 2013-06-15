@@ -22,14 +22,12 @@ actor TimeGun : AOWWeapon {
 		TMGN A 0 A_GiveInventory ("TimeGunAmmo", 2)
 		loop
 	Deselect:
-		TMGN A 0 A_Lower
 		TMGN A 1 A_Lower
 		loop
 	Select:
 		TMGN A 0
 		TMGN A 0 ACS_ExecuteAlways (959, 0)
 	SelectLoop:
-		TMGN A 0 A_Raise
 		TMGN A 1 A_Raise
 		Loop
 	Fire:
@@ -345,9 +343,9 @@ actor GoldenPuff {
 	+NOGRAVITY
 	+BLOODLESSIMPACT
 	+PUFFGETSOWNER
-	renderstyle Add
-	alpha 0.75
-	translation "168:173=147:151", "174:191=148:159", "116:127=148:159"
+	RenderStyle Add
+	Alpha 0.75
+	Translation "192:207=160:167"
 
 	states {
 	Spawn:
@@ -487,4 +485,12 @@ actor PlayerSpeedTrail2 replaces PlayerSpeedTrail {
 	renderStyle None
 	alpha 0.0
 	scale 0.0
+}
+
+actor TimeGunAmmo : Ammo {
+	+IGNORESKILL
+	inventory.amount 175
+	inventory.maxamount 175
+	ammo.backpackamount 0
+	ammo.backpackmaxamount 175
 }

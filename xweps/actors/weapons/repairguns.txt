@@ -1,33 +1,32 @@
 // Repair gun
 actor RepairGun : AOWWeapon {
-	AttackSound "repairgun/fire"
-	DropItem "EngineerPack"
-	Weapon.KickBack 0
-	Weapon.AmmoUse 0
-	Weapon.AmmoGive 0
-	Weapon.PreferredSkin "MarineBackpack"
-	States {
+	weapon.kickback 0
+	inventory.pickupsound "misc/w_pkup"
+	obituary "%o was repaired to death by %k."
+	attacksound "repairgun/fire"
+	weapon.ammouse 0
+	weapon.ammogive 0
+	weapon.PreferredSkin "MarineBackpack"
+	dropitem "EngineerPack"
+	states {
 	Ready:
 		REP1 A 0 A_JumpIfInventory ("RepairGunUpgrade", 1, "ReadyEnhanced")
 		REP1 A 35 A_WeaponReady
 		loop
 	Deselect:
 		REP1 A 0 A_JumpIfInventory ("RepairGunUpgrade", 1, "DeselectEnhanced")
-		REP1 AA 0 A_Lower
 		REP1 A 1 A_Lower
 		wait
 	Select:
 		REP1 A 0 A_JumpIfInventory ("RepairGunUpgrade", 1, "SelectEnhanced")
-		REP1 AA 0 A_Raise
 		REP1 A 1 A_Raise
 		wait
 	Fire:
-		TNT1 A 0 A_JumpIfInventory ("InMenu", 1, "Ready")
 		REP1 C 0 A_JumpIfInventory ("RepairGunUpgrade", 1, "FireEnhanced")
 		REP1 C 2
-		REP1 B 0 bright A_FireBullets (0.2, 0.2, 1, 2, "RepairDisarmPuff", 0, 800)
+		REP1 B 0 bright A_FireBullets (0, 0, 1, 2, "RepairDisarmPuff", 0, 800)
 		REP1 B 0 bright ACS_ExecuteAlways (650, 0, 10, 0)
-		REP1 B 2 bright ACS_ExecuteAlways (820, 0) // display target health
+		REP1 B 2 bright ACS_ExecuteAlways (654, 0) // display target health
 		REP1 C 2 A_Refire
 		Goto Ready
 	AltFire:
@@ -41,29 +40,28 @@ actor RepairGun : AOWWeapon {
 		REP2 A 1 A_WeaponReady
 		wait
 	DeselectEnhanced:
-		REP2 AA 0 A_Lower
 		REP2 A 1 A_Lower
-		loop
+		wait
 	SelectEnhanced:
-		REP2 AA 0 A_Raise
 		REP2 A 1 A_Raise
-		loop
+		wait
 	FireEnhanced:
 		REP2 C 1
-		REP2 B 0 bright A_FireBullets (0.2, 0.2, 1, 1, "EnhancedRepairDisarmPuff", 0, 800)
+		REP2 B 0 bright A_FireBullets (0, 0, 1, 1, "EnhancedRepairDisarmPuff", 0, 800)
 		REP2 B 0 bright ACS_ExecuteAlways (650, 0, 10, 0)
-		REP2 B 1 bright ACS_ExecuteAlways (820, 0)
+		REP2 B 1 bright ACS_ExecuteAlways (654, 0)
 		REP2 A 2 A_Refire
 		Goto Ready
 	}
 }
-
-actor RepairGunUpgrade : Inventory {}
+actor RepairGunUpgrade : Boolean {}
 
 actor HealGun : RepairGun {
-	DropItem "MedicPack"
+	Inventory.PickupMessage "Picked up the Healing Gun."
+	Obituary "%o suffers from medicophobia."
 	Weapon.PreferredSkin "MarineMedic"
-	States {
+	dropitem "MedicPack"
+	states {
 	Spawn:
 		TNT1 A 0
 		stop
@@ -77,24 +75,24 @@ actor HealGun : RepairGun {
 		REP4 A 1 A_Raise
 		loop
 	Fire:
-		TNT1 A 0 A_JumpIfInventory ("InMenu", 1, "Ready")
 		REP4 A 0 A_JumpIfTargetInLOS ("AltFire")
 		goto Ready
 	AltFire:
-		TNT1 A 0 A_JumpIfInventory ("InMenu", 1, "Ready")
 		REP4 C 2
 		REP4 B 0 bright A_FireBullets (0, 0, 1, 0, "MedicPuff", 0, 800) // visual ONLY
 		REP4 B 0 bright ACS_ExecuteAlways (650, 0, 6, 1) // actually does the healing
-		REP4 B 2 bright ACS_ExecuteAlways (820, 0) // display target health
+		REP4 B 2 bright ACS_ExecuteAlways (654, 0) // display target health
 		REP4 C 2 A_Refire
 		goto Ready
 	}
 }
 
 actor BombSquadGun : RepairGun {
-	+THRUGHOST
+	Inventory.PickupMessage "Picked up the Bomb-Squad Gun."
 	AttackSound "repairgun/fire"
-	States {
+	Obituary "%o was disarmed by %k."
+	+THRUGHOST
+	states {
 	Ready:
 		REP3 A 1 A_WeaponReady
 		Loop
@@ -105,57 +103,11 @@ actor BombSquadGun : RepairGun {
 		REP3 A 1 A_Raise
 		Loop
 	Fire:
-		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
-		TNT1 A 0 A_JumpIfInventory ("InMenu", 1, "Ready")
 		REP3 C 2
-		REP3 B 2 bright A_FireBullets (0.0, 0.0, 1, 6, "DisarmPuff", 0, 500)
+		REP3 B 2 bright A_FireBullets (2.0, 2.0, 1, 6, "DisarmPuff", 0, 500)
 		REP3 C 2 A_Refire
 		Goto Ready
-	AltFire:
-		stop
-	}
-}
-
-actor RemoverGunHeat : Ammo
-{
-	Inventory.Maxamount 100
-	Inventory.Amount 1
-	+IGNORESKILL
-}
-
-actor RemoverGun : RepairGun {
-	AttackSound "repairgun/fire"
-	Weapon.Ammotype "RemoverGunHeat"
-	+AMMO_OPTIONAL
-	States {
-	Ready:
-		REP5 A 0 A_TakeInventory("RemoverGunHeat",3)
-		REP5 AAAAA 1 A_WeaponReady
-		Loop
-	Deselect:
-		REP5 A 1 A_Lower
-		Loop
-	Select:
-		REP5 A 1 A_Raise
-		Loop
-	Fire:
-		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
-		TNT1 A 0 A_JumpIfInventory ("InMenu", 1, "Ready")
-		TNT1 A 0 A_JumpIfInventory ("RemoverGunHeat", 100, "Cool")
-		REP5 C 2
-		REP5 B 0 A_GiveInventory("RemoverGunHeat",1)
-		REP5 B 2 bright A_FireBullets (0.0, 0.0, 1, 1, "DeconstructionPuff", 1, 250)
-		REP5 C 2 A_Refire
-		Goto Ready
-	Cool:
-		REP5 A 35 A_PlaySound("Plasma/FailFire")
-		TNT1 A 0 A_PlaySound("Plasma/Vapour")
-	CoolingLoop:
-		REP5 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 4 A_TakeInventory("RemoverGunHeat",2)
-		Goto Ready
-	AltFire:
-		TNT1 A 0 A_JumpIfTargetInLOS ("Fire")
-		Goto Ready
+	AltFire: stop
 	}
 }
 
@@ -168,101 +120,50 @@ actor DisarmPuff {
 	+THRUGHOST
 	+PUFFGETSOWNER
 	+NODAMAGETHRUST
-	Renderstyle Add
-	Alpha 0.5
-	Scale 0.25
-	DamageType "Disarm"
-	States {
+	renderstyle Add
+	alpha 0.5
+	scale 0.25
+	damagetype "Disarm"
+	translation "112:127=160:167"
+	states {
 	Spawn:
-		DPFF A 0
-		DPFF A 0 A_Explode (9, 64)
-		DPFF ABC 2 bright
+		CHMX AA 1 A_Explode (9, 64)
+		CHMX BC 2 bright
 	Melee:
-		DPFF DEF 2 bright
+		CHMX DEF 2 bright
 		stop
 	}
 }
-
 actor RepairDisarmPuff : DisarmPuff {
-	Alpha 0.66
-	States {
+	translation ""
+	states {
 	Spawn:
-		RPFF A 0
-		RPFF A 0 A_Explode (9, 64)
-		RPFF ABC 2 bright
+		PLCX AA 1 A_Explode (9, 64)
+		PLCX BC 2 bright
 	Melee:
-		RPFF DEF 2 bright
+		PLCX DEF 2 bright
 		stop
 	}
 }
 
 actor EnhancedRepairDisarmPuff : DisarmPuff {
-	States {
+	translation "112:127=250:254"
+	states {
 	Spawn:
-		UPFF A 0
-		UPFF A 0 A_Explode (9, 64)
-		UPFF ABC 2 bright
+		CHMX AA 1 A_Explode (7, 64)
+		CHMX BC 2 bright
 	Melee:
-		UPFF DEF 2 bright
+		CHMX DEF 2 bright
 		stop
 	}
 }
 
 actor MedicPuff : DisarmPuff {
+	translation "112:127=174:189"
 	states {
 	Spawn:
-		HPFF ABC 2 bright
-	Melee:
-		HPFF DEF 2 bright
-		stop
+		CHMX ABC 2 bright
+		goto Melee
 	}
 }
-
-actor DeconstructionPuff : DisarmPuff {
-	DamageType "Deconstruction"
-	States {
-	Spawn:
-		DCPF A 0
-		DCPF A 0 A_Explode (9, 128)
-		DCPF ABC 2 bright
-	Melee:
-		DCPF DEF 2 bright
-		stop
-	}
-}
-
-
-actor DisarmTrail {
-	+NOINTERACTION
-	+CLIENTSIDEONLY
-	Scale 0.05
-	Alpha 0.5
-	RenderStyle add
-	states {
-	Spawn:
-		DPFF ABCDEF 2 bright
-		stop
-	}
-}
-
-actor HealTrail : DisarmTrail {
-	States {
-	Spawn:
-		HPFF ABCDEF 2 bright
-		stop
-	}
-}
-actor UpgradedRepairTrail : DisarmTrail {
-	States {
-	Spawn:
-		UPFF ABCDEF 2 bright
-		stop
-	}
-}
-actor RepairTrail : DisarmTrail {
-	States {
-	Spawn:
-		PLCX ABCDEF 2 bright
-		stop
-	}
-}
+actor DeconstructionPuff : DisarmPuff {damagetype "Deconstruction" translation "0:0=0:0"}
