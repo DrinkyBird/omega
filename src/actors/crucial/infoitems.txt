@@ -1,4 +1,8 @@
-actor ClassID : Inventory {inventory.maxamount 29}
+actor Counter : Inventory {
+	Inventory.MaxAmount 0x7FFFFFFF
+}
+
+actor ClassID : Counter {}
 
 actor SelfHealCooldown : Boolean {}
 actor Ingame : Boolean {} // DEPRECATED
@@ -10,8 +14,8 @@ actor InRepairs : Boolean {}
 actor HasClass : Boolean {}
 actor IsMech : Boolean {}
 actor TournamentMode : Boolean {}
-actor Refunds : Inventory {inventory.maxamount 10000}
-actor PlayerRank : Inventory {inventory.maxamount 8}
+actor Refunds : Counter {}
+actor PlayerRank : Counter {}
 actor IsCommando : Boolean {}
 actor IsSniper : Boolean {}
 actor IsMedic : Boolean {}
@@ -19,7 +23,7 @@ actor IsKamikaze : Boolean {}
 actor IsHarvester : Boolean {}
 actor HighUpgrade : Boolean {}
 actor CrispyPlayer : Boolean {}
-actor CrispyPlayer2 : Inventory {inventory.maxamount 4}
+actor CrispyPlayer2 : Counter {}
 actor IsInSpawnRoom : Boolean {}
 actor IsMCT : Boolean {}
 actor IsArtillerySoldier : Boolean {}
@@ -29,10 +33,10 @@ actor IsArtillerySoldier : Boolean {}
 actor UtilityOutOfRange : Boolean {}
 
 actor DonateMenu : Boolean {}
-actor DonationName : Inventory {inventory.maxamount 100}
+actor DonationName : Counter {}
 
-actor RepairBonus_XP : Inventory {inventory.maxamount 1000}
-actor RepairBonus_Money : Inventory {inventory.maxamount 20}
+actor RepairBonus_XP : Counter {}
+actor RepairBonus_Money : Counter {}
 
 actor RepairBonusItem : CustomInventory
 {
