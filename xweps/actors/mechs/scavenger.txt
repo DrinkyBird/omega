@@ -23,7 +23,7 @@ actor Scavenger : MechPlayer_Base {
 	states {
 	Spawn:
 		ROB2 Q 0 SetPlayerProperty (0, 0, 3)
-		ROB2 Q 0 ACS_ExecuteAlways (SC_STEALTH, 0, STEALTH_FORCEOFF)
+		ROB2 Q 0 ACS_ExecuteAlways (310, 0, 3)
 		ROB2 Q 0 A_GiveInventory ("ScavengerEject", 1)
 		ROB2 Q 0 A_GiveInventory ("IsMech", 1)
 		ROB2 Q 35
@@ -71,12 +71,14 @@ actor Scavenger : MechPlayer_Base {
 	Pain.Flash:
 		ROB2 Q 0 ACS_ExecuteAlways(320,0,3,0,0)
 		ROB2 Q 0 ACS_ExecuteAlways(320,0,3,0,0)
+		ROB2 Q 0 ACS_ExecuteAlways(310,0,4,0,0)
 		goto Spawn
 	Death:
 		ROB2 Q 0
 		ROB2 Q 0 A_JumpIfInventory ("IsKamikaze", 1, "Death.IonExplosion")
 		goto DeathGo
 	DeathGo:
+		ROB2 A 0 A_TakeInventory("Ingame",1)
 		ROB2 A 10 A_NoBlocking
 		ROB2 A 0 A_StopSound (1) ROB2 A 0 A_StopSound (5)
 		ROB2 A 0 A_StopSound (2) ROB2 A 0 A_StopSound (6)
@@ -110,7 +112,7 @@ actor ScavengerExplosion {
 		TNT1 A 8 A_PlaySound ("weapons/rocklx")
 		TNT1 A 0 A_SpawnItemEx ("ExplosionMainLarge", 12, 16, 32)
 		TNT1 A 8 A_PlaySound("weapons/rocklx")
-		TNT1 AAAAA 0 A_SpawnItemEx("MechDeathJunk", 0, 0, random(64,120), random(-5,5), random(-5,5), random(9,14), 0, 0, 64)
+		TNT1 AAAAA 0 A_SpawnItemEx("MechDeathSmoke", 0, 0, random(64,120), random(-5,5), random(-5,5), random(9,14), 0, 0, 64)
 		TNT1 A 0 A_SpawnItemEx ("ExplosionMainLarge", 14, 32, 64)
 		TNT1 A 8 A_PlaySound ("weapons/rocklx")
 		TNT1 A 0 A_SpawnItemEx ("ExplosionMainLarge", 26, 48, 96)

@@ -1,0 +1,139 @@
+A testing patch for experimental concepts and tweaks, based on AOW2 r3579. Basically where all the crazy shit goes that I'm afraid to put in the main
+game.
+Fullscreen this .txt to avoid having to scroll sideways.
+
+At this time nothing in this branch is done or near done. Lots needs to be finished.
+
+///////////////////////
+//// Other Changes ////
+///////////////////////
+
+[*] [PLANNED] Refining gives 20% less profits when Enh Ref is researched.
+[*] [PLANNED] Armour types no longer have any weaknesses, whatsoever: only strengths. The thing is the armor system's balance goes out the window when
+you realize that it's easy to get bullet and explosive weapons for any class. An entry in TVTrope's "Fake Balance" article:
+"This results in a practice known as "counter-picking", where a player makes their choice based on the other player's choice. This naturally leads to
+all players hiding their choices and making the game feel like an elaborate version of Rock-Paper-Scissors played before instead of whatever actual
+gameplay was intended, determining the outcome of the game before it starts."
+With this setup, the game will only tell you what NOT to use, not "you MUST use THIS to have the best chances, no creativity allowed!"
+[*] [PLANNED] Buildings are to generally be far more vulnerable to fire damage, giving flamethrowers and Titan flamers a powerful if risky tiebreaker
+to defeat turtled buildings. This is because enough repairers can outdamage a ton of arty shells and rockets from afar. If the turtlers get beat deep
+enough to let Titans/Flamethrowers get within flamerushing distance, they have the option to do a ton more damage than explosives while sacrificing
+the infinite range explosives have. 
+[*] [PLANNED] Util turrets are to have limited ranges, 1.25x more health, and have minimum-space requirements like Portals do. They also cannot be
+placed within a certain radius of each other.
+[*] [PLANNED] When building Mini-Refineries/Portals/Turrets in a place where they cannot spawn, a green holographic sprite will be used instead of the
+green.
+[*] [PLANNED] Armour switching no longer has an "equip time". Activating the item immediately announces "fire/chemical proof" and switches your armour.
+[*] [PLANNED] Damage from fire/tiberium damagetypes are to have their own sound, because loldelta12
+[*] [PLANNED] Planting Ion Cannon/Nuclear Strike beacons is different. To plant, one must not move and activate the beacon item. From this point on,
+the player is not locked from movement, but the old armour-switching meter is used for the beacon-planting process (4 seconds). If the player moves
+while this meter is incomplete, the beacon will be cancelled and can be attempted again. This system is used in Renegade.
+[*] [PLANNED] Credits have a default cap at $10,000. Any more is seriously overkill.
+
+
+//////////////////////////////////
+//// Infantry Weapons Changes ////
+//////////////////////////////////
+
+[*] [PLANNED] All weapons switch at double the speed. High priority.
+[*] [PLANNED] Two free/cheap classes of energy and explosive damage:
+	[*] The Engineer would get a Energy Pistol, where it would fire smaller, faster, weaker plasma gun projectiles in a three-round burst with minor
+	spread. Technicians would get this weapon as well as the standard SMG. This would make them the basic, free energy classes as well as basic
+	repairmen.
+[*] [PLANNED] Riot Control class: 350$, has a shotgun and a riot shield, a 'la the Allied Peacekeeper. You're only really paying for the shield.
+Primary fires the shotgun, and the shield would be raised and lowered by holding altfire, shielding damage from the front while reducing player speed.
+Weapons with splash damage and obviously area-of-effect weapons can obviously not be directly blocked.
+[*] [PLANNED] Shotgun's spread reduced from 5.5° to 5.25°.
+[*] [PLANNED] SMG is full-auto only, but fires faster with much reduced accuracy. Can be tap-fired like the machinegun for higher accuracy.
+[*] [PLANNED] Pistol has full-retard spraying altfire for pointblank combat. Basically, think full-auto glock with a limp wrist. This will
+also result in way too much heat for the little gun very quickly, and the barrel will visibly glow red as it heats up. Fire too much, and glocknade!
+(Or you could be boring and just make it lock itself, a la Plasma Rifle)
+[*] [PLANNED] Plasma rifle is to have its tip visibly glow red when heating up. Another side to it is possibly losing accuracy as it fires, as well.
+As a compensation, the projectiles themselves fly a tad (10%) faster.
+[*] [PLANNED] Sniper rifle's responsiveness increased by many user's request. The rifle scopes in instantly upon right click, and unscoping is also
+instant. However, the black fade-in/out is still there to combat "quickscoping". The weapon can also be switched during the reloading sequence,
+reducing clunkiness.
+[*] [PLANNED] Full-auto Machinegun spread increased from 4.5° to 4.75°.
+[*] [PLANNED] All laser weapons can leave fire decays.
+[*] [PLANNED] Laser Rifle damage reduced from 16 to 14, partly because of the likely burning damage.
+[*] [PLANNED] Laser Chaingun becomes an essentially double-speed laser rifle with 2° spread. Though it fires slower than 2539, it hits harder and
+functions as a decent mech killer on the side.
+[*] [PLANNED] Heal Gun renamed to Healing Tool.
+[*] [PLANNED] BFG2704 deducts health upon release of attack, instead of afterwards.
+[*] [PLANNED] Fists are deleted, all classes get a knife. Knife gets a low-ish damage "poke" primary attack and a buffed long slash as an altfire.
+[*] [PLANNED] Combustion Autorifle fires full auto at half speed, with no spread. Projectiles fly at 75% speed but deal 1.25x damage. This is similar
+to the real Tibrifle from Ren and diffrentiates itself from the other autorifle "clone". Secondary is a 5-projectile 5.5° randomized shotgun attack
+with 4 second cooldown after shooting. There is no "weak" version.
+[*] [PLANNED] Tiberium Autorifle remains unchanged in function. There is no weak version, however it fires a burst of 5 rounds before needing to
+reload. Altfire shoots two smaller smaller shards per one ammo, at twice the fire rate, which fly at double speed and do half damage. This is for when
+the rifle needs to reach longer ranges with accuracy at the expense of damage.
+[*] [PLANNED] Shock Rifle acts as a beam weapon: It fires a stream of 100% accurate hitscans (and cosmetic special effect actors), each doing minor
+damage but adding up to a high DPS within this medium-short range. These would have a short range, and drain ammo supplies very rapidly along with
+ammo packs not restocking much, emphasizing ammo efficiency and accuracy. The price would be adjusted to 700$ or 800$, being in around the same tier
+as Plasma Troopers.
+[*] [PLANNED] Jumpjet is to be revamped. Armed with one (or two) SMGs (or an AC-2?) modified to fire faster, mounted on the arm(s) of his jetpack:
+he can tap fire for short, accurate airborne attacks or let loose with an full-auto flurry of inaccurate fury pointblank. Flight is controlled by
+altfire, where tapping it will use a sizeable portion of fuel to blast the user upwards in a jet powered boost jump. Holding the button will allow the
+user to slowly float downwards while steadily consuming fuel. The user can press altfire again in midair to boost jump again and gain height if desired,
+though trying to attain high heights by purely boosting will consume a lot of fuel from all the boost jumps. In this way, rapid up-down vertical
+movement cannot be used as a means to abuse Doom's poor vertical aiming mechanics while allowing some midair agility, which is its sole purpose for
+existing. Altfire does not interfere with the gun's function.
+The downsides? The compacted, modified guns can't dissipate heat as well as their full-size counterparts, so prolonged W+M1 fire is not an option. The
+bullets don't hit hard individually, and the gun itself loses accuracy very quickly to after a handful of shots. This means sneaking up vertically (up
+cliffs and jumping over cover) is a great strategy, where their foe is within their effective range long enough for them to gun them down, and where
+they have many escape routes available to them.
+Second, their fuel runs out very quickly through heavy use, though it regenerates on its own fast enough to keep it effective if moderated.
+Third, when they're not dashing about midair, the jetpack itself is pretty heavy and the guy's fairly slow on foot.
+I'd expect this class to be the "elite" bullet class like Shock/Plasma troops (or if fitted with an AC-2 or two, the "elite" explosive class), and be
+priced accordingly: $700-$800.
+
+
+////////////////////////////////////////
+//// Mechs and Mech Weapons Changes ////
+////////////////////////////////////////
+
+
+[*] Titans, Madcats, and Juggernauts recieve a 10% speed boost: otherwise they're just plain helpless to a single arty guy.
+[*] Orca's "stomps" do far less damage. Keep your distance, for mindlessly ramming marines with the nose of your Orca while holding M1 will do you
+no good.
+[*] [PLANNED] Mech stomp, idle, and LRM sounds edited.
+[*] [PLANNED] Ejecting will have an armour-switch styled delay of 2 seconds, and not have the launch seat.
+[*] [PLANNED] All mechs have their health cut to 1/4th. That's 250 for Orcas, 500 for Ravens, 750 for Wolverines, 875 for Tortoises, 1000 for Madcats,
+and 1250 for Titans and Juggernauts.
+[*] [PLANNED] However, their armour resists 50% more damage (besides anti-mech weapons, to which they resist 60% damage). Basically what this means is
+all weapons get a 25% damage buff against mechs, while anti-mech ones 10%.
+[*] [PLANNED] LRMs hit harder, but have an arc to compensate. Effectively giving them a limited range against buildings, helping against base sniping
+from across the map.
+
+>> Ravens:
+[*] AC-2 fires twice as fast, but half as powerful, closer mirroring its MW counterpart. Radius/height adjusted from 4/8 to 5/10.
+[*] AC-2 has a 1° horiz spread when firing in single shots, but full-auto increases this to 2° horiz/1° vert.
+[*] AC-2 maximum ammo raised from 120 to 200. Overall won't last as long as vanilla Raven.
+[*] LRM-5 launcher is the only one with no spread (all others have 1°/1°), allowing it to harass slower targets from a distance.
+
+>> Wolverines:
+[*] [PLANNED] Miniguns do not fire full speed immediately. They must be allowed to spin faster to reach full firepower capacity, but W+M1ing is
+not the way to win: firing full-speed burns ammo like no tomorrow and can't be done for long before running dry. The sheer amount of bullets even
+makes it a decent anti-air weapon.
+[*] [Planned] Pulse gun fires at 1/2 speed, but projectiles fly at 2x speed.
+[*] LRM-10s fire from other arm.
+
+>> Madcats:
+[*] [PLANNED] Twin arm-mounted 20-damage medium lasers instead of twin shock rifles with minor (5) splash. The impacts of these lasers would leave
+flames from sheer heat.
+[*] LRM-20s visibly fire from shoulder pods properly.
+
+>> Titans:
+[*] [PLANNED] 100mm cannon sound changed, 100mm now fires from offset similar to cannon on sprite, 100mm shell damage buffed from 374 to 390 w/
+more gentle damage curve.
+[*] LRM-20s fire from shoulders.
+
+>> Guardians:
+[*] [PLANNED] Cannons are now like highly modified Titan guns, with 20% lower speed and power per shell, and focus nearly ALL their power into
+direct hit. Their splash damage is minimal (armour-piercing instead of high-explosive shells Titans use).
+
+>> Orcas:
+[*] Maximum machine gun ammunition reduced to 400 and base damage reduced from 7 to 6.
+[*] [PLANNED/UNFINISHED] Instead of single-shot dumbfire rockets, the Orca is now equipped with twin heavy missile pods, each with 20 missiles.
+Pressing fire will unload a barrage of 10 missiles (like LRMs but more powerful), and they can home in. Four high-damage barrages and it's back to
+base for a refill, making the Orca both a gunship and a bomber.

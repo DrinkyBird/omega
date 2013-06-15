@@ -19,7 +19,7 @@ actor Wolverine : MechPlayer_Base {
 		ROB1 A 0
 		ROB1 A 0 SetPlayerProperty (0, 0, 3)
 		ROB1 A 0 ACS_Execute (315, 0)
-		ROB1 A 0 ACS_ExecuteAlways (SC_STEALTH, 0, STEALTH_FORCEOFF)
+		ROB1 A 0 ACS_ExecuteAlways (310, 0, 3)
 		ROB1 A 0 A_GiveInventory ("MechEjectButton", 1)
 		ROB1 A 0 A_GiveInventory ("IsMech",1)
 		ROB1 A 35
@@ -61,6 +61,7 @@ actor Wolverine : MechPlayer_Base {
 		TNT1 A 0 A_JumpIfInventory("IsKamikaze",1,"Death.IonExplosion")
 		TNT1 A 0 A_JumpIfInventory("IsBombCrate", 1, "Death.BombExplosion")
 	DeathGo:
+		ROB1 A 0 A_TakeInventory("Ingame",1)
 		ROB1 A 10 A_NoBlocking
 		TNT1 A 0 A_StopSound (5)
 		TNT1 A 0 A_StopSound (CHAN_WEAPON)
@@ -122,30 +123,35 @@ actor WolverineWeapons : AOWWeapon {
 	+WEAPON.CHEATNOTWEAPON
 	+WEAPON.DONTBOB
 	weapon.preferredskin "WolverineMech"
+	
 	States {
 	Ready:
 		MHUD A 1 A_WeaponReady
 		Loop
+	
 	Deselect:
 		MHUD A 0 A_JumpIfHealthLower(1,1)
 		goto Ready
 		MHUD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 0 A_Lower
 		TNT1 A 1 A_Lower
 		goto Deselect+29
+	
 	Select:
 		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
 		TNT1 A 1 A_Raise
 		wait
+	
 	WaitReload:
 		MHUD A 2
 		MHUD A 2 A_ReFire
 		Goto Ready
+	
 	Fire:
 		MHUD A 0 A_JumpIfInventory ("Wolverine-WhatWeapon",2,"FireMinigun")
 		MHUD A 0 A_JumpIfInventory ("Wolverine-WhatWeapon",1,"FirePulse")
 		MHUD A 0 A_JumpIfInventory ("Reload-LRM", 1, "FirePulse")
 		MHUD A 10 A_JumpIfInventory ("MechRocketAmmo",10,1)
-		Goto NoAmmo
+		Goto AltFire
 		MHUD A 2 A_PlayWeaponSound ("lrm/fire")
 		MHUD B 0 Radius_Quake (2, 35, 0, 1, 0)
 		MHUD A 0 A_TakeInventory ("MechRocketAmmo", 10)
@@ -155,6 +161,7 @@ actor WolverineWeapons : AOWWeapon {
 		MHUD A 20
 		MHUD A 2 A_Refire
 		Goto Ready
+	
 	FirePulse:
 		MHUD C 0
 		MHUD A 0 Radius_Quake (1, 4, 0, 1, 0)
@@ -163,10 +170,11 @@ actor WolverineWeapons : AOWWeapon {
 		MHUD C 1
 		MHUD C 2 A_Refire
 		Goto Ready
+	
 	FireMinigun:
 		MHUD A 10 A_JumpIfInventory("Wolverine-MinigunAmmo",2,2)
 		MHUD A 0 A_PlaySoundEx("minigun/spin","Weapon",0)
-		Goto NoAmmo
+		Goto AltFire
 		MHUD B 0 Radius_Quake(2,8,0,1,0)
 		MHUD A 0 A_PlaySoundEx("minigun/fire","Weapon",1)
 		MHUD A 0 A_GunFlash
@@ -183,18 +191,18 @@ actor WolverineWeapons : AOWWeapon {
 		MHUD A 0 A_PlaySoundEx("minigun/spin","Weapon",0)
 		MHUD A 4
 		goto Ready
+	
 	Flash:
 		TNT1 A 1 Bright A_Light2
 		TNT1 A 2 Bright A_Light1
 		Goto LightDone
+	
 	AltFire:
 		MHUD A 0
 		MHUD C 35 ACS_ExecuteAlways (314, 0)
 		MHUD A 18
 		Goto Ready
-	NoAmmo:
-		MHUD A 10 A_WeaponReady (WRF_NOPRIMARY)
-		goto Ready
+	
 	Spawn:
 		TNT1 A 0 
 		stop
@@ -204,26 +212,28 @@ actor WolverineWeapons : AOWWeapon {
 actor PulseBall {
 	PROJECTILE
 	+FORCEXYBILLBOARD
+	Radius 8
+	Height 8
+	Speed 50
+	Damage (20)
+	Scale 0.2
+	RenderStyle Add
+	Alpha 0.9
+	SeeSound "plasma/fire"
+	DeathSound "plasma/explo"
+	Decal PulseScorch
+	DamageType "Laser"
 	
-	radius 8
-	height 8
-	speed 50
-	damage (20)
-	scale 0.2
-	renderstyle Add
-	alpha 0.9
-	seesound "plasma/fire"
-	deathsound "plasma/explo"
-	decal PulseScorch
-	damagetype "Energy"
-	
-	states {
+	States {
 	Spawn:
 		PLGX A 0
 		PLGX A 0 A_SpawnItemEx("PulseBallSmokePuff", 0, 0, 0, 0, 0, 1)
+		goto Idle
+	
 	Idle:
 		PLGX ABCDE 2 BRIGHT
 		loop
+	
 	Death:
 		PLGX ABCD 3 bright
 		PLGX E 6 bright A_SpawnItemEx("PulseBallSmokePuff", 0, 0, 0, 0, 0, 1)
@@ -245,7 +255,7 @@ actor Wolverine-MinigunAmmo : Ammo {
 	ammo.backpackmaxamount 600
 }
 
-actor Reload-LRM : Inventory {}
+actor Reload-LRM : Boolean {}
 
 actor Wolverine-WhatWeapon : Inventory {inventory.maxamount 8}
 
