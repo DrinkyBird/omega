@@ -54,5 +54,3 @@ actor InventoryItem : CustomInventory {
 		fail
 	}
 }
-
-actor Inventory : Inventory {inventory.maxamount 1}
