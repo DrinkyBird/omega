@@ -5,7 +5,7 @@ function int IncrCredits (int p, int amount) {
 	
 	Credits[p] += amount;
 	
-	if (Credits[p] > GetCVAR ("aow_creditlimit") && GetCVAR ("aow_creditlimit") != 0)
+	if (Credits[p] > GetCVAR ("aow_creditlimit") && GetCVAR ("aow_creditlimit") > 0)
 		Credits[p] = GetCVAR ("aow_creditlimit");
 	
 	return true;
