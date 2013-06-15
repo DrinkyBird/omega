@@ -68,7 +68,7 @@ actor Utility_RepairGunTurretRed : Utility_TurretBase {
 	}
 }
 
-actor SDReplace : Boolean {}
+actor SDReplace : Inventory {}
 
 actor Utility_RepairGunTurretBlue : Utility_RepairGunTurretRed {
 	states {

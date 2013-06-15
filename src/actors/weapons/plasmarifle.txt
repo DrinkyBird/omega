@@ -177,7 +177,7 @@ actor PlasmaHeat : Ammo {
 	}
 }
 
-actor WarningChecker : Boolean {}
+actor WarningChecker : Inventory {}
 
 ACTOR OverheatSmokeSpawner {
 	PROJECTILE

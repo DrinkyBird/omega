@@ -107,8 +107,8 @@ actor BerserkFists : Unarmed {
 	}
 }
 
-actor FistSwitch : Boolean {}
-actor FistReplaced : Boolean {}
+actor FistSwitch : Inventory {}
+actor FistReplaced : Inventory {}
 
 actor FistPuff : BulletPuff {
 	+CLIENTSIDEONLY

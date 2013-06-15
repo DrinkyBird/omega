@@ -4,35 +4,35 @@ actor Counter : Inventory {
 
 actor ClassID : Counter {}
 
-actor SelfHealCooldown : Boolean {}
-actor Ingame : Boolean {} // DEPRECATED
-actor IsRed : Boolean {}
-actor IsBlue : Boolean {}
-actor IsFemale : Boolean {}
-actor PurchaseToken : Boolean {}
-actor InRepairs : Boolean {}
-actor HasClass : Boolean {}
-actor IsMech : Boolean {}
-actor TournamentMode : Boolean {}
+actor SelfHealCooldown : Inventory {}
+actor Ingame : Inventory {} // DEPRECATED
+actor IsRed : Inventory {}
+actor IsBlue : Inventory {}
+actor IsFemale : Inventory {}
+actor PurchaseToken : Inventory {}
+actor InRepairs : Inventory {}
+actor HasClass : Inventory {}
+actor IsMech : Inventory {}
+actor TournamentMode : Inventory {}
 actor Refunds : Counter {}
 actor PlayerRank : Counter {}
-actor IsCommando : Boolean {}
-actor IsSniper : Boolean {}
-actor IsMedic : Boolean {}
-actor IsKamikaze : Boolean {}
-actor IsHarvester : Boolean {}
-actor HighUpgrade : Boolean {}
-actor CrispyPlayer : Boolean {}
+actor IsCommando : Inventory {}
+actor IsSniper : Inventory {}
+actor IsMedic : Inventory {}
+actor IsKamikaze : Inventory {}
+actor IsHarvester : Inventory {}
+actor HighUpgrade : Inventory {}
+actor CrispyPlayer : Inventory {}
 actor CrispyPlayer2 : Counter {}
-actor IsInSpawnRoom : Boolean {}
-actor IsMCT : Boolean {}
-actor IsArtillerySoldier : Boolean {}
+actor IsInSpawnRoom : Inventory {}
+actor IsMCT : Inventory {}
+actor IsArtillerySoldier : Inventory {}
 
 // [SP] This item is used to determine whether a util can build turrets in his base.
 // He must be close enough to one of his own (standing) structures to do this.
-actor UtilityOutOfRange : Boolean {}
+actor UtilityOutOfRange : Inventory {}
 
-actor DonateMenu : Boolean {}
+actor DonateMenu : Inventory {}
 actor DonationName : Counter {}
 
 actor RepairBonus_XP : Counter {}
@@ -101,15 +101,15 @@ actor StealthMode : Inventory {
 }
 
 // [NF] players get this when they start pain flashing.
-actor StealthPain : Boolean {}
+actor StealthPain : Inventory {}
 
 // [NF] players get this when they're getting forcibly destealthed (see #310, switch case 3)
 // Stealth scripts recognize this item and terminate themselves to make way for the destealthing.
-actor DestealthOverride : Boolean {}
+actor DestealthOverride : Inventory {}
 
 // [NF] players get this when they start firing while stealthed. This way
 // the script knows to restealth them afterwards
-actor StealthFire : Boolean {}
+actor StealthFire : Inventory {}
 
 // token spawned so that clients know to display ticket hud
 actor TicketToken {}

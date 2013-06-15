@@ -334,7 +334,7 @@ actor GuardianAttack : Inventory {
 	Inventory.MaxAmount 10
 }
 
-actor Reload-Nuke : Boolean {}
+actor Reload-Nuke : Inventory {}
 
 actor MiniNuke {
 	PROJECTILE

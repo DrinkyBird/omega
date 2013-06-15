@@ -82,7 +82,7 @@ actor BombExplosion : KamikazeExplosion {
 		stop
 	}
 }
-actor IsBombCrate : Boolean {}
+actor IsBombCrate : Inventory {}
 
 // ==== NEW BOMB CRATE STUFF
 actor BombCrateFXBlue1 {

@@ -255,7 +255,7 @@ actor Wolverine-MinigunAmmo : Ammo {
 	ammo.backpackmaxamount 600
 }
 
-actor Reload-LRM : Boolean {}
+actor Reload-LRM : Inventory {}
 
 actor Wolverine-WhatWeapon : Inventory {inventory.maxamount 8}
 

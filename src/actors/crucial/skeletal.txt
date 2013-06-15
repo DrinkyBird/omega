@@ -55,4 +55,4 @@ actor InventoryItem : CustomInventory {
 	}
 }
 
-actor Boolean : Inventory {inventory.maxamount 1}
+actor Inventory : Inventory {inventory.maxamount 1}

@@ -54,7 +54,7 @@ actor RepairGun : AOWWeapon {
 		Goto Ready
 	}
 }
-actor RepairGunUpgrade : Boolean {}
+actor RepairGunUpgrade : Inventory {}
 
 actor HealGun : RepairGun {
 	Inventory.PickupMessage "Picked up the Healing Gun."

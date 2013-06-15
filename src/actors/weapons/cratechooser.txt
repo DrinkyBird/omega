@@ -69,7 +69,7 @@ actor CrateChooser : AOWWeapon {
 }
 
 actor CrateChooserRotation : Inventory {inventory.maxamount 21}
-actor CrateChooserReady : Boolean {}
-actor CrateChooserFiring : Boolean {}
-actor CrateChooserGo : Boolean {}
-actor CrateChooserFailure : Boolean {}
+actor CrateChooserReady : Inventory {}
+actor CrateChooserFiring : Inventory {}
+actor CrateChooserGo : Inventory {}
+actor CrateChooserFailure : Inventory {}

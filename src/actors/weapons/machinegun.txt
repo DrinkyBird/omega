@@ -87,7 +87,7 @@ actor MachineGun : AOWWeapon {
 	}
 }
 
-actor MachineGunSwitch : Boolean {}
+actor MachineGunSwitch : Inventory {}
 actor MachineGunAmmo : Ammo {
 	inventory.amount 30
 	inventory.maxamount 400

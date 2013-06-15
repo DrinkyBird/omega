@@ -214,4 +214,4 @@ actor RemoteC4ArmedBlue : RemoteC4Armed {
 	}
 }
 
-actor C4DetonateCheck : Boolean {}
+actor C4DetonateCheck : Inventory {}

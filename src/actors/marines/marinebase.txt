@@ -1,4 +1,4 @@
-actor IsAIMarine : Boolean {}
+actor IsAIMarine : Inventory {}
 Actor MBase : PlayerPawn	//Basic unarmed marine.
 {
 

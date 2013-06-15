@@ -167,7 +167,7 @@ actor TimedC4ArmedBlue : TimedC4Armed {
 }
 
 actor TimedC4Count : Inventory {inventory.maxamount 4}
-actor EnhancedTimedC4 : Boolean {}
+actor EnhancedTimedC4 : Inventory {}
 
 actor TimedC4ThrownE : TimedC4Thrown {
 	obituary "%o was blown far away by %k's Timed C4 bomb."

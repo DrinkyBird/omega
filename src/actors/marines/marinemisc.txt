@@ -58,4 +58,4 @@ Actor A_CheckRailReload : Inventory //This is used to simulate Skulltag's railgu
 }
 
 // [Dusk] Is the marine spawned because of compensation?
-actor IsCompensationMarine : Boolean {}
+actor IsCompensationMarine : Inventory {}

@@ -42,7 +42,7 @@ actor NuclearStrikeBeacon : InventoryItem {
 }
 
 // safety lock
-actor BeaconUseToken : Boolean {}
+actor BeaconUseToken : Inventory {}
 
 actor IonCannonPlaced {
 	+SHOOTABLE

@@ -278,5 +278,5 @@ actor Utility_PortalSpark {
 }
 
 // Dummy item to mark the portal as invalid with
-actor Utility_PortalNotInSight : Boolean {}
-actor IsActive : Boolean {}
+actor Utility_PortalNotInSight : Inventory {}
+actor IsActive : Inventory {}
