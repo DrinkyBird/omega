@@ -2,20 +2,61 @@ blanksnd			blanksnd
 game/rank			veteran
 misc/nope			nope
 
+//// Infantry Weapons ////
+
+// Fists
+fist/wall			dspunchw
+fist/hit			dspunch
+$limit				fist/wall		0
+$limit				fist/hit		0
+
+// Pistol
 pistol/fire			dspistol
-$rolloff 			100mm/fire	500 2000
+$rolloff			pistol/fire 250 750
+
+// SMG
 subby/fire			dssubby
 $volume subby/fire 0.6
 $limit				subby/fire	0
+
+// Rifle
 rifle/fire			dsrifle
 rifle/reload			dsmssgr2
+
+// Machinegun
 ak47/fire			dsmachgn
 $limit				ak47/fire	0
+
+// Repairgun
 repairgun/fire			repairgn
+
+// Gauss Rifle
 gauss/fire			dsgauss
 Gauss/Select		gauss_s
+
+// Laser Rifle
 laser/fire			lsrlfire
+$limit				laser/fire	0
+
+// Laser Chaingun
 lchaingun/fire			lsclfire
+
+// Missile Launcher
+seeker/beep			seekbeep
+missilelauncher/see		seekwarn
+missilelauncher/fire		mislfire
+missilelauncher/reload		mislload
+missilelauncher/clipout		mislrelo
+missilelauncher/clipin		dsd3rlr
+missilelauncher/clipdone	dsd3rup
+
+// Grenade Launcher
+$random				grenade/fire	{ grenade/fire1 grenade/fire2 }
+grenade/fire1			grenf01
+grenade/fire2			grenf02
+$random				grenade/explode	{ grenade/explode1 grenade/explode2 }
+grenade/explode1		mineexp1
+grenade/explode2		mineexp2
 
 // Gatling gun
 gatling/fire			minifire
@@ -49,16 +90,16 @@ plasmacannon/fire		plasmaca
 plasmacannon/altfire		plasmac3
 plasmacannon/explode		plasmaex
 plasmacannon/altexplode		plasmae3
-$rolloff 			plasmacannon/explode	2000 7500
-$rolloff 			plasmacannon/altexplode	2000 7500
+$rolloff 			plasmacannon/explode	750 7500
+$rolloff 			plasmacannon/altexplode	500 5000
 $limit				plasmacannon/explode	0
 $limit				plasmacannon/altexplode	0
 
-// Sniper rifle
+// Sniper Rifle
 rc50/fire			rc50fire
 rc50/boltopen			rc50blto
 rc50/boltclose			rc50bltc
-$rolloff 			rc50/fire	500 3000
+$rolloff 			rc50/fire	400 2400 //Double of default
 
 // Artillery cannon (incl. Guardian's)
 artillery/fire1			ds80mm1
@@ -79,6 +120,8 @@ c4/beep3			demoliti
 c4/remote			c4remote
 c4/remote2			c4detona
 c4/proxy			c4plant1
+
+
 
 mech/step			mechstep
 $limit				mech/step		0
@@ -142,6 +185,7 @@ jumpjet/stop			orc2stop
 orca/loop			orc2loo2
 orca/fire			dsorcamg
 orca/fire2			orc2fire
+$limit				orca/fire 1
 $rolloff 			jumpjet/start	500 3000
 $rolloff 			jumpjet/loop	500 3000
 $rolloff 			orca/loop	1000 6000
@@ -308,31 +352,10 @@ $random 			misc/shell	{ misc/shell1 misc/shell2 }
 misc/shell1			shell2
 misc/shell2			shell2
 
-// missile launcher sounds
-seeker/beep			seekbeep
-missilelauncher/see		seekwarn
-missilelauncher/fire		mislfire
-missilelauncher/reload		mislload
-missilelauncher/clipout		mislrelo
-missilelauncher/clipin		dsd3rlr
-missilelauncher/clipdone	dsd3rup
-
 //door
 door/start	mdoors22
 door/loop	mdoorl22
 door/end	mdoore22
-
-fist/wall			dspunchw
-fist/hit			dspunch
-$limit				fist/wall		0
-$limit				fist/hit		0
-
-$random				grenade/fire	{ grenade/fire1 grenade/fire2 }
-grenade/fire1			grenf01
-grenade/fire2			grenf02
-$random				grenade/explode	{ grenade/explode1 grenade/explode2 }
-grenade/explode1		mineexp1
-grenade/explode2		mineexp2
 
 menu/activate			menusnd4	// Activate a new menu
 menu/backup			menusnd3	// Backup to previous menu
@@ -421,6 +444,7 @@ $rolloff 			misc/sniper	500 3000
 $rolloff 			misc/stealth	100 2000
 $rolloff 			misc/chem	100 2000
 
+//// Player Sounds ////
 $random				player/burn 	{player/burnr1 player/burnr2} 
 $random				player/burnr1 	{player/burn1 player/burn2 player/burn3 player/burn4 player/burn5} 
 $random				player/burnr2 	{player/burn6 player/burn7 player/burn8 player/burn9} 
@@ -512,7 +536,7 @@ $random die/sounds1		{ die/sound1 die/sound2 die/sound3 die/sound4 die/sound5 di
 $random die/sounds2		{ die/sound8 die/sound9 die/sound10 die/sound11 die/sound12 die/sound13 }
 
 
-//MECH
+// In-Mech Playersounds
 $playeralias	mech	male	*death		weapons/rocklx
 $playeralias	mech	male	*xdeath		weapons/rocklx
 $playeralias	mech	male	*gibbed		weapons/rocklx

@@ -1,0 +1,15 @@
+// Infantry changes
+
+[*] Pistol has much shorter sound because it's silenced, it also has a full-retard pointblank altfire
+
+
+// Mech changes
+
+[*] Wolverine minigun revamped, accurately shoots bullets at absurd rate but each bullet does 4-12 damage instead of 10-30.
+[*] Orca's ramming damage nerfed to be very minor.
+[*] Orca's gun is like a plane-mounted minigun, requires windup time and spits out bullets
+
+
+// Misc changes
+
+[*]
