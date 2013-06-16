@@ -35,14 +35,14 @@ script 401 (int Player,int Action)
 		}
 		if ( PlayerTeam() == 0 )
 		{
-			Log(s:"Player ",d:Player,s:" named ",n:0,s:" is already on Blue.");
+			Log(s:"Player ",d:Player,s:" named ",n:0,s:" is already on GDI.");
 			terminate;
 		}
 		SetFont("BIGFONT");
 		HudMessage (n:Player, s:"\c- has been forced to\n\cKchange team\c- by an \cQadmin.";
 			HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
 		Player_SetTeam(0);
-		Log(n:0,s:" forced to change to Blue by admin.");
+		Log(n:0,s:" forced to change to GDI by admin.");
 		delay(1);
 		Teleport(70);
 		GiveInventory("HasClass",1);
@@ -115,11 +115,13 @@ script 402 (int Arg1, int Arg2, int Arg3) NET
 		if (arg2 <= 0) {
 			HudMessage (s:"Usage: a_teleport <tid>\n",
 				s:"TIDs of interest:\n",
-				s:"1: blue base\t\t2: red base\n",
-				s:"70: blue spawn room\t71: red spawn room\n",
-				s:"108: blue wf hanger\t208: red wf hanger\n",
-				s:"110: blue mech room\t210: red mech room\n",
-				s:"111: blue res room\t211: red res room\n"; HUDMSG_PLAIN|HUDMSG_LOG, 9000, 0, 0, 0, 0);
+				s:"1: GDI base\t\t2: Nod base\n",
+				s:"70: GDI spawn room\t71: Nod spawn room\n",
+				s:"108: GDI wf hanger\t208: Nod wf hanger\n",
+				s:"110: GDI mech room\t210: Nod mech room\n",
+				s:"111: GDI res room\t211: Nod res room\n";
+				HUDMSG_PLAIN|HUDMSG_LOG, 9000, 0, 0, 0, 0);
+			
 			HudMessage (s:""; HUDMSG_PLAIN, 9000, 0, 0, 0, 0.1);
 			terminate;
 		}

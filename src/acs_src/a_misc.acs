@@ -85,20 +85,20 @@ script 957 (int Team) {
 	
 	if (Team == 0) {
 		LastPurchasedBeacon[2] = 0;
-		HudMessage (s:"Some \cARed mong\cJ planted a beacon \cNunderwater";
+		HudMessage (s:"Some \cGNod mong\cJ planted a beacon \cNunderwater";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		delay (3*35);	
-		HudMessage (s:"\cARed Team\cJ free to \cDrepurchase\n\cANuclear Strike Beacon";
+		HudMessage (s:"\cGNod\cJ free to \cDrepurchase\n\cANuclear Strike Beacon";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 	} else {
 		LastPurchasedBeacon[1] = 0;
-		HudMessage (s:"Some \cNBlue mong\cJ planted a beacon \cNunderwater";
+		HudMessage (s:"Some \cFGDI mong\cJ planted a beacon \cNunderwater";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		delay (3*35);
-		HudMessage (s:"\cNBlue Team\cJ free to \cDrepurchase\n\cNIon Cannon Beacon";
+		HudMessage (s:"\cFGDI\cJ free to \cDrepurchase\n\cNIon Cannon Beacon";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 	}

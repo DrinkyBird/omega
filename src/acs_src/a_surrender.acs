@@ -49,12 +49,12 @@ script 342 (void) NET {
 	SetFont("SMALLFONT");
 	if (PlayerTeam() == TEAM_RED)
 		HudMessageBold (s:"\cD", d:SurrenderCount(TEAM_RED), s:"\cQ/\cD", d:RedCount(), s:" ",
-			s:"\cJof \cARed Team\cJ\n have voted to surrender";
+			s:"\cJof \cGNod\cJ\n have voted to surrender";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 	else
 		HudMessageBold (s:"\cD", d:SurrenderCount(TEAM_BLUE), s:"\cQ/\cD", d:BlueCount(), s:" ",
-			s:"\cJof \cNBlue Team\cJ\n have voted to surrender";
+			s:"\cJof \cFGDI\cJ\n have voted to surrender";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 	delay(35*2);
@@ -69,7 +69,7 @@ script 751 (void) {
 	if ((count > BlueCount()/2 && (BlueCount() <= 6 && RedCount() != 0)) ||
 		(count >= BlueCount()-3 && (BlueCount() > 6 && RedCount() != 0))) {
 		SetFont("BIGFONT");
-		HudMessage (s:"\cNBlue Team surrenders";
+		HudMessage (s:"\cFSteel Talons surrender";
 			HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0);
 		FreezeBold();
 		delay(35*2);
@@ -84,14 +84,14 @@ script 751 (void) {
 		Thing_Destroy(109);
 		delay(5);
 		Thing_Destroy(114);
-		Log(s:"Blue team surrenders.");
+		Log(s:"GDI surrenders.");
 	}
    
 	count = SurrenderCount (TEAM_RED);
 	if ((count > RedCount()/2 && RedCount() <= 6 && BlueCount() != 0) ||
 		(count >= RedCount()-3 && RedCount() > 6 && BlueCount() != 0)) {
 		SetFont("BIGFONT");
-		HudMessage (s:"\cARed Team surrenders";
+		HudMessage (s:"\cGBlack Hand surrenders";
 			HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0);
 		FreezeBold();
 		delay(35*2);
@@ -106,6 +106,6 @@ script 751 (void) {
 		Thing_Destroy(209);
 		delay(5);
 		Thing_Destroy(214);
-		Log(s:"Red team surrenders.");
+		Log(s:"Nod surrenders.");
 	}
 }

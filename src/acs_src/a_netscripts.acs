@@ -43,7 +43,7 @@ script 942 (void) NET {
 		if (RedCount() + 1 >= BlueCount()) {
 			DisplayCross();
 			SETFONT("BigFont");
-			HudMessage(s:"There is already enough players on Red!";
+			HudMessage(s:"There is already enough players on Nod!";
 				HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
 			terminate;
 		}
@@ -51,7 +51,7 @@ script 942 (void) NET {
 		if (RedScore() > BlueScore()) {
 			DisplayCross();
 			SETFONT("BigFont");
-			HudMessage(s:"Red has more buildings than Blue!";
+			HudMessage(s:"Nod has more buildings than GDI!";
 				HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
 			terminate;
 		}
@@ -64,7 +64,7 @@ script 942 (void) NET {
 		if (BlueCount() + 1 >= RedCount()) {
 			DisplayCross();
 			SETFONT("BigFont");
-			HudMessage(s:"There is already enough players on Blue!";
+			HudMessage(s:"There is already enough players on GDI!";
 				HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
 			terminate;
 		}
@@ -72,7 +72,7 @@ script 942 (void) NET {
 		if (BlueScore() > RedScore()) {
 			DisplayCross();
 			SETFONT("BigFont");
-			HudMessage(s:"Blue has more buildings than Red!";
+			HudMessage(s:"GDI has more buildings than Nod!";
 				HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
 			terminate;
 		}
@@ -94,13 +94,13 @@ script 942 (void) NET {
 	// logs and notices
 	str newteam, newcolor;
 	if (PlayerTeam() == TEAM_BLUE) {
-		newteam = "Blue";
-		newcolor = "\cN";
+		newteam = "GDI";
+		newcolor = "\cF";
 	} else {
-		newteam = "Red";
-		newcolor = "\cA";
+		newteam = "Nod";
+		newcolor = "\cG";
 	}
-	HudMessageBold (n:0, s:" switches to the\nweaker ", s:newcolor, s:newteam, s:"\c- Team";
+	HudMessageBold (n:0, s:" switches to ", s:newcolor, s:newteam;
 		HUDMSG_FADEOUT, 15000, CR_WHITE,
 		INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 	Log (n:0, s:" switches to weaker ", s:newteam, s:" team. (Score: ", d:score, s:")");

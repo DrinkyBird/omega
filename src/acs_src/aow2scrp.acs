@@ -215,7 +215,7 @@ int BaseTIDs[18] = {
 	TID_AMMOREGEN_BLUE, TID_AMMOREGEN_RED
 };
 
-str TeamNames[2] = {"Blue", "Red"};
+str TeamNames[2] = {"GDI", "Nod"};
 
 int Developer;
 int DeveloperSafetyLock;

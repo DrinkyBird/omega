@@ -43,15 +43,15 @@ script 65 (int Team) {
 	
 	SetFont("SMALLFONT");
 	if(Team == 0) {
-		HudMessageBold (s:"\cARed Team\cJ researches \cDEnhanced Refining!";
+		HudMessageBold (s:"\cGNod\c- researches \cDEnhanced Refining!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		Log (n:0, s:" researches Enhanced Refining for Red Team.");
+		Log (n:0, s:" researches Enhanced Refining for Nod.");
 	} else {
-		HudMessageBold (s:"\cNBlue Team\cJ researches \cDEnhanced Refining!";
+		HudMessageBold (s:"\cFGDI\c- researches \cDEnhanced Refining!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		Log (n:0, s:" researches Enhanced Refining for Blue Team.");
+		Log (n:0, s:" researches Enhanced Refining for GDI.");
 	}
 	
 	EnhancedRefining[Team] = True;
@@ -101,15 +101,15 @@ script 66 (int Team) {
 	
 	SetFont("SMALLFONT");
 	if(Team == 0) {
-		HudMessageBold (s:"\cARed Team\cJ researches \cKAdvanced Mechs!";
+		HudMessageBold (s:"\cGNod\cJ researches \cKAdvanced Mechs!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		Log (n:0, s:" researches Advanced Mechs for Red Team");
+		Log (n:0, s:" researches Advanced Mechs for Nod");
 	} else {
-		HudMessageBold (s:"\cNBlue Team\cJ researches \cKAdvanced Mechs!";
+		HudMessageBold (s:"\cFGDI\cJ researches \cKAdvanced Mechs!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		Log (n:0, s:" researches Advanced Mechs for Blue Team");
+		Log (n:0, s:" researches Advanced Mechs for GDI");
 	}
 
 	AdvancedMechResearch[Team] = True;
@@ -318,15 +318,15 @@ script 72 (int Team) {
 	
 	SetFont("SMALLFONT");
 	if(Team == 0) {
-		HudMessageBold (s:"\cARed Team\cJ researches \cKAdvanced Turrets!";
+		HudMessageBold (s:"\cGNod\c- researches \cKAdvanced Turrets!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		Log (n:0, s:" researches Advanced Turrets for Red Team");
+		Log (n:0, s:" researches Advanced Turrets for Nod");
 	} else {
-		HudMessageBold (s:"\cNBlue Team\cJ researches \cKAdvanced Turrets!";
+		HudMessageBold (s:"\cFGDI\c- researches \cKAdvanced Turrets!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		Log (n:0, s:" researches Advanced Turrets for Blue Team");
+		Log (n:0, s:" researches Advanced Turrets for GDI");
 	}
 	
 	AdvancedTurrets[Team] = True;
@@ -371,15 +371,15 @@ script 73 (int Team) {
 	
 	SetFont ("SMALLFONT");
 	if(Team == 0) {
-		HudMessageBold (s:"\cARed Team\cJ researches \cKIncreased Turret Support!";
+		HudMessageBold (s:"\cGNod\c- researches \cKIncreased Turret Support!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		Log (n:0, s:" researches More Turrets for Red Team");
+		Log (n:0, s:" researches More Turrets for Nod");
 	} else {
-		HudMessageBold (s:"\cNBlue Team\cJ researches \cKIncreased Turret Support!";
+		HudMessageBold (s:"\cFGDI\c- researches \cKIncreased Turret Support!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		Log (n:0, s:" researches More Turrets for Blue Team");
+		Log (n:0, s:" researches More Turrets for GDI");
 	}
 
 	MoreTurrets[Team] = True;

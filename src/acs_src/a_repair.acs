@@ -163,8 +163,9 @@ script 651 (void) {
 script 654 (void) CLIENTSIDE {
 	if (PlayerNumber() != ConsolePlayer) terminate;
 	int myteam = PlayerTeam ();
-	str nc = "\ch";
-	if (myteam) nc = "\cg";
+	str nc = "\cF";
+	if (myteam)
+		nc = "\cG";
 	
 	SetActivatorToTarget (0);
 	delay (3);

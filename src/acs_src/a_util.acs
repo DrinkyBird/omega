@@ -84,14 +84,14 @@ script 344 (int Type, int DoneByUtilGun)
 		if(PlayerTeam() == TEAM_RED && ThingCountSector(T_NONE,900,18) >= 1) {
 			SetFont("SMALLFONT");
 			MiniRefinery[0] = 1;
-			HudMessageBold (n:0, s:"\cJ of \cARed Team\cJ\nhas built a \cDMini-Refinery!";
+			HudMessageBold (n:0, s:"\cJ of \cGNod\cJ\nhas built a \cDMini-Refinery!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 			//ACS_ExecuteAlways(324,0,2,0,0);
 			AddExperience (125);
 			SetThingSpecial(900,226,345,0,3,0);
 			SetActorState (900, "Approved");
-			Log(n:0, s:" builds Red Mini-Refinery.");
+			Log(n:0, s:" builds Nod Mini-Refinery.");
 			GivePoints (POINTS_RESEARCH);
 			ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_RED);
 		} else if(PlayerTeam() == TEAM_RED && ThingCountSector(T_NONE,900,18) == 0) {
@@ -106,14 +106,14 @@ script 344 (int Type, int DoneByUtilGun)
 		if (PlayerTeam() == TEAM_BLUE && ThingCountSector(T_NONE,901,18) >= 1) {
 			SetFont("SMALLFONT");
 			MiniRefinery[1] = 1;
-			HudMessageBold (n:0, s:"\cJ of \cNBlue Team\cJ\nhas built a \cDMini-Refinery!";
+			HudMessageBold (n:0, s:"\cJ of \cFGDI\cJ\nhas built a \cDMini-Refinery!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 			//ACS_ExecuteAlways(324,0,2,0,0);
 			AddExperience (125);
 			SetThingSpecial(901,226,345,0,3,1);
 			SetActorState (901, "Approved");
-			Log(n:0, s:" builds Blue Mini-Refinery.");
+			Log(n:0, s:" builds GDI Mini-Refinery.");
 			GivePoints (POINTS_RESEARCH);
 			ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_BLUE);
 		}
@@ -180,14 +180,14 @@ script 344 (int Type, int DoneByUtilGun)
 			GlobalMedic[0] = 1;
 			delay(35);
 			SetFont ("SMALLFONT");
-			HudMessageBold (n:0, s:"\cJ of \cARed Team\cJ\nhas built a \cAHealth Regenerator!";
+			HudMessageBold (n:0, s:"\cJ of \cGNod\cJ\nhas built a \cAHealth Regenerator!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 			
 			AddExperience (125);
 			SetThingSpecial(902, ACS_ExecuteAlways, 345,0,5,0);
 			SetActorState (902, "Approved");
-			Log(n:0, s:" builds Red Health Regen Cache.");
+			Log(n:0, s:" builds Nod Health Regen Cache.");
 			GivePoints (POINTS_RESEARCH);
 			ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_RED);
 		} else if(PlayerTeam() == TEAM_RED) {
@@ -208,14 +208,14 @@ script 344 (int Type, int DoneByUtilGun)
 			GlobalMedic[1] = 1;
 			delay(35);
 			SetFont ("SMALLFONT");
-			HudMessageBold (n:0, s:"\cJ of \cNBlue Team\cJ\nhas built a \cAHealth Regenerator!";
+			HudMessageBold (n:0, s:"\cJ of \cFGDI\cJ\nhas built a \cAHealth Regenerator!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 			
 			AddExperience (125);
 			SetThingSpecial(903, ACS_ExecuteAlways, 345, 0, 5, 1);
 			SetActorState (903, "Approved");
-			Log(n:0, s:" builds Blue Health Regen Cache.");
+			Log(n:0, s:" builds GDI Health Regen Cache.");
 			GivePoints (POINTS_RESEARCH);
 			ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_BLUE);
 		} else if (PlayerTeam() == TEAM_BLUE) {
@@ -278,14 +278,14 @@ script 344 (int Type, int DoneByUtilGun)
 			GlobalAmmo[0] = 1;
 			delay(35);
 			SetFont ("SMALLFONT");
-			HudMessageBold (n:0, s:"\cJ of \cARed Team\cJ\nhas built an \cKAmmo Regenerator!";
+			HudMessageBold (n:0, s:"\cJ of \cGNod\cJ\nhas built an \cKAmmo Regenerator!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 			
 			AddExperience (125);
 			SetActorState (904, "Approved");
 			SetThingSpecial(904, ACS_ExecuteAlways, 345, 0, 7, 0);
-			Log(n:0, s:" builds Red Ammo Regen Cache.");
+			Log(n:0, s:" builds Nod Ammo Regen Cache.");
 			GivePoints (POINTS_RESEARCH);
 			ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_RED);
 		} else if(PlayerTeam() == TEAM_RED) {
@@ -306,14 +306,14 @@ script 344 (int Type, int DoneByUtilGun)
 			GlobalAmmo[1] = 1;
 			delay(35);
 			SetFont ("SMALLFONT");
-			HudMessageBold (n:0, s:"\cJ of \cNBlue Team\cJ\nhas built a \cKAmmo Regenerator!";
+			HudMessageBold (n:0, s:"\cJ of \cFGDI\cJ\nhas built a \cKAmmo Regenerator!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 			
 			AddExperience (125);
 			SetActorState (905, "Approved");
 			SetThingSpecial(905, ACS_ExecuteAlways, 345, 0, 7, 1);
-			Log(n:0, s:" builds Blue Ammo Regen Cache.");
+			Log(n:0, s:" builds GDI Ammo Regen Cache.");
 			GivePoints (POINTS_RESEARCH);
 			ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_BLUE);
 		} else if (PlayerTeam() == TEAM_BLUE) {
@@ -352,12 +352,12 @@ script 345 (int Type, int Team)
 	{
 		MiniRefinery[0] = 0;
 		SetFont("SMALLFONT");
-		HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cARed \cDMini-Refinery!";
+		HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cGNod \cDMini-Refinery!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
 		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log(n:0, s:" destroys Red Mini-Ref.");
+		Log(n:0, s:" destroys Nod Mini-Ref.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_RED);
 	}
@@ -365,12 +365,12 @@ script 345 (int Type, int Team)
 	{
 		MiniRefinery[1] = 0;
 		SetFont ("SMALLFONT");
-		HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cNBlue \cDMini-Refinery!";
+		HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cFGDI \cDMini-Refinery!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
 		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log(n:0, s:" destroys Blue Mini-Ref.");
+		Log(n:0, s:" destroys GDI Mini-Ref.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_BLUE);
 	}
@@ -378,12 +378,12 @@ script 345 (int Type, int Team)
 	{
 		GlobalMedic[0] = 0;
 		SetFont ("SMALLFONT");
-		HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cARed \cAHealth Regenerator!";
+		HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cGNod \cAHealth Regenerator!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
 		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log(n:0, s:" destroys Red Health Regen Cache.");
+		Log(n:0, s:" destroys Nod Health Regen Cache.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_RED);
 	}
@@ -391,12 +391,12 @@ script 345 (int Type, int Team)
 	{
 		GlobalMedic[1] = 0;
 		SetFont ("SMALLFONT");
-		HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cNBlue \cAHealth Regenerator!";
+		HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cFGDI \cAHealth Regenerator!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
 		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log(n:0, s:" destroys Blue Health Regen Cache.");
+		Log(n:0, s:" destroys GDI Health Regen Cache.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_RED);
 	}
@@ -404,12 +404,12 @@ script 345 (int Type, int Team)
 	{
 		GlobalAmmo[0] = 0;
 		SetFont ("SMALLFONT");
-		HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cARed \cKAmmo Regenerator!";
+		HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cGNod \cKAmmo Regenerator!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
 		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log(n:0, s:" destroys Red Ammo Regen Cache.");
+		Log(n:0, s:" destroys Nod Ammo Regen Cache.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_RED);
 
@@ -418,12 +418,12 @@ script 345 (int Type, int Team)
 	{
 		GlobalAmmo[1] = 0;
 		SetFont ("SMALLFONT");
-		HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cNBlue \cKAmmo Regenerator!";
+		HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cFGDI \cKAmmo Regenerator!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
 		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log(n:0, s:" destroys Blue Ammo Regen Cache.");
+		Log(n:0, s:" destroys GDI Ammo Regen Cache.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_BLUE);
 	}

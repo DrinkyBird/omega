@@ -51,7 +51,7 @@ script 309 (int Crate, int Override) {
 		AmbientSound ("powerup/base", 127);	
 		Log (n:0, s:" gets Base Miracle.");
 		if(PlayerTeam() == TEAM_RED) {
-			HudMessageBold (s:"\cARed Team\cJ got \cDBase Miracle!";
+			HudMessageBold (s:"\cGNod\cJ got \cDBase Miracle!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			
@@ -61,7 +61,7 @@ script 309 (int Crate, int Override) {
 			if (GotFactory[0]) SetActorHealth (207, GetActorSpawnHealth (207));
   			if (GotObelisk[0]) SetActorHealth (214, GetActorSpawnHealth (214));
 		} else if(PlayerTeam() == TEAM_BLUE) {
-			HudMessageBold (s:"\cNBlue Team\cJ got \cDBase Miracle!";
+			HudMessageBold (s:"\cFGDI\cJ got \cDBase Miracle!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			if (GotBarracks[1]) SetActorHealth (101, GetActorSpawnHealth (101));
@@ -159,11 +159,11 @@ script 309 (int Crate, int Override) {
 		
 		SetFont("SMALLFONT");
 		if(PlayerTeam() == TEAM_RED)
-			HudMessageBold (s:"\cARed player\cJ got \cUStealth Crate!";
+			HudMessageBold (s:"\cGNod\c- got \cUStealth Crate!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		else if(PlayerTeam() == TEAM_BLUE)
-			HudMessageBold (s:"\cNBlue player\cJ got \cUStealth Crate!";
+			HudMessageBold (s:"\cFGDI\c- got \cUStealth Crate!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		
@@ -193,11 +193,11 @@ script 309 (int Crate, int Override) {
 		Log (n:0, s:" gets Iron Curtain.");
 		
 		if (PlayerTeam() == TEAM_RED)
-			HudMessageBold (s:"\cARed player\cJ got \cCIron Curtain!!";
+			HudMessageBold (s:"\cGNod\cJ got \cCIron Curtain!!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		else if (PlayerTeam() == TEAM_BLUE)
-			HudMessageBold (s:"\cNBlue player\cJ got \cCIron Curtain!!";
+			HudMessageBold (s:"\cFGDI\cJ got \cCIron Curtain!!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		HudMessage (s:"\cCIron curtain!!";
@@ -217,11 +217,11 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound("powerup/kama",255);
 		
 		if(PlayerTeam() == TEAM_RED)
-			HudMessageBold (s:"Some crazy ass \cARed player\cJ got\nthe \cKKamikaze Crate!!";
+			HudMessageBold (s:"Some crazy ass \cGNod\cJ got\nthe \cKKamikaze Crate!!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		else if(PlayerTeam() == TEAM_BLUE)
-			HudMessageBold (s:"Some crazy ass \cNBlue player\cJ got\nthe \cKKamikaze Crate!!";
+			HudMessageBold (s:"Some crazy ass \cFGDI\cJ got\nthe \cKKamikaze Crate!!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
 		HudMessage (s:"\cKKamikaze!";
@@ -241,11 +241,11 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound("powerup/plas",255);
 		
 		if(PlayerTeam() == TEAM_RED)
-			HudMessageBold (s:"\cARed player\cJ got \cNPlasma Cannon Crate!";
+			HudMessageBold (s:"\cGNod\cJ got \cNPlasma Cannon Crate!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		else if(PlayerTeam() == TEAM_BLUE)
-			HudMessageBold (s:"\cNBlue player\cJ got \cNPlasma Cannon Crate!";
+			HudMessageBold (s:"\cFGDI\cJ got \cNPlasma Cannon Crate!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		HudMessage (s:"\cNPlasma Cannon!";
@@ -314,11 +314,11 @@ script 309 (int Crate, int Override) {
 		
 		SetFont ("SMALLFONT");
 		if(PlayerTeam() == TEAM_RED)
-			HudMessageBold (s:"\cARed player\cJ got \cITime Gun Crate!";
+			HudMessageBold (s:"\cGNod\cJ got \cITime Gun Crate!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		else if(PlayerTeam() == TEAM_BLUE)
-			HudMessageBold (s:"\cNBlue player\cJ got \cITime Gun Crate!";
+			HudMessageBold (s:"\cFGDI\cJ got \cITime Gun Crate!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		GiveInventory("TimeGunAmmo",30);
@@ -404,7 +404,7 @@ script 309 (int Crate, int Override) {
 		AmbientSound("powerup/crsh",255);
 		if(PlayerTeam() == TEAM_RED)
 		{
-			HudMessageBold (s:"Poor \cARed Team\cJ got \cRBase Crasher";
+			HudMessageBold (s:"Poor \cGNod\cJ got \cRBase Crasher";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			Thing_Damage(201,4000,0);
@@ -415,7 +415,7 @@ script 309 (int Crate, int Override) {
 		}
 		else if(PlayerTeam() == TEAM_BLUE)
 		{
-			HudMessageBold (s:"Poor \cNBlue Team\cJ got \cRBase Crasher";
+			HudMessageBold (s:"Poor \cFGDI\cJ got \cRBase Crasher";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 			Thing_Damage(101,4000,0);
@@ -506,11 +506,11 @@ script 309 (int Crate, int Override) {
 		
 		SetFont ("SMALLFONT");
 		if(PlayerTeam() == TEAM_RED)
-			HudMessageBold (s:"\cARed player\cJ got \cKGuardian Crate!";
+			HudMessageBold (s:"\cGNod\cJ got \cKGuardian Crate!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		else if(PlayerTeam() == TEAM_BLUE)
-			HudMessageBold (s:"\cNBlue player\cJ got \cKGuardian Crate!";
+			HudMessageBold (s:"\cFGDI\cJ got \cKGuardian Crate!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		
@@ -530,11 +530,11 @@ script 309 (int Crate, int Override) {
 		
 		SetFont ("SMALLFONT");
 		if(PlayerTeam() == TEAM_RED)
-			HudMessageBold (s:"\cARed player\cJ got \cGBerserk!";
+			HudMessageBold (s:"\cFGDI\cJ got \cGBerserk!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		else if(PlayerTeam() == TEAM_BLUE)
-			HudMessageBold (s:"\cNBlue player\cJ got \cGBerserk!";
+			HudMessageBold (s:"\cGNod\cJ got \cGBerserk!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		HudMessage (s:"\cGBerserk!";
@@ -594,11 +594,11 @@ script 309 (int Crate, int Override) {
 		
 		SetFont("SMALLFONT");
 		if (PlayerTeam() == TEAM_RED)
-			HudMessageBold (s:"\cARed player\cJ got \cKOpen Deck!";
+			HudMessageBold (s:"\cGNod\cJ got \cKOpen Deck!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		else
-			HudMessageBold (s:"\cNBlue player\cJ got \cKOpen Deck!";
+			HudMessageBold (s:"\cFGDI\cJ got \cKOpen Deck!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		

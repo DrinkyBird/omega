@@ -12,8 +12,8 @@ script 101 (VOID)
 	ReddenSector (2);
 	
 	SetFont("BIGFONT");
-	HudMessageBold(s:"The \chBlue Barracks\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
-	Log(n:0, s:" destroys Blue Barracks.");
+	HudMessageBold(s:"The \cFGDI Barracks\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log(n:0, s:" destroys GDI Barracks.");
 	AwardBuildingDestruction (TEAM_RED, false);
 	ACS_ExecuteAlways (930, 0, BUILDING_BARRACKS, TEAM_BLUE);
 	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_DESTROY_BARRACKS, TEAM_BLUE);
@@ -32,8 +32,8 @@ script 102 (VOID)
 	
 	SetFont("BIGFONT");
 	
-	HudMessageBold(s:"The \chBlue Refinery\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
-	Log(n:0, s:" destroys Blue Refinery.");
+	HudMessageBold(s:"The \cFGDI Refinery\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log(n:0, s:" destroys GDI Refinery.");
 	AwardBuildingDestruction (TEAM_RED, false);
 	ACS_ExecuteAlways (930, 0, BUILDING_REFINERY, TEAM_BLUE);
 	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_DESTROY_REFINERY, TEAM_BLUE);
@@ -54,9 +54,9 @@ script 103 (void) {
 	
 	SetFont("BIGFONT");
 	
-	HudMessageBold(s:"The \chBLUE Research Centre\cd has been destroyed!!";
+	HudMessageBold(s:"The \cFGDI Research Centre\cd has been destroyed!!";
 		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
-	Log(n:0, s:" destroys Blue Research Centre.");
+	Log(n:0, s:" destroys GDI Research Centre.");
 	AwardBuildingDestruction (TEAM_RED, false);
 	ACS_ExecuteAlways (930, 0, BUILDING_RESCENTRE, TEAM_BLUE);
 	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_DESTROY_PLANT, TEAM_BLUE);
@@ -76,8 +76,8 @@ script 104 (VOID)
 	
 	SetFont("BIGFONT");
 	
-	HudMessageBold(s:"The \chBlue WarFactory\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
-	Log(n:0, s:" destroys Blue War Factory.");
+	HudMessageBold(s:"The \cFGDI War Factory\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log(n:0, s:" destroys GDI War Factory.");
 	AwardBuildingDestruction (TEAM_RED, false);
 	ACS_ExecuteAlways (930, 0, BUILDING_FACTORY, TEAM_BLUE);
 	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_DESTROY_FACTORY, TEAM_BLUE);
@@ -94,14 +94,14 @@ script 105 (VOID)
 	SetActorProperty(109,APROP_Health,0);
 	
 	// SetFont("BIGFONT");
-	// HudMessageBold(s:"The \chBlue Repair Facility\cd has been destroyed!!";
+	// HudMessageBold(s:"The \cFBlue Repair Facility\cd has been destroyed!!";
 	// 	HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
 	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_DESTROY_REPAIR, TEAM_BLUE);
 	SetFont ("SMALLFONT");
-	HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cNBlue \cFRepair Facility!";
+	HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cNGDI \cFRepair Facility!";
 		HUDMSG_FADEOUT, 15000, CR_WHITE,
 		INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-	Log(n:0, s:" destroys Blue Repair Facility.");
+	Log(n:0, s:" destroys GDI Repair Facility.");
 	ACS_ExecuteAlways (930, 0, BUILDING_REPAIR, TEAM_BLUE);
 	AwardBuildingDestruction (TEAM_RED, true);
 }
@@ -119,8 +119,8 @@ script 114 (VOID)
 	
 	SetFont("BIGFONT");
 	
-	HudMessageBold(s:"The \chBlue Obelisk\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
-	Log(n:0, s:" destroys Blue Obelisk.");
+	HudMessageBold(s:"The \cFGDI Obelisk\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log(n:0, s:" destroys GDI Obelisk.");
 	AwardBuildingDestruction (TEAM_RED, false);
 	ACS_ExecuteAlways (930, 0, BUILDING_OBELISK, TEAM_BLUE);
 	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_DESTROY_OBELISK, TEAM_BLUE);
@@ -143,8 +143,8 @@ script 201 (VOID)
 	ReddenSector (4);
 	
 	SetFont("BIGFONT");
-	HudMessageBold(s:"The \cgRED Barracks\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
-	Log(n:0, s:" destroys Red Barracks.");
+	HudMessageBold(s:"The \cgNod Barracks\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log(n:0, s:" destroys Nod Barracks.");
 	AwardBuildingDestruction (TEAM_BLUE, false);
 	ACS_ExecuteAlways (930, 0, BUILDING_BARRACKS, TEAM_RED);
 	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_DESTROY_BARRACKS, TEAM_RED);
@@ -163,8 +163,8 @@ script 202 (VOID)
 	
 	SetFont("BIGFONT");
 	
-	HudMessageBold(s:"The \cgRed Refinery\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
-	Log(n:0, s:" destroys Red Refinery.");
+	HudMessageBold(s:"The \cgNod Refinery\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log(n:0, s:" destroys Nod Refinery.");
 	AwardBuildingDestruction (TEAM_BLUE, false);
 	ACS_ExecuteAlways (930, 0, BUILDING_REFINERY, TEAM_RED);
 	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_DESTROY_REFINERY, TEAM_RED);
@@ -184,9 +184,9 @@ script 203 (VOID)
 	ReddenSector (4);
 	
 	SetFont("BIGFONT");
-	HudMessageBold(s:"The \cgRED Research Centre\cd has been destroyed!!";
+	HudMessageBold(s:"The \cgNod Research Centre\cd has been destroyed!!";
 		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
-	Log(n:0, s:" destroys Red Research Centre.");
+	Log(n:0, s:" destroys Nod Research Centre.");
 	AwardBuildingDestruction (TEAM_BLUE, false);
 	ACS_ExecuteAlways (930, 0, BUILDING_RESCENTRE, TEAM_RED);
 	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_DESTROY_PLANT, TEAM_RED);
@@ -208,9 +208,9 @@ script 204 (VOID)
 	
 	SetFont("BIGFONT");
 		
-	HudMessageBold(s:"The \cgRed War Factory\cd has been destroyed!!";
+	HudMessageBold(s:"The \cgNod War Factory\cd has been destroyed!!";
 		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
-	Log(n:0, s:" destroys Red War Factory.");
+	Log(n:0, s:" destroys Nod War Factory.");
 	AwardBuildingDestruction (TEAM_BLUE, false);
 }
 
@@ -228,10 +228,10 @@ script 205 (VOID) {
 	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_DESTROY_REPAIR, TEAM_RED);
 	ACS_ExecuteAlways (930, 0, BUILDING_REPAIR, TEAM_RED);
 	SetFont ("SMALLFONT");
-	HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cARed \cFRepair Facility!";
+	HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cGNod \cFRepair Facility!";
 		HUDMSG_FADEOUT, 15000, CR_WHITE,
 		INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-	Log(n:0, s:" destroys Red Repair Facility.");
+	Log(n:0, s:" destroys Nod Repair Facility.");
 	AwardBuildingDestruction (TEAM_BLUE, true);
 }
 
@@ -248,9 +248,9 @@ script 214 (VOID)
 	
 	SetFont("BIGFONT");
 	
-	HudMessageBold(s:"The \cgRed Obelisk\cd has been destroyed!!";
+	HudMessageBold(s:"The \cgNod Obelisk\cd has been destroyed!!";
 		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
-	Log(n:0, s:" destroys Red Obelisk.");
+	Log(n:0, s:" destroys Nod Obelisk.");
 	AwardBuildingDestruction (TEAM_BLUE, false);
 	ACS_ExecuteAlways (930, 0, BUILDING_OBELISK, TEAM_RED);
 	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_DESTROY_OBELISK, TEAM_RED);
