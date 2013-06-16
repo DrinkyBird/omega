@@ -46,30 +46,6 @@ script 994 DEATH {
 	int killer_t = ACS_ExecuteWithResult (964, 5);
 	int killer_p = ACS_ExecuteWithResult (964, 9);
 	//Log (n:0, s:"\c-: I am ", d:ActivatorTID(), s:" and was killed by ", d:killer_t, s:" (", n:killer_p+1, s:")");
-	if (CheckInventory ("SpreeCount") >= 5) {
-		SetFont ("SMALLFONT");
-		if (killer_p != PlayerNumber() && killer_p != -1) {
-			// killed by a player
-			HudMessageBold (n:0, s:"\c-'s killing spree was ended by ", n:killer_p+1, s:".";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		} else if (killer_t == 115) {
-			// killed by blue obelisk
-			HudMessageBold (n:0, s:"\c-'s killing spree was ended by the \chBlue Obelisk\c-.";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		} else if (killer_t == 215) {
-			// killed by red obelisk
-			HudMessageBold (n:0, s:"\c-'s killing spree was ended by the \cgRed Obelisk\c-.";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		} else if (killer_p == PlayerNumber ()) {
-			// killed by something (self, env. kills, etc)
-			HudMessageBold (n:0, s:"\c- was lookin' good until he tripped over a log!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		}
-	}
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * KILLER POV STARTS HERE
@@ -105,42 +81,6 @@ script 994 DEATH {
 			HudMessageBold (n:0, s:"\c- gets first blood!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-		}
-		
-		// check sprees
-		GiveInventory ("SpreeCount", 1);
-		SetFont ("SMALLFONT");
-		switch (CheckInventory ("SpreeCount")) {
-		case 5:
-			HudMessageBold (n:0, s:"\c- is on a killing spree!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-			break;
-		case 10:
-			HudMessageBold (n:0, s:"\c- is on a rampage!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-			break;
-		case 15:
-			HudMessageBold (n:0, s:"\c- is dominating!";
-				HUDMSG_FADEOUT, 15000, CR_TAN,
-				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-			break;
-		case 20:
-			HudMessageBold (n:0, s:"\c- is unstoppable!";
-				HUDMSG_FADEOUT, 15000, CR_YELLOW,
-				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-			break;
-		case 25:
-			HudMessageBold (n:0, s:"\c- is Godlike!";
-				HUDMSG_FADEOUT, 15000, CR_ORANGE,
-				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-			break;
-		case 30:
-			HudMessageBold (n:0, s:"\c- is Wicked Sick!";
-				HUDMSG_FADEOUT, 15000, CR_RED,
-				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-			break;
 		}
 	}
 	
