@@ -8,6 +8,6 @@ Team "Steel Talons" {
 
 Team "Black Hand" {
 	PlayerColor "7F 7F 7F"
-	TextColor "Dark Red"
+	TextColor "Red"
 	PlayerStartThingNumber 5081
 }
