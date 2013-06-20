@@ -47,16 +47,16 @@ script SC_TIMEGUN (int action, int type) {
 	SetFont ("SMALLFONT");
 	switch (type) {
 	case 0: // boost
-		IntelMessage ("\cIYou are turbo!", false);
+		IntelMessage ("\cIYou are turbo!");
 		break;
 	case 1: // float
-		IntelMessage ("\cIYou feel lighter!", false);
+		IntelMessage ("\cIYou feel lighter!");
 		break;
 	case 2: // slow
-		IntelMessage ("\cISomething pulls your legs...", false);
+		IntelMessage ("\cISomething pulls your legs...");
 		break;
 	case 3: // weaken
-		IntelMessage ("\cIYou hear something crack in your weapon...", false);
+		IntelMessage ("\cIYou hear something crack in your weapon...");
 		break;
 	}
 }

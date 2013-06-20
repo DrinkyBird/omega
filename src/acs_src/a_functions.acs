@@ -535,13 +535,16 @@ function int CheckTargetWeapon (str type) {
 	return ACS_ExecuteWithResult (SC_TARGETINFO, TARGETINFO_WeaponCheck, type);
 }
 // ============================================================================
-// [Dusk] {9/6/12} Generic intel message
-function void IntelMessage (str text, bool bold) {
+// [Dusk] Generic intel message
+function void _IntelMessage (str text, bool bold) {
 	// Check if it's multi-line
 	int multiline = false;
-	for (int c = 0; c < strlen (text) && !multiline; c++)
-		if (GetChar (text, c) == '\n')
+	for (int c = 0; c < strlen (text); c++) {
+		if (GetChar (text, c) == '\n') {
 			multiline = true;
+			break;
+		}
+	}
 	
 	// Determine y-pos
 	int ypos = INTEL_YPOS;
@@ -556,4 +559,12 @@ function void IntelMessage (str text, bool bold) {
 		HudMessage (s:text;
 			HUDMSG_FADEOUT | HUDMSG_LOG, 15000, CR_WHITE,
 			INTEL_XPOS, ypos, 2.0, 1.0);
+}
+
+function void IntelMessage (str text) {
+	_IntelMessage (text, false);
+}
+
+function void IntelMessageBold (str text) {
+	_IntelMessage (text, true);
 }
