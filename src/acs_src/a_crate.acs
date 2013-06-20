@@ -328,7 +328,6 @@ script 309 (int Crate, int Override) {
 			
 			IncrCredits (i, amount / enemyplayers);
 			SetActivator (3800 + i);
-			Log (d:amount / enemyplayers, s:" -> ", n:i + 1);
 			IntelMessage (strparam (s:"Espionage crew has acquired you and your team \cQ$\cD", d:amount / enemyplayers));
 		}
 		
