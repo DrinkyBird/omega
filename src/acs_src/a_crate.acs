@@ -8,6 +8,9 @@
  * of this and call it your own. Thanks!
  */
 
+// [Dusk] There's some anomaly going around with the RNG which causes the powerup crate
+// to favor one effect over another. Get around this by re-rolling the crate number
+// every second.
 script 312 OPEN {
 	while (1) {
 		CrateNumber += random (0, MAX_CRATE);
@@ -27,11 +30,13 @@ script 309 (int Crate, int Override) {
 		Crate = CrateNumber;
 		Override = false;
 		
-		// bump the value to keep two simultaneous
-		// crates from having the same effect
+		// [Dusk] Re-roll CrateNumber now to keep two simultaneous crates from
+		// having the same effect.
 		CrateNumber += random (0, MAX_CRATE);
 		CrateNumber %= MAX_CRATE;
 		CrateNumber++;
+		
+		ACS_Execute (312, 0);
 	}
 	
 	switch (crate) {
@@ -296,16 +301,41 @@ script 309 (int Crate, int Override) {
 		break;
 	case 14:
 	case 28:
+		// [Dusk] Take half the credits instead
+		int amount = (GetCredits (-1) / 2);
+		
+		if (!amount) {
+			// Nothing to steal
+			crate = 0;
+			restart;
+		}
+		
 		SetFont("SMALLFONT");
-		HudMessage (s:"\cACredits stolen! (\cQ$\cD)", d:CreditAwardAmount;
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage (strparam (s:"\cACredits stolen! (\cQ$\cD", d:amount, s:"\c-)"));
+		
 		LocalAmbientSound("powerup/stol",255);
 		Delay(4);
 		LocalAmbientSound("powerup/stolsound",255);
-		DecrCredits (PlayerNumber (), CreditAwardAmount);
 		Log(n:0, s:" gets Credits Stolen.");
+		
+		DecrCredits (PlayerNumber (), amount);
+		
+		// [Dusk] Spread the amount evenly amongst the enemy team
+		int enemy = 1 - PlayerTeam ();
+		int enemyplayers = (GetTeamProperty (enemy, TPROP_NumPlayers));
+		
+		for (i = 0; i < MAXPLAYERS; ++i) {
+			if (!PlayerInGame (i) || GetPlayerTeam (i) != enemy)
+				continue;
+			
+			IncrCredits (i, amount / enemyplayers);
+			SetActivator (3800 + i);
+			Log (d:amount / enemyplayers, s:" -> ", n:i + 1);
+			IntelMessage (strparam (s:"Espionage crew has acquired you and your team \cQ$\cD", d:amount / enemyplayers));
+		}
+		
 		break;
+	
 	case 15:
 		if (CheckInventory ("TimeGun") && !Override) {crate = 0; restart;}
 		
@@ -775,4 +805,9 @@ script 964 (int type, int value) {
 	case 8: SetResultValue (CheckInventory (value)); break;
 	case 9: SetResultValue (PlayerNumber ()); break;
 	}
+}
+
+script 812 (int n) {
+	CrateNumber = n;
+	ACS_Terminate (312, 0);
 }
