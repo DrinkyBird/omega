@@ -35,8 +35,6 @@ script 309 (int Crate, int Override) {
 		CrateNumber += random (0, MAX_CRATE);
 		CrateNumber %= MAX_CRATE;
 		CrateNumber++;
-		
-		ACS_Execute (312, 0);
 	}
 	
 	switch (crate) {
@@ -805,9 +803,4 @@ script 964 (int type, int value) {
 	case 8: SetResultValue (CheckInventory (value)); break;
 	case 9: SetResultValue (PlayerNumber ()); break;
 	}
-}
-
-script 812 (int n) {
-	CrateNumber = n;
-	ACS_Terminate (312, 0);
 }
