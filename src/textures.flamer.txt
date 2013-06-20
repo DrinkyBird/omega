@@ -1,0 +1,167 @@
+Sprite fmrfj0, 6, 6 {
+	XScale 0.909
+	YScale 0.909
+	Offset 3, 10
+	Patch brbaj0, 0, 0
+}
+
+Sprite fmrfi0, 10, 8 {
+	XScale 0.833
+	YScale 0.833
+	Offset 5, 12
+	Patch brbai0, 0, 0
+}
+
+Sprite fmrfh0, 12, 11 {
+	XScale 0.769
+	YScale 0.769
+	Offset 6, 13
+	Patch brbah0, 0, 0
+}
+
+Sprite fmrfg0, 15, 14 {
+	XScale 0.714
+	YScale 0.714
+	Offset 8, 15
+	Patch brbag0, 0, 0
+}
+
+Sprite fmrff0, 18, 18 {
+	XScale 0.667
+	YScale 0.667
+	Offset 9, 18
+	Patch brbaf0, 0, 0
+}
+
+Sprite fmrfe0, 21, 20 {
+	XScale 0.625
+	YScale 0.625
+	Offset 10, 18
+	Patch brbae0, 0, 0
+}
+
+Sprite fmrfd0, 23, 22 {
+	XScale 0.588
+	YScale 0.588
+	Offset 11, 20
+	Patch brbad0, 0, 0
+}
+
+Sprite fmrfc0, 26, 25 {
+	XScale 0.555
+	YScale 0.555
+	Offset 13, 21
+	Patch brbac0, 0, 0
+}
+
+Sprite fmrfb0, 27, 26 {
+	XScale 0.526
+	YScale 0.526
+	Offset 13, 22
+	Patch brbab0, 0, 0
+}
+
+Sprite fmrfa0, 26, 25 {
+	XScale 0.5
+	YScale 0.5
+	Offset 13, 21
+	Patch brbaa0, 0, 0
+}
+
+Sprite fmrfk0, 27, 27 {
+	XScale 0.5
+	YScale 0.5
+	Offset 13, 22
+	Patch brbak0, 0, 0
+}
+
+Sprite fmrfl0, 37, 37 {
+	XScale 0.5
+	YScale 0.5
+	Offset 19, 27
+	Patch brbal0, 0, 0
+}
+
+Sprite fmrfm0, 40, 40 {
+	XScale 0.5
+	YScale 0.5
+	Offset 20, 29
+	Patch brbam0, 0, 0
+}
+
+Sprite fmrfn0, 39, 39 {
+	XScale 0.5
+	YScale 0.5
+	Offset 19, 29
+	Patch brban0, 0, 0
+}
+
+Sprite fmrfo0, 37, 38 {
+	XScale 0.5
+	YScale 0.5
+	Offset 18, 28
+	Patch brbao0, 0, 0
+}
+
+Sprite fmrfp0, 35, 35 {
+	XScale 0.5
+	YScale 0.5
+	Offset 17, 27
+	Patch brbap0, 0, 0
+}
+
+Sprite fmrfq0, 35, 35 {
+	XScale 0.5
+	YScale 0.5
+	Offset 17, 27
+	Patch brbaq0, 0, 0
+}
+
+Sprite fmrfr0, 33, 33 {
+	XScale 0.5
+	YScale 0.5
+	Offset 16, 26
+	Patch brbar0, 0, 0
+}
+
+Sprite fmrfs0, 32, 32 {
+	XScale 0.5
+	YScale 0.5
+	Offset 16, 25
+	Patch brbas0, 0, 0
+}
+
+Sprite fmrft0, 30, 30 {
+	XScale 0.5
+	YScale 0.5
+	Offset 15, 24
+	Patch brbat0, 0, 0
+}
+
+Sprite fmrfu0, 30, 30 {
+	XScale 0.5
+	YScale 0.5
+	Offset 15, 24
+	Patch brbau0, 0, 0
+}
+
+Sprite fmrfv0, 29, 29 {
+	XScale 0.5
+	YScale 0.5
+	Offset 14, 24
+	Patch brbav0, 0, 0
+}
+
+Sprite fmrfw0, 28, 27 {
+	XScale 0.5
+	YScale 0.5
+	Offset 14, 23
+	Patch brbaw0, 0, 0
+}
+
+Sprite fmrfx0, 20, 20 {
+	XScale 0.5
+	YScale 0.5
+	Offset 10, 19
+	Patch brbax0, 0, 0
+}

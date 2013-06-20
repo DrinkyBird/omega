@@ -6,8 +6,11 @@ script 360 (void) {
 	
 	GiveInventory("CrispyPlayer",1);
 	int n = 10;
-	while (n > 0 && GetHealth() > 1) {
-		Thing_Damage2 (0, 1, "FireSpecial");
+	
+	// [Dusk] Damage but don't kill the player, since otherwise he'd "kill himself"
+	// This way the true killer is more likely to get the frag.
+	while (n > 0 && GetHealth() > 3) {
+		Thing_Damage2 (0, 3, "FireSpecial");
 		delay(5);
 		n--;
 	}
@@ -22,9 +25,9 @@ script 361 (void) {
 	if (CheckInventory("CrispyPlayer2")) terminate;
 	
 	GiveInventory("CrispyPlayer2", 1);
-	int n = 20;
-	while (n > 0 && GetHealth() > 1) {
-		Thing_Damage2 (0, 1, "ChemicalSpecial");
+	int n = 10;
+	while (n > 0 && GetHealth() > 7) {
+		Thing_Damage2 (0, 7, "ChemicalSpecial");
 		delay(8);
 		n--;
 	}
