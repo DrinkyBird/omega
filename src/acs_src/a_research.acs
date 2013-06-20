@@ -97,7 +97,7 @@ script 66 (int Team) {
 	
 	SetFont("SMALLFONT");
 	if(Team == 0) {
-		IntelMessageBold (s:"\cGNod\cJ researches \cKAdvanced Mechs!");
+		IntelMessageBold ("\cGNod\cJ researches \cKAdvanced Mechs!");
 		Log (n:0, s:" researches Advanced Mechs for Nod");
 	} else {
 		IntelMessageBold ("\cFGDI\cJ researches \cKAdvanced Mechs!");

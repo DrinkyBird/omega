@@ -311,22 +311,10 @@ script 309 (int Crate, int Override) {
 		
 		LocalAmbientSound ("powerup/time", 127);
 		LocalAmbientSound ("misc/timewarp", 64);
-		
-		SetFont ("SMALLFONT");
-		if(PlayerTeam() == TEAM_RED)
-			HudMessageBold (s:"\cGNod\cJ got \cITime Gun Crate!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		else if(PlayerTeam() == TEAM_BLUE)
-			HudMessageBold (s:"\cFGDI\cJ got \cITime Gun Crate!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		GiveInventory("TimeGunAmmo",30);
 		GiveInventory("TimeGun",1);
 		
-		HudMessage (s:"You got the \cITime Gun!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage ("You got the \cITime Gun!");
 		
 		Log(n:0, s:" gets Time Gun Crate.");
 		RecountTimeCops ();
@@ -338,27 +326,14 @@ script 309 (int Crate, int Override) {
 	case 33:
 	case 34:
 	case 56:
-		// [Dusk] high rank dudes get less of these
-		if (Rank[PlayerNumber()] >= RANK_LIEUTENANT && !random (0, 2)) {Crate = 0; restart;}
-		SetFont("BIGFONT");
-		HudMessage(s:"BOMB CRATE!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
-		if (GetCVar ("aow_oldbombcrate")) {
-			AmbientSound("weapons/rocklx",255);
-			SetFont ("SMALLFONT");
-			HudMessageBold (s:"Some poor bugga got the bomb crate";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-			Log (n:0, s:" gets bomb crate and goes boom boom.");
-			GiveInventory ("IsBombCrate", 1);
-			delay(1);
-			Thing_Destroy (ActivatorTID(), 1); // death state spawns big boom
-			terminate;
+		// [Dusk] High ranking dudes get less of these
+		if (Rank[PlayerNumber()] >= RANK_LIEUTENANT && !random (0, 2)) {
+			Crate = 0;
+			restart;
 		}
 		
-		SetFont ("SMALLFONT");
-		HudMessageBold (n:0, s:" is gonna blow!!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		SetFont("BIGFONT");
+		HudMessage(s:"BOMB CRATE!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
 		
 		if (PlayerTeam() == TEAM_BLUE)
 			GiveInventory ("BombCrateFXGiverBlue", 1);
@@ -367,7 +342,7 @@ script 309 (int Crate, int Override) {
 		
 		ActivatorSound ("powerup/bomb", 127);
 		
-		for (i = 0; i <= 3; i++) {
+		for (i = 0; i < 4; i++) {
 			if (GetHealth() <= 0) {
 				FadeTo (0, 0, 0, 0, 1.0);
 				terminate;
@@ -592,16 +567,6 @@ script 309 (int Crate, int Override) {
 			if (!Override) {Crate = 0; restart;}
 		}
 		
-		SetFont("SMALLFONT");
-		if (PlayerTeam() == TEAM_RED)
-			HudMessageBold (s:"\cGNod\cJ got \cKOpen Deck!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		else
-			HudMessageBold (s:"\cFGDI\cJ got \cKOpen Deck!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		
 		IntelMessage ("\cKOPEN DECK!");
 		LocalAmbientSound ("powerup/invisound", 127);
 		GiveInventory ("CrateChooser", 1);
@@ -613,7 +578,7 @@ script 309 (int Crate, int Override) {
 		GiveInventory ("ThermalCloakingTime", 90);
 		ACS_ExecuteAlways(953, 0);
 		Log (n:0, s:" gets Thermal Cloaking.");
-		IntelMessage (s:"\cUThermal cloaking!");
+		IntelMessage ("\cUThermal cloaking!");
 		delay (35);
 		IntelMessage ("Turrets cannot see you for 90 seconds");
 		break;

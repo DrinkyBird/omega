@@ -58,7 +58,7 @@ script 7 (void) {
 	}
 	if (Experience[PlayerNumber()] >= XPREQ_SERGEANT && Rank[PlayerNumber()] < RANK_SERGEANT) {
 		LocalAmbientSound("game/rank",255);
-		IntelMessage (strparam (s:"You have ranked up to \cDSergeant!");
+		IntelMessage (strparam (s:"You have ranked up to \cDSergeant!"));
 		Rank[PlayerNumber()] = RANK_SERGEANT;
 		RankedUp = True;
 		TakeInventory("PlayerRank",8);
