@@ -100,9 +100,8 @@ script 942 (void) NET {
 		newteam = "Nod";
 		newcolor = "\cG";
 	}
-	HudMessageBold (n:0, s:" switches to ", s:newcolor, s:newteam;
-		HUDMSG_FADEOUT, 15000, CR_WHITE,
-		INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
+	
+	IntelMessageBold (strparam (n:0, s:" switches to ", s:newcolor, s:newteam));
 	Log (n:0, s:" switches to weaker ", s:newteam, s:" team. (Score: ", d:score, s:")");
 	
 	// reward
@@ -215,9 +214,7 @@ script 950 (void) NET {
 	TakeInventory (weapon, 1);
 	GiveCredits (-1, price);
 	LocalAmbientSound ("powerup/credsound", 127);
-	HudMessage (s:"You have sold your ", s:weapon, s:" for \cq$\cd", d:price;
-		HUDMSG_FADEOUT, 15000, CR_WHITE,
-		INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	IntelMessage (strparam (s:"You have sold your ", s:weapon, s:" for \cq$\cd", d:price));
 	Log (n:0, s:" sells ", s:weapon, s:" for $", d:price);
 }
 

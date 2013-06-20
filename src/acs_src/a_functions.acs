@@ -551,6 +551,8 @@ function void _IntelMessage (str text, bool bold) {
 	if (multiline)
 		ypos = INTEL_YPOS2;
 	
+	SetFont ("SMALLFONT");
+	
 	if (bold)
 		HudMessageBold (s:text;
 			HUDMSG_FADEOUT | HUDMSG_LOG, 15000, CR_WHITE,

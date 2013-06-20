@@ -94,36 +94,30 @@ script SC_PORTAL_INIT (void) {
 		
 		switch (disapproved) {
 		case 1:
-			HudMessage (s:"The other portal is too far away!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+			IntelMessage ("The other portal is too far away!");
 			break;
+		
 		case 2:
-			HudMessage (s:"The portal needs more space than that...";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+			IntelMessage ("The portal needs more space than that...");
 			break;
+		
 		case 3:
-			HudMessage (s:"Portals are disabled!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+			IntelMessage ("Portals are disabled!");
 			break;
+		
 		case 4:
-			HudMessage (s:"The other portal is too close!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+			IntelMessage ("The other portal is too close!");
 			break;
+		
 		case 5:
-			HudMessage (s:"You can't put that there. :I";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+			IntelMessage ("You can't put that there.");
 			break;
+		
 		default:
-			HudMessage (s:"Initialization failed! Unknown failure code.";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+			IntelMessage ("Initialization failed!");
 			break;
 		}
+		
 		delay (3*35);
 		RefundCredits (175);
 		terminate;

@@ -3,10 +3,7 @@ script 357 (void) {
 	SetResultValue (0);
 	if (CheckInventory ("IsHarvester") && !CheckInventory ("TiberiumCrystal")) {
 		SetResultValue (1);
-		SetFont ("SMALLFONT");
-		HudMessage (s:"\cJTake it back to \cQRefinery!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage ("\cJTake it back to \cQRefinery!");
 	}
 }
 
@@ -62,30 +59,30 @@ script 110 (int Team) {
 	}
 	GivePoints (1);
 	int amount = 75;
-	if(GetCVAR("aow_economy_mode") == 1)
-	{
+	
+	switch (GetCVAR ("aow_economy_mode")) {
+	case 1:
 		amount = 75;
-		if (EnhancedRefining[Team]) amount = 225;
-	}
-	else if(GetCVAR("aow_economy_mode") == 0)
-	{
+		if (EnhancedRefining[Team])
+			amount = 225;
+		break;
+	
+	case 0:
 		amount = 1500;
-		if (EnhancedRefining[Team]) amount = 2000;
+		if (EnhancedRefining[Team])
+			amount = 2000;
+		
+		amount /= GetTeamProperty (PlayerTeam (), TPROP_NumPlayers);
+		break;
 	}
-	if(GetCVAR("aow_economy_mode") == 0)
-	{
-			amount = amount / GetTeamProperty (PlayerTeam (), TPROP_NumPlayers);
-	}
+	
 	for (int i = 0; i < MAXPLAYERS; i++) {
 		if (PlayerInGame(i) && GetPlayerInfo (i, PLAYERINFO_TEAM) == PlayerTeam()) {
 			GiveCredits (i, amount);
 			SetActivator (3800+i);
-			SetFont ("SMALLFONT");
-			HudMessage (s:"Your teammate has \cDrefined Tiberium\n",
-				s:"and has awarded your team with \cQ$\cD", d:amount;
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-				
+			IntelMessage (strparam (s:"Your teammate has \cDrefined Tiberium\n",
+				s:"and has awarded your team with \cQ$\cD", d:amount));
+			
 			LocalAmbientSound ("powerup/credsound", 255);
 		}
 	}

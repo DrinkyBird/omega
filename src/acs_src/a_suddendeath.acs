@@ -86,15 +86,11 @@ script 997 (void) {
 	
 	SetActivator (-1);
 	while (1) {
-		if (!(ticker % 5)) {
+		if (!(ticker % 5))
 			degeninterval = GetCVar ("aow_degenerationinterval");
-		}
-		if (!(ticker % 60)) {
-			SetFont("SMALLFONT");
-			HudMessageBold (s:"Sudden death!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		}
+		
+		if (!(ticker % 60))
+			IntelMessageBold ("Sudden death!");
 		
 		if (degeneration && !(ticker % degeninterval)) {
 			// crash all buildings by 1% every interval seconds

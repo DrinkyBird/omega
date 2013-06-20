@@ -102,12 +102,8 @@ function void SetArmorGrade (int n, int mod) {
 				case -1: GiveInventory ("Grade-1Armor", 1); break;
 			}
 			
-			if (n == 5) {
-				SetFont ("SMALLFONT");
-				HudMessageBold (n:0, s:"\c- has \cKGrade 5 Armor!";
-					HUDMSG_FADEOUT, 15000, CR_WHITE,
-					INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-			}
+			if (n == 5)
+				IntelMessageBold (strparam (n:0, s:"\c- has \cKGrade 5 Armor!"));
 		}
 	}
 	

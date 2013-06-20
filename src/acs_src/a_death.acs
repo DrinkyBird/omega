@@ -60,10 +60,10 @@ script 994 DEATH {
 	int n1 = PlayerNumber();
 	int t1 = PlayerTeam();
 	
-	// remove tickets from the victim team
+	// Remove tickets from the victim team
 	TakeTickets (t0, points);
 	
-	// no points for suicides
+	// No points for suicides
 	if (n0 != n1 && n1 != -1) {
 		GivePoints (2*points);
 		ACS_ExecuteAlways (931, 0);
@@ -77,10 +77,7 @@ script 994 DEATH {
 		if (!FirstBlood) {
 			// we got first blood!
 			FirstBlood = true;
-			
-			HudMessageBold (n:0, s:"\c- gets first blood!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
+			IntelMessageBold (strparam (n:0, s:"\c- gets first blood!"));
 		}
 	}
 	

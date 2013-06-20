@@ -97,10 +97,7 @@ script 105 (VOID)
 	// HudMessageBold(s:"The \cFBlue Repair Facility\cd has been destroyed!!";
 	// 	HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
 	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_DESTROY_REPAIR, TEAM_BLUE);
-	SetFont ("SMALLFONT");
-	HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cNGDI \cFRepair Facility!";
-		HUDMSG_FADEOUT, 15000, CR_WHITE,
-		INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
+	IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cNGDI \cFRepair Facility!"));
 	Log(n:0, s:" destroys GDI Repair Facility.");
 	ACS_ExecuteAlways (930, 0, BUILDING_REPAIR, TEAM_BLUE);
 	AwardBuildingDestruction (TEAM_RED, true);
@@ -227,10 +224,7 @@ script 205 (VOID) {
 		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);*/
 	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_DESTROY_REPAIR, TEAM_RED);
 	ACS_ExecuteAlways (930, 0, BUILDING_REPAIR, TEAM_RED);
-	SetFont ("SMALLFONT");
-	HudMessageBold (n:0, s:"\cJ has destroyed\cJ\nthe \cGNod \cFRepair Facility!";
-		HUDMSG_FADEOUT, 15000, CR_WHITE,
-		INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
+	IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cGNod \cFRepair Facility!"));
 	Log(n:0, s:" destroys Nod Repair Facility.");
 	AwardBuildingDestruction (TEAM_BLUE, true);
 }

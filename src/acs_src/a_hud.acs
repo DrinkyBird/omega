@@ -36,9 +36,7 @@ script 111 (int what) {
 	case 0:
 		// donation message
 		SetFont ("SMALLFONT");
-		HudMessage (s:"You have been donated \cQ$\cD100\cJ\nby ", n:Donor[PlayerNumber()]+1;
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
+		IntelMessage (strparam (s:"You have been donated \cQ$\cD100\cJ\nby ", n:Donor[PlayerNumber()] + 1));
 		break;
 	}
 }

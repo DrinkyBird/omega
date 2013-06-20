@@ -81,26 +81,16 @@ function bool TimeDelay (int time, bool display) {
 
 // [Dusk] beacon timer reset due to it being placed underwater
 script 957 (int Team) {
-	SetFont ("SMALLFONT");
-	
 	if (Team == 0) {
 		LastPurchasedBeacon[2] = 0;
-		HudMessage (s:"Some \cGNod mong\cJ planted a beacon \cNunderwater";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		delay (3*35);	
-		HudMessage (s:"\cGNod\cJ free to \cDrepurchase\n\cANuclear Strike Beacon";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
+		IntelMessageBold ("Some \cGNod mong\cJ planted a beacon \cNunderwater");
+		delay (3*35);
+		IntelMessageBold ("\cGNod\cJ free to \cDrepurchase\n\cANuclear Strike Beacon");
 	} else {
 		LastPurchasedBeacon[1] = 0;
-		HudMessage (s:"Some \cFGDI mong\cJ planted a beacon \cNunderwater";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessageBold ("Some \cFGDI mong\cJ planted a beacon \cNunderwater");
 		delay (3*35);
-		HudMessage (s:"\cFGDI\cJ free to \cDrepurchase\n\cNIon Cannon Beacon";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
+		IntelMessageBold ("\cFGDI\cJ free to \cDrepurchase\n\cNIon Cannon Beacon");
 	}
 }
 

@@ -46,19 +46,14 @@ script 342 (void) NET {
 	LastSurrenderTime[PlayerNumber()] = Timer();
 	
 	Surrender[PlayerNumber()] = !Surrender[PlayerNumber()];
-	SetFont("SMALLFONT");
 	if (PlayerTeam() == TEAM_RED)
-		HudMessageBold (s:"\cD", d:SurrenderCount(TEAM_RED), s:"\cQ/\cD", d:RedCount(), s:" ",
-			s:"\cJof \cGNod\cJ\n have voted to surrender";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
+		IntelMessageBold (strparam (s:"\cD", d:SurrenderCount(TEAM_RED), s:"\cQ/\cD", d:RedCount(), s:" ",
+			s:"\cJof \cGNod\cJ\n have voted to surrender"));
 	else
-		HudMessageBold (s:"\cD", d:SurrenderCount(TEAM_BLUE), s:"\cQ/\cD", d:BlueCount(), s:" ",
-			s:"\cJof \cFGDI\cJ\n have voted to surrender";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-	delay(35*2);
+		IntelMessageBold (strparam (s:"\cD", d:SurrenderCount(TEAM_BLUE), s:"\cQ/\cD", d:BlueCount(), s:" ",
+			s:"\cJof \cFGDI\cJ\n have voted to surrender"));
 	
+	delay(35*2);
 	ACS_Execute(751, 0);
 }
 

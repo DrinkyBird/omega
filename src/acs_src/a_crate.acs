@@ -602,10 +602,7 @@ script 309 (int Crate, int Override) {
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
 				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		
-		HudMessage (s:"\cKOPEN DECK!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-			
+		IntelMessage ("\cKOPEN DECK!");
 		LocalAmbientSound ("powerup/invisound", 127);
 		GiveInventory ("CrateChooser", 1);
 		Log (n:0, s:" gets Open Deck.");
@@ -615,14 +612,10 @@ script 309 (int Crate, int Override) {
 		SetFont("SMALLFONT");
 		GiveInventory ("ThermalCloakingTime", 90);
 		ACS_ExecuteAlways(953, 0);
-		Log(n:0, s:" gets Thermal Cloaking.");
-		HudMessage (s:"\cUThermal cloaking!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		Log (n:0, s:" gets Thermal Cloaking.");
+		IntelMessage (s:"\cUThermal cloaking!");
 		delay (35);
-		HudMessage (s:"Turrets cannot see you for 90 seconds";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage ("Turrets cannot see you for 90 seconds");
 		break;
 	case 59:
 	case 60:
@@ -632,9 +625,6 @@ script 309 (int Crate, int Override) {
 		SetFont ("BIGFONT");
 		HudMessage (s:"Disarm crate!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
 		SetFont ("SMALLFONT");
-		HudMessageBold (s:"Somebody went and lost all of his weapons.";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		Log (n:0, s:" gets disarm crate.");
 		
 		CheckAndRemove ("Boomstick");
@@ -692,20 +682,19 @@ script 309 (int Crate, int Override) {
 	case 62:
 		if (CheckInventory("PowerFatigue")) {crate = 0; restart;}
 		
-		// this crate ruins stealth due to speed trails
+		// [Dusk] This crate ruins stealth due to speed trails
 		if (CheckInventory ("StealthLaserRifle") || CheckInventory ("Knife")) {
-			Crate = 0; restart;
+			Crate = 0;
+			restart;
 		}
 		
 		if (CheckInventory ("PowerInvisibility")) {
-			Crate = 0; restart;
+			Crate = 0;
+			restart;
 		}
 		
 		SetFont("SMALLFONT");
-		HudMessage (s:"\cAFatigue!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		//LocalAmbientSound("powerup/downsped",255);
+		IntelMessage ("\cAFatigue!");
 		GiveInventory("SpeedDowngrade",1);
 		Log(n:0, s:" gets Fatigue crate.");
 		break;
@@ -716,9 +705,7 @@ script 309 (int Crate, int Override) {
 			terminate;
 		}
 		SetFont ("SMALLFONT");
-		HudMessage (s:"\cFRemote C4!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage ("\cFRemote C4!");
 		LocalAmbientSound ("c4/remote", 127);
 		GiveInventory ("RemoteC4", 1);
 		GiveInventory ("RemoteC4Ammo", 5);
@@ -740,10 +727,7 @@ script 309 (int Crate, int Override) {
 			}
 		}
 		
-		SetFont ("SMALLFONT");
-		HudMessage (s:"\cFPartial Invisibility!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage ("\cFPartial Invisibility!");
 		GiveInventory ("BlurSphere", 1);
 		Log (n:0, s:" gets Partial Invisibility crate.");
 		break;
@@ -763,10 +747,7 @@ script 309 (int Crate, int Override) {
 		
 		if (RandomWeapon != -1) {
 			LocalAmbientSound ("misc/w_pkup", 127);
-			HudMessage (s:"\cFRandom Weapon!\nYou get a \cF", s:RandomWeapon;
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-			
+			IntelMessage (strparam (s:"\cFRandom Weapon!\nYou get a \cF", s:RandomWeapon));
 			GiveInventory (RandomWeapon, 1);
 		} else {
 			// could not find a weapon the player doesn't have. reroll

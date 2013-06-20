@@ -48,12 +48,9 @@ function str GetRankPic (void) {
 script 7 (void) {
 	bool RankedUp;
 	
-	SetFont("SMALLFONT");
 	if (Experience[PlayerNumber()] >= XPREQ_CORPORAL && Rank[PlayerNumber()] < RANK_CORPORAL) {
 		LocalAmbientSound("game/rank",255);
-		HudMessage (s:"You have ranked up to \cDCorporal!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage (strparam (s:"You have ranked up to \cDCorporal!"));
 		Rank[PlayerNumber()] = RANK_CORPORAL;
 		RankedUp = True;
 		TakeInventory("PlayerRank",8);
@@ -61,9 +58,7 @@ script 7 (void) {
 	}
 	if (Experience[PlayerNumber()] >= XPREQ_SERGEANT && Rank[PlayerNumber()] < RANK_SERGEANT) {
 		LocalAmbientSound("game/rank",255);
-		HudMessage (s:"You have ranked up to \cDSergeant!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage (strparam (s:"You have ranked up to \cDSergeant!");
 		Rank[PlayerNumber()] = RANK_SERGEANT;
 		RankedUp = True;
 		TakeInventory("PlayerRank",8);
@@ -71,9 +66,7 @@ script 7 (void) {
 	}	
 	if (Experience[PlayerNumber()] >= XPREQ_MASTERSGT && Rank[PlayerNumber()] < RANK_MASTERSGT) {
 		LocalAmbientSound("game/rank",255);
-		HudMessage (s:"You have ranked up to \cDMaster Sergeant!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage (strparam (s:"You have ranked up to \cDMaster Sergeant!"));
 		Rank[PlayerNumber()] = RANK_MASTERSGT;
 		RankedUp = True;
 		TakeInventory("PlayerRank",8);
@@ -81,9 +74,7 @@ script 7 (void) {
 	}	
 	if (Experience[PlayerNumber()] >= XPREQ_OFFICER && Rank[PlayerNumber()] < RANK_OFFICER) {
 		LocalAmbientSound("game/rank",255);
-		HudMessage (s:"You have ranked up to \cDOfficer!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage (strparam (s:"You have ranked up to \cDOfficer!"));
 		RankedUp = True;
 		Rank[PlayerNumber()] = RANK_OFFICER;
 		TakeInventory("PlayerRank",8);
@@ -91,9 +82,7 @@ script 7 (void) {
 	}	
 	if (Experience[PlayerNumber()] >= XPREQ_LIEUTENANT && Rank[PlayerNumber()] < RANK_LIEUTENANT) {
 		LocalAmbientSound("game/rank",255);
-		HudMessage (s:"You have ranked up to \cDLieutenant!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage (strparam (s:"You have ranked up to \cDLieutenant!"));
 		RankedUp = True;
 		Rank[PlayerNumber()] = RANK_LIEUTENANT;
 		TakeInventory("PlayerRank",8);
@@ -101,9 +90,7 @@ script 7 (void) {
 	}	
 	if (Experience[PlayerNumber()] >= XPREQ_MAJOR && Rank[PlayerNumber()] < RANK_MAJOR) {
 		LocalAmbientSound("game/rank",255);
-		HudMessage (s:"You have ranked up to \cDMajor!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage (strparam (s:"You have ranked up to \cDMajor!"));
 		RankedUp = True;
 		Rank[PlayerNumber()] = RANK_MAJOR;
 		TakeInventory("PlayerRank",8);
@@ -111,15 +98,13 @@ script 7 (void) {
 	}	
 	if (Experience[PlayerNumber()] >= XPREQ_COMMANDO && Rank[PlayerNumber()] < RANK_COMMANDO) {
 		LocalAmbientSound("game/rank",255);
-		HudMessage (s:"You have ranked up to \cDCommando!!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage (strparam (s:"You have ranked up to \cDCommando!!"));
 		RankedUp = True;
 		Rank[PlayerNumber()] = RANK_COMMANDO;
 		TakeInventory("PlayerRank",8);
 		GiveInventory("PlayerRank",7);
-	}	
-			
+	}
+	
 	//Check for RANK to give awards
 	if (RankedUp) ACS_ExecuteAlways(91, 0);
 }

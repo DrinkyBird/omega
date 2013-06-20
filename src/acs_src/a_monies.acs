@@ -55,10 +55,7 @@ function void AwardCredits (int amount) {
 		return;
 	
 	IncrCredits (p, amount);
-	SetFont ("SMALLFONT");
-	HudMessage (s:"You have been awarded with \cQ$\cD", d:amount;
-		HUDMSG_FADEOUT, 15000, CR_WHITE,
-		INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	IntelMessage (strparam (s:"You have been awarded with \cQ$\cD", d:amount));
 }
 
 // [Dusk] cleaner version :|
@@ -85,9 +82,7 @@ Script 32 (int amount, int i) {
 		terminate;
 	
 	GiveCredits (i, amount);
-	HudMessageBold (s:"\cRServer \cJhas given \cQ$\cD", d:amount, s:" \cJto ", n:i+1;
-		HUDMSG_FADEOUT, 15000, CR_WHITE,
-		INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+	IntelMessageBold (strparam (s:"\cRServer \cJhas given \cQ$\cD", d:amount, s:" \cJto ", n:i+1));
 }
 
 // Backpacks and credit items use this to give the player credits
@@ -123,11 +118,7 @@ Script 326 OPEN {
 			IncrCredits (i, CreditAwardAmount);
 	
 	AmbientSound ("powerup/credsound", 127);
-	SetFont ("SMALLFONT");
-	HudMessageBold (s:"Credit bonus! You all get \cQ$\cD", d:CreditAwardAmount, s:"\cJ!";
-		HUDMSG_FADEOUT, 15000, CR_WHITE,
-		INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-	
+	IntelMessageBold (strparam (s:"Credit bonus! You all get \cQ$\cD", d:CreditAwardAmount, s:"\cJ!"));
 	restart;
 }
 
@@ -188,12 +179,8 @@ Function int AddCredits (int Player, int NewCredits)
 	if (IsAdmin[PlayerNumber()])
 		return -1;
 	
-	if (IncrCredits (PlayerNumber (), NewCredits)) {
-		SetFont ("SMALLFONT");
-		HudMessage (s:"You have been awarded with \cQ$\cD", d:NewCredits;
-		HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-	}
+	if (IncrCredits (PlayerNumber (), NewCredits))
+		IntelMessage (strparam (s:"You have been awarded with \cQ$\cD", d:NewCredits));
 	
 	return NewCredits;
 }
@@ -202,12 +189,8 @@ Function int RefundCredits (int NewCredits) {
 	if (IsAdmin[PlayerNumber()])
 		return -1;
 	
-	if (IncrCredits (PlayerNumber (), NewCredits)) {
-		SetFont("SMALLFONT");
-		HudMessage (s:"You have been refunded with \cQ$\cD", d:NewCredits;
-		HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-	}
+	if (IncrCredits (PlayerNumber (), NewCredits))
+		IntelMessage (strparam (s:"You have been refunded with \cQ$\cD", d:NewCredits));
 	
 	return NewCredits;
 }
