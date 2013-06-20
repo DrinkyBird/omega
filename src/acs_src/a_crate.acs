@@ -25,6 +25,8 @@ script 309 (int Crate, int Override) {
 	// Crate determines which crate is given, 0 means random
 	// Override means whether all limits should be overridden. Open Deck needs this.
 	int i;
+	int amount;
+	
 	if (!Crate) {
 		// Crate = random(1, MAX_CRATE);
 		Crate = CrateNumber;
@@ -62,7 +64,7 @@ script 309 (int Crate, int Override) {
 			if (GotRefinery[0]) SetActorHealth (203, GetActorSpawnHealth (203));
 			if (GotPlant[0]) SetActorHealth (205, GetActorSpawnHealth (205));
 			if (GotFactory[0]) SetActorHealth (207, GetActorSpawnHealth (207));
-  			if (GotObelisk[0]) SetActorHealth (214, GetActorSpawnHealth (214));
+			if (GotObelisk[0]) SetActorHealth (214, GetActorSpawnHealth (214));
 		} else if(PlayerTeam() == TEAM_BLUE) {
 			HudMessageBold (s:"\cFGDI\cJ got \cDBase Miracle!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
@@ -71,7 +73,7 @@ script 309 (int Crate, int Override) {
 			if (GotRefinery[1]) SetActorHealth (103, GetActorSpawnHealth (103));
 			if (GotPlant[1]) SetActorHealth (105, GetActorSpawnHealth (105));
 			if (GotFactory[1]) SetActorHealth (107, GetActorSpawnHealth (107));
-  			if (GotObelisk[1]) SetActorHealth (114, GetActorSpawnHealth (114));
+			if (GotObelisk[1]) SetActorHealth (114, GetActorSpawnHealth (114));
 		}
 		ACS_ExecuteAlways (930, 0, BUILDING_ALL, PlayerTeam());
 		HudMessage (s:"\cDBase miracle!";
@@ -106,29 +108,30 @@ script 309 (int Crate, int Override) {
 		break;
 	case 5:
 	case 16:
-		SetFont("SMALLFONT");
-		HudMessage (s:"Bonus credits! \cQ$\cD", d:CreditAwardAmount, s:"!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		LocalAmbientSound("powerup/cred",255);
-		Delay(4);
-		LocalAmbientSound("powerup/credsound",255);
-		IncrCredits (PlayerNumber (), CreditAwardAmount);
-		Log(n:0, s:" gets Bonus Credits Crate.");
+		if (GetCredits (-1) >= GetCVAR ("aow_creditlimit")) {
+			crate = 0;
+			restart;
+		}
+		
+		amount = CreditAwardAmount + (GetCredits (-1) / 4);
+		IntelMessage (strparam (s:"Bonus credits! You get \cQ$\cD", d:amount, s:"!"));
+		LocalAmbientSound ("powerup/cred",255);
+		Delay (4);
+		LocalAmbientSound ("powerup/credsound",255);
+		IncrCredits (PlayerNumber (), amount);
+		Log (n:0, s:" gets Bonus Credits Crate.");
 		break;
+	
 	case 6:
 	case 23:
 		if (Rank[PlayerNumber()] >= RANK_COMMANDO && !Override) {crate = 0; restart;}
-		SetFont("SMALLFONT");
-		Log(n:0, s:" gets Bonus XP crate.");
-		HudMessage (s:"\cJYou got \cD250 \cQXP\cJ!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		LocalAmbientSound("powerup/exp",255);
+		Log (n:0, s:" gets Bonus XP crate.");
+		IntelMessage ("\cJYou got \cD250 \cQXP\cJ!");
+		LocalAmbientSound ("powerup/exp",255);
 		
 		for (i = 0; i < 5; i++) {
 			Delay(5);
-			LocalAmbientSound("c4/use",255);
+			LocalAmbientSound ("c4/use",255);
 			AddExperience (50);
 		}
 		break;
@@ -139,10 +142,7 @@ script 309 (int Crate, int Override) {
 			restart;
 		}
 		
-		SetFont("SMALLFONT");
-		HudMessage (s:"\cKFire proof!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage ("\cKFire proof!");
 		LocalAmbientSound("powerup/fire",255);
 		LocalAmbientSound ("misc/armor_pkup", 127);
 		GiveInventory ("FireArmor", 1);
@@ -160,15 +160,10 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound("powerup/invi",255);
 		LocalAmbientSound("powerup/invisound",255);
 		
-		SetFont("SMALLFONT");
-		if(PlayerTeam() == TEAM_RED)
-			HudMessageBold (s:"\cGNod\c- got \cUStealth Crate!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		else if(PlayerTeam() == TEAM_BLUE)
-			HudMessageBold (s:"\cFGDI\c- got \cUStealth Crate!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		if (PlayerTeam() == TEAM_RED)
+			IntelMessageBold ("\cGNod\c- got \cUStealth Crate!");
+		else
+			IntelMessageBold ("\cFGDI\c- got \cUStealth Crate!");
 		
 		SetArmorGrade (-1, AGF_ADDITIVE|ARMOD_NOCHANGE);
 		GiveInventory ("StealthLaserRifle", 1);
@@ -176,18 +171,18 @@ script 309 (int Crate, int Override) {
 		SetActorProperty(0,APROP_DeathSound,"stealth/death");
 		Log(n:0, s:" gets Stealth crate.");
 		
-		HudMessage (s:"\cUStealth rifle!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		// [Dusk] This kind of sounds awkward, is there anything better to go here?
+		IntelMessage ("\cUStealth rifle!");
 		delay (2*35);
-		HudMessage (s:"\cJUse the rifle's \cKAlt-Fire\cJ\nto toggle \cUstealth!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+		IntelMessage ("\cJUse the rifle's \cKAlt-Fire\cJ\nto toggle \cUstealth!");
 		break;
+	
 	case 9:
 	case 25:
-		if (CheckInventory ("PowerInvulnerable") && !Override) {crate = 0; restart;}
-		if (TournamentMode) {crate = 0; restart;}
+		if ((CheckInventory ("PowerInvulnerable") && !Override) || TournamentMode) {
+			crate = 0;
+			restart;
+		}
 		
 		SetFont("SMALLFONT");
 		LocalAmbientSound("powerup/iron", 255);
@@ -207,6 +202,7 @@ script 309 (int Crate, int Override) {
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		break;
+	
 	case 10:
 	case 26:
 	case 36:
@@ -220,20 +216,15 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound("powerup/kama",255);
 		
 		if(PlayerTeam() == TEAM_RED)
-			HudMessageBold (s:"Some crazy ass \cGNod\cJ got\nthe \cKKamikaze Crate!!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-		else if(PlayerTeam() == TEAM_BLUE)
-			HudMessageBold (s:"Some crazy ass \cFGDI\cJ got\nthe \cKKamikaze Crate!!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0);
-		HudMessage (s:"\cKKamikaze!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
+			IntelMessageBold ("Some crazy ass \cGNod\cJ got\nthe \cKKamikaze Crate!!");
+		else
+			IntelMessageBold ("Some crazy ass \cFGDI\cJ got\nthe \cKKamikaze Crate!!");
 		
+		IntelMessage ("\cKKamikaze!");
 		GiveInventory("IsKamikaze",1);
 		Log(n:0, s:" gets Kamikaze.");
 		break;
+	
 	case 11:
 	case 27:
 		SetFont("SMALLFONT");
@@ -260,6 +251,7 @@ script 309 (int Crate, int Override) {
 		RecountPlasma ();
 		Log(n:0, s:" gets Plasma Cannon.");
 		break;
+	
 	case 12:
 	case 19:
 		if (!CheckInventory ("HasClass") && !Override) {crate = 0; restart;}
@@ -276,6 +268,7 @@ script 309 (int Crate, int Override) {
 		ACS_ExecuteAlways(95, 0);
 		Log(n:0, s:" gets Resign Crate.");
 		break;
+	
 	case 13:
 	case 20:
 		SetFont("SMALLFONT");
@@ -297,10 +290,11 @@ script 309 (int Crate, int Override) {
 		GiveInventory("SpeedUpgrade",1);
 		Log(n:0, s:" gets Speed Upgrade.");
 		break;
+	
 	case 14:
 	case 28:
 		// [Dusk] Take half the credits instead
-		int amount = (GetCredits (-1) / 2);
+		amount = (GetCredits (-1) / 2);
 		
 		if (!amount) {
 			// Nothing to steal
