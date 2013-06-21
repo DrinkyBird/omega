@@ -49,12 +49,12 @@ script 309 (int Crate, int Override) {
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		LocalAmbientSound("powerup/armr",255);
 		SetArmorGrade (1, AGF_ADDITIVE|ARMOD_NOCHANGE);
-		Log(n:0, s:" gets Armor Upgrade crate.");
+		Log (s:pname (-1), s:" gets Armor Upgrade crate.");
 		break;
 	case 2:
 		SetFont ("SMALLFONT");
 		AmbientSound ("powerup/base", 127);	
-		Log (n:0, s:" gets Base Miracle.");
+		Log (s:pname (-1), s:" gets Base Miracle.");
 		if(PlayerTeam() == TEAM_RED) {
 			HudMessageBold (s:"\cGNod\cJ got \cDBase Miracle!";
 				HUDMSG_FADEOUT, 15000, CR_WHITE,
@@ -93,7 +93,7 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound("powerup/chem",255);
 		LocalAmbientSound ("misc/armor_pkup", 127);
 		GiveInventory ("ChemicalArmor", 1);
-		Log(n:0, s:" gets Chem Proof.");
+		Log (s:pname (-1), s:" gets Chem Proof.");
 		break;
 	case 4:
 	case 22:
@@ -104,7 +104,7 @@ script 309 (int Crate, int Override) {
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		LocalAmbientSound("powerup/dama",255);
 		GiveInventory("FirepowerUpgrade",1);
-		Log(n:0, s:" gets FirePower Upgrade crate.");
+		Log (s:pname (-1), s:" gets FirePower Upgrade crate.");
 		break;
 	case 5:
 	case 16:
@@ -119,13 +119,13 @@ script 309 (int Crate, int Override) {
 		Delay (4);
 		LocalAmbientSound ("powerup/credsound",255);
 		IncrCredits (PlayerNumber (), amount);
-		Log (n:0, s:" gets Bonus Credits Crate.");
+		Log (s:pname (-1), s:" gets Bonus Credits Crate.");
 		break;
 	
 	case 6:
 	case 23:
 		if (Rank[PlayerNumber()] >= RANK_COMMANDO && !Override) {crate = 0; restart;}
-		Log (n:0, s:" gets Bonus XP crate.");
+		Log (s:pname (-1), s:" gets Bonus XP crate.");
 		IntelMessage ("\cJYou got \cD250 \cQXP\cJ!");
 		LocalAmbientSound ("powerup/exp",255);
 		
@@ -146,7 +146,7 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound("powerup/fire",255);
 		LocalAmbientSound ("misc/armor_pkup", 127);
 		GiveInventory ("FireArmor", 1);
-		Log(n:0, s:" gets Fire Proof crate.");
+		Log (s:pname (-1), s:" gets Fire Proof crate.");
 		break;
 	case 8:
 	case 24:
@@ -169,7 +169,7 @@ script 309 (int Crate, int Override) {
 		GiveInventory ("StealthLaserRifle", 1);
 		GiveInventory ("LaserRifleAmmo", 100);
 		SetActorProperty(0,APROP_DeathSound,"stealth/death");
-		Log(n:0, s:" gets Stealth crate.");
+		Log (s:pname (-1), s:" gets Stealth crate.");
 		
 		// [Dusk] This kind of sounds awkward, is there anything better to go here?
 		IntelMessage ("\cUStealth rifle!");
@@ -188,7 +188,7 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound("powerup/iron", 255);
 		LocalAmbientSound("powerup/invisound", 255);
 		GiveInventory("IronCurtain", 1);
-		Log (n:0, s:" gets Iron Curtain.");
+		Log (s:pname (-1), s:" gets Iron Curtain.");
 		
 		if (PlayerTeam() == TEAM_RED)
 			HudMessageBold (s:"\cGNod\cJ got \cCIron Curtain!!";
@@ -222,7 +222,7 @@ script 309 (int Crate, int Override) {
 		
 		IntelMessage ("\cKKamikaze!");
 		GiveInventory("IsKamikaze",1);
-		Log(n:0, s:" gets Kamikaze.");
+		Log (s:pname (-1), s:" gets Kamikaze.");
 		break;
 	
 	case 11:
@@ -249,7 +249,7 @@ script 309 (int Crate, int Override) {
 		GiveInventory("PlasmaCannon",1);
 		GiveInventory("PlasmaCannonAmmo",10);
 		RecountPlasma ();
-		Log(n:0, s:" gets Plasma Cannon.");
+		Log (s:pname (-1), s:" gets Plasma Cannon.");
 		break;
 	
 	case 12:
@@ -266,7 +266,7 @@ script 309 (int Crate, int Override) {
 			Teleport(70);
 		
 		ACS_ExecuteAlways(95, 0);
-		Log(n:0, s:" gets Resign Crate.");
+		Log (s:pname (-1), s:" gets Resign Crate.");
 		break;
 	
 	case 13:
@@ -288,7 +288,7 @@ script 309 (int Crate, int Override) {
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		GiveInventory("SpeedUpgrade",1);
-		Log(n:0, s:" gets Speed Upgrade.");
+		Log (s:pname (-1), s:" gets Speed Upgrade.");
 		break;
 	
 	case 14:
@@ -308,7 +308,7 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound("powerup/stol",255);
 		Delay(4);
 		LocalAmbientSound("powerup/stolsound",255);
-		Log(n:0, s:" gets Credits Stolen.");
+		Log (s:pname (-1), s:" gets Credits Stolen.");
 		
 		DecrCredits (PlayerNumber (), amount);
 		
@@ -337,7 +337,7 @@ script 309 (int Crate, int Override) {
 		
 		IntelMessage ("You got the \cITime Gun!");
 		
-		Log(n:0, s:" gets Time Gun Crate.");
+		Log (s:pname (-1), s:" gets Time Gun Crate.");
 		RecountTimeCops ();
 		break;
 	case 29:
@@ -431,7 +431,7 @@ script 309 (int Crate, int Override) {
 		SetFont("SMALLFONT");
 		GiveInventory("UtilityGun", 75);
 		GiveInventory("Utility_Ammo", 75);
-		Log(n:0, s:" gets Utility Gun crate.");
+		Log (s:pname (-1), s:" gets Utility Gun crate.");
 		HudMessage (s:"You got the \cKUtility Gun!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
@@ -454,7 +454,7 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound("powerup/resistlaser", 127);
 		LocalAmbientSound ("misc/armor_pkup", 127);
 		GiveInventory ("LaserArmor", 1);
-		Log(n:0, s:" gets Laser Resistance.");
+		Log (s:pname (-1), s:" gets Laser Resistance.");
 		break;
 	case 41:
 	case 42:
@@ -470,7 +470,7 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound("powerup/resistexplosive", 127);
 		LocalAmbientSound ("misc/armor_pkup", 127);
 		GiveInventory ("ExplosionArmor", 1);
-		Log(n:0, s:" gets Explosive Resistance.");
+		Log (s:pname (-1), s:" gets Explosive Resistance.");
 		break;
 	case 43:
 	case 44:
@@ -486,14 +486,14 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound("powerup/resistbullet",255);
 		LocalAmbientSound ("misc/armor_pkup", 127);
 		GiveInventory ("BulletArmor", 1);
-		Log(n:0, s:" gets Bulletproof Vest.");
+		Log (s:pname (-1), s:" gets Bulletproof Vest.");
 		break;
 	case 45:
 		if (!Override && (CrateTime || CheckInventory("IsMech") || !MechEnabled || CheckInventory ("GuardianPowerup"))) {
 			crate = 0; restart;
 		}
 		
-		Log(n:0, s:" gets Guardian crate.");
+		Log (s:pname (-1), s:" gets Guardian crate.");
 		GiveInventory("GuardianPowerup",1);
 		GiveInventory("FlamerAmmo", 200);
 		GiveInventory("NukeAmmo", 1);
@@ -536,7 +536,7 @@ script 309 (int Crate, int Override) {
 		HudMessage (s:"\cGBerserk!";
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
-		Log(n:0, s:" gets Berserk Crate.");
+		Log (s:pname (-1), s:" gets Berserk Crate.");
 		break;
 	case 47:
 	case 48:
@@ -547,7 +547,7 @@ script 309 (int Crate, int Override) {
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		GiveInventory("HealingRadiusItem",1);
 		ACS_ExecuteAlways (352, 0);
-		Log(n:0, s:" gets Healing Radius crate.");
+		Log (s:pname (-1), s:" gets Healing Radius crate.");
 		break;
 	case 49:
 	case 50:
@@ -559,7 +559,7 @@ script 309 (int Crate, int Override) {
 			HUDMSG_FADEOUT, 15000, CR_WHITE,
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		GiveInventory ("EagerBeaver", 1);
-		Log(n:0, s:" gets Chainsaw crate.");
+		Log (s:pname (-1), s:" gets Chainsaw crate.");
 		
 		// [Dusk] The chainsaw replaces unarmed, therefore
 		// if we use the fists, switch to the chainsaw.
@@ -581,7 +581,7 @@ script 309 (int Crate, int Override) {
 			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0);
 		GiveInventory("MarineBeaconItem",1);
 		ACS_ExecuteAlways (352, 0);
-		Log(n:0, s:" gets Marine Beacon.");
+		Log (s:pname (-1), s:" gets Marine Beacon.");
 		break;
 	case 55:
 		if (Timer() < 10*60*35 || CheckInventory ("CrateChooser") || TournamentMode) {
@@ -591,14 +591,14 @@ script 309 (int Crate, int Override) {
 		IntelMessage ("\cKOPEN DECK!");
 		LocalAmbientSound ("powerup/invisound", 127);
 		GiveInventory ("CrateChooser", 1);
-		Log (n:0, s:" gets Open Deck.");
+		Log (s:pname (-1), s:" gets Open Deck.");
 		break;
 	case 57:
 	case 58:
 		SetFont("SMALLFONT");
 		GiveInventory ("ThermalCloakingTime", 90);
 		ACS_ExecuteAlways(953, 0);
-		Log (n:0, s:" gets Thermal Cloaking.");
+		Log (s:pname (-1), s:" gets Thermal Cloaking.");
 		IntelMessage ("\cUThermal cloaking!");
 		delay (35);
 		IntelMessage ("Turrets cannot see you for 90 seconds");
@@ -611,7 +611,7 @@ script 309 (int Crate, int Override) {
 		SetFont ("BIGFONT");
 		HudMessage (s:"Disarm crate!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
 		SetFont ("SMALLFONT");
-		Log (n:0, s:" gets disarm crate.");
+		Log (s:pname (-1), s:" gets disarm crate.");
 		
 		CheckAndRemove ("Boomstick");
 		CheckAndRemove ("DoubleShotgun");
@@ -682,7 +682,7 @@ script 309 (int Crate, int Override) {
 		SetFont("SMALLFONT");
 		IntelMessage ("\cAFatigue!");
 		GiveInventory("SpeedDowngrade",1);
-		Log(n:0, s:" gets Fatigue crate.");
+		Log (s:pname (-1), s:" gets Fatigue crate.");
 		break;
 	case 63:
 	case 64:
@@ -695,7 +695,7 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound ("c4/remote", 127);
 		GiveInventory ("RemoteC4", 1);
 		GiveInventory ("RemoteC4Ammo", 5);
-		Log(n:0, s:" gets Remote C4 crate.");
+		Log (s:pname (-1), s:" gets Remote C4 crate.");
 		break;
 	case 65:
 	case 66:
@@ -715,7 +715,7 @@ script 309 (int Crate, int Override) {
 		
 		IntelMessage ("\cFPartial Invisibility!");
 		GiveInventory ("BlurSphere", 1);
-		Log (n:0, s:" gets Partial Invisibility crate.");
+		Log (s:pname (-1), s:" gets Partial Invisibility crate.");
 		break;
 	case 67:
 	case 68:

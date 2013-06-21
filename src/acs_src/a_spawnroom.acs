@@ -135,7 +135,7 @@ script 95 (int unused, int force) {
 	ACS_ExecuteAlways (91, 0);
 	ACS_ExecuteAlways (10, 0);
 	RecountTimeCops ();
-	Log (n:0, s:" resigns.");
+	Log (s:pname (-1), s:" resigns.");
 	
 	delay (3*35);
 }

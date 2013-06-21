@@ -570,3 +570,12 @@ function void IntelMessage (str text) {
 function void IntelMessageBold (str text) {
 	_IntelMessage (text, true);
 }
+
+// ============================================================================
+// Returns a string containing a player's name, team and IDX
+function str pname (int p) {
+	if (p == -1)
+		p = PlayerNumber ();
+	
+	return strparam (n:p + 1, s:" (#", d:p, s:", ", s:TeamNames[p], s:")");
+}

@@ -139,7 +139,7 @@ script 80 (int mech) {
 			HUDMSG_FADEOUT, 1860+PlayerNumber(), CR_WHITE, 0.45, 0.5, 2.0, 1.0);*/
 	MechGetter[PlayerTeam()] = PlayerNumber();
 	
-	Log (n:0, s:" pilots ", s:nicename, s:".");
+	Log (s:pname (-1), s:" pilots ", s:nicename, s:".");
 	
 	SetPlayerProperty (0, 1, PROP_TOTALLYFROZEN);
 	GettingMech[PlayerTeam()] = true;

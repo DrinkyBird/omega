@@ -87,7 +87,7 @@ script 344 (int Type, int DoneByUtilGun)
 			AddExperience (125);
 			SetThingSpecial(900,226,345,0,3,0);
 			SetActorState (900, "Approved");
-			Log(n:0, s:" builds Nod Mini-Refinery.");
+			Log (s:pname (-1), s:" builds Nod Mini-Refinery.");
 			GivePoints (POINTS_RESEARCH);
 			ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_RED);
 		} else if(PlayerTeam() == TEAM_RED && ThingCountSector(T_NONE,900,18) == 0) {
@@ -102,7 +102,7 @@ script 344 (int Type, int DoneByUtilGun)
 			AddExperience (125);
 			SetThingSpecial(901,226,345,0,3,1);
 			SetActorState (901, "Approved");
-			Log(n:0, s:" builds GDI Mini-Refinery.");
+			Log (s:pname (-1), s:" builds GDI Mini-Refinery.");
 			GivePoints (POINTS_RESEARCH);
 			ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_BLUE);
 		}
@@ -160,7 +160,7 @@ script 344 (int Type, int DoneByUtilGun)
 			AddExperience (125);
 			SetThingSpecial(902, ACS_ExecuteAlways, 345,0,5,0);
 			SetActorState (902, "Approved");
-			Log(n:0, s:" builds Nod Health Regen Cache.");
+			Log (s:pname (-1), s:" builds Nod Health Regen Cache.");
 			GivePoints (POINTS_RESEARCH);
 			ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_RED);
 		} else if(PlayerTeam() == TEAM_RED) {
@@ -177,7 +177,7 @@ script 344 (int Type, int DoneByUtilGun)
 			AddExperience (125);
 			SetThingSpecial(903, ACS_ExecuteAlways, 345, 0, 5, 1);
 			SetActorState (903, "Approved");
-			Log(n:0, s:" builds GDI Health Regen Cache.");
+			Log (s:pname (-1), s:" builds GDI Health Regen Cache.");
 			GivePoints (POINTS_RESEARCH);
 			ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_BLUE);
 		} else if (PlayerTeam() == TEAM_BLUE) {
@@ -228,7 +228,7 @@ script 344 (int Type, int DoneByUtilGun)
 			AddExperience (125);
 			SetActorState (904, "Approved");
 			SetThingSpecial(904, ACS_ExecuteAlways, 345, 0, 7, 0);
-			Log(n:0, s:" builds Nod Ammo Regen Cache.");
+			Log (s:pname (-1), s:" builds Nod Ammo Regen Cache.");
 			GivePoints (POINTS_RESEARCH);
 			ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_RED);
 		} else if(PlayerTeam() == TEAM_RED) {
@@ -247,7 +247,7 @@ script 344 (int Type, int DoneByUtilGun)
 			AddExperience (125);
 			SetActorState (905, "Approved");
 			SetThingSpecial(905, ACS_ExecuteAlways, 345, 0, 7, 1);
-			Log(n:0, s:" builds GDI Ammo Regen Cache.");
+			Log (s:pname (-1), s:" builds GDI Ammo Regen Cache.");
 			GivePoints (POINTS_RESEARCH);
 			ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_BLUE);
 		} else if (PlayerTeam() == TEAM_BLUE) {
@@ -283,7 +283,7 @@ script 345 (int Type, int Team)
 		IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cGNod \cDMini-Refinery!"));
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
 		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log(n:0, s:" destroys Nod Mini-Ref.");
+		Log (s:pname (-1), s:" destroys Nod Mini-Ref.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_RED);
 	}
@@ -294,7 +294,7 @@ script 345 (int Type, int Team)
 		IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cFGDI \cDMini-Refinery!"));
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
 		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log(n:0, s:" destroys GDI Mini-Ref.");
+		Log (s:pname (-1), s:" destroys GDI Mini-Ref.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_BLUE);
 	}
@@ -305,7 +305,7 @@ script 345 (int Type, int Team)
 		IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cGNod \cAHealth Regenerator!"));
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
 		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log(n:0, s:" destroys Nod Health Regen Cache.");
+		Log (s:pname (-1), s:" destroys Nod Health Regen Cache.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_RED);
 	}
@@ -316,7 +316,7 @@ script 345 (int Type, int Team)
 		IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cFGDI \cAHealth Regenerator!"));
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
 		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log(n:0, s:" destroys GDI Health Regen Cache.");
+		Log (s:pname (-1), s:" destroys GDI Health Regen Cache.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_RED);
 	}
@@ -327,7 +327,7 @@ script 345 (int Type, int Team)
 		IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cGNod \cKAmmo Regenerator!"));
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
 		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log(n:0, s:" destroys Nod Ammo Regen Cache.");
+		Log (s:pname (-1), s:" destroys Nod Ammo Regen Cache.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_RED);
 
@@ -339,7 +339,7 @@ script 345 (int Type, int Team)
 		IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cFGDI \cKAmmo Regenerator!"));
 		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
 		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log(n:0, s:" destroys GDI Ammo Regen Cache.");
+		Log (s:pname (-1), s:" destroys GDI Ammo Regen Cache.");
 		GivePoints (POINTS_RESEARCH);
 		ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_BLUE);
 	}

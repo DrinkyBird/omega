@@ -35,6 +35,8 @@ script 951 (int action, int team) {
 			SpawnProjectile (ActivatorTID(), "IonBeaconThrown", 0, 0, -5, 1, 0);
 		else
 			SpawnProjectile (ActivatorTID(), "NukeBeaconThrown", 0, 0, -5, 1, 0);
+		
+		Log (s:pname (-1), s:" plants ", s:cond (PlayerTeam () == TEAM_RED, "Nuclear Strike Beacon", "Ion Cannon Beacon"));
 		SetPlayerProperty (0, 0, PROP_TOTALLYFROZEN);
 		break;
 	case 1:

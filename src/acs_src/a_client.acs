@@ -24,7 +24,7 @@ script 943 OPEN CLIENTSIDE {
 }
 
 script 944 (void) NET CLIENTSIDE {ConsolePlayer = PlayerNumber();}
-script 946 (void) NET CLIENTSIDE {Log(s:"I am player ", d:ConsolePlayer, s:" named ", n:0);}
+script 946 (void) NET CLIENTSIDE {Log(s:"I am ", s:pname (-1));}
 
 script 366 (void) NET CLIENTSIDE {
 	if (PlayerIsBot(PlayerNumber())) terminate;

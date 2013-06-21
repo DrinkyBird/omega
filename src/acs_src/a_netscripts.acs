@@ -83,14 +83,6 @@ script 942 (void) NET {
 		GiveInventory ("IsBlue", 1);
 	}
 	
-	Player_SetTeam (!PlayerTeam());
-	
-	Teleport (70 + PlayerTeam());
-	GiveInventory("IsInSpawnRoom",1);
-	
-	// resign if necessary
-	if (CheckInventory ("HasClass")) ACS_ExecuteAlways (95, 0);
-	
 	// logs and notices
 	str newteam, newcolor;
 	if (PlayerTeam() == TEAM_BLUE) {
@@ -102,7 +94,17 @@ script 942 (void) NET {
 	}
 	
 	IntelMessageBold (strparam (n:0, s:" switches to ", s:newcolor, s:newteam));
-	Log (n:0, s:" switches to weaker ", s:newteam, s:" team. (Score: ", d:score, s:")");
+	Log (s:pname (-1), s:" switches to ", s:newteam, s:" team. (Score: ", d:score, s:")");
+	
+	Player_SetTeam (!PlayerTeam());
+	
+	Teleport (70 + PlayerTeam());
+	GiveInventory("IsInSpawnRoom",1);
+	
+	// Resign, if necessary
+	// TODO: is this really needed?
+	if (CheckInventory ("HasClass"))
+		ACS_ExecuteAlways (95, 0);
 	
 	// reward
 	delay (35*2);
@@ -215,7 +217,7 @@ script 950 (void) NET {
 	GiveCredits (-1, price);
 	LocalAmbientSound ("powerup/credsound", 127);
 	IntelMessage (strparam (s:"You have sold your ", s:weapon, s:" for \cq$\cd", d:price));
-	Log (n:0, s:" sells ", s:weapon, s:" for $", d:price);
+	Log (s:pname (-1), s:" sells ", s:weapon, s:" for $", d:price);
 }
 
 function bool WS_CheckClass (int a, int b) {

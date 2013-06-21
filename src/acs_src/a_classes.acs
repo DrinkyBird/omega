@@ -229,7 +229,7 @@ function void PurchaseClass (int c) {
 	ACS_ExecuteAlways (91, 0);
 	ACS_ExecuteAlways (961, 0, Team);
 	PlayerSpeeds[PlayerNumber()] = Classes[c][CK_SPEED];
-	Log (n:0, s:" becomes ", s:Classes[c][CK_NAME]);
+	Log (s:pname (-1), s:" becomes ", s:Classes[c][CK_NAME]);
 }
 
 // -----------------------------------------------------------------------------
@@ -340,7 +340,7 @@ script 37 (int Team)
 	GiveInventory("PlasmaCannon",1);
 	GiveInventory("PlasmaCannonAmmo",10);
 	SetWeapon("PlasmaCannon");
-	Log(n:0, s:" purchases Plasma Cannon.");
+	Log (s:pname (-1), s:" purchases Plasma Cannon.");
 	RecountPlasma();
 }
 
@@ -373,7 +373,7 @@ script 49 (int Team)
 	GiveInventory("TiberiumAutorifleWeak", 1);
 	GiveInventory("TE21CalAmmo", 200);
 	SetWeapon("TiberiumAutorifleWeak");
-	Log(n:0, s:" purchases Tiberium Autorifle.");
+	Log (s:pname (-1), s:" purchases Tiberium Autorifle.");
 }
 
 //---------------------------CHAINSAW (was flashbangs)
@@ -403,7 +403,7 @@ script 50 (int Team) {
 	
 	GiveInventory ("EagerBeaver", 1);
 	SetWeapon ("EagerBeaver");
-	Log (n:0, s:" purchases Chainsaw.");
+	Log (s:pname (-1), s:" purchases Chainsaw.");
 }
 
 // ARTILLERY CANNON
@@ -434,7 +434,7 @@ script 51 (int Team) {
 	GiveInventory ("ArtilleryCannon", 1);
 	GiveInventory ("ArtilleryShellAmmo", 40);
 	SetWeapon ("ArtilleryCannon");
-	Log(n:0, s:" purchases artillery cannon.");
+	Log (s:pname (-1), s:" purchases artillery cannon.");
 }
 
 //-------------------- BLUE TEAM SUPERWEAPON
@@ -497,7 +497,7 @@ script 55 (int Team) {
 	SetWeapon("IonCannonBeacon");
 	
 	BlueBeaconCooldown = True;
-	Log(n:0, s:" purchases Ion Cannon Beacon.");
+	Log (s:pname (-1), s:" purchases Ion Cannon Beacon.");
 }
 
 //-------------------- RED TEAM SUPERWEAPON
@@ -557,7 +557,7 @@ script 56 (int Team) {
 	SetWeapon ("NuclearStrikeBeacon");
 
 	RedBeaconCooldown = True;
-	Log(n:0, s:" purchases Nuclear Strike Beacon.");
+	Log (s:pname (-1), s:" purchases Nuclear Strike Beacon.");
 }
 
 //---------------------------ARMOUR/DAMAGE UPGRADE
@@ -599,7 +599,7 @@ script 57 (int Team) {
 	GiveInventory("HasArmorUpgrade", 1);
 	GiveInventory("HighUpgrade", 1);
 	SetArmorGrade (1, AGF_ADDITIVE);
-	Log(n:0, s:" purchases armour/damage upgrade.");
+	Log (s:pname (-1), s:" purchases armour/damage upgrade.");
 }
 
 script 961 (int team) {

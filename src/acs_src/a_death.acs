@@ -41,11 +41,10 @@ script 994 DEATH {
 			points = 4;
 		}
 	}
-		
-	// were we on a spree?
+	
 	int killer_t = ACS_ExecuteWithResult (964, 5);
 	int killer_p = ACS_ExecuteWithResult (964, 9);
-	//Log (n:0, s:"\c-: I am ", d:ActivatorTID(), s:" and was killed by ", d:killer_t, s:" (", n:killer_p+1, s:")");
+	// Log (s:pname (-1), s:"\c-: I am ", d:ActivatorTID(), s:" and was killed by ", d:killer_t, s:" (", n:killer_p+1, s:")");
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * KILLER POV STARTS HERE

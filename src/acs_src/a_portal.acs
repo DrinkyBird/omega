@@ -162,11 +162,11 @@ script SC_PORTAL_INIT (void) {
 		
 		SetActorState (TID_PORTAL_BLUE1 + dest, "Active");
 		SetActorState (TID_PORTAL_FX + dest, "Active");
-		Log (n:0, s:" constructs a portal and establishes a link.");
+		Log (s:pname (-1), s:" constructs a portal and establishes a link.");
 	} else {
 		SetActorState (tid, "Inactive");
 		SetActorState (tid_effects, "Init.Inactive");
-		Log (n:0, s:" constructs a portal end.");
+		Log (s:pname (-1), s:" constructs a portal end.");
 	}
 	
 	// update the hud
@@ -180,7 +180,7 @@ script SC_PORTAL_FUNCTION (int idx) {
 	
 	// this script gets executed on both bump and death
 	if (!ThingCount (0, tid)) {
-		Log(n:0, s:" destroys a portal.");
+		Log (s:pname (-1), s:" destroys a portal.");
 		
 		// teamkilling should not yield a reward...
 		if (idx >= 2 && PlayerTeam () == TEAM_BLUE || idx < 2 && PlayerTeam () == TEAM_RED) {

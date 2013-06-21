@@ -210,7 +210,7 @@ Script 350 (int team) {
 	ACS_ExecuteAlways(324,0,3,0,0);			//150 XP
 	Team_GivePoints (PlayerTeam(), 10, false);
 	AddCredits(GetCredits (PlayerNumber()), 250);		//250 credits
-	Log(n:0, s:" disarms beacon.");
+	Log(s:pname (-1), s:" disarms beacon.");
 }
 
 function void SetMaxHealth (int hp) {

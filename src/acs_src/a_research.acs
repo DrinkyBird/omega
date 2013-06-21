@@ -44,10 +44,10 @@ script 65 (int Team) {
 	SetFont("SMALLFONT");
 	if(Team == 0) {
 		IntelMessageBold ("\cGNod\c- researches \cDEnhanced Refining!");
-		Log (n:0, s:" researches Enhanced Refining for Nod.");
+		Log (s:pname (-1), s:" researches Enhanced Refining for Nod.");
 	} else {
 		IntelMessageBold ("\cFGDI\c- researches \cDEnhanced Refining!");
-		Log (n:0, s:" researches Enhanced Refining for GDI.");
+		Log (s:pname (-1), s:" researches Enhanced Refining for GDI.");
 	}
 	
 	EnhancedRefining[Team] = True;
@@ -98,10 +98,10 @@ script 66 (int Team) {
 	SetFont("SMALLFONT");
 	if(Team == 0) {
 		IntelMessageBold ("\cGNod\cJ researches \cKAdvanced Mechs!");
-		Log (n:0, s:" researches Advanced Mechs for Nod");
+		Log (s:pname (-1), s:" researches Advanced Mechs for Nod");
 	} else {
 		IntelMessageBold ("\cFGDI\cJ researches \cKAdvanced Mechs!");
-		Log (n:0, s:" researches Advanced Mechs for GDI");
+		Log (s:pname (-1), s:" researches Advanced Mechs for GDI");
 	}
 
 	AdvancedMechResearch[Team] = True;
@@ -226,7 +226,7 @@ script 70 (int Team) {
 	
 	GiveInventory ("TimedC4Count", 1);
 	SetInventory ("TimedC4", CheckInventory ("TimedC4Count"));
-	Log (n:0, s:" purchases extra C4.");
+	Log (s:pname (-1), s:" purchases extra C4.");
 }
 
 //---------------------------REPAIR GUN UPGRADE
@@ -269,7 +269,7 @@ script 71 (int Team) {
 	
 	GiveInventory ("RepairGunUpgrade", 1);
 	SetWeapon ("RepairGun");
-	Log (n:0, s:" purchases repair gun upgrade.");
+	Log (s:pname (-1), s:" purchases repair gun upgrade.");
 }
 
 
@@ -310,10 +310,10 @@ script 72 (int Team) {
 	SetFont("SMALLFONT");
 	if(Team == 0) {
 		IntelMessageBold ("\cGNod\c- researches \cKAdvanced Turrets!");
-		Log (n:0, s:" researches Advanced Turrets for Nod");
+		Log (s:pname (-1), s:" researches Advanced Turrets for Nod");
 	} else {
 		IntelMessageBold ("\cFGDI\c- researches \cKAdvanced Turrets!");
-		Log (n:0, s:" researches Advanced Turrets for GDI");
+		Log (s:pname (-1), s:" researches Advanced Turrets for GDI");
 	}
 	
 	AdvancedTurrets[Team] = True;
@@ -359,10 +359,10 @@ script 73 (int Team) {
 	SetFont ("SMALLFONT");
 	if(Team == TEAM_RED) {
 		IntelMessageBold ("\cGNod\c- researches \cKIncreased Turret Support!");
-		Log (n:0, s:" researches More Turrets for Nod");
+		Log (s:pname (-1), s:" researches More Turrets for Nod");
 	} else {
 		IntelMessageBold ("\cFGDI\c- researches \cKIncreased Turret Support!");
-		Log (n:0, s:" researches More Turrets for GDI");
+		Log (s:pname (-1), s:" researches More Turrets for GDI");
 	}
 
 	MoreTurrets[Team] = True;
