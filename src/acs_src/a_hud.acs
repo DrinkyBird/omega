@@ -17,22 +17,22 @@ script 5 RESPAWN {
 }
 
 function void ShowStatus(void) {
-	SetFont ("SMALLFONT");
-	HudMessage(s:"\cNCredits: \cQ$\cD", d:GetCredits (PlayerNumber ()),
-		s:"\n", s:"\cNExperience: \cD",d:Experience[PlayerNumber()], s:"\cQ/\cD",d:GetExpNeed(), s:" XP",
-		s:"\n", s:RankTitles[Rank[PlayerNumber()]];
-		HUDMSG_PLAIN, 50+PlayerNumber(), CR_WHITE, -0.685, -0.805, 1.5);
+	str color = cond( PlayerTeam() == TEAM_BLUE, "\cN", "\cA" );
 	
-	SetFont (GetRankPic());
-	HudMessage(s:"a";
-		HUDMSG_PLAIN, 5000+PlayerNumber(), CR_LIGHTBLUE, -0.92, -0.78, 1.5);	
+	SetFont( "SMALLFONT" );
+	HudMessage( s:color, s:"Credits: \cQ$\cD", d:GetCredits( PlayerNumber() ), s:"\n",
+		s:color, s:"Experience: \cD",d:Experience[PlayerNumber()], s:"\cQ/\cD",d:GetExpNeed(), s:" XP", s:"\n",
+		s:RankTitles[Rank[PlayerNumber()]];
+		HUDMSG_PLAIN, 50+PlayerNumber(), CR_WHITE, -0.685, -0.805, 1.5 );
 	
-	SetFont ("DOOMFONT");
+	SetFont( GetRankPic() );
+	HudMessage( s:"a";
+		HUDMSG_PLAIN, 5000+PlayerNumber(), CR_LIGHTBLUE, -0.92, -0.78, 1.5 );
 }
 
 script 111 (int what) {
 	int amount;
-	switch (what) {
+	switch( what ) {
 	case 0:
 		// donation message
 		SetFont ("SMALLFONT");
