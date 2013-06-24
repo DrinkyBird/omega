@@ -1,131 +1,144 @@
 // BUILDING HUD CODE
-script 930 (int what, int team) {
-	if (ActivatorTID () == 0)
+script 930( int what, int team )
+{
+	if( ActivatorTID() == 0 )
 		terminate;
-	
+		
 	int update = false;
 	
 	// Check did the health percentage change.
-	int LastHealth = CheckInventory ("TerminalLastHealth");
-	int perc = BuildingHealth (ActivatorTID ());
+	int LastHealth = CheckInventory( "TerminalLastHealth" );
+	int perc = BuildingHealth( ActivatorTID() );
 	
-	if (perc == LastHealth)
+	if( perc == LastHealth )
 		terminate;
 	
 	// Store the new "last health"
-	SetInventory ("TerminalLastHealth", perc);
+	SetInventory( "TerminalLastHealth", perc );
 	
-	DrawBuildingHud ();
+	DrawBuildingHud();
 }
 
-function void DrawBuildingHud (void) {
-	SetFont ("SMALLFONT");
-	HudMessageBold (s:ExistsBuilding (101), s:"Barracks\cc: ",
-		s:ColorCodeHealth(BuildingHealth (101)), d:BuildingHealth (101), s:"\cc%\n",
-		s:ExistsBuilding (103), s:"Refinery\cc: ",
-		s:ColorCodeHealth(BuildingHealth (103)), d:BuildingHealth (103), s:"\cc%\n",
-		s:ExistsBuilding (105), s:"Research Centre\cc: ",
-		s:ColorCodeHealth(BuildingHealth (105)), d:BuildingHealth (105), s:"\cc%\n",
-		s:ExistsBuilding (107), s:"War Factory\cc: ",
-		s:ColorCodeHealth(BuildingHealth (107)), d:BuildingHealth (107), s:"\cc%\n",
-		s:ExistsBuilding (114), s:"Obelisk of Light\cc: ",
-		s:ColorCodeHealth(BuildingHealth (114)), d:BuildingHealth (114), s:"\cc%\n",
-		s:ExistsBuildingGreen (109), s:"++", s:ExistsBuilding (109), s:"Repair Facility\cc: ",
-		s:ColorCodeHealth(BuildingHealth (109)), d:BuildingHealth (109), s:"\cc%\n",
-		s:ExistsBuildingGreen (903), s:"++", s:ExistsBuilding (903), s:"HP Regen\cc: ",
-		s:ColorCodeHealth(BuildingHealth (903)), d:BuildingHealth (903), s:"\cc%\n",
-		s:ExistsBuildingGreen (905), s:"++", s:ExistsBuilding (905), s:"Ammo Regen\cc: ",
-		s:ColorCodeHealth (BuildingHealth (905)), d:BuildingHealth (905), s:"\cc%\n",
-		s:ExistsBuildingGreen(901), s:"++", s:ExistsBuilding (901), s:"Mini Refinery\cc: ",
-		s:ColorCodeHealth(BuildingHealth (901)), d:BuildingHealth (901), s:"\cc%\n",
-		s:PortalLinkColor (TEAM_BLUE, 0), s:"++", s:PortalLinkColor (TEAM_BLUE, 1), s:"Portal\cc: ",
-		s:ColorCodeHealth(BuildingHealth (TID_PORTAL_BLUE1)), d:BuildingHealth (TID_PORTAL_BLUE1), s:"\cc% / ",
-		s:ColorCodeHealth(BuildingHealth (TID_PORTAL_BLUE2)), d:BuildingHealth (TID_PORTAL_BLUE2), s:"\cc%";
-		HUDMSG_PLAIN, 8850, CR_BLUE, 0.012, 0.52, 0.0);
-	
-	HudMessageBold (s:ExistsBuilding (201), s:"Barracks\cc: ",
-		s:ColorCodeHealth(BuildingHealth (201)), d:BuildingHealth (201), s:"\cc%\n",
-		s:ExistsBuilding (203), s:"Refinery\cc: ",
-		s:ColorCodeHealth(BuildingHealth (203)), d:BuildingHealth (203), s:"\cc%\n",
-		s:ExistsBuilding (205), s:"Research Centre\cc: ",
-		s:ColorCodeHealth(BuildingHealth (205)), d:BuildingHealth (205), s:"\cc%\n",
-		s:ExistsBuilding (207), s:"War Factory\cc: ",
-		s:ColorCodeHealth(BuildingHealth (207)), d:BuildingHealth (207), s:"\cc%\n",
-		s:ExistsBuilding (214), s:"Obelisk of Light\cc: ",
-		s:ColorCodeHealth(BuildingHealth (214)), d:BuildingHealth (214), s:"\cc%\n",
-		s:ExistsBuildingGreen (209), s:"++", s:ExistsBuilding (209), s:"Repair Facility\cc: ",
-		s:ColorCodeHealth(BuildingHealth (209)), d:BuildingHealth (209), s:"\cc%\n",
-		s:ExistsBuildingGreen (902), s:"++", s:ExistsBuilding (902), s:"HP Regen\cc: ",
-		s:ColorCodeHealth(BuildingHealth (902)), d:BuildingHealth (902), s:"\cc%\n",
-		s:ExistsBuildingGreen (904), s:"++", s:ExistsBuilding (904), s:"Ammo Regen\cc: ",
-		s:ColorCodeHealth (BuildingHealth (904)), d:BuildingHealth (904), s:"\cc%\n",
-		s:ExistsBuildingGreen(900), s:"++", s:ExistsBuilding (900), s:"Mini Refinery\cc: ",
-		s:ColorCodeHealth(BuildingHealth (900)), d:BuildingHealth (900), s:"\cc%\n",
-		s:PortalLinkColor (TEAM_RED, 0), s:"++", s:PortalLinkColor (TEAM_RED, 1), s:"Portal\cc: ",
-		s:ColorCodeHealth(BuildingHealth (TID_PORTAL_RED1)), d:BuildingHealth (TID_PORTAL_RED1), s:"\cc% / ",
-		s:ColorCodeHealth(BuildingHealth (TID_PORTAL_RED2)), d:BuildingHealth (TID_PORTAL_RED2), s:"\cc%";
-		HUDMSG_PLAIN, 8851, CR_RED, 0.012, 0.74, 0.0);
-	
-	if (SuddenDeath || TicketPool) {
-		SetFont ("SMALLFONT");
-		HudMessageBold (
-			s:"\cFLives\cC: ", s:FractionColor (Tickets[TEAM_BLUE], StartingTickets), d:Tickets[TEAM_BLUE],
-			s:"\n\cGLives\cC: ", s:FractionColor (Tickets[TEAM_RED], StartingTickets), d:Tickets[TEAM_RED];
-			HUDMSG_PLAIN, 8852, CR_BLUE, 0.012, 0.4, 0.0);
+function void DrawBuildingHud( void )
+{
+	SetFont( "SMALLFONT" );
+	HudMessageBold( s:ExistsBuilding( 101 ), s:"Barracks\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 101 ) ), d:BuildingHealth( 101 ), s:"\cc%\n",
+		s:ExistsBuilding( 103 ), s:"Refinery\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 103 ) ), d:BuildingHealth( 103 ), s:"\cc%\n",
+		s:ExistsBuilding( 105 ), s:"Research Centre\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 105 ) ), d:BuildingHealth( 105 ), s:"\cc%\n",
+		s:ExistsBuilding( 107 ), s:"War Factory\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 107 ) ), d:BuildingHealth( 107 ), s:"\cc%\n",
+		s:ExistsBuilding( 114 ), s:"Obelisk of Light\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 114 ) ), d:BuildingHealth( 114 ), s:"\cc%\n",
+		s:ExistsBuildingGreen( 109 ), s:"++", s:ExistsBuilding( 109 ), s:"Repair Facility\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 109 ) ), d:BuildingHealth( 109 ), s:"\cc%\n",
+		s:ExistsBuildingGreen( 903 ), s:"++", s:ExistsBuilding( 903 ), s:"HP Regen\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 903 ) ), d:BuildingHealth( 903 ), s:"\cc%\n",
+		s:ExistsBuildingGreen( 905 ), s:"++", s:ExistsBuilding( 905 ), s:"Ammo Regen\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 905 ) ), d:BuildingHealth( 905 ), s:"\cc%\n",
+		s:ExistsBuildingGreen( 901 ), s:"++", s:ExistsBuilding( 901 ), s:"Mini Refinery\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 901 ) ), d:BuildingHealth( 901 ), s:"\cc%\n",
+		s:PortalLinkColor( TEAM_BLUE, 0 ), s:"++", s:PortalLinkColor( TEAM_BLUE, 1 ), s:"Portal\cc: ",
+		s:ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE1 ) ), d:BuildingHealth( TID_PORTAL_BLUE1 ), s:"\cc% / ",
+		s:ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE2 ) ), d:BuildingHealth( TID_PORTAL_BLUE2 ), s:"\cc%";
+			HUDMSG_PLAIN, 8850, CR_BLUE, 0.012, 0.52, 0.0 );
+					
+	HudMessageBold( s:ExistsBuilding( 201 ), s:"Barracks\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 201 ) ), d:BuildingHealth( 201 ), s:"\cc%\n",
+		s:ExistsBuilding( 203 ), s:"Refinery\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 203 ) ), d:BuildingHealth( 203 ), s:"\cc%\n",
+		s:ExistsBuilding( 205 ), s:"Research Centre\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 205 ) ), d:BuildingHealth( 205 ), s:"\cc%\n",
+		s:ExistsBuilding( 207 ), s:"War Factory\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 207 ) ), d:BuildingHealth( 207 ), s:"\cc%\n",
+		s:ExistsBuilding( 214 ), s:"Obelisk of Light\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 214 ) ), d:BuildingHealth( 214 ), s:"\cc%\n",
+		s:ExistsBuildingGreen( 209 ), s:"++", s:ExistsBuilding( 209 ), s:"Repair Facility\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 209 ) ), d:BuildingHealth( 209 ), s:"\cc%\n",
+		s:ExistsBuildingGreen( 902 ), s:"++", s:ExistsBuilding( 902 ), s:"HP Regen\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 902 ) ), d:BuildingHealth( 902 ), s:"\cc%\n",
+		s:ExistsBuildingGreen( 904 ), s:"++", s:ExistsBuilding( 904 ), s:"Ammo Regen\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 904 ) ), d:BuildingHealth( 904 ), s:"\cc%\n",
+		s:ExistsBuildingGreen( 900 ), s:"++", s:ExistsBuilding( 900 ), s:"Mini Refinery\cc: ",
+		s:ColorCodeHealth( BuildingHealth( 900 ) ), d:BuildingHealth( 900 ), s:"\cc%\n",
+		s:PortalLinkColor( TEAM_RED, 0 ), s:"++", s:PortalLinkColor( TEAM_RED, 1 ), s:"Portal\cc: ",
+		s:ColorCodeHealth( BuildingHealth( TID_PORTAL_RED1 ) ), d:BuildingHealth( TID_PORTAL_RED1 ), s:"\cc% / ",
+		s:ColorCodeHealth( BuildingHealth( TID_PORTAL_RED2 ) ), d:BuildingHealth( TID_PORTAL_RED2 ), s:"\cc%";
+			HUDMSG_PLAIN, 8851, CR_RED, 0.012, 0.74, 0.0 );
+					
+	if( SuddenDeath || TicketPool )
+	{
+		SetFont( "SMALLFONT" );
+		HudMessageBold(
+			s:"\cFLives\cC: ", s:FractionColor( Tickets[TEAM_BLUE], StartingTickets ), d:Tickets[TEAM_BLUE],
+			s:"\n\cGLives\cC: ", s:FractionColor( Tickets[TEAM_RED], StartingTickets ), d:Tickets[TEAM_RED];
+			HUDMSG_PLAIN, 8852, CR_BLUE, 0.012, 0.4, 0.0 );
 	}
 }
 
-function int BuildingHealth (int tid) {
-	if (ThingCount (T_NONE, tid) == 0)
+function int BuildingHealth( int tid )
+{
+	if( ThingCount( T_NONE, tid ) == 0 )
 		return 0;
 	
-	int p = ((GetActorHealth (tid) * 99) / GetActorSpawnHealth (tid)) + 1;
+	int p = ( ( GetActorHealth( tid ) * 99 ) / GetActorSpawnHealth( tid ) ) + 1;
 	
-	if (p < 0)
+	if( p < 0 )
 		p = 0;
 	
 	return p;
 }
 
-function str PortalLinkColor (int team, int teamcolor) {
-	int t1 = TID_PORTAL_BLUE1 + 2*team;
-	int t2 = TID_PORTAL_BLUE2 + 2*team;
-	int exists = ThingCount (T_NONE, t1) && ThingCount (T_NONE, t2);
-	if (exists) {
-		if (!teamcolor)
+function str PortalLinkColor( int team, int teamcolor )
+{
+	int t1 = TID_PORTAL_BLUE1 + 2 * team;
+	int t2 = TID_PORTAL_BLUE2 + 2 * team;
+	int exists = ThingCount( T_NONE, t1 ) && ThingCount( T_NONE, t2 );
+	
+	if( exists )
+	{
+		if( !teamcolor )
 			return "\cD";
 		
-		if (team == TEAM_BLUE)
+		if( team == TEAM_BLUE )
 			return "\cF";
 		
 		return "\cG";
 	}
+	
 	return "\cM";
 }
 
-function str ColorCodeHealth(int Percentage)
+function str ColorCodeHealth( int Percentage )
 {
-	if (Percentage == 100) // 100%
+	if( Percentage == 100 ) // 100%
 		return "\cq";
-	else if (Percentage > 75) // healthy
+	else if( Percentage > 75 ) // healthy
 		return "\cd";
-	else if (Percentage > 50) // moderate
+	else if( Percentage > 50 ) // moderate
 		return "\cf";
-	else if (Percentage > 25) // low
+	else if( Percentage > 25 ) // low
 		return "\ci";
-	else if (Percentage > 0) // critical
+	else if( Percentage > 0 ) // critical
 		return "\cr";
+	
 	return "\cm"; //destroyed
 }
 
-function str ExistsBuilding (int tid) {
-	if (tid <= 199 || (tid >= 900 && tid % 2 == 1)) {
-		if (ThingCount (T_NONE, tid) > 0)
+function str ExistsBuilding( int tid )
+{
+	if( tid <= 199 || ( tid >= 900 && tid % 2 == 1 ) )
+	{
+		if( ThingCount( T_NONE, tid ) > 0 )
 			return "\cF";
 		else
 			return "\cM";
-	} else {
-		if (ThingCount (T_NONE, tid) > 0)
+	}
+	else
+	{
+		if( ThingCount( T_NONE, tid ) > 0 )
 			return "\cG";
 		else
 			return "\cM";
@@ -134,8 +147,9 @@ function str ExistsBuilding (int tid) {
 	return "\cU";
 }
 
-function str ExistsBuildingGreen (int tid) {
-	if (ThingCount (T_NONE, tid))
+function str ExistsBuildingGreen( int tid )
+{
+	if( ThingCount( T_NONE, tid ) )
 		return "\cD";
 	
 	return "\cM";

@@ -4,33 +4,40 @@ int BotClassNumbers[13] = {20, 22, 54, 24, 27, 33, 34, 53, 61, 35, 36, 44, 60};
 int BotClassBarDependencies[13]   = {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 int BotClassPlantDependencies[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1};
 
-script 888 ENTER {
-	if (!PlayerIsBot(PlayerNumber())) terminate;
-	ACS_ExecuteAlways(92,0,0,0,0);
-	int chance = random(0,100);
-	delay (35);
+script 888 ENTER
+{
+	if( !PlayerIsBot( PlayerNumber() ))
+		terminate;
 	
-	GiveInventory("PurchaseToken",1);
+	ACS_ExecuteAlways( 92, 0 );
+	int chance = random( 0, 100 );
+	delay( 35 );
 	
-	delay (10);
+	GiveInventory( "PurchaseToken", 1 );
+	delay( 10 );
 	
-	int i; int team = 1-PlayerTeam();
-	int max = 12; int x;
-	if (!GotPlant[Team]) max = 8;
-	if (!GotBarracks[Team]) max = 2;
+	int i;
+	int team = 1 - PlayerTeam();
+	int max = 12;
+	int x;
+	
+	if( !GotPlant[Team] ) max = 8;
+	if( !GotBarracks[Team] ) max = 2;
 	
 	// PrintBold (n:0, s:"\c-: I have \cQ$\cD", d:GetCredits (PlayerNumber()));
 	
-	// [Dusk]  save some computing time - see if we can only afford an ssg
+	// [Dusk] TODO: this is quite a gross hack, find a cleaner way to do this!
 	do {
-		i = random(0, max);
-	} while ((!GotBarracks[Team] && BotClassBarDependencies[i]) ||
-			(!GotPlant[Team] && BotClassPlantDependencies[i]) ||
-			(GetCredits (PlayerNumber ()) < BotClassCosts[i]));
+		i = random( 0, max );
+	}
+	while( ( !GotBarracks[Team] && BotClassBarDependencies[i] ) ||
+		( !GotPlant[Team] && BotClassPlantDependencies[i] ) ||
+		( GetCredits( PlayerNumber() ) < BotClassCosts[i] ) );
 	
-	ACS_ExecuteAlways (BotClassNumbers[i], 0, team);
+	ACS_ExecuteAlways( BotClassNumbers[i], 0, team );
 }
 
-script 889 RESPAWN {
-	ACS_ExecuteAlways(888, 0);
+script 889 RESPAWN
+{
+	ACS_ExecuteAlways( 888, 0 );
 }

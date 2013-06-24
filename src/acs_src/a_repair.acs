@@ -2,110 +2,138 @@
 
 #define REPAIRTYPE_REPAIR 0
 #define REPAIRTYPE_MEDIC 1
-script 650 (int amount, int repairtype, int turret) {
-	if (GetHealth() <= 0) terminate;
+script 650( int amount, int repairtype, int turret )
+{
+	if( GetHealth() <= 0 ) terminate;
 	
 	int hp, newhp;
 	int tid = ActivatorTID();
 	
-	int origid = ActivatorTID ();
-	int pn = PlayerNumber ();
-	int team = PlayerTeam ();
+	int origid = ActivatorTID();
+	int pn = PlayerNumber();
+	int team = PlayerTeam();
 	int bonus;
 	
-	SetActivatorToTarget (0);
-	tid = ActivatorTID ();
+	SetActivatorToTarget( 0 );
+	tid = ActivatorTID();
 	
-	if (tid == origid) terminate;
-	if (!CheckActorDistance (origid, tid, 800)) terminate;
+	if( tid == origid ) terminate;
+	
+	if( !CheckActorDistance( origid, tid, 800 ) ) terminate;
 	
 	int newpn;
 	int what = -1;
 	int tteam = -1;
 	
 	// are we shooting at a terminal?
-	if (tid == TID_PORTAL_BLUE1 || tid == TID_PORTAL_BLUE2) {
+	if( tid == TID_PORTAL_BLUE1 || tid == TID_PORTAL_BLUE2 )
+	{
 		// blue portal
 		what = BUILDING_PORTAL;
 		tteam = TEAM_BLUE;
-	} else if (tid == TID_PORTAL_RED1 || tid == TID_PORTAL_RED2) {
+	}
+	else if( tid == TID_PORTAL_RED1 || tid == TID_PORTAL_RED2 )
+	{
 		// red portal
 		what = BUILDING_PORTAL;
 		tteam = TEAM_RED;
-	} else for (int i = 0; i < 18; i++) {
-		if (tid == BaseTIDs[i]) {
-			what = i/2;
-			tteam = i%2;
-		}
 	}
-	
-	if (what != -1 && tteam == team) {
-		if (repairtype != REPAIRTYPE_REPAIR) terminate;
-		if (SuddenDeath && tid < 900) terminate;
-		// k we're shooting at a terminal
-
-		hp = GetHealth ();
-		newhp = hp + amount;
-		if (hp >= GetSpawnHealth ()) terminate;
-		if (newhp >= GetSpawnHealth ()) newhp = GetSpawnHealth();
+	else for( int i = 0; i < 18; i++ )
+		{
+			if( tid == BaseTIDs[i] )
+			{
+				what = i / 2;
+				tteam = i % 2;
+			}
+		}
 		
-		SetHealth (newhp);
-	
+	if( what != -1 && tteam == team )
+	{
+		if( repairtype != REPAIRTYPE_REPAIR ) terminate;
+		
+		if( SuddenDeath && tid < 900 ) terminate;
+		
+		// k we're shooting at a terminal
+		
+		hp = GetHealth();
+		newhp = hp + amount;
+		
+		if( hp >= GetSpawnHealth() ) terminate;
+		
+		if( newhp >= GetSpawnHealth() ) newhp = GetSpawnHealth();
+		
+		SetHealth( newhp );
+		
 		// REPAIR AWARDS
-		SetActivator (origid);
+		SetActivator( origid );
 		
 		// activator is now the repairman again
-		if (RepairBonus[pn] < 250)
+		if( RepairBonus[pn] < 250 )
 			RepairBonus[pn]++;
-		else {
+		else
+		{
 			RepairBonus[pn] = 0;
-			AddExperience (50);
-			LocalAmbientSound ("c4/use", 127);
-			GivePoints (1);
+			AddExperience( 50 );
+			LocalAmbientSound( "c4/use", 127 );
+			GivePoints( 1 );
 		}
 		
-		if (!(RepairBonus[pn] % 10)) GiveCredits (-1, CreditRepairAmount);
+		if( !( RepairBonus[pn] % 10 ) ) GiveCredits( -1, CreditRepairAmount );
 		
-		ACS_ExecuteAlways (930, 0, what, tteam); // update the hud
-	} else if (tid >= 3800 && tid <= 3831 || CheckInventory ("IsAIMarine")) {
-		if (repairtype == REPAIRTYPE_REPAIR) amount = 1;
-		bonus = amount*3;
-		newpn = tid-3800;
+		ACS_ExecuteAlways( 930, 0, what, tteam ); // update the hud
+	}
+	else if( tid >= 3800 && tid <= 3831 || CheckInventory( "IsAIMarine" ) )
+	{
+		if( repairtype == REPAIRTYPE_REPAIR ) amount = 1;
+		
+		bonus = amount * 3;
+		newpn = tid - 3800;
 		
 		// NOT AT ENEMIES YOU FUCKTARD
-		if (!CheckInventory ("IsAIMarine") && GetPlayerInfo (newpn, PLAYERINFO_TEAM) != team) terminate;
-		if (CheckInventory ("IsAIMarine") && CheckInventory ("IsRed") != team)
-			terminate;
+		if( !CheckInventory( "IsAIMarine" ) && GetPlayerInfo( newpn, PLAYERINFO_TEAM ) != team ) terminate;
 		
+		if( CheckInventory( "IsAIMarine" ) && CheckInventory( "IsRed" ) != team )
+			terminate;
+			
 		// special case for mechs
-		if (CheckInventory ("IsMech")) {
-			if (repairtype == REPAIRTYPE_MEDIC)
+		if( CheckInventory( "IsMech" ) )
+		{
+			if( repairtype == REPAIRTYPE_MEDIC )
 				terminate;
-			else {
+			else
+			{
 				amount = 4;
 				bonus = 1;
 			}
 		}
 		
-		hp = GetHealth ();
+		hp = GetHealth();
 		newhp = hp + amount;
-		if (hp >= GetSpawnHealth ()) terminate;
-		if (newhp >= GetSpawnHealth ()) newhp = GetSpawnHealth();
-		SetHealth (newhp);
+		
+		if( hp >= GetSpawnHealth() ) terminate;
+		
+		if( newhp >= GetSpawnHealth() ) newhp = GetSpawnHealth();
+		
+		SetHealth( newhp );
 		
 		// MEDIC AWARDS
-		if (!CheckInventory ("PowerNoHealXP")) {
-			SetActivator (3800+pn);
-			if (MedicBonus[pn] < MedicBonusNeed) {
+		if( !CheckInventory( "PowerNoHealXP" ) )
+		{
+			SetActivator( 3800 + pn );
+			
+			if( MedicBonus[pn] < MedicBonusNeed )
+			{
 				MedicBonus[pn] += bonus;
-			} else {
+			}
+			else
+			{
 				MedicBonus[pn] = 0;
-				AddExperience (50);
-				LocalAmbientSound ("c4/use", 127);
-				GivePoints (1);
+				AddExperience( 50 );
+				LocalAmbientSound( "c4/use", 127 );
+				GivePoints( 1 );
 			}
 			
-			if (!(MedicBonus[pn] % 6)) GiveCredits (-1, CreditRepairAmount);
+			if( !( MedicBonus[pn] % 6 ) ) GiveCredits( -1, CreditRepairAmount );
 		}
 	}
 }
@@ -114,11 +142,13 @@ script 650 (int amount, int repairtype, int turret) {
  * Result value of 1 means repair turret should display
  * the repairing animation, 0 means it should not.
  */
-script 651 (void) {
-	SetResultValue (0);
-	int tid = ACS_ExecuteWithResult (964, 5);
+script 651( void )
+{
+	SetResultValue( 0 );
+	int tid = ACS_ExecuteWithResult( 964, 5 );
 	
-	if (SuddenDeath && tid < 900) {
+	if( SuddenDeath && tid < 900 )
+	{
 		// It's sudden death. We can't repair here, so
 		// transform into a klaxon turret instead!
 		// SetActorState (0, "NoLongerMrNiceGuy");
@@ -126,58 +156,75 @@ script 651 (void) {
 		// SetActorState crashes here as this function is used
 		// as a parameter for A_JumpIf. Signify the turret instead
 		// that it should replace itself.
-		GiveInventory ("SDReplace", 1);
+		GiveInventory( "SDReplace", 1 );
 		terminate;
 	}
 	
 	int what = -1;
 	int tteam = -1;
-	if (tid == TID_PORTAL_BLUE1 || tid == TID_PORTAL_BLUE2) {
+	
+	if( tid == TID_PORTAL_BLUE1 || tid == TID_PORTAL_BLUE2 )
+	{
 		// blue portal
 		what = BUILDING_PORTAL;
 		tteam = TEAM_BLUE;
-	} else if (tid == TID_PORTAL_RED1 || tid == TID_PORTAL_RED2) {
+	}
+	else if( tid == TID_PORTAL_RED1 || tid == TID_PORTAL_RED2 )
+	{
 		// red portal
 		what = BUILDING_PORTAL;
 		tteam = TEAM_RED;
-	} for (int i = 0; i < 18; i++) {
-		if (tid == BaseTIDs[i]) {
-			what = i/2;
-			tteam = i%2;
+	}
+	
+	for( int i = 0; i < 18; i++ )
+	{
+		if( tid == BaseTIDs[i] )
+		{
+			what = i / 2;
+			tteam = i % 2;
 		}
 	}
-	if (what == -1) terminate;
 	
-	int hp = GetActorHealth (tid);
+	if( what == -1 ) terminate;
+	
+	int hp = GetActorHealth( tid );
 	int newhp = hp + 8;
-	if (hp >= GetActorSpawnHealth (tid)) terminate;
-	if (newhp >= GetActorSpawnHealth (tid)) newhp = GetActorSpawnHealth(tid);
 	
-	SetActorHealth (tid, newhp);
+	if( hp >= GetActorSpawnHealth( tid ) ) terminate;
 	
-	ACS_ExecuteAlways (930, 0, what, tteam);
-	SetResultValue (1);
+	if( newhp >= GetActorSpawnHealth( tid ) ) newhp = GetActorSpawnHealth( tid );
+	
+	SetActorHealth( tid, newhp );
+	
+	ACS_ExecuteAlways( 930, 0, what, tteam );
+	SetResultValue( 1 );
 }
 
 // FRIEND HEALTH DISPLAY
-script 654 (void) CLIENTSIDE {
-	if (PlayerNumber() != ConsolePlayer) terminate;
-	int myteam = PlayerTeam ();
+script 654( void ) CLIENTSIDE
+{
+	if( PlayerNumber() != ConsolePlayer ) terminate;
+	
+	int myteam = PlayerTeam();
 	str nc = "\cF";
-	if (myteam)
+	
+	if( myteam )
 		nc = "\cG";
+		
+	SetActivatorToTarget( 0 );
+	delay( 3 );
 	
-	SetActivatorToTarget (0);
-	delay (3);
+	int tid = ActivatorTID();
 	
-	int tid = ActivatorTID ();
-	if (PlayerNumber() == -1) terminate;
-	if (tid == 3800+ConsolePlayer) terminate;
-	if (GetPlayerInfo (tid-3800, PLAYERINFO_TEAM) != myteam) terminate;
+	if( PlayerNumber() == -1 ) terminate;
 	
-	int shp = GetSpawnHealth ();
-	int hp = GetHealth ();
-	str c = FractionColor (hp, shp);
-	SetFont ("SMALLFONT");
-	HudMessageBold (s:nc, n:0, s:"\n", s:c, d:hp, s:" / ", d:shp; HUDMSG_FADEOUT, 2000, 0, 0.5, 0.4, 1.0, 0.5);
+	if( tid == 3800 + ConsolePlayer ) terminate;
+	
+	if( GetPlayerInfo( tid - 3800, PLAYERINFO_TEAM ) != myteam ) terminate;
+	
+	int shp = GetSpawnHealth();
+	int hp = GetHealth();
+	str c = FractionColor( hp, shp );
+	SetFont( "SMALLFONT" );
+	HudMessageBold( s: nc, n: 0, s: "\n", s: c, d: hp, s: " / ", d: shp; HUDMSG_FADEOUT, 2000, 0, 0.5, 0.4, 1.0, 0.5 );
 }

@@ -160,7 +160,7 @@
 // 1504 - 1505
 #define TID_PORTAL_FX 1508
 // 1508 - 1511
-	// 1512 - 1519 is free
+// 1512 - 1519 is free
 #define TID_MARINE 1520
 // 1520 - 1544
 
@@ -203,7 +203,8 @@
 
 bool Bots[MAX_MARINES];
 
-int BaseTIDs[18] = {
+int BaseTIDs[18] =
+{
 	TID_BARRACKS_BLUE, TID_BARRACKS_RED,
 	TID_REFINERY_BLUE, TID_REFINERY_RED,
 	TID_RESCENTRE_BLUE, TID_RESCENTRE_RED,
@@ -376,11 +377,11 @@ int Classes[NUM_CLASSES][64];
 #define CK_NUMITEMS     9 // last key - item info follows
 
 // CK_FLAGS
-#define CF_ENHANCEDC4   (1 << 0)
-#define CF_SUPPORT      (1 << 1)
-#define CF_CANTPILOT    (1 << 2)
-#define CF_HEALTHREGEN  (1 << 3)
-#define CF_HARVESTER    (1 << 4)
+#define CF_ENHANCEDC4   ( 1 << 0 )
+#define CF_SUPPORT      ( 1 << 1 )
+#define CF_CANTPILOT    ( 1 << 2 )
+#define CF_HEALTHREGEN  ( 1 << 3 )
+#define CF_HARVESTER    ( 1 << 4 )
 
 // CK_DEP
 #define DEP_NONE        0
@@ -389,7 +390,8 @@ int Classes[NUM_CLASSES][64];
 #define DEP_REFINERY    3
 
 // =============================================================================
-str NormalWeaponNames[MAX_NORMAL_WEAPONS] = {
+str NormalWeaponNames[MAX_NORMAL_WEAPONS] =
+{
 	"ArtilleryCannon",
 	"ChemicalSprayer",
 	"DoubleShotgun",

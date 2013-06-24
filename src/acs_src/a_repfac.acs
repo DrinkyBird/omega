@@ -5,68 +5,100 @@
 // You may use portions of this script in your project as long as you give credit where credit is
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
-script 106 (int team) {
-	if (team == PlayerTeam()) terminate; // inverse values, bah
-	if (CheckInventory ("InRepairs")) terminate;
-	GiveInventory("InRepairs",1);
-	delay(1);
-	ACS_ExecuteAlways (107, 0);
+script 106( int team )
+{
+	if( team == PlayerTeam() )
+		terminate; // inverse values, bah
+	
+	if( CheckInventory( "InRepairs" ) )
+		terminate;
+	
+	GiveInventory( "InRepairs", 1 );
+	delay( 1 );
+	ACS_ExecuteAlways( 107, 0 );
 }
 
-script 107 (void) {
-	if (!CheckInventory("InRepairs")) terminate;
-	int hp, shp, i;
-	shp = GetSpawnHealth ();
+script 107( void )
+{
+	if( !CheckInventory( "InRepairs" ) )
+		terminate;
 	
-	if (!CheckInventory("IsMech")) {
-		while (GetHealth () < GetSpawnHealth ()) {
-			GiveInventory ("RepairEffectPlayer", 1);
+	int hp, shp, i;
+	shp = GetSpawnHealth();
+	
+	if( !CheckInventory( "IsMech" ) )
+	{
+		while( GetHealth() < GetSpawnHealth() )
+		{
+			GiveInventory( "RepairEffectPlayer", 1 );
 			
-			for (i = 0; i <= 2; i++) {
-				if (!CheckInventory ("InRepairs")) terminate;
-				delay (5);
+			for( i = 0; i <= 2; i++ )
+			{
+				if( !CheckInventory( "InRepairs" ) ) terminate;
+				
+				delay( 5 );
 			}
 			
-			if (GotRepair[1-PlayerTeam()]) {
-				SetHealth (GetHealth() + 3);
-				GiveInventory ("AmmoCachePack", 1);
-			} else {
-				SetHealth (GetHealth() + 1);
+			if( GotRepair[1 - PlayerTeam()] )
+			{
+				SetHealth( GetHealth() + 3 );
+				GiveInventory( "AmmoCachePack", 1 );
+			}
+			else
+			{
+				SetHealth( GetHealth() + 1 );
 			}
 			
-			if (GetHealth () > shp) SetHealth (shp);
-			if (GetHealth () <= 0) terminate;
+			if( GetHealth() > shp )
+				SetHealth( shp );
+			
+			if( GetHealth() <= 0 )
+				terminate;
 		}
 		
-		if (GetHealth () > GetSpawnHealth ()) SetHealth (GetSpawnHealth ());
-		TakeInventory("InRepairs",1);
-	} else {
-		while (GetHealth () < GetSpawnHealth () && CheckInventory ("InRepairs")) {
-			GiveInventory("RepairEffectMech",1);
+		if( GetHealth() > GetSpawnHealth() )
+			SetHealth( GetSpawnHealth() );
+		
+		TakeInventory( "InRepairs", 1 );
+	}
+	else
+	{
+		while( GetHealth() < GetSpawnHealth() && CheckInventory( "InRepairs" ) )
+		{
+			GiveInventory( "RepairEffectMech", 1 );
 			
-			for (i = 0; i <= 2; i++) {
-				if (!CheckInventory ("InRepairs")) terminate;
-				delay (5);
+			for( i = 0; i <= 2; i++ )
+			{
+				if( !CheckInventory( "InRepairs" ) ) terminate;
+				
+				delay( 5 );
 			}
 			
-			if (GotRepair[1-PlayerTeam()]) {
-				SetHealth (GetHealth() + 22);
-				GiveInventory("MechAmmoStuffSmall",1);
-			} else {
-				SetHealth (GetHealth() + 66);
+			if( GotRepair[1 - PlayerTeam()] )
+			{
+				SetHealth( GetHealth() + 22 );
+				GiveInventory( "MechAmmoStuffSmall", 1 );
+			}
+			else
+			{
+				SetHealth( GetHealth() + 66 );
 			}
 			
-			if (GetHealth () > shp) SetHealth (shp);
-			if (GetHealth () <= 0) terminate;
+			if( GetHealth() > shp )
+				SetHealth( shp );
+			
+			if( GetHealth() <= 0 )
+				terminate;
 		}
 		
-		while (CheckInventory ("InRepairs")) {
-			delay (15);
-			GiveInventory("MechAmmoStuffSmall",1);
+		while( CheckInventory( "InRepairs" ) )
+		{
+			delay( 15 );
+			GiveInventory( "MechAmmoStuffSmall", 1 );
 		}
 		
-		TakeInventory("InRepairs",1);
+		TakeInventory( "InRepairs", 1 );
 	}
 }
 
-script 108 (void) TakeInventory ("InRepairs", 1);
+script 108( void ) TakeInventory( "InRepairs", 1 );

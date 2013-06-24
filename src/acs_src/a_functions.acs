@@ -9,37 +9,42 @@
  */
 
 // MATH FUNCTIONS
-function int abs (int n) {
-	if (n < 0)
+function int abs( int n )
+{
+	if( n < 0 )
 		return -n;
+		
 	return n;
 }
 
-function int msqr (int n) {
+function int msqr( int n )
+{
 	return n * n;
 }
 
 // [SP] This came from the ZDoom wiki
-function int sqrt(int number)
+function int sqrt( int number )
 {
-	if(number <= 3)
+	if( number <= 3 )
 	{
-		if(number > 0)
+		if( number > 0 )
 		{
 			return 1;
 		}
+		
 		return 0;
 	}
-
+	
 	int oldAns = number >> 1,                     // initial guess
-	    newAns = (oldAns + number / oldAns) >> 1; // first iteration
-
+		newAns = ( oldAns + number / oldAns ) >> 1; // first iteration
+		
 	// main iterative method
-	while(newAns < oldAns) {
+	while( newAns < oldAns )
+	{
 		oldAns = newAns;
-		newAns = (oldAns + number / oldAns) >> 1;
+		newAns = ( oldAns + number / oldAns ) >> 1;
 	}
-
+	
 	return oldAns;
 }
 
@@ -47,20 +52,24 @@ function int sqrt(int number)
 
 // [Dusk] returns 1 if player has $price money, discount taken into account
 // if not, prints the error message and returns 0
-function int CheckCredits(int price) {
-	if (IsAdmin[PlayerNumber()]) return 1;
-	price = ACS_ExecuteWithResult (330, price);
+function int CheckCredits( int price )
+{
+	if( IsAdmin[PlayerNumber()] ) return 1;
 	
-	if (GetCredits (PlayerNumber()) < price) {
-		TakeInventory("PurchaseToken",1);
-		LocalAmbientSound("misc/funds",255);
+	price = ACS_ExecuteWithResult( 330, price );
+	
+	if( GetCredits( PlayerNumber() ) < price )
+	{
+		TakeInventory( "PurchaseToken", 1 );
+		LocalAmbientSound( "misc/funds", 255 );
 		DisplayCross();
-		SETFONT("BigFont");
-		HudMessage(s:"You need \cQ$\cD", d:price - GetCredits (PlayerNumber()), s:"\c- more to purchase this!";
-			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
-		
-		if (GetLevelInfo (LEVELINFO_LEVELNUM) == 20 || GetLevelInfo (LEVELINFO_LEVELNUM) == 21)
-			ThrustThing((VectorAngle(GetActorVelX(0), GetActorVelY(0)) >> 8) + 128, 25, 0, 0);
+		SETFONT( "BigFont" );
+HudMessage( s: "You need \cQ$\cD", d: price - GetCredits( PlayerNumber() ), s: "\c- more to purchase this!";
+					HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+					
+		if( GetLevelInfo( LEVELINFO_LEVELNUM ) == 20 || GetLevelInfo( LEVELINFO_LEVELNUM ) == 21 )
+			ThrustThing( ( VectorAngle( GetActorVelX( 0 ), GetActorVelY( 0 ) ) >> 8 ) + 128, 25, 0, 0 );
+			
 		return 0;
 	}
 	
@@ -68,479 +77,618 @@ function int CheckCredits(int price) {
 }
 
 // [Dusk] returns 1 if player has no class, 0 of they have, along with error message
-function int IsResigned(void) {
-	if (CheckInventory ("HasClass") == 0)
+function int IsResigned( void )
+{
+	if( CheckInventory( "HasClass" ) == 0 )
 		return 1;
+		
+	Error( "You need to resign first!" );
 	
-	Error ("You need to resign first!");
-	
-	if (GetLevelInfo (LEVELINFO_LEVELNUM) == 20 || GetLevelInfo (LEVELINFO_LEVELNUM) == 21)
-		ThrustThing((VectorAngle(GetActorVelX(0), GetActorVelY(0)) >> 8) + 128, 25, 0, 0);
-	
+	if( GetLevelInfo( LEVELINFO_LEVELNUM ) == 20 || GetLevelInfo( LEVELINFO_LEVELNUM ) == 21 )
+		ThrustThing( ( VectorAngle( GetActorVelX( 0 ), GetActorVelY( 0 ) ) >> 8 ) + 128, 25, 0, 0 );
+		
 	return 0;
 }
 
 // [Dusk] returns 1 if player is pressing this button the second time
-function int IsSecondPress(str StatCard, int price) {
+function int IsSecondPress( str StatCard, int price )
+{
 	// AOW20 skips this check for classes
-	if ((GetLevelInfo (LEVELINFO_LEVELNUM) == 20 || GetLevelInfo (LEVELINFO_LEVELNUM) == 21) && (
-		StatCard != "WEAP01" && StatCard != "WEAP02" &&
-		StatCard != "WEAP03" && StatCard != "WEAP04" &&
-		StatCard != "WEAP05" && StatCard != "WEAP06")) {return 1;}
-	
-	if (!CheckInventory("PurchaseToken")) {
-		ACS_ExecuteWithResult (330, price);
-		SetFont(StatCard);
-		HudMessage(s:"a";
-			HUDMSG_FADEOUT, 2100+PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0);
-		ACS_ExecuteAlways (956, 0);
-		return 0;
-	} else {
-		// [Dusk] clear the card out once the class is purchased
-		HudMessage(s:""; HUDMSG_PLAIN, 2100+PlayerNumber(), CR_UNTRANSLATED, 0.0, 0.0, 0.01);
+	if( ( GetLevelInfo( LEVELINFO_LEVELNUM ) == 20 || GetLevelInfo( LEVELINFO_LEVELNUM ) == 21 ) && (
+				StatCard != "WEAP01" && StatCard != "WEAP02" &&
+				StatCard != "WEAP03" && StatCard != "WEAP04" &&
+				StatCard != "WEAP05" && StatCard != "WEAP06" ) )
+	{
+		return 1;
 	}
+	
+	if( !CheckInventory( "PurchaseToken" ) )
+	{
+		ACS_ExecuteWithResult( 330, price );
+		SetFont( StatCard );
+	HudMessage( s: "a";
+					HUDMSG_FADEOUT, 2100 + PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0 );
+		ACS_ExecuteAlways( 956, 0 );
+		return 0;
+	}
+	else
+	{
+		// [Dusk] clear the card out once the class is purchased
+	HudMessage( s: ""; HUDMSG_PLAIN, 2100 + PlayerNumber(), CR_UNTRANSLATED, 0.0, 0.0, 0.01 );
+	}
+	
 	return 1;
 }
 
 // this bit is in its own script because custom functions cannot use latent functions
-script 956 (void) {
-	GiveInventory("PurchaseToken",1);
-	Delay(35*1);
-	TakeInventory("PurchaseToken",1);
+script 956( void )
+{
+	GiveInventory( "PurchaseToken", 1 );
+	Delay( 35 * 1 );
+	TakeInventory( "PurchaseToken", 1 );
 	terminate;
 }
 
 // [Dusk] tick display function
-function void DisplayTick (void) {
-	LocalAmbientSound ("c4/use", 255);
+function void DisplayTick( void )
+{
+	LocalAmbientSound( "c4/use", 255 );
 	// SETFONT("TICK");
 	// HudMessage(s:"a"; HUDMSG_FADEOUT, 2100+PlayerNumber(), CR_DarkRed, 0.5, 0.5, 2.0, 1.0);
 }
 
-function void DisplayCross (void) {
-	LocalAmbientSound ("misc/nope", 127);
+function void DisplayCross( void )
+{
+	LocalAmbientSound( "misc/nope", 127 );
 	// SETFONT("NOENTRY");
 	// HudMessage(s:"a"; HUDMSG_FADEOUT, 2100+PlayerNumber(), CR_DarkRed, 0.5, 0.5, 2.0, 1.0);
 }
 
 // [Dusk] Barracks check
-function int CheckBarracks (int Team) {
-	if (IsAdmin[PlayerNumber()]) return 1;
-	if (!GotBarracks[Team]) {
-		Error ("Your \cFbarracks\c- has been destroyed!");
+function int CheckBarracks( int Team )
+{
+	if( IsAdmin[PlayerNumber()] ) return 1;
+	
+	if( !GotBarracks[Team] )
+	{
+		Error( "Your \cFbarracks\c- has been destroyed!" );
 		return 0;
 	}
+	
 	return 1;
 }
 
 // [Dusk] Research Centre check
-function int CheckPlant (int Team) {
-	if (IsAdmin[PlayerNumber()]) return 1;
-	if (!GotPlant[Team]) {
-		Error ("Your \cFresearch centre\c- has been destroyed!");
+function int CheckPlant( int Team )
+{
+	if( IsAdmin[PlayerNumber()] ) return 1;
+	
+	if( !GotPlant[Team] )
+	{
+		Error( "Your \cFresearch centre\c- has been destroyed!" );
 		return 0;
 	}
+	
 	return 1;
 }
 
 // [Dusk] Refinery check
-function int CheckRefinery (int Team) {
-	if (IsAdmin[PlayerNumber()]) return 1;
-	if (!GotRefinery[Team]) {
-		Error ("Your \cFrefinery\c- has been destroyed!");
+function int CheckRefinery( int Team )
+{
+	if( IsAdmin[PlayerNumber()] ) return 1;
+	
+	if( !GotRefinery[Team] )
+	{
+		Error( "Your \cFrefinery\c- has been destroyed!" );
 		return 0;
 	}
+	
 	return 1;
 }
 
 // [Dusk] War Factory check
-function int CheckFactory (int Team) {
-	if (IsAdmin[PlayerNumber()]) return 1;
-	if (!GotFactory[Team]) {
-		Error ("Your \cFwar factory\c- has been destroyed!");
+function int CheckFactory( int Team )
+{
+	if( IsAdmin[PlayerNumber()] ) return 1;
+	
+	if( !GotFactory[Team] )
+	{
+		Error( "Your \cFwar factory\c- has been destroyed!" );
 		return 0;
 	}
+	
 	return 1;
 }
 
 // [Dusk] Check for free hangers
-function int CheckFreeHanger (int Team) {
-	if (GettingMech[Team]) {
-		Error ("There is another mech in the hanger!");
+function int CheckFreeHanger( int Team )
+{
+	if( GettingMech[Team] )
+	{
+		Error( "There is another mech in the hanger!" );
 		return 0;
 	}
+	
 	return 1;
 }
 
 // [Dusk] Check for advanced mech research
-function int CheckAdvMechResearch (int Team) {
-	if (IsAdmin[PlayerNumber()]) return 1;
-	if (!AdvancedMechResearch[Team]) {
-		Error ("You need to research \cfadvanced mechs\c- first!");
+function int CheckAdvMechResearch( int Team )
+{
+	if( IsAdmin[PlayerNumber()] ) return 1;
+	
+	if( !AdvancedMechResearch[Team] )
+	{
+		Error( "You need to research \cfadvanced mechs\c- first!" );
 		return 0;
 	}
+	
 	return 1;
 }
 
 // [Dusk] Check for plasma cooldown
-function int CheckPlasmaCooldown (void) {
+function int CheckPlasmaCooldown( void )
+{
 	int wait;
-	if (IsAdmin[PlayerNumber()]) return 1;
-	if (PlasmaCooldown[PlayerNumber()] > Timer()) {
-		wait = (PlasmaCooldown[PlayerNumber()] - Timer()) / 35;
+	
+	if( IsAdmin[PlayerNumber()] ) return 1;
+	
+	if( PlasmaCooldown[PlayerNumber()] > Timer() )
+	{
+		wait = ( PlasmaCooldown[PlayerNumber()] - Timer() ) / 35;
 		DisplayCross();
-		SETFONT("BigFont");
-		HudMessage(s:"You must wait \cF", d:wait, s:" seconds\c- before\n",
-			s:"purchasing another \cNplasma cannon!";
-			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+		SETFONT( "BigFont" );
+		HudMessage( s: "You must wait \cF", d: wait, s: " seconds\c- before\n",
+			s: "purchasing another \cNplasma cannon!";
+			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
 		return 0;
 	}
+	
 	return 1;
 }
 
-function void GiveToAll (str what, int amount) {
-	for (int i = 0; i < MAXPLAYERS; i++)
-		GiveActorInventory (3800 + i, what, amount);
-}
-
-script 356 (void)
+// [Dusk]
+function void GiveToAll( str what, int amount )
 {
-	if(PlayerTeam() == TEAM_RED)
-		SetResultValue(1);
-	else if(PlayerTeam() == TEAM_BLUE)
-		SetResultValue(0);
+	for( int i = 0; i < MAXPLAYERS; i++ )
+		GiveActorInventory( 3800 + i, what, amount );
 }
 
-script 336 (int Invert) {
-	if (Invert == 0)
+script 356( void )
+{
+	if( PlayerTeam() == TEAM_RED )
+		SetResultValue( 1 );
+	else if( PlayerTeam() == TEAM_BLUE )
+		SetResultValue( 0 );
+}
+
+script 336( int Invert )
+{
+	if( Invert == 0 )
 	{
-		if(PlayerTeam() == TEAM_RED)
-			SetResultValue(0);
-		else if(PlayerTeam() == TEAM_BLUE)
-			SetResultValue(1);
+		if( PlayerTeam() == TEAM_RED )
+			SetResultValue( 0 );
+		else if( PlayerTeam() == TEAM_BLUE )
+			SetResultValue( 1 );
 	}
 	else
 	{
-		if(PlayerTeam() == TEAM_RED)
-			SetResultValue(1);
-		else if(PlayerTeam() == TEAM_BLUE)
-			SetResultValue(0);
+		if( PlayerTeam() == TEAM_RED )
+			SetResultValue( 1 );
+		else if( PlayerTeam() == TEAM_BLUE )
+			SetResultValue( 0 );
 	}
 }
 
-function bool MitigateDoublePress(void)
+function bool MitigateDoublePress( void )
 {
-	if ( Timer() - LastMenu[PlayerNumber()] < 5 )
+	if( Timer() - LastMenu[PlayerNumber()] < 5 )
 		return true; // [SP] This is to fix the "double cost" bug
+	
 	LastMenu[PlayerNumber()] = Timer();
 	return false;
 }
 
-function int SurrenderCount (int team) {
+function int SurrenderCount( int team )
+{
 	int count = 0;
-	for (int i = 0; i < MAXPLAYERS; i++) {
-		if (PlayerInGame(i) && GetPlayerInfo (i, PLAYERINFO_TEAM) == team && Surrender[i]) count++;
+	
+	for( int i = 0; i < MAXPLAYERS; i++ )
+	{
+		if( PlayerInGame( i ) && GetPlayerInfo( i, PLAYERINFO_TEAM ) == team && Surrender[i] ) count++;
 	}
+	
 	return count;
 }
 
-// freezes all players
-function void FreezeBold (void) {
-	for (int i = 0; i < MAXPLAYERS; i++) {
-		if (PlayerInGame(i) && !IsAdmin[i]) {
-			SetPlayerProperty (i, PROP_TOTALLYFROZEN, true);
-			SetActorProperty (3800+i, APROP_Invulnerable, true);
+// [Dusk] Freezes all players
+function void FreezeBold( void )
+{
+	for( int i = 0; i < MAXPLAYERS; i++ )
+	{
+		if( PlayerInGame( i ) && !IsAdmin[i] )
+		{
+			SetPlayerProperty( i, PROP_TOTALLYFROZEN, true );
+			SetActorProperty( 3800 + i, APROP_Invulnerable, true );
 		}
 	}
 }
 
-// reverse action for above
-function void DefrostBold (void) {
-	for (int i = 0; i < MAXPLAYERS; i++) {
-		if (PlayerInGame(i) && !IsAdmin[i]) {
-			SetPlayerProperty (i, PROP_TOTALLYFROZEN, false);
-			SetActorProperty (3800+i, APROP_Invulnerable, false);
-		}
-	}
-}
-
-// refreshes time cop limit
-function void RecountTimeCops (void) {
-	NumTimeCops[0] = 0; NumTimeCops[1] = 0;
-	for (int i = 0; i < MAXPLAYERS; i++) {
-		if (!PlayerInGame(i)) continue;
-		if (CheckActorInventory(3800+i, "TimeGun")) {
-			if (GetPlayerInfo (i, PLAYERINFO_TEAM) == TEAM_RED)
+// [Dusk] Refreshes time cop limit
+function void RecountTimeCops( void )
+{
+	NumTimeCops[0] = 0;
+	NumTimeCops[1] = 0;
+	
+	for( int i = 0; i < MAXPLAYERS; i++ )
+	{
+		if( !PlayerInGame( i ) ) continue;
+		
+		if( CheckActorInventory( 3800 + i, "TimeGun" ) )
+		{
+			if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_RED )
 				NumTimeCops[0]++;
-			else if (GetPlayerInfo (i, PLAYERINFO_TEAM) == TEAM_BLUE)
+			else if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_BLUE )
 				NumTimeCops[1]++;
 		}
 	}
 }
 
 // refreshes plasma limit
-function void RecountPlasma (void) {
-	NumPlasmaCannons[0] = 0; NumPlasmaCannons[1] = 0;
-	for (int i = 0; i < MAXPLAYERS; i++) {
-		if (!PlayerInGame(i)) continue;
-		if (CheckActorInventory(3800+i, "PlasmaCannon")) {
-			if (GetPlayerInfo (i, PLAYERINFO_TEAM) == TEAM_RED)
+function void RecountPlasma( void )
+{
+	NumPlasmaCannons[0] = 0;
+	NumPlasmaCannons[1] = 0;
+	
+	for( int i = 0; i < MAXPLAYERS; i++ )
+	{
+		if( !PlayerInGame( i ) ) continue;
+		
+		if( CheckActorInventory( 3800 + i, "PlasmaCannon" ) )
+		{
+			if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_RED )
 				NumPlasmaCannons[0]++;
-			else if (GetPlayerInfo (i, PLAYERINFO_TEAM) == TEAM_BLUE)
+			else if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_BLUE )
 				NumPlasmaCannons[1]++;
 		}
 	}
 }
 
-// checks tickets and ends the game if tickets are out
-// activator is assumed to be the killer!
-function void TakeTickets (int team, int count) {
-	if (!SuddenDeath && !TicketPool) return;
+// [Dusk] Checks tickets and ends the game if tickets are out
+// The activator is assumed to be the killer!
+// TODO: should this be moved to a_suddendeath.acs?
+function void TakeTickets( int team, int count )
+{
+	if( !SuddenDeath && !TicketPool ) return;
 	
 	Tickets[team] -= count;
 	
 	// inform clients of the new ticket values by changing the counters'
 	// speed. clients use these speeds to display ticket values.
-	if (GetActorSpeed (TID_TICKETCOUNTER_RED) != Tickets[TEAM_RED])
-		SetActorSpeed (TID_TICKETCOUNTER_RED, Tickets[TEAM_RED]);
-	if (GetActorSpeed (TID_TICKETCOUNTER_BLUE) != Tickets[TEAM_BLUE])
-		SetActorSpeed (TID_TICKETCOUNTER_BLUE, Tickets[TEAM_BLUE]);
-	
+	if( GetActorSpeed( TID_TICKETCOUNTER_RED ) != Tickets[TEAM_RED] )
+		SetActorSpeed( TID_TICKETCOUNTER_RED, Tickets[TEAM_RED] );
+		
+	if( GetActorSpeed( TID_TICKETCOUNTER_BLUE ) != Tickets[TEAM_BLUE] )
+		SetActorSpeed( TID_TICKETCOUNTER_BLUE, Tickets[TEAM_BLUE] );
+		
 	// tell clients to update the hud
-	ACS_ExecuteAlways (931, 0);
+	ACS_ExecuteAlways( 931, 0 );
 	
 	// handle ticket loss
 	int d;
-	if (Tickets[TEAM_BLUE] <= 0) {
-		d = BlueScore () - RedScore ();
-		if (d < 0) d = 0;
+	
+	if( Tickets[TEAM_BLUE] <= 0 )
+	{
+		d = BlueScore() - RedScore();
 		
-		SetFont("BIGFONT");
-		HudMessageBold (s:"\cFSteel Talons\cJ lose out of ticket loss";
-			HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0);
-		Log(s:"GDI loses out of ticket loss");
+		if( d < 0 ) d = 0;
+		
+		SetFont( "BIGFONT" );
+		HudMessageBold( s: "\cFSteel Talons\cJ lose out of ticket loss";
+			HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0 );
+		Log( s: "GDI loses out of ticket loss" );
+	
+		GameOver = true;
+		ConsoleCommand( "pointlimit 1" );
+		Team_GivePoints( TEAM_RED, d + 50, 0 );
+	}
+	else if( Tickets[TEAM_RED] <= 0 )
+	{
+		d = RedScore() - BlueScore();
+		
+		if( d < 0 ) d = 0;
+		
+		SetFont( "BIGFONT" );
+		HudMessageBold( s: "\cgBlack Hand\cJ loses out of ticket loss";
+			HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0 );
+		Log( s: "Nod loses out of ticket loss" );
 		
 		GameOver = true;
-		ConsoleCommand ("pointlimit 1");
-		Team_GivePoints (TEAM_RED, d+50, 0);
-	} else if (Tickets[TEAM_RED] <= 0) {
-		d = RedScore () - BlueScore ();
-		if (d < 0) d = 0;
-		
-		SetFont("BIGFONT");
-		HudMessageBold (s:"\cgBlack Hand\cJ loses out of ticket loss";
-			HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0);
-		Log(s:"Nod loses out of ticket loss");
-		
-		GameOver = true;
-		ConsoleCommand ("pointlimit 1");
-		Team_GivePoints (TEAM_BLUE, d+50, 0);
+		ConsoleCommand( "pointlimit 1" );
+		Team_GivePoints( TEAM_BLUE, d + 50, 0 );
 	}
 }
 
-// returns color code
-function str FractionColor (int perc, int max) {
-	if (perc == max)
+// [Dusk] Returns color code for the given fraction
+function str FractionColor( int numer, int denom )
+{
+	if( numer > denom )
+		return "\cH";
+	
+	if( numer == denom )
 		return "\cQ";
-	else if ((perc*4)/3 >= max) // 75%
+	
+	if(( numer * 4 ) / 3 >= denom ) // 75%
 		return "\cD";
-	else if (perc*2 >= max) // 50%
+	
+	if( numer * 2 >= denom ) // 50%
 		return "\cF";
-	else if (perc*4 >= max) // 25%
+	
+	if( numer * 4 >= denom ) // 25%
 		return "\cI";
-	else if (perc > 0) // 24-1%
+	
+	if( numer > 0 ) // 24 - 1%
 		return "\cR";
+	
 	return "\cM"; // 0%
 }
 
 // shortcuts
-function void SetFragGrenades (int grenades) {
-	if (!CheckInventory ("FragGrenade"))
-		GiveInventory ("FragGrenade", 1);
-	SetAmmoCapacity ("FragGrenadeAmmo", grenades);
-	if (CheckInventory ("FragGrenadeAmmo") < grenades) {
-		GiveInventory ("FragGrenadeAmmo", grenades);
-	} else if (CheckInventory ("FragGrenadeAmmo") > grenades) {
-		TakeInventory ("FragGrenadeAmmo", 10);
-		GiveInventory ("FragGrenadeAmmo", grenades);
-	}
+function void SetFragGrenades( int grenades )
+{
+	if( !CheckInventory( "FragGrenade" ) )
+		GiveInventory( "FragGrenade", 1 );
+	
+	SetAmmoCapacity( "FragGrenadeAmmo", grenades );
+	SetInventory( "FragGrenadeAmmo", grenades );
 }
 
-function int GetHealth (void) {return GetActorProperty (0, APROP_HEALTH);}
-function void SetHealth (int hp) {SetActorProperty (0, APROP_HEALTH, hp);}
-function int GetActorHealth (int tid) {return GetActorProperty (tid, APROP_HEALTH);}
-function void SetActorHealth (int tid, int hp) {SetActorProperty (tid, APROP_HEALTH, hp);}
-function int GetSpawnHealth (void) {return GetActorProperty (0, APROP_SPAWNHEALTH);}
-function void SetSpawnHealth (int shp) {SetActorProperty (0, APROP_SPAWNHEALTH, shp);}
-function int GetActorSpawnHealth (int tid) {return GetActorProperty (tid, APROP_SPAWNHEALTH);}
-function void SetActorSpawnHealth (int tid, int shp) {SetActorProperty (tid, APROP_SPAWNHEALTH, shp);}
-function int GetSpeed (void) {return GetActorProperty (0, APROP_SPEED);}
-function void SetSpeed (int value) {SetActorProperty (0, APROP_SPEED, value);}
-function int GetActorSpeed (int tid) {return GetActorProperty (tid, APROP_SPEED);}
-function void SetActorSpeed (int tid, int value) {SetActorProperty (tid, APROP_SPEED, value);}
-function int LevelNumber (void) {return GetLevelInfo (LEVELINFO_LEVELNUM);}
-function void GivePoints (int p) {Team_GivePoints (PlayerTeam(), p, false);}
-function int GetPlayerTeam (int p) { return GetPlayerInfo (p, PLAYERINFO_TEAM); }
+// [Dusk] Various shortcut functions.
+function int GetHealth( void )
+{
+	return GetActorProperty( 0, APROP_HEALTH );
+}
+
+function void SetHealth( int hp )
+{
+	SetActorProperty( 0, APROP_HEALTH, hp );
+}
+
+function int GetActorHealth( int tid )
+{
+	return GetActorProperty( tid, APROP_HEALTH );
+}
+
+function void SetActorHealth( int tid, int hp )
+{
+	SetActorProperty( tid, APROP_HEALTH, hp );
+}
+
+function int GetSpawnHealth( void )
+{
+	return GetActorProperty( 0, APROP_SPAWNHEALTH );
+}
+
+function void SetSpawnHealth( int shp )
+{
+	SetActorProperty( 0, APROP_SPAWNHEALTH, shp );
+}
+
+function int GetActorSpawnHealth( int tid )
+{
+	return GetActorProperty( tid, APROP_SPAWNHEALTH );
+}
+
+function void SetActorSpawnHealth( int tid, int shp )
+{
+	SetActorProperty( tid, APROP_SPAWNHEALTH, shp );
+}
+
+function int GetSpeed( void )
+{
+	return GetActorProperty( 0, APROP_SPEED );
+}
+
+function void SetSpeed( int value )
+{
+	SetActorProperty( 0, APROP_SPEED, value );
+}
+
+function int GetActorSpeed( int tid )
+{
+	return GetActorProperty( tid, APROP_SPEED );
+}
+
+function void SetActorSpeed( int tid, int value )
+{
+	SetActorProperty( tid, APROP_SPEED, value );
+}
+
+function int LevelNumber( void )
+{
+	return GetLevelInfo( LEVELINFO_LEVELNUM );
+}
+
+function void GivePoints( int p )
+{
+	Team_GivePoints( PlayerTeam(), p, false );
+}
+
+function int GetPlayerTeam( int p )
+{
+	return GetPlayerInfo( p, PLAYERINFO_TEAM );
+}
 
 // returns the `display name` of the player with id pn
 // NOTE: this function must cater for client-side acs!
-function str DisplayName (int pn) {
-	int tid = 3800+pn;
-	if (pn < 0 || pn > 31) tid = ActivatorTID();
+function str DisplayName( int pn )
+{
+	int tid = 3800 + pn;
 	
-	if (CheckActorInventory (tid, "IsMech")) {
-		if (CheckActorInventory (tid, "OrcaWeapons")) return"\cCOrca";
-		if (CheckActorInventory (tid, "RavenWeapons")) return"\cCRaven";
-		if (CheckActorInventory (tid, "WolverineWeapons")) return"\cCWolverine";
-		if (CheckActorInventory (tid, "MadCatWeapons")) return"\cCMadCat";
-		if (CheckActorInventory (tid, "TitanWeapons")) return"\cCTitan";
-		if (CheckActorInventory (tid, "GuardianWeapons")) return"\cCGuardian";
-	} else if (CheckActorInventory (tid, "PowerBerserk")) {
+	if( pn < 0 || pn > 31 ) tid = ActivatorTID();
+	
+	if( CheckActorInventory( tid, "IsMech" ) )
+	{
+		if( CheckActorInventory( tid, "OrcaWeapons" ))      return "\cCOrca";
+		if( CheckActorInventory( tid, "RavenWeapons" ))     return "\cCRaven";
+		if( CheckActorInventory( tid, "WolverineWeapons" )) return "\cCWolverine";
+		if( CheckActorInventory( tid, "MadCatWeapons" ))    return "\cCMadCat";
+		if( CheckActorInventory( tid, "TitanWeapons" ))     return "\cCTitan";
+		if( CheckActorInventory( tid, "GuardianWeapons" ))  return "\cCGuardian";
+	}
+	else if( CheckActorInventory( tid, "PowerBerserk" ) )
 		return "\cGBerserker";
-	} else if (CheckActorInventory (tid, "IsAdmin")) {
+	else if( CheckActorInventory( tid, "IsAdmin" ) )
 		return "\cJAdministrator";
-	}
+	else if( CheckActorInventory( tid, "HasClass" ))
+		return Classes[CheckActorInventory( tid, "ClassID" )][CK_NAME];
 	
-	switch (CheckActorInventory (tid, "ClassID")) {
-		case CLASS_NONE: return "No class";
-		case CLASS_GUNMAN: return "Gunman";
-		case CLASS_ENGINEER: return "Engineer";
-		case CLASS_MINIGUNNER: return "Minigunner";
-		case CLASS_TECHNICIAN: return "Technician";
-		case CLASS_FLAMER: return "Flamethrower";
-		case CLASS_RIFLEMAN: return "Rifleman";
-		case CLASS_MACHINEGUNNER: return "Machinegunner";
-		case CLASS_GRENADIER: return "Grenadier";
-		case CLASS_ROCKETEER: return "Rocket soldier";
-		case CLASS_STEALTH: return "Stealth trooper";
-		case CLASS_GAUSSGUNNER: return "Gauss gunner";
-		case CLASS_CHEMWARRIOR: return "Chem warrior";
-		case CLASS_SHOCKTROOPER: return "Shock trooper";
-		case CLASS_COMMANDO: return "Commando";
-		case CLASS_SHOTGUNNER: return "Shotgunner";
-		case CLASS_SUICIDEBOMBER: return "Suicide bomber";
-		case CLASS_SNIPER: return "Sniper";
-		case CLASS_UTILITYGUY: return "Utility guy";
-		case CLASS_DEMOEXPERT: return "Demo expert";
-		case CLASS_MEDIC: return "Field Medic";
-		case CLASS_LASERCHAINGUNNER: return "Laser chaingunner";
-		case CLASS_JUMPJET: return "Jumpjet infantry";
-		case CLASS_TIBRIFLE: return "Tiberium autorifleman";
-		case CLASS_DOUBLESHOTGUNNER: return "Double shotgunner";
-		case CLASS_PLASMAGUNNER: return "Plasma gunner";
-		case CLASS_ARTILLERY: return "Artillery soldier";
-		case CLASS_TIMECOP: return "Time cop";
-		case CLASS_HARVESTER: return "Tiberium harvester";
-		case CLASS_ADVHARVESTER: return "Adv. Tiberium harvester";
-	}
-	
-	return "missingno.";
+	return "";
 }
 
-function int SetInventory (str item, int count) {
-	int n = count - CheckInventory (item);
-	if (n > 0)
-		GiveInventory (item, n);
-	else if (n < 0)
-		TakeInventory (item, -n);
+// [Dusk] Function for explicitly setting the amount given inventory item.
+// No-op if no change is necessary.
+function int SetInventory( str item, int count )
+{
+	int n = count - CheckInventory( item );
 	
+	if( n > 0 )
+		GiveInventory( item, n );
+	else if( n < 0 )
+		TakeInventory( item, -n );
+		
 	return n;
 }
 
-function int SetActorInventory (int tid, str item, int count) {
-	int n = count - CheckActorInventory (tid, item);
-	if (n > 0)
-		GiveActorInventory (tid, item, n);
-	else if (n < 0)
-		TakeActorInventory (tid, item, -1*n);
+// [Dusk] Exactly the same as SetInventory except operates on someone
+// other than the activator.
+function int SetActorInventory( int tid, str item, int count )
+{
+	int n = count - CheckActorInventory( tid, item );
 	
+	if( n > 0 )
+		GiveActorInventory( tid, item, n );
+	else if( n < 0 )
+		TakeActorInventory( tid, item, -1 * n );
+		
 	return n;
 }
 
-// [Dusk] counts how many guardians you have
-function int GuardianCount (void) {
+// [Dusk] Counts how many guardians you have
+function int GuardianCount( void )
+{
 	int n;
-	for (int i = 0; i < MAXPLAYERS; i++) {
-		if (GetPlayerInfo (i, PLAYERINFO_TEAM) == PlayerTeam() &&
-		CheckActorInventory (3800+i, "PowerGuardian"))
+	
+	for( int i = 0; i < MAXPLAYERS; i++ )
+	{
+		if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == PlayerTeam() &&
+				CheckActorInventory( 3800 + i, "PowerGuardian" ) )
 			n++;
 	}
+	
 	return n;
 }
 
-function void Error (str text) {
-	LocalAmbientSound ("misc/nope", 127);
-	SetFont ("BIGFONT");
-	HudMessage (s:text; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
+// [Dusk] Generic function for an error message
+function void Error( str text )
+{
+	LocalAmbientSound( "misc/nope", 127 );
+	SetFont( "BIGFONT" );
+	HudMessage( s:text;
+		HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
 }
 
-function void ReddenSector (int tag) {Sector_SetColor (tag, 255, 150, 150);}
+function void ReddenSector( int tag )
+{
+	Sector_SetColor( tag, 255, 150, 150 );
+}
 
-function int cond (int a, int b, int c) {
-	if (a)
+// [Dusk] ACS does not have the ?: operator, work around this:
+function int cond( int a, int b, int c )
+{
+	if( a )
 		return b;
-	
+		
 	return c;
 }
 
 // ============================================================================
-// Acquire target information. This is encapsulated in a script so
+// [Dusk] Acquire target information. This is encapsulated in a script so
 // as not to interfere with the original script's activator.
-script SC_TargetInfo (int type, int value) {
-	SetActivatorToTarget (0);
-	SetResultValue (0);
+script SC_TargetInfo( int type, int value )
+{
+	SetActivatorToTarget( 0 );
+	SetResultValue( 0 );
 	
-	switch (type) {
+	switch( type )
+	{
 	case TARGETINFO_X:
-		SetResultValue (GetActorX (0));
+		SetResultValue( GetActorX( 0 ) );
 		break;
+	
 	case TARGETINFO_Y:
-		SetResultValue (GetActorY (0));
+		SetResultValue( GetActorY( 0 ) );
 		break;
+	
 	case TARGETINFO_Z:
-		SetResultValue (GetActorZ (0));
+		SetResultValue( GetActorZ( 0 ) );
 		break;
+	
 	case TARGETINFO_Health:
-		SetResultValue (GetHealth ());
+		SetResultValue( GetHealth() );
 		break;
+	
 	case TARGETINFO_Angle:
-		SetResultValue (GetActorAngle (0));
+		SetResultValue( GetActorAngle( 0 ) );
 		break;
+	
 	case TARGETINFO_TID:
-		SetResultValue (ActivatorTID ());
+		SetResultValue( ActivatorTID() );
 		break;
+	
 	case TARGETINFO_PlayerNum:
-		SetResultValue (PlayerNumber ());
+		SetResultValue( PlayerNumber() );
 		break;
+	
 	case TARGETINFO_SpawnHealth:
-		SetResultValue (GetSpawnHealth ());
+		SetResultValue( GetSpawnHealth() );
 		break;
+	
 	case TARGETINFO_Team:
-		SetResultValue (PlayerTeam ());
+		SetResultValue( PlayerTeam() );
 		break;
+	
 	case TARGETINFO_WeaponCheck:
-		SetResultValue (CheckWeapon (value));
+		SetResultValue( CheckWeapon( value ) );
 		break;
+	
 	case TARGETINFO_Name:
-		SetResultValue (strparam (n:0));
+		SetResultValue( strparam( n: 0 ) );
 		break;
 	}
 }
 
-function int GetTargetInfo (int type) {
-	return ACS_ExecuteWithResult (SC_TARGETINFO, type);
+// [Dusk] Front-ends:
+function int GetTargetInfo( int type )
+{
+	return ACS_ExecuteWithResult( SC_TARGETINFO, type );
 }
 
-function int CheckTargetWeapon (str type) {
-	return ACS_ExecuteWithResult (SC_TARGETINFO, TARGETINFO_WeaponCheck, type);
+function int CheckTargetWeapon( str type )
+{
+	return ACS_ExecuteWithResult( SC_TARGETINFO, TARGETINFO_WeaponCheck, type );
 }
 // ============================================================================
 // [Dusk] Generic intel message
-function void _IntelMessage (str text, bool bold) {
+function void _IntelMessage( str text, bool bold )
+{
 	// Check if it's multi-line
 	int multiline = false;
-	for (int c = 0; c < strlen (text); c++) {
-		if (GetChar (text, c) == '\n') {
+	
+	for( int c = 0; c < strlen( text ); c++ )
+	{
+		if( GetChar( text, c ) == '\n' )
+		{
 			multiline = true;
 			break;
 		}
@@ -548,34 +696,38 @@ function void _IntelMessage (str text, bool bold) {
 	
 	// Determine y-pos
 	int ypos = INTEL_YPOS;
-	if (multiline)
+	
+	if( multiline )
 		ypos = INTEL_YPOS2;
+		
+	SetFont( "SMALLFONT" );
 	
-	SetFont ("SMALLFONT");
-	
-	if (bold)
-		HudMessageBold (s:text;
+	if( bold )
+		HudMessageBold( s:text;
 			HUDMSG_FADEOUT | HUDMSG_LOG, 15000, CR_WHITE,
-			INTEL_XPOS, ypos, 2.0, 1.0);
+			INTEL_XPOS, ypos, 2.0, 1.0 );
 	else
-		HudMessage (s:text;
+		HudMessage( s:text;
 			HUDMSG_FADEOUT | HUDMSG_LOG, 15000, CR_WHITE,
-			INTEL_XPOS, ypos, 2.0, 1.0);
+			INTEL_XPOS, ypos, 2.0, 1.0 );
 }
 
-function void IntelMessage (str text) {
-	_IntelMessage (text, false);
+function void IntelMessage( str text )
+{
+	_IntelMessage( text, false );
 }
 
-function void IntelMessageBold (str text) {
-	_IntelMessage (text, true);
+function void IntelMessageBold( str text )
+{
+	_IntelMessage( text, true );
 }
 
 // ============================================================================
-// Returns a string containing a player's name, team and IDX
-function str pname (int p) {
-	if (p == -1)
-		p = PlayerNumber ();
-	
-	return strparam (n:p + 1, s:" (#", d:p, s:", ", s:TeamNames[p], s:")");
+// [Dusk] Returns a string containing a player's name, team and IDX
+function str pname( int p )
+{
+	if( p == -1 )
+		p = PlayerNumber();
+		
+	return strparam( n:p + 1, s:" (#", d:p, s:", ", s:TeamNames[p], s:")" );
 }

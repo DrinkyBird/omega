@@ -6,365 +6,423 @@
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
 //---------------------------RESEARCH ENHANCED REFINING
-script 65 (int Team) {
+script 65( int Team )
+{
 	int cost = 2000;
-	if (MitigateDoublePress()) terminate;
-
-	if(EnhancedRefining[Team]) {
-		Error ("This has already been researched!");
+	
+	if( MitigateDoublePress() ) terminate;
+	
+	if( EnhancedRefining[Team] )
+	{
+		Error( "This has already been researched!" );
 		terminate;
 	}
 	
-	if (!CheckPlant(Team)) terminate;
-	if (!CheckInventory("PurchaseToken")) {
-		GiveInventory("PurchaseToken",1);
-		SetFont("BIGFONT");
-		HudMessage(s:"\cd----Enhanced Refining----
+	if( !CheckPlant( Team ) ) terminate;
+	
+	if( !CheckInventory( "PurchaseToken" ) )
+	{
+		GiveInventory( "PurchaseToken", 1 );
+		SetFont( "BIGFONT" );
+		HudMessage( s: "\cd----Enhanced Refining----
 			\n\n\ciCost: \cf$2000
 			\n\ciPurpose: \cdNew technology gets more purity
 			\n\tout of refining Tiberium.
 			\n\cd--- Increases Harvesting income by \cf$150";
-			HUDMSG_FADEOUT, 2100+PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0);
-		ACS_ExecuteWithResult(330, cost);
-		Delay(35);
-		TakeInventory("PurchaseToken",1);
+			HUDMSG_FADEOUT, 2100 + PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0 );
+		ACS_ExecuteWithResult( 330, cost );
+		Delay( 35 );
+		TakeInventory( "PurchaseToken", 1 );
 		terminate;
 	}
-	if (!CheckCredits(cost)) terminate;
 	
-	AddExperience (150);
-	GivePoints (POINTS_RESEARCH);
-	SpendCredits (cost);
+	if( !CheckCredits( cost ) ) terminate;
+	
+	AddExperience( 150 );
+	GivePoints( POINTS_RESEARCH );
+	SpendCredits( cost );
 	DisplayTick();
 	
-	SETFONT("BigFont");
-	HudMessage(s:"\ciResearch Complete!"; HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	SETFONT( "BigFont" );
+	HudMessage( s: "\ciResearch Complete!"; HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	// if (GetLevelInfo (LEVELINFO_LEVELNUM) != 50 || GetLevelInfo (LEVELINFO_LEVELNUM) != 18) Floor_LowerToLowest (0, 45);
 	
-	SetFont("SMALLFONT");
-	if(Team == 0) {
-		IntelMessageBold ("\cGNod\c- researches \cDEnhanced Refining!");
-		Log (s:pname (-1), s:" researches Enhanced Refining for Nod.");
-	} else {
-		IntelMessageBold ("\cFGDI\c- researches \cDEnhanced Refining!");
-		Log (s:pname (-1), s:" researches Enhanced Refining for GDI.");
+	SetFont( "SMALLFONT" );
+	
+	if( Team == 0 )
+	{
+		IntelMessageBold( "\cGNod\c- researches \cDEnhanced Refining!" );
+		Log( s: pname( -1 ), s: " researches Enhanced Refining for Nod." );
+	}
+	else
+	{
+		IntelMessageBold( "\cFGDI\c- researches \cDEnhanced Refining!" );
+		Log( s: pname( -1 ), s: " researches Enhanced Refining for GDI." );
 	}
 	
 	EnhancedRefining[Team] = True;
 }
 
 //---------------------------ADVANCED MECH RESEARCH
-script 66 (int Team) {
+script 66( int Team )
+{
 	int cost = 2000;
-	if ( MitigateDoublePress() ) terminate;
 	
-	if (!CheckFactory(Team)) terminate;
+	if( MitigateDoublePress() ) terminate;
+	
+	if( !CheckFactory( Team ) ) terminate;
 	
 	// [sp] mechs not allowed!
-	if (!MechEnabled) {
-		Error ("Mechs have been disabled for this map!");
+	if( !MechEnabled )
+	{
+		Error( "Mechs have been disabled for this map!" );
 		terminate;
 	}
-
-	if (AdvancedMechResearch[Team]) {
-		Error ("This has already been researched!");
-		terminate;
-	}
-	if (!CheckPlant(Team)) terminate;
 	
-	if(CheckInventory("PurchaseToken") == 0) {
-		GiveInventory("PurchaseToken",1);
-		SetFont("BIGFONT");
-		HudMessage(s:"\cd----Advanced Mech Research----
+	if( AdvancedMechResearch[Team] )
+	{
+		Error( "This has already been researched!" );
+		terminate;
+	}
+	
+	if( !CheckPlant( Team ) ) terminate;
+	
+	if( CheckInventory( "PurchaseToken" ) == 0 )
+	{
+		GiveInventory( "PurchaseToken", 1 );
+		SetFont( "BIGFONT" );
+		HudMessage( s: "\cd----Advanced Mech Research----
 			\n\n\ciCost: \cf$2000
 			\n\ciPurpose: \cdNew Mech chassis and hardened metal plating.
 			\n\cd--- Enables construction of larger Mechs.";
-			HUDMSG_FADEOUT, 2100+PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0);
-		ACS_ExecuteWithResult(330, cost);
-		Delay(35);
-		TakeInventory("PurchaseToken",1);
+			HUDMSG_FADEOUT, 2100 + PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0 );
+		ACS_ExecuteWithResult( 330, cost );
+		Delay( 35 );
+		TakeInventory( "PurchaseToken", 1 );
 		terminate;
 	}
 	
-	if (!CheckCredits(cost)) terminate;
-	AddExperience (150);
-	GivePoints (POINTS_RESEARCH);
-	SpendCredits (cost);
+	if( !CheckCredits( cost ) ) terminate;
+	
+	AddExperience( 150 );
+	GivePoints( POINTS_RESEARCH );
+	SpendCredits( cost );
 	DisplayTick();
 	
-	SETFONT("BigFont");
-	HudMessage(s:"\ciResearch Complete!"; HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	SETFONT( "BigFont" );
+	HudMessage( s: "\ciResearch Complete!"; HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	
-	SetFont("SMALLFONT");
-	if(Team == 0) {
-		IntelMessageBold ("\cGNod\cJ researches \cKAdvanced Mechs!");
-		Log (s:pname (-1), s:" researches Advanced Mechs for Nod");
-	} else {
-		IntelMessageBold ("\cFGDI\cJ researches \cKAdvanced Mechs!");
-		Log (s:pname (-1), s:" researches Advanced Mechs for GDI");
+	SetFont( "SMALLFONT" );
+	
+	if( Team == 0 )
+	{
+		IntelMessageBold( "\cGNod\cJ researches \cKAdvanced Mechs!" );
+		Log( s: pname( -1 ), s: " researches Advanced Mechs for Nod" );
 	}
-
+	else
+	{
+		IntelMessageBold( "\cFGDI\cJ researches \cKAdvanced Mechs!" );
+		Log( s: pname( -1 ), s: " researches Advanced Mechs for GDI" );
+	}
+	
 	AdvancedMechResearch[Team] = True;
 }
 
 // [Dusk] Dummy script for a possible future research
-script 67 (void) {
-	Error ("This button seems to have\na couple of circuits broken...");
+script 67( void )
 	terminate;
-}
 
 
 //---------------------------HEALTH REGEN CACHE
-script 68 (int Team) {
+script 68( int Team )
+{
 	int cost = 2250;
-	if (MitigateDoublePress()) terminate;
-	if ((Team == 0 && ThingCount(T_NONE,902) || (Team == 1 && ThingCount(T_NONE,903)))) {
-		Error ("This has already been built!");
+	
+	if( MitigateDoublePress() ) terminate;
+	
+	if( ( Team == 0 && ThingCount( T_NONE, 902 ) || ( Team == 1 && ThingCount( T_NONE, 903 ) ) ) )
+	{
+		Error( "This has already been built!" );
 		terminate;
 	}
-	if (!CheckPlant(team)) terminate;
-	if (!CheckInventory("PurchaseToken")) {
-		GiveInventory("PurchaseToken",1);
-		SetFont("BIGFONT");
-		HudMessage(s:"\cd----Team Health Regeneration----
+	
+	if( !CheckPlant( team ) ) terminate;
+	
+	if( !CheckInventory( "PurchaseToken" ) )
+	{
+		GiveInventory( "PurchaseToken", 1 );
+		SetFont( "BIGFONT" );
+		HudMessage( s: "\cd----Team Health Regeneration----
 			\n\n\ciCost: \cf$2250
 			\n\ciPurpose: \cdImplant advanced cell reproduction.
 			\n\cd--- Gives entire team +1 health/s regeneration.
 			\n\cd--- Builds a Regen. Health Cache behind the Research Centre.";
-			HUDMSG_FADEOUT, 2100+PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0);
+			HUDMSG_FADEOUT, 2100 + PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0 );
 		
-		ACS_ExecuteWithResult(330, cost);
-		Delay(35);
-		TakeInventory("PurchaseToken",1);
+		ACS_ExecuteWithResult( 330, cost );
+		Delay( 35 );
+		TakeInventory( "PurchaseToken", 1 );
 		terminate;
 	}
-	if (!CheckCredits(cost)) terminate;
 	
-	SpendCredits (cost);
+	if( !CheckCredits( cost ) ) terminate;
+	
+	SpendCredits( cost );
 	DisplayTick();
-	SETFONT("BigFont");
-	HudMessage(s:"\ciConstruction Complete!"; HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	SETFONT( "BigFont" );
+	HudMessage( s: "\ciConstruction Complete!"; HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 
-	ACS_ExecuteAlways(344, 0, 6);
+	ACS_ExecuteAlways( 344, 0, 6 );
 	// GlobalMedic[Team] = True;
-
-	if(Team == 0)
-		SpawnSpot("Utility_GlobalMedicCacheRed", 212);
+	
+	if( Team == 0 )
+		SpawnSpot( "Utility_GlobalMedicCacheRed", 212 );
 	else
-		SpawnSpot("Utility_GlobalMedicCacheBlue", 112);
+		SpawnSpot( "Utility_GlobalMedicCacheBlue", 112 );
 }
 
 //---------------------------AMMO REGEN CACHE
-script 69 (int Team) {
+script 69( int Team )
+{
 	int cost = 2250;
-	if (MitigateDoublePress()) terminate;
-	if ((Team == 0 && ThingCount(T_NONE,904) || (Team == 1 && ThingCount(T_NONE,905)))) {
-		Error ("This has already been built!");
+	
+	if( MitigateDoublePress() ) terminate;
+	
+	if( ( Team == 0 && ThingCount( T_NONE, 904 ) || ( Team == 1 && ThingCount( T_NONE, 905 ) ) ) )
+	{
+		Error( "This has already been built!" );
 		terminate;
 	}
-	if (!CheckPlant(Team)) terminate;
 	
-	if(!CheckInventory("PurchaseToken")) {
-		GiveInventory("PurchaseToken",1);
-		SetFont("BIGFONT");
-		HudMessage(s:"\cd----Team Ammo Regeneration----
+	if( !CheckPlant( Team ) ) terminate;
+	
+	if( !CheckInventory( "PurchaseToken" ) )
+	{
+		GiveInventory( "PurchaseToken", 1 );
+		SetFont( "BIGFONT" );
+		HudMessage( s: "\cd----Team Ammo Regeneration----
 			\n\n\ciCost: \cf$2250
 			\n\ciPurpose: \cdIssue mini-ammo dispensers
 			\n\cd--- Gives entire team slow Ammo regeneration. Mechs Included.
 			\n\cd--- Builds a Regen. Ammo Cache behind the Research Centre.";
-				HUDMSG_FADEOUT, 2100+PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0);
-		ACS_ExecuteWithResult(330, cost);
-		Delay(35*1);
-		TakeInventory("PurchaseToken",1);
+			HUDMSG_FADEOUT, 2100 + PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0 );
+		ACS_ExecuteWithResult( 330, cost );
+		Delay( 35 * 1 );
+		TakeInventory( "PurchaseToken", 1 );
 		terminate;
 	}
 	
-	if (!CheckCredits(cost)) terminate;
+	if( !CheckCredits( cost ) ) terminate;
 	
-	SpendCredits (cost);
+	SpendCredits( cost );
 	DisplayTick();
-	SETFONT("BigFont");
-	HudMessage(s:"\ciConstruction Complete!";
-		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-
-	ACS_ExecuteAlways(344, 0, 8);
+	SETFONT( "BigFont" );
+	HudMessage( s: "\ciConstruction Complete!";
+		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
+	
+	ACS_ExecuteAlways( 344, 0, 8 );
 	//GlobalAmmo[Team] = True;
-
-	if(Team == 0)
-		SpawnSpot("Utility_GlobalAmmoCacheRed", 213);
+	
+	if( Team == 0 )
+		SpawnSpot( "Utility_GlobalAmmoCacheRed", 213 );
 	else
-		SpawnSpot("Utility_GlobalAmmoCacheBlue", 113);
+		SpawnSpot( "Utility_GlobalAmmoCacheBlue", 113 );
 }
 
 
 //---------------------------+1 TIMED C4
-script 70 (int Team) {
+script 70( int Team )
+{
 	int cost = 200;
-	if (MitigateDoublePress()) terminate;
 	
-	// classes that don't have C4 aren't supposed to buy any
-	if (!CheckInventory ("TimedC4Count")) {
-		Error ("You don't have any C4 to add up to!");
+	if( MitigateDoublePress() ) terminate;
+	
+	// [Dusk] Classes that don't have C4 aren't supposed to buy any
+	if( !CheckInventory( "TimedC4Count" ) )
 		terminate;
-	}
 	
-	if (CheckInventory ("TimedC4Count") >= 4) {
-		Error ("You already have four!");
+	if( CheckInventory( "TimedC4Count" ) >= 4 )
 		terminate;
-	}
 	
-	if (!CheckPlant(team)) terminate;
-	if (!IsSecondPress("UPGR02", cost)) terminate;
-	if (!CheckCredits(cost)) terminate;
+	if( !CheckPlant( team ) ) terminate;
 	
-	SpendCredits (200);
+	if( !IsSecondPress( "UPGR02", cost ) ) terminate;
+	
+	if( !CheckCredits( cost ) ) terminate;
+	
+	SpendCredits( 200 );
 	DisplayTick();
-	GiveInventory("Refunds", 50);
+	GiveInventory( "Refunds", 50 );
 	
-	SetFont ("BIGFONT");
-	HudMessage(s:"\ciGot extra C4!"; HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	SetFont( "BIGFONT" );
+	HudMessage( s: "\ciGot extra C4!"; HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	
-	GiveInventory ("TimedC4Count", 1);
-	SetInventory ("TimedC4", CheckInventory ("TimedC4Count"));
-	Log (s:pname (-1), s:" purchases extra C4.");
+	GiveInventory( "TimedC4Count", 1 );
+	SetInventory( "TimedC4", CheckInventory( "TimedC4Count" ) );
+	Log( s: pname( -1 ), s: " purchases extra C4." );
 }
 
 //---------------------------REPAIR GUN UPGRADE
-script 71 (int Team) {
+script 71( int Team )
+{
 	int cost = 200;
-	if ( MitigateDoublePress() ) terminate;
-
-	if (CheckInventory("RepairGunUpgrade")) {
-		Error ("You already have an upgraded repair gun!");
+	
+	if( MitigateDoublePress() ) terminate;
+	
+	if( CheckInventory( "RepairGunUpgrade" ) )
+		terminate;
+	
+	if( !CheckInventory( "RepairGun" ) )
+	{
+		Error( "You must have a repair gun!" );
 		terminate;
 	}
-	if (!CheckInventory("RepairGun")) {
-		Error ("You must have a repair gun!");
-		terminate;
-	}
-	if (!CheckPlant(team)) terminate;
-	if (!CheckInventory("PurchaseToken")) {
-		GiveInventory("PurchaseToken",1);
-		SetFont("BIGFONT");
-		HudMessage(s:"\cd----Repair Gun Upgrade----
+	
+	if( !CheckPlant( team ) ) terminate;
+	
+	if( !CheckInventory( "PurchaseToken" ) )
+	{
+		GiveInventory( "PurchaseToken", 1 );
+		SetFont( "BIGFONT" );
+		HudMessage( s: "\cd----Repair Gun Upgrade----
 			\n\n\ciCost: \cf$200
 			\n\ciPurpose: \cdUpgrades your repair gun
 			\n\cd--- Allows you to repair faster";
-			HUDMSG_FADEOUT, 2100+PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0);
-		ACS_ExecuteWithResult(330, cost);
-		Delay(35);
-		TakeInventory("PurchaseToken",1);
+			HUDMSG_FADEOUT, 2100 + PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0 );
+		ACS_ExecuteWithResult( 330, cost );
+		Delay( 35 );
+		TakeInventory( "PurchaseToken", 1 );
 		terminate;
 	}
 	
-	if (!CheckCredits(cost)) terminate;
+	if( !CheckCredits( cost ) ) terminate;
 	
-	SpendCredits (200);
-	GiveInventory("Refunds", 175);
+	SpendCredits( 200 );
+	GiveInventory( "Refunds", 175 );
 	DisplayTick();
 	
-	SETFONT("BigFont");
-	HudMessage(s:"\ciUpgraded the Repair Gun!";
-		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	SETFONT( "BigFont" );
+	HudMessage( s: "\ciUpgraded the Repair Gun!";
+		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	
-	GiveInventory ("RepairGunUpgrade", 1);
-	SetWeapon ("RepairGun");
-	Log (s:pname (-1), s:" purchases repair gun upgrade.");
+	GiveInventory( "RepairGunUpgrade", 1 );
+	SetWeapon( "RepairGun" );
+	Log( s: pname( -1 ), s: " purchases repair gun upgrade." );
 }
 
 
 //---------------------------ADVANCED TURRETS
-script 72 (int Team) {
+script 72( int Team )
+{
 	int cost = 2000;
-	if (MitigateDoublePress()) terminate;
-	if (AdvancedTurrets[Team]) {
-		Error ("This has already been researched!");
+	
+	if( MitigateDoublePress() ) terminate;
+	
+	if( AdvancedTurrets[Team] )
+	{
+		Error( "This has already been researched!" );
 		terminate;
 	}
 	
-	if (!CheckPlant(team)) terminate;
+	if( !CheckPlant( team ) ) terminate;
 	
-	if(CheckInventory("PurchaseToken") == 0) {
-		GiveInventory("PurchaseToken",1);
-		SetFont("BIGFONT");
-		HudMessage(s:"\cd----Advanced Turrets----
+	if( CheckInventory( "PurchaseToken" ) == 0 )
+	{
+		GiveInventory( "PurchaseToken", 1 );
+		SetFont( "BIGFONT" );
+		HudMessage( s: "\cd----Advanced Turrets----
 			\n\n\ciCost: \cf$2000
 			\n\ciPurpose: \cdNew turret tech has come in!
-			\n\cd--- Enables use of higher level turrets."; 
-			HUDMSG_FADEOUT, 2100+PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0);
-		ACS_ExecuteWithResult(330, cost);
-		Delay(35);
-		TakeInventory("PurchaseToken",1);
+			\n\cd--- Enables use of higher level turrets.";
+			HUDMSG_FADEOUT, 2100 + PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0 );
+		ACS_ExecuteWithResult( 330, cost );
+		Delay( 35 );
+		TakeInventory( "PurchaseToken", 1 );
 		terminate;
 	}
-	if (!CheckCredits(cost)) terminate;
 	
-	AddExperience (150);
-	GivePoints (POINTS_RESEARCH);
-	SpendCredits (cost);
+	if( !CheckCredits( cost ) ) terminate;
+	
+	AddExperience( 150 );
+	GivePoints( POINTS_RESEARCH );
+	SpendCredits( cost );
 	DisplayTick();
-	SETFONT("BigFont");
-	HudMessage(s:"\ciResearch Complete!";
-		HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	SETFONT( "BigFont" );
+	HudMessage( s: "\ciResearch Complete!";
+		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	
-	SetFont("SMALLFONT");
-	if(Team == 0) {
-		IntelMessageBold ("\cGNod\c- researches \cKAdvanced Turrets!");
-		Log (s:pname (-1), s:" researches Advanced Turrets for Nod");
-	} else {
-		IntelMessageBold ("\cFGDI\c- researches \cKAdvanced Turrets!");
-		Log (s:pname (-1), s:" researches Advanced Turrets for GDI");
+	SetFont( "SMALLFONT" );
+	
+	if( Team == 0 )
+	{
+		IntelMessageBold( "\cGNod\c- researches \cKAdvanced Turrets!" );
+		Log( s: pname( -1 ), s: " researches Advanced Turrets for Nod" );
+	}
+	else
+	{
+		IntelMessageBold( "\cFGDI\c- researches \cKAdvanced Turrets!" );
+		Log( s: pname( -1 ), s: " researches Advanced Turrets for GDI" );
 	}
 	
 	AdvancedTurrets[Team] = True;
 }
 
 //---------------------------MORE TURRETS
-script 73 (int Team) {
+script 73( int Team )
+{
 	int cost = 2000;
-	if (MitigateDoublePress()) terminate;
 	
-	if (MoreTurrets[Team]) {
-		Error ("This has already been researched!");
+	if( MitigateDoublePress() ) terminate;
+	
+	if( MoreTurrets[Team] )
+	{
+		Error( "This has already been researched!" );
 		terminate;
 	}
 	
-	if (!CheckPlant(team)) terminate;
+	if( !CheckPlant( team ) ) terminate;
 	
-	if (!CheckInventory("PurchaseToken")) {
-		GiveInventory("PurchaseToken",1);
-		SetFont("BIGFONT");
-
-		HudMessage(s:"\cd----Increased Turret Support----
+	if( !CheckInventory( "PurchaseToken" ) )
+	{
+		GiveInventory( "PurchaseToken", 1 );
+		SetFont( "BIGFONT" );
+		
+		HudMessage( s: "\cd----Increased Turret Support----
 			\n\n\ciCost: \cf$2000
 			\n\ciPurpose: \cdMore generators to power turrets.
 			\n\cd--- Increases Turret cap by 10.";
-				HUDMSG_FADEOUT, 2100+PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0);
-		ACS_ExecuteWithResult(330, cost);
-		Delay(35);
-		TakeInventory("PurchaseToken",1);
+			HUDMSG_FADEOUT, 2100 + PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0 );
+		ACS_ExecuteWithResult( 330, cost );
+		Delay( 35 );
+		TakeInventory( "PurchaseToken", 1 );
 		terminate;
 	}
-	if (!CheckCredits(cost)) terminate;
-
-	AddExperience (150);
-	GivePoints (POINTS_RESEARCH);
-	SpendCredits (cost);
+	
+	if( !CheckCredits( cost ) )
+		terminate;
+	
+	AddExperience( 150 );
+	GivePoints( POINTS_RESEARCH );
+	SpendCredits( cost );
 	DisplayTick();
 	
-	SETFONT("BigFont");
-	HudMessage(s:"\ciResearch Complete!"; HUDMSG_FADEOUT, 1800+PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	SETFONT( "BigFont" );
+	HudMessage( s: "\ciResearch Complete!"; HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	// if (GetLevelInfo (LEVELINFO_LEVELNUM) != 50 || GetLevelInfo (LEVELINFO_LEVELNUM) != 18) Floor_LowerToLowest (0, 45);
 	
-	SetFont ("SMALLFONT");
-	if(Team == TEAM_RED) {
-		IntelMessageBold ("\cGNod\c- researches \cKIncreased Turret Support!");
-		Log (s:pname (-1), s:" researches More Turrets for Nod");
-	} else {
-		IntelMessageBold ("\cFGDI\c- researches \cKIncreased Turret Support!");
-		Log (s:pname (-1), s:" researches More Turrets for GDI");
+	SetFont( "SMALLFONT" );
+	
+	if( Team == TEAM_RED )
+	{
+		IntelMessageBold( "\cGNod\c- researches \cKIncreased Turret Support!" );
+		Log( s: pname( -1 ), s: " researches More Turrets for Nod" );
 	}
-
+	else
+	{
+		IntelMessageBold( "\cFGDI\c- researches \cKIncreased Turret Support!" );
+		Log( s: pname( -1 ), s: " researches More Turrets for GDI" );
+	}
+	
 	MoreTurrets[Team] = True;
 	MaxTurrets[Team] += 5;
 }

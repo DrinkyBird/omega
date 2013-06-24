@@ -9,41 +9,47 @@
  */
 
 // death script: victim POV
-script 994 DEATH {
-	Thing_ChangeTID (0, 9999);
-	TakeInventory ("ThermalCloakingTime", 90);
-	TakeInventory ("InUtilMenu", 1);
-	SetPlayerProperty (0, 0, PROP_FROZEN);
-	SetPlayerProperty (0, 0, PROP_TOTALLYFROZEN);
+script 994 DEATH
+{
+	Thing_ChangeTID( 0, 9999 );
+	TakeInventory( "ThermalCloakingTime", 90 );
+	TakeInventory( "InUtilMenu", 1 );
+	SetPlayerProperty( 0, 0, PROP_FROZEN );
+	SetPlayerProperty( 0, 0, PROP_TOTALLYFROZEN );
 	
-	// tiberium dropped by dead harvesters
-	if (CheckInventory ("TiberiumCrystal") && !CheckInventory ("IsInSpawnRoom"))
-		SpawnSpotForced ("TiberiumCrystalDropped", 0, 0, 0);
+	// [Dusk] Drop Tiberium if a harvester dies
+	if( CheckInventory( "TiberiumCrystal" ) && !CheckInventory( "IsInSpawnRoom" ) )
+		SpawnSpotForced( "TiberiumCrystalDropped", 0, 0, 0 );
 	
-	// bomb pack disarm sound
-	if (CheckWeapon ("BombPack") && !CheckInventory ("IsTerrorist")) ActivatorSound ("c4/disarm", 127);
+	// [Dusk] If the victim was holding the bomb pack, make a defuse sound
+	if( CheckWeapon( "BombPack" ) && !CheckInventory( "IsTerrorist" ) )
+		ActivatorSound( "c4/disarm", 127 );
 	
-	// activate plasma cannon cooldown, if player had a plasma cannon
-	if (CheckInventory ("PlasmaCannon")) PlasmaCooldown[PlayerNumber()] = Timer() + PlasmaCooldownTime;
+	// [Dusk] Activate plasma cannon cooldown now if the player had a plasma cannon
+	if( CheckInventory( "PlasmaCannon" ) )
+		PlasmaCooldown[PlayerNumber()] = Timer() + PlasmaCooldownTime;
 	
-	// how much is this thing worth?
+	// [Dusk] Infantry is worth one point, mechs are 3 or 4 points.
 	int points = 1;
-	if (CheckInventory ("IsMech")) {
-		if (CheckInventory ("OrcaWeapons") ||
-			CheckInventory ("RavenWeapons")) {
-			
+	
+	if( CheckInventory( "IsMech" ) )
+	{
+		if( CheckInventory( "OrcaWeapons" ) ||
+		CheckInventory( "RavenWeapons" ) )
+		{
 			points = 3;
-		} else if (CheckInventory ("WolverineWeapons") ||
-			CheckInventory ("MadCatWeapons") ||
-			CheckInventory ("TitanWeapons") ||
-			CheckInventory ("GuardianWeapons")) {
-			
+		}
+		else if( CheckInventory( "WolverineWeapons" ) ||
+			CheckInventory( "MadCatWeapons" ) ||
+			CheckInventory( "TitanWeapons" ) ||
+			CheckInventory( "GuardianWeapons" ) )
+		{
 			points = 4;
 		}
 	}
 	
-	int killer_t = ACS_ExecuteWithResult (964, 5);
-	int killer_p = ACS_ExecuteWithResult (964, 9);
+	int killer_t = ACS_ExecuteWithResult( 964, 5 );
+	int killer_p = ACS_ExecuteWithResult( 964, 9 );
 	// Log (s:pname (-1), s:"\c-: I am ", d:ActivatorTID(), s:" and was killed by ", d:killer_t, s:" (", n:killer_p+1, s:")");
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -52,50 +58,59 @@ script 994 DEATH {
 	
 	int n0 = PlayerNumber();
 	int t0 = PlayerTeam();
-	SetActivatorToTarget (0);
-	if ((ActivatorTID () < 3800 || ActivatorTID () > 3831) && ActivatorTID () != 9999)
+	SetActivatorToTarget( 0 );
+	
+	if(( ActivatorTID() < 3800 || ActivatorTID() > 3831 ) && ActivatorTID() != 9999 )
 		terminate;
 	
 	int n1 = PlayerNumber();
 	int t1 = PlayerTeam();
 	
 	// Remove tickets from the victim team
-	TakeTickets (t0, points);
+	TakeTickets( t0, points );
 	
-	// No points for suicides
-	if (n0 != n1 && n1 != -1) {
-		GivePoints (2*points);
-		ACS_ExecuteAlways (931, 0);
+	// [Dusk] Don't award suicides
+	if( n0 != n1 && n1 != -1 )
+	{
+		GivePoints( 2 * points );
+		ACS_ExecuteAlways( 931, 0 );
 		
-		LocalAmbientSound ("game/boink", 127);
-		GiveCredits (-1, CreditFragAward);
-		AddExperience (50);
+		LocalAmbientSound( "game/boink", 127 );
+		GiveCredits( -1, CreditFragAward );
+		AddExperience( 50 );
 		
-		delay (5);
+		delay( 5 );
 		
-		if (!FirstBlood) {
+		if( !FirstBlood )
+		{
 			// we got first blood!
 			FirstBlood = true;
-			IntelMessageBold (strparam (n:0, s:"\c- gets first blood!"));
+		IntelMessageBold( strparam( n: 0, s: "\c- gets first blood!" ) );
 		}
 	}
 	
-	ACS_ExecuteAlways (992, 0);
+	ACS_ExecuteAlways( 992, 0 );
 }
 
 // Guardian stomp health
-script 923 (void) {
-	SetActivatorToTarget (0);
-	if (!CheckWeapon ("GuardianWeapons")) terminate;
-	SetHealth (GetHealth () + 100);
-	if (GetHealth () > GetSpawnHealth ()) SetHealth (GetSpawnHealth ());
+script 923( void )
+{
+	SetActivatorToTarget( 0 );
+	
+	if( !CheckWeapon( "GuardianWeapons" ) ) terminate;
+	
+	SetHealth( GetHealth() + 100 );
+	
+	if( GetHealth() > GetSpawnHealth() ) SetHealth( GetSpawnHealth() );
 }
 
 // [SP] Fragging a monster
-Script 947 (int Amount) {
-	if (ActivatorTID() >= 3800 && ActivatorTID() <= 3831) {
-		LocalAmbientSound("game/boink",255);
-		AwardCredits (15 * Amount);
-		AddExperience (10 * Amount);
+script 947( int Amount )
+{
+	if( ActivatorTID() >= 3800 && ActivatorTID() <= 3831 )
+	{
+		LocalAmbientSound( "game/boink", 255 );
+		AwardCredits( 15 * Amount );
+		AddExperience( 10 * Amount );
 	}
 }

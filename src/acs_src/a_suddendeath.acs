@@ -8,102 +8,117 @@
  * of this and call it your own. Thanks!
  */
 
-script 995 OPEN {
-	Delay (60*(35*5));
+script 995 OPEN
+{
+	Delay( 60 * ( 35 * 5 ) );
 	CrateTime = False;
 }
 
-script 998 OPEN {
-	delay (5);
-	while (Timer() < GetCVAR ("aow_suddendeathtime") * 35 * 60) delay (35 * 15);
-	ACS_Execute (997, 0);
+script 998 OPEN
+{
+	delay( 5 );
+	
+	while( Timer() < GetCVAR( "aow_suddendeathtime" ) * 35 * 60 ) delay( 35 * 15 );
+	
+	ACS_Execute( 997, 0 );
 }
 
-script 997 (void) {
-	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_SUDDENDEATH, TEAM_NONE);
-	GiveActorInventory (100, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (101, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (102, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (103, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (104, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (105, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (106, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (107, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (108, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (114, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (115, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (200, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (201, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (202, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (203, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (204, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (205, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (206, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (207, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (208, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (214, "SuddenDeathVulnerability", 1);
-	GiveActorInventory (215, "SuddenDeathVulnerability", 1);
-	if (Timer() > 5*35 + 10) {
-		if (random (0, 1))
-			SetMusic ("razor-ub");
+script 997( void )
+{
+	if( EventScripts ) ACS_ExecuteAlways( 960, 0, ACTION_SUDDENDEATH, TEAM_NONE );
+	
+	GiveActorInventory( 100, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 101, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 102, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 103, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 104, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 105, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 106, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 107, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 108, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 114, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 115, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 200, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 201, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 202, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 203, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 204, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 205, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 206, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 207, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 208, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 214, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory( 215, "SuddenDeathVulnerability", 1 );
+	
+	if( Timer() > 5 * 35 + 10 )
+	{
+		if( random( 0, 1 ) )
+			SetMusic( "razor-ub" );
 		else
-			SetMusic ("razorub2");
+			SetMusic( "razorub2" );
 	}
-
-	Log(s:"=== Sudden Death begins ===");
-
-	if (!TournamentMode)
-		GiveToAll ("BeaconItem", 1);
-
-	SetFont("BIGFONT");
-	HudMessageBold (s:"\cgSUDDEN DEATH!\n\nNo more repairs can be done\nEvery death counts!";
+	
+	Log( s: "=== Sudden Death begins ===" );
+	
+	if( !TournamentMode )
+		GiveToAll( "BeaconItem", 1 );
+		
+	SetFont( "BIGFONT" );
+	HudMessageBold( s: "\cgSUDDEN DEATH!\n\nNo more repairs can be done\nEvery death counts!";
 		HUDMSG_FADEOUT, 15001, CR_YELLOW,
-		INTEL_XPOS, 0.25, 7.0, 1.0);
+		INTEL_XPOS, 0.25, 7.0, 1.0 );
+		
+	int degeneration = GetCVar( "aow_degeneration" );
+	int degeninterval = GetCVar( "aow_degenerationinterval" );
 	
-	int degeneration = GetCVar ("aow_degeneration");
-	int degeninterval = GetCVar ("aow_degenerationinterval");
-	if (degeneration) {
-		SetFont("BIGFONT");
-		HudMessageBold (s:"WARNING: BUILDING DEGENERATION ACTIVE!!!";
+	if( degeneration )
+	{
+		SetFont( "BIGFONT" );
+		HudMessageBold( s: "WARNING: BUILDING DEGENERATION ACTIVE!!!";
 			HUDMSG_FADEOUT, 15002, CR_RED,
-			INTEL_XPOS, 0.45, 7.0, 1.0);
+			INTEL_XPOS, 0.45, 7.0, 1.0 );
 	}
 	
-	if (!TicketPool) {
+	if( !TicketPool )
+	{
 		// init tickets
 		Tickets[TEAM_BLUE] = StartingTickets;
 		Tickets[TEAM_RED] = StartingTickets;
-		SetActorSpeed (TID_TICKETCOUNTER_BLUE, StartingTickets);
-		SetActorSpeed (TID_TICKETCOUNTER_RED, StartingTickets);
+		SetActorSpeed( TID_TICKETCOUNTER_BLUE, StartingTickets );
+		SetActorSpeed( TID_TICKETCOUNTER_RED, StartingTickets );
 		
 		// tell clients to update the hud
-		ACS_ExecuteAlways (931, 0);
+		ACS_ExecuteAlways( 931, 0 );
 	}
 	
 	SuddenDeath = true;
 	int ticker = 0;
 	int i;
 	
-	SetActivator (-1);
-	while (1) {
-		if (!(ticker % 5))
-			degeninterval = GetCVar ("aow_degenerationinterval");
-		
-		if (!(ticker % 60))
-			IntelMessageBold ("Sudden death!");
-		
-		if (degeneration && !(ticker % degeninterval)) {
+	SetActivator( -1 );
+	
+	while( 1 )
+	{
+		if( !( ticker % 5 ) )
+			degeninterval = GetCVar( "aow_degenerationinterval" );
+			
+		if( !( ticker % 60 ) )
+			IntelMessageBold( "Sudden death!" );
+			
+		if( degeneration && !( ticker % degeninterval ) )
+		{
 			// crash all buildings by 1% every interval seconds
-			for (i = 0; i <= 1; i++) {
-				Thing_Damage (101+(i*100), HP_BARRACKS / 100);
-				Thing_Damage (103+(i*100), HP_REFINERY / 100);
-				Thing_Damage (105+(i*100), HP_PLANT / 100);
-				Thing_Damage (107+(i*100), HP_FACTORY / 100);
-				Thing_Damage (114+(i*100), HP_OBELISK / 100);
+			for( i = 0; i <= 1; i++ )
+			{
+				Thing_Damage( 101 + ( i * 100 ), HP_BARRACKS / 100 );
+				Thing_Damage( 103 + ( i * 100 ), HP_REFINERY / 100 );
+				Thing_Damage( 105 + ( i * 100 ), HP_PLANT / 100 );
+				Thing_Damage( 107 + ( i * 100 ), HP_FACTORY / 100 );
+				Thing_Damage( 114 + ( i * 100 ), HP_OBELISK / 100 );
 			}
 		}
 		
-		delay (35);
+		delay( 35 );
 		ticker++;
 	}
 }

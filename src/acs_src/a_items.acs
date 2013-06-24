@@ -5,95 +5,102 @@
 // You may use portions of this script in your project as long as you give credit where credit is
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
-script 951 (int action, int team) {
-	switch (action) {
+script 951( int action, int team )
+{
+	switch( action )
+	{
 	case 0:
 		// deploy superweapon beacon
-		if (ActivatorTID() < 3800 || ActivatorTID() > 3831) terminate;
-		if (!CheckInventory ("BeaconUseToken")) {
-			GiveInventory ("BeaconUseToken", 1);
-			ActivatorSound ("beacon/safetylock", 80);
-			SetFont ("BIGFONT");
-			HudMessage (s:"BEACON SAFETY LOCK DISENGAGED";
+		if( ActivatorTID() < 3800 || ActivatorTID() > 3831 ) terminate;
+		
+		if( !CheckInventory( "BeaconUseToken" ) )
+		{
+			GiveInventory( "BeaconUseToken", 1 );
+			ActivatorSound( "beacon/safetylock", 80 );
+			SetFont( "BIGFONT" );
+			HudMessage( s:"BEACON SAFETY LOCK DISENGAGED";
 				HUDMSG_FADEOUT, 0, CR_RED,
-				0.1, 0.95, 2.0, 0.25);
-			delay (2*35);
-			TakeInventory ("BeaconUseToken", 1);
+				0.1, 0.95, 2.0, 0.25 );
+			
+			delay( 2 * 35 );
+			TakeInventory( "BeaconUseToken", 1 );
 			terminate;
 		}
 		
-		TakeInventory ("BeaconUseToken", 1);
-		SetPlayerProperty (0, 1, PROP_TOTALLYFROZEN);
-		for (int i = 0; i < 175; i += 5) {
-			if (GetHealth () <= 0) terminate;
-			delay (5);
+		TakeInventory( "BeaconUseToken", 1 );
+		SetPlayerProperty( 0, 1, PROP_TOTALLYFROZEN );
+		
+		for( int i = 0; i < 175; i += 5 )
+		{
+			if( GetHealth() <= 0 )
+				terminate;
+			
+			delay( 5 );
 		}
 		
-		if (ActivatorTID() < 3800 || ActivatorTID() > 3831) terminate;
+		if( ActivatorTID() < 3800 || ActivatorTID() > 3831 )
+			terminate;
 		
-		if (team == TEAM_BLUE)
-			SpawnProjectile (ActivatorTID(), "IonBeaconThrown", 0, 0, -5, 1, 0);
+		if( team == TEAM_BLUE )
+			SpawnProjectile( ActivatorTID(), "IonBeaconThrown", 0, 0, -5, 1, 0 );
 		else
-			SpawnProjectile (ActivatorTID(), "NukeBeaconThrown", 0, 0, -5, 1, 0);
-		
-		Log (s:pname (-1), s:" plants ", s:cond (PlayerTeam () == TEAM_RED, "Nuclear Strike Beacon", "Ion Cannon Beacon"));
-		SetPlayerProperty (0, 0, PROP_TOTALLYFROZEN);
+			SpawnProjectile( ActivatorTID(), "NukeBeaconThrown", 0, 0, -5, 1, 0 );
+			
+		Log( s: pname( -1 ), s: " plants ", s: cond( PlayerTeam() == TEAM_RED, "Nuclear Strike Beacon", "Ion Cannon Beacon" ));
+		SetPlayerProperty( 0, 0, PROP_TOTALLYFROZEN );
 		break;
+	
 	case 1:
 		// remote c4
-		GiveInventory ("RemoteC4Thrower", 1);
-		delay (1);
-		SetWeapon ("RemoteC4Thrower");
+		GiveInventory( "RemoteC4Thrower", 1 );
+		delay( 1 );
+		SetWeapon( "RemoteC4Thrower" );
 		break;
+	
 	case 2:
 		// refill c4
-		if (CheckInventory ("RemoteC4Count") > 0) SetInventory ("RemoteC4", CheckInventory ("RemoteC4Count"));
-		if (CheckInventory ("ProxyMineCount") > 0) SetInventory ("ProxyMine", CheckInventory ("ProxyMineCount"));
-		if (CheckInventory ("TimedC4Count") > 0) SetInventory ("TimedC4", CheckInventory ("TimedC4Count"));
-		TakeInventory ("RemoteC4Detonator", CheckInventory ("RemoteC4Detonator"));
+		if( CheckInventory( "RemoteC4Count" ) > 0 )
+			SetInventory( "RemoteC4", CheckInventory( "RemoteC4Count" ) );
+		
+		if( CheckInventory( "ProxyMineCount" ) > 0 )
+			SetInventory( "ProxyMine", CheckInventory( "ProxyMineCount" ) );
+		
+		if( CheckInventory( "TimedC4Count" ) > 0 )
+			SetInventory( "TimedC4", CheckInventory( "TimedC4Count" ) );
+		
+		TakeInventory( "RemoteC4Detonator", CheckInventory( "RemoteC4Detonator" ) );
 		break;
+	
 	case 3:
 		// marine beacon summons a marine
 		int x, y, x0, y0, z, yays;
 		str marine = "BlueBackup";
-		if (team == TEAM_RED) marine = "RedBackup";
-		x0 = GetActorX (0);
-		y0 = GetActorY (0);
-		z = GetActorZ (0) + 32.0;
 		
-		// first try straight above
-		x = x0; y = y0;
-		yays = Spawn (marine, x, y, z);
-		if (yays) {Spawn ("TeleportFog", x, y, z); SetActorState (0, "Done"); terminate;}
+		if( team == TEAM_RED )
+			marine = "RedBackup";
 		
-		// a bit to north
-		x = x0; y = y0 + 64.0;
-		yays = Spawn (marine, x, y, z);
-		if (yays) {Spawn ("TeleportFog", x, y, z); SetActorState (0, "Done"); terminate;}
+		x = GetActorX( 0 );
+		y = GetActorY( 0 );
+		z = GetActorZ( 0 ) + 32.0;
 		
-		// east
-		x = x0 + 64.0; y = y0;
-		yays = Spawn (marine, x, y, z);
-		if (yays) {Spawn ("TeleportFog", x, y, z); SetActorState (0, "Done"); terminate;}
-		
-		// south
-		x = x0; y = y0 - 64.0;
-		yays = Spawn (marine, x, y, z);
-		if (yays) {Spawn ("TeleportFog", x, y, z); SetActorState (0, "Done"); terminate;}
-		
-		// west
-		x = x0 - 64.0; y = y0;
-		yays = Spawn (marine, x, y, z);
-		if (yays) {Spawn ("TeleportFog", x, y, z); SetActorState (0, "Done"); terminate;}
+		if( Spawn( marine, x, y, z ))
+		{
+			Spawn( "TeleportFog", x, y, z );
+			SetActorState( 0, "Done" );
+			terminate;
+		}
 		
 		// if success, beacon is put to Done state, if failure, it will call this again after 35 ticks
 		break;
 	case 4:
+	
 		// use selfheal
-		if (CheckInventory ("SelfHeal")) terminate;
-		GiveInventory ("SelfHeal", 1);
-		delay (1);
-		SetWeapon ("SelfHeal");
+		if( CheckInventory( "SelfHeal" ))
+			terminate;
+		
+		GiveInventory( "SelfHeal", 1 );
+		delay( 1 );
+		SetWeapon( "SelfHeal" );
 		break;
 	}
 }
@@ -103,28 +110,39 @@ script 951 (int action, int team) {
 #define HEALRAD_AMOUNT 10
 #define HEALRAD_DELAY 5
 int IsBeingHealed[MAXPLAYERS];
-script 952 (int action, int i) {
+script 952( int action, int i )
+{
 	int shp, n;
 	
-	switch (action) {
+	switch( action )
+	{
 	case 0:
-		for (i = 0; i < MAXPLAYERS; i++)
-			if (GetActorHealth (3800+i) < GetActorSpawnHealth (3800+i) && !CheckActorInventory (3800+i, "IsMech"))
-				if (CheckActorDistance (0, 3800+i, HEALRAD_RANGE))
-					ACS_ExecuteAlways (952, 0, 1, i);
+		for( i = 0; i < MAXPLAYERS; i++ )
+		{
+			if( GetActorHealth( 3800 + i ) < GetActorSpawnHealth( 3800 + i ) && !CheckActorInventory( 3800 + i, "IsMech" ) )
+				if( CheckActorDistance( 0, 3800 + i, HEALRAD_RANGE ) )
+					ACS_ExecuteAlways( 952, 0, 1, i );
+		}
 		break;
-	
-	case 1:
-		if (IsBeingHealed[i]) terminate;
-		IsBeingHealed[i] = true;
-		shp = GetActorSpawnHealth (3800+i);
-		n = GetActorHealth (3800+i);
 		
-		while (n < shp && n > 0 && CheckActorDistance (0, 3800+i, HEALRAD_RANGE)) {
-			n += HEALRAD_AMOUNT; if (n > shp) n = shp;
-			SetActorHealth (3800+i, n);
-			delay (HEALRAD_DELAY);
-			n = GetActorHealth (3800+i);
+	case 1:
+		if( IsBeingHealed[i] )
+			terminate;
+		
+		IsBeingHealed[i] = true;
+		shp = GetActorSpawnHealth( 3800 + i );
+		n = GetActorHealth( 3800 + i );
+		
+		while( n < shp && n > 0 && CheckActorDistance( 0, 3800 + i, HEALRAD_RANGE ) )
+		{
+			n += HEALRAD_AMOUNT;
+			
+			if( n > shp )
+				n = shp;
+			
+			SetActorHealth( 3800 + i, n );
+			delay( HEALRAD_DELAY );
+			n = GetActorHealth( 3800 + i );
 		}
 		
 		IsBeingHealed[i] = false;

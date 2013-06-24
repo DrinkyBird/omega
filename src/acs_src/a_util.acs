@@ -6,697 +6,913 @@
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
 //Show limits
-script 349 (int Type) {
-	if(Type == 0)
+script 349( int Type )
+{
+	if( Type == 0 )
 	{
-		SetFont("BIGFONT");
- 		HudMessage(s:"\cFLimit: \cJ",d:TurretLimit(), s:" \cK/\cJ ", d:MaxTurrets[1-PlayerTeam()];
-			HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+HudMessage( s: "\cFLimit: \cJ", d: TurretLimit(), s: " \cK/\cJ ", d: MaxTurrets[1 - PlayerTeam()];
+					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
-	if(Type == 1)
+	
+	if( Type == 1 )
 	{
-		SetFont("BIGFONT");
-		HudMessage(s:"\cFLimit: \cJ",d:RazorWireLimit(), s:" \cK/\cJ ", d:MaxRazorWire;
-			HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+HudMessage( s: "\cFLimit: \cJ", d: RazorWireLimit(), s: " \cK/\cJ ", d: MaxRazorWire;
+					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
-	if(Type == 2)
+	
+	if( Type == 2 )
 	{
-		SetFont("BIGFONT");
-		if (MineLimit() < MaxProxy)
-			HudMessage(s:"\cFLimit: \cJ",d:MineLimit(), s:" \cK/\cJ ", d:MaxProxy;
-				HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+		
+		if( MineLimit() < MaxProxy )
+HudMessage( s: "\cFLimit: \cJ", d: MineLimit(), s: " \cK/\cJ ", d: MaxProxy;
+						HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 		else
-			HudMessage(s:"\cRLimit: \cG",d:MineLimit(), s:" \cR/\cG ", d:MaxProxy;
-				HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+HudMessage( s: "\cRLimit: \cG", d: MineLimit(), s: " \cR/\cG ", d: MaxProxy;
+						HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
-	if(Type == 3)
+	
+	if( Type == 3 )
 	{
-		SetFont("BIGFONT");
-		HudMessage(s:"\cFLimit: \cJ", d:MiniRefinery[1-PlayerTeam()],s:" \cK/\cJ 1";
-			HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+HudMessage( s: "\cFLimit: \cJ", d: MiniRefinery[1 - PlayerTeam()], s: " \cK/\cJ 1";
+					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
-	if(Type == 4)
+	
+	if( Type == 4 )
 	{
-		SetFont("BIGFONT");
-		HudMessage(s:"\cFLimit: \cJ", d:GlobalMedic[1-PlayerTeam()],s:" \cK/\cJ 1";
-			HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+HudMessage( s: "\cFLimit: \cJ", d: GlobalMedic[1 - PlayerTeam()], s: " \cK/\cJ 1";
+					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
-	if(Type == 5)
+	
+	if( Type == 5 )
 	{
-		SetFont("BIGFONT");
-		HudMessage(s:"\cFLimit: \cJ", d:MiniRavenLimit(), s:" \cK/\cJ ", d:MaxMechs;
-			HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+HudMessage( s: "\cFLimit: \cJ", d: MiniRavenLimit(), s: " \cK/\cJ ", d: MaxMechs;
+					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
-	if(Type == 6)
+	
+	if( Type == 6 )
 	{
-		SetFont("BIGFONT");
-		HudMessage(s:"\cFLimit: \cJ", d:GlobalMedic[1-PlayerTeam()],s:" \cK/\cJ 1";
-			HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+HudMessage( s: "\cFLimit: \cJ", d: GlobalMedic[1 - PlayerTeam()], s: " \cK/\cJ 1";
+					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
-	if(Type == 8)
+	
+	if( Type == 8 )
 	{
-		SetFont("BIGFONT");
-		HudMessage(s:"\cFLimit: \cJ", d:GlobalAmmo[1-PlayerTeam()],s:" \cK/\cJ 1";
-			HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+HudMessage( s: "\cFLimit: \cJ", d: GlobalAmmo[1 - PlayerTeam()], s: " \cK/\cJ 1";
+					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
 }
 
 
 //Limits
-script 344 (int Type, int DoneByUtilGun)
+script 344( int Type, int DoneByUtilGun )
 {
 	int Counter = 0;
-	if(Type == 0)
+	
+	if( Type == 0 )
 	{
-		SetFont("BIGFONT");
-		HudMessage(s:"\cFLimit: \cJ",d:TurretLimit(), s:" \cK/\cJ ", d:MaxTurrets[1-PlayerTeam()];
-			HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+HudMessage( s: "\cFLimit: \cJ", d: TurretLimit(), s: " \cK/\cJ ", d: MaxTurrets[1 - PlayerTeam()];
+					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
-	if(Type == 1)
+	
+	if( Type == 1 )
 	{
-		SetFont("BIGFONT");
-		HudMessage(s:"\cFLimit: \cJ",d:RazorWireLimit(), s:" \cK/\cJ ", d:MaxRazorWire;
-			HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+HudMessage( s: "\cFLimit: \cJ", d: RazorWireLimit(), s: " \cK/\cJ ", d: MaxRazorWire;
+					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
-	if(Type == 3)
+	
+	if( Type == 3 )
 	{
-		delay(101);
-		if(PlayerTeam() == TEAM_RED && ThingCountSector(T_NONE,900,18) >= 1) {
+		delay( 101 );
+		
+		if( PlayerTeam() == TEAM_RED && ThingCountSector( T_NONE, 900, 18 ) >= 1 )
+		{
 			MiniRefinery[0] = 1;
-			IntelMessageBold (strparam (n:0, s:"\cJ of \cGNod\cJ\nhas built a \cDMini-Refinery!"));
-			AddExperience (125);
-			SetThingSpecial(900,226,345,0,3,0);
-			SetActorState (900, "Approved");
-			Log (s:pname (-1), s:" builds Nod Mini-Refinery.");
-			GivePoints (POINTS_RESEARCH);
-			ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_RED);
-		} else if(PlayerTeam() == TEAM_RED && ThingCountSector(T_NONE,900,18) == 0) {
-			IntelMessage ("Must be built into a \cDTiberium Field!");
-			SetActorState (900, "Disapproved");
-			delay (3*35);
-			RefundCredits (1500);
+		IntelMessageBold( strparam( n: 0, s: "\cJ of \cGNod\cJ\nhas built a \cDMini-Refinery!" ) );
+			AddExperience( 125 );
+			SetThingSpecial( 900, 226, 345, 0, 3, 0 );
+			SetActorState( 900, "Approved" );
+	Log( s: pname( -1 ), s: " builds Nod Mini-Refinery." );
+			GivePoints( POINTS_RESEARCH );
+			ACS_ExecuteAlways( 930, 0, BUILDING_MINIREF, TEAM_RED );
 		}
-		if (PlayerTeam() == TEAM_BLUE && ThingCountSector(T_NONE,901,18) >= 1) {
+		else if( PlayerTeam() == TEAM_RED && ThingCountSector( T_NONE, 900, 18 ) == 0 )
+		{
+			IntelMessage( "Must be built into a \cDTiberium Field!" );
+			SetActorState( 900, "Disapproved" );
+			delay( 3 * 35 );
+			RefundCredits( 1500 );
+		}
+		
+		if( PlayerTeam() == TEAM_BLUE && ThingCountSector( T_NONE, 901, 18 ) >= 1 )
+		{
 			MiniRefinery[1] = 1;
-			IntelMessageBold (strparam (n:0, s:"\cJ of \cFGDI\cJ\nhas built a \cDMini-Refinery!"));
-			AddExperience (125);
-			SetThingSpecial(901,226,345,0,3,1);
-			SetActorState (901, "Approved");
-			Log (s:pname (-1), s:" builds GDI Mini-Refinery.");
-			GivePoints (POINTS_RESEARCH);
-			ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_BLUE);
+		IntelMessageBold( strparam( n: 0, s: "\cJ of \cFGDI\cJ\nhas built a \cDMini-Refinery!" ) );
+			AddExperience( 125 );
+			SetThingSpecial( 901, 226, 345, 0, 3, 1 );
+			SetActorState( 901, "Approved" );
+	Log( s: pname( -1 ), s: " builds GDI Mini-Refinery." );
+			GivePoints( POINTS_RESEARCH );
+			ACS_ExecuteAlways( 930, 0, BUILDING_MINIREF, TEAM_BLUE );
 		}
-		else if(PlayerTeam() == TEAM_BLUE && ThingCountSector(T_NONE,901,18) == 0) {
-			IntelMessage ("Must be built into a \cDTiberium Field!");
-			SetActorState (901, "Disapproved");
-			delay (3*35);
-			RefundCredits (1500);
+		else if( PlayerTeam() == TEAM_BLUE && ThingCountSector( T_NONE, 901, 18 ) == 0 )
+		{
+			IntelMessage( "Must be built into a \cDTiberium Field!" );
+			SetActorState( 901, "Disapproved" );
+			delay( 3 * 35 );
+			RefundCredits( 1500 );
 		}
 	}
-	if(Type == 4)
+	
+	if( Type == 4 )
 	{
-		SetFont("BIGFONT");
-		HudMessage(s:"\cFLimit: \cJ",d:TurretLimit(), s:" \cK/\cJ ", d:MaxTurrets[1-PlayerTeam()];
-			HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+HudMessage( s: "\cFLimit: \cJ", d: TurretLimit(), s: " \cK/\cJ ", d: MaxTurrets[1 - PlayerTeam()];
+					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
-	if(Type == 5)
+	
+	if( Type == 5 )
 	{
-		SetFont("BIGFONT");
-		HudMessage(s:"\cFLimit: \cJ",d:MineLimit(), s:" \cK/\cJ ", d:MaxProxy;
-			HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+HudMessage( s: "\cFLimit: \cJ", d: MineLimit(), s: " \cK/\cJ ", d: MaxProxy;
+					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
-	if(Type == 6) {
-		delay(70);
-		if (GlobalMedic[1-PlayerTeam()] == 1) {
+	
+	if( Type == 6 )
+	{
+		delay( 70 );
+		
+		if( GlobalMedic[1 - PlayerTeam()] == 1 )
+		{
 			// [Dusk] fuckup compensation..
 			
 			// NOTE: this check leaves the useless cache there,
 			// therefore, this check should not be relied on!
-			IntelMessage ("You already have a \cAHealth Regenerator!");
+			IntelMessage( "You already have a \cAHealth Regenerator!" );
 			terminate;
 		}
 		
 		// [SP] Can only build on repair pad if built w/ util gun
-		if (PlayerTeam() == TEAM_RED && DoneByUtilGun == 1 && ThingCountSector(T_NONE,902,15) == 0 &&  ThingCount(T_NONE,902) == 1) {
-			IntelMessage ("You must put this in your \cKrepair facility!");
-			SetActorState (902, "Disapproved");
-			delay (3*35);
-			RefundCredits (1500);
+		if( PlayerTeam() == TEAM_RED && DoneByUtilGun == 1 && ThingCountSector( T_NONE, 902, 15 ) == 0 &&  ThingCount( T_NONE, 902 ) == 1 )
+		{
+			IntelMessage( "You must put this in your \cKrepair facility!" );
+			SetActorState( 902, "Disapproved" );
+			delay( 3 * 35 );
+			RefundCredits( 1500 );
 			terminate;
 		}
 		
-		if (PlayerTeam() == TEAM_BLUE && DoneByUtilGun == 1 && ThingCountSector(T_NONE,903,13) == 0 &&  ThingCount(T_NONE,903) == 1) {
-			IntelMessage ("You must put this in your \cKrepair facility!");
-			SetActorState (903, "Disapproved");
-			delay (3*35);
-			RefundCredits (1500);
+		if( PlayerTeam() == TEAM_BLUE && DoneByUtilGun == 1 && ThingCountSector( T_NONE, 903, 13 ) == 0 &&  ThingCount( T_NONE, 903 ) == 1 )
+		{
+			IntelMessage( "You must put this in your \cKrepair facility!" );
+			SetActorState( 903, "Disapproved" );
+			delay( 3 * 35 );
+			RefundCredits( 1500 );
 			terminate;
 		}
-
-		if(PlayerTeam() == TEAM_RED && ThingCount(T_NONE,902) == 1) {
+		
+		if( PlayerTeam() == TEAM_RED && ThingCount( T_NONE, 902 ) == 1 )
+		{
 			GlobalMedic[0] = 1;
-			delay(35);
-			IntelMessageBold (strparam (n:0, s:"\cJ of \cGNod\cJ\nhas built a \cAHealth Regenerator!"));
-			AddExperience (125);
-			SetThingSpecial(902, ACS_ExecuteAlways, 345,0,5,0);
-			SetActorState (902, "Approved");
-			Log (s:pname (-1), s:" builds Nod Health Regen Cache.");
-			GivePoints (POINTS_RESEARCH);
-			ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_RED);
-		} else if(PlayerTeam() == TEAM_RED) {
-			SetFont ("SMALLFONT");
-			IntelMessage ("Regenerator failed to spawn to cache pad!");
-			delay (3*35);
-			RefundCredits (2250);	
+			delay( 35 );
+		IntelMessageBold( strparam( n: 0, s: "\cJ of \cGNod\cJ\nhas built a \cAHealth Regenerator!" ) );
+			AddExperience( 125 );
+			SetThingSpecial( 902, ACS_ExecuteAlways, 345, 0, 5, 0 );
+			SetActorState( 902, "Approved" );
+	Log( s: pname( -1 ), s: " builds Nod Health Regen Cache." );
+			GivePoints( POINTS_RESEARCH );
+			ACS_ExecuteAlways( 930, 0, BUILDING_HEALTHREGEN, TEAM_RED );
+		}
+		else if( PlayerTeam() == TEAM_RED )
+		{
+			SetFont( "SMALLFONT" );
+			IntelMessage( "Regenerator failed to spawn to cache pad!" );
+			delay( 3 * 35 );
+			RefundCredits( 2250 );
 		}
 		
-		if (PlayerTeam() == TEAM_BLUE && ThingCount(T_NONE,903) == 1) {
+		if( PlayerTeam() == TEAM_BLUE && ThingCount( T_NONE, 903 ) == 1 )
+		{
 			GlobalMedic[1] = 1;
-			delay(35);
-			IntelMessageBold (strparam (n:0, s:"\cJ of \cFGDI\cJ\nhas built a \cAHealth Regenerator!"));
-			AddExperience (125);
-			SetThingSpecial(903, ACS_ExecuteAlways, 345, 0, 5, 1);
-			SetActorState (903, "Approved");
-			Log (s:pname (-1), s:" builds GDI Health Regen Cache.");
-			GivePoints (POINTS_RESEARCH);
-			ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_BLUE);
-		} else if (PlayerTeam() == TEAM_BLUE) {
-			SetFont ("SMALLFONT");
-			IntelMessage ("Regenerator failed to spawn to cache pad!");
-			delay (3*35);
-			RefundCredits (2250);
+			delay( 35 );
+		IntelMessageBold( strparam( n: 0, s: "\cJ of \cFGDI\cJ\nhas built a \cAHealth Regenerator!" ) );
+			AddExperience( 125 );
+			SetThingSpecial( 903, ACS_ExecuteAlways, 345, 0, 5, 1 );
+			SetActorState( 903, "Approved" );
+	Log( s: pname( -1 ), s: " builds GDI Health Regen Cache." );
+			GivePoints( POINTS_RESEARCH );
+			ACS_ExecuteAlways( 930, 0, BUILDING_HEALTHREGEN, TEAM_BLUE );
+		}
+		else if( PlayerTeam() == TEAM_BLUE )
+		{
+			SetFont( "SMALLFONT" );
+			IntelMessage( "Regenerator failed to spawn to cache pad!" );
+			delay( 3 * 35 );
+			RefundCredits( 2250 );
 		}
 	}
-	if(Type == 7)
+	
+	if( Type == 7 )
 	{
-		SetFont("BIGFONT");
-		HudMessage(s:"\cFLimit: \cJ",d:MiniRavenLimit(), s:" \cK/\cJ ", d:MaxMechs;
-			HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+HudMessage( s: "\cFLimit: \cJ", d: MiniRavenLimit(), s: " \cK/\cJ ", d: MaxMechs;
+					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
-	if(Type == 8) {
-		delay(70);
-		if (GlobalAmmo[1-PlayerTeam()] == 1) {
+	
+	if( Type == 8 )
+	{
+		delay( 70 );
+		
+		if( GlobalAmmo[1 - PlayerTeam()] == 1 )
+		{
 			// [Dusk] fuckup compensation..
 			
 			// NOTE: this check leaves the useless cache there,
 			// therefore, this check should not be relied on!
-			SetFont ("SMALLFONT");
-			IntelMessage ("You already have an \cKAmmo Regenerator!");
+			SetFont( "SMALLFONT" );
+			IntelMessage( "You already have an \cKAmmo Regenerator!" );
 			terminate;
 		}
 		
 		// [SP] Can only build on repair pad if built w/ util gun
-		if (PlayerTeam() == TEAM_RED && DoneByUtilGun == 1 && ThingCountSector(T_NONE,904,15) == 0 &&  ThingCount(T_NONE,904) == 1) {
-			IntelMessage ("You must put this in your \cKrepair facility!");
-			SetActorState (904, "Disapproved");
-			delay (3*35);
-			RefundCredits (1500);		
+		if( PlayerTeam() == TEAM_RED && DoneByUtilGun == 1 && ThingCountSector( T_NONE, 904, 15 ) == 0 &&  ThingCount( T_NONE, 904 ) == 1 )
+		{
+			IntelMessage( "You must put this in your \cKrepair facility!" );
+			SetActorState( 904, "Disapproved" );
+			delay( 3 * 35 );
+			RefundCredits( 1500 );
 			terminate;
-		}
-		if (PlayerTeam() == TEAM_BLUE && DoneByUtilGun == 1 && ThingCountSector(T_NONE,905,13) == 0 &&  ThingCount(T_NONE,905) == 1) {
-			IntelMessage ("You must put this in your \cKrepair facility!");
-			SetActorState (905, "Disapproved");
-			delay (3*35);
-			RefundCredits (1500);
-			terminate;
-		}
-
-		if(PlayerTeam() == TEAM_RED && ThingCount(T_NONE,904) == 1) {
-			GlobalAmmo[0] = 1;
-			delay(35);
-			IntelMessageBold (strparam (n:0, s:"\cJ of \cGNod\cJ\nhas built an \cKAmmo Regenerator!"));
-			AddExperience (125);
-			SetActorState (904, "Approved");
-			SetThingSpecial(904, ACS_ExecuteAlways, 345, 0, 7, 0);
-			Log (s:pname (-1), s:" builds Nod Ammo Regen Cache.");
-			GivePoints (POINTS_RESEARCH);
-			ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_RED);
-		} else if(PlayerTeam() == TEAM_RED) {
-			// [Dusk] Refund if the cache fails to spawn
-			SetFont ("SMALLFONT");
-			IntelMessage ("Regenerator failed to spawn to cache pad!");
-			delay (3*35);
-			RefundCredits (2250);
 		}
 		
-		if (PlayerTeam() == TEAM_BLUE && ThingCount(T_NONE,905) == 1) {
-			GlobalAmmo[1] = 1;
-			delay(35);
-			SetFont ("SMALLFONT");
-			IntelMessageBold (strparam (n:0, s:"\cJ of \cFGDI\cJ\nhas built a \cKAmmo Regenerator!"));
-			AddExperience (125);
-			SetActorState (905, "Approved");
-			SetThingSpecial(905, ACS_ExecuteAlways, 345, 0, 7, 1);
-			Log (s:pname (-1), s:" builds GDI Ammo Regen Cache.");
-			GivePoints (POINTS_RESEARCH);
-			ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_BLUE);
-		} else if (PlayerTeam() == TEAM_BLUE) {
+		if( PlayerTeam() == TEAM_BLUE && DoneByUtilGun == 1 && ThingCountSector( T_NONE, 905, 13 ) == 0 &&  ThingCount( T_NONE, 905 ) == 1 )
+		{
+			IntelMessage( "You must put this in your \cKrepair facility!" );
+			SetActorState( 905, "Disapproved" );
+			delay( 3 * 35 );
+			RefundCredits( 1500 );
+			terminate;
+		}
+		
+		if( PlayerTeam() == TEAM_RED && ThingCount( T_NONE, 904 ) == 1 )
+		{
+			GlobalAmmo[0] = 1;
+			delay( 35 );
+		IntelMessageBold( strparam( n: 0, s: "\cJ of \cGNod\cJ\nhas built an \cKAmmo Regenerator!" ) );
+			AddExperience( 125 );
+			SetActorState( 904, "Approved" );
+			SetThingSpecial( 904, ACS_ExecuteAlways, 345, 0, 7, 0 );
+	Log( s: pname( -1 ), s: " builds Nod Ammo Regen Cache." );
+			GivePoints( POINTS_RESEARCH );
+			ACS_ExecuteAlways( 930, 0, BUILDING_AMMOREGEN, TEAM_RED );
+		}
+		else if( PlayerTeam() == TEAM_RED )
+		{
 			// [Dusk] Refund if the cache fails to spawn
-			SetFont ("SMALLFONT");
-			IntelMessage ("Regenerator failed to spawn to cache pad!");
-			delay (3*35);
-			RefundCredits (2250);
+			SetFont( "SMALLFONT" );
+			IntelMessage( "Regenerator failed to spawn to cache pad!" );
+			delay( 3 * 35 );
+			RefundCredits( 2250 );
+		}
+		
+		if( PlayerTeam() == TEAM_BLUE && ThingCount( T_NONE, 905 ) == 1 )
+		{
+			GlobalAmmo[1] = 1;
+			delay( 35 );
+			SetFont( "SMALLFONT" );
+		IntelMessageBold( strparam( n: 0, s: "\cJ of \cFGDI\cJ\nhas built a \cKAmmo Regenerator!" ) );
+			AddExperience( 125 );
+			SetActorState( 905, "Approved" );
+			SetThingSpecial( 905, ACS_ExecuteAlways, 345, 0, 7, 1 );
+	Log( s: pname( -1 ), s: " builds GDI Ammo Regen Cache." );
+			GivePoints( POINTS_RESEARCH );
+			ACS_ExecuteAlways( 930, 0, BUILDING_AMMOREGEN, TEAM_BLUE );
+		}
+		else if( PlayerTeam() == TEAM_BLUE )
+		{
+			// [Dusk] Refund if the cache fails to spawn
+			SetFont( "SMALLFONT" );
+			IntelMessage( "Regenerator failed to spawn to cache pad!" );
+			delay( 3 * 35 );
+			RefundCredits( 2250 );
 		}
 	}
-	if(Type == 9)
+	
+	if( Type == 9 )
 	{
-		SetFont("BIGFONT");
-		HudMessage(s:"\cFLimit: \cJ",d:TurretLimit(), s:" \cK/\cJ ", d:MaxTurrets[1-PlayerTeam()];
-			HUDMSG_FADEOUT, 960+PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0);
+		SetFont( "BIGFONT" );
+HudMessage( s: "\cFLimit: \cJ", d: TurretLimit(), s: " \cK/\cJ ", d: MaxTurrets[1 - PlayerTeam()];
+					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
 }
 
 //Deaths of said objects
-script 345 (int Type, int Team)
+script 345( int Type, int Team )
 {
 	// give points for disabling enemy defenses
-	if (type == 0 && team != PlayerTeam()) {
-		GivePoints (1);
+	if( type == 0 && team != PlayerTeam() )
+	{
+		GivePoints( 1 );
 		terminate;
 	}
 	
 	int Counter = 0;
-	if(Type == 3 && Team == 0) //RED 
+	
+	if( Type == 3 && Team == 0 ) //RED
 	{
 		MiniRefinery[0] = 0;
-		SetFont("SMALLFONT");
-		IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cGNod \cDMini-Refinery!"));
-		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
-		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log (s:pname (-1), s:" destroys Nod Mini-Ref.");
-		GivePoints (POINTS_RESEARCH);
-		ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_RED);
+		SetFont( "SMALLFONT" );
+	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cGNod \cDMini-Refinery!" ) );
+		ACS_ExecuteAlways( 324, 0, 2, 0, 0 ); // 100xp
+		AddCredits( GetCredits( PlayerNumber() ), 200 );
+Log( s: pname( -1 ), s: " destroys Nod Mini-Ref." );
+		GivePoints( POINTS_RESEARCH );
+		ACS_ExecuteAlways( 930, 0, BUILDING_MINIREF, TEAM_RED );
 	}
-	if(Type == 3 && Team == 1) //BLUE 
+	
+	if( Type == 3 && Team == 1 ) //BLUE
 	{
 		MiniRefinery[1] = 0;
-		SetFont ("SMALLFONT");
-		IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cFGDI \cDMini-Refinery!"));
-		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
-		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log (s:pname (-1), s:" destroys GDI Mini-Ref.");
-		GivePoints (POINTS_RESEARCH);
-		ACS_ExecuteAlways (930, 0, BUILDING_MINIREF, TEAM_BLUE);
+		SetFont( "SMALLFONT" );
+	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cFGDI \cDMini-Refinery!" ) );
+		ACS_ExecuteAlways( 324, 0, 2, 0, 0 ); // 100xp
+		AddCredits( GetCredits( PlayerNumber() ), 200 );
+Log( s: pname( -1 ), s: " destroys GDI Mini-Ref." );
+		GivePoints( POINTS_RESEARCH );
+		ACS_ExecuteAlways( 930, 0, BUILDING_MINIREF, TEAM_BLUE );
 	}
-	if(Type == 5 && Team == 0) //RED 
+	
+	if( Type == 5 && Team == 0 ) //RED
 	{
 		GlobalMedic[0] = 0;
-		SetFont ("SMALLFONT");
-		IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cGNod \cAHealth Regenerator!"));
-		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
-		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log (s:pname (-1), s:" destroys Nod Health Regen Cache.");
-		GivePoints (POINTS_RESEARCH);
-		ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_RED);
+		SetFont( "SMALLFONT" );
+	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cGNod \cAHealth Regenerator!" ) );
+		ACS_ExecuteAlways( 324, 0, 2, 0, 0 ); // 100xp
+		AddCredits( GetCredits( PlayerNumber() ), 200 );
+Log( s: pname( -1 ), s: " destroys Nod Health Regen Cache." );
+		GivePoints( POINTS_RESEARCH );
+		ACS_ExecuteAlways( 930, 0, BUILDING_HEALTHREGEN, TEAM_RED );
 	}
-	if(Type == 5 && Team == 1) //BLUE 
+	
+	if( Type == 5 && Team == 1 ) //BLUE
 	{
 		GlobalMedic[1] = 0;
-		SetFont ("SMALLFONT");
-		IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cFGDI \cAHealth Regenerator!"));
-		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
-		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log (s:pname (-1), s:" destroys GDI Health Regen Cache.");
-		GivePoints (POINTS_RESEARCH);
-		ACS_ExecuteAlways (930, 0, BUILDING_HEALTHREGEN, TEAM_RED);
+		SetFont( "SMALLFONT" );
+	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cFGDI \cAHealth Regenerator!" ) );
+		ACS_ExecuteAlways( 324, 0, 2, 0, 0 ); // 100xp
+		AddCredits( GetCredits( PlayerNumber() ), 200 );
+Log( s: pname( -1 ), s: " destroys GDI Health Regen Cache." );
+		GivePoints( POINTS_RESEARCH );
+		ACS_ExecuteAlways( 930, 0, BUILDING_HEALTHREGEN, TEAM_RED );
 	}
-	if(Type == 7 && Team == 0) //RED 
+	
+	if( Type == 7 && Team == 0 ) //RED
 	{
 		GlobalAmmo[0] = 0;
-		SetFont ("SMALLFONT");
-		IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cGNod \cKAmmo Regenerator!"));
-		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
-		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log (s:pname (-1), s:" destroys Nod Ammo Regen Cache.");
-		GivePoints (POINTS_RESEARCH);
-		ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_RED);
-
+		SetFont( "SMALLFONT" );
+	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cGNod \cKAmmo Regenerator!" ) );
+		ACS_ExecuteAlways( 324, 0, 2, 0, 0 ); // 100xp
+		AddCredits( GetCredits( PlayerNumber() ), 200 );
+Log( s: pname( -1 ), s: " destroys Nod Ammo Regen Cache." );
+		GivePoints( POINTS_RESEARCH );
+		ACS_ExecuteAlways( 930, 0, BUILDING_AMMOREGEN, TEAM_RED );
+		
 	}
-	if(Type == 7 && Team == 1) //BLUE 
+	
+	if( Type == 7 && Team == 1 ) //BLUE
 	{
 		GlobalAmmo[1] = 0;
-		SetFont ("SMALLFONT");
-		IntelMessageBold (strparam (n:0, s:"\cJ has destroyed\cJ\nthe \cFGDI \cKAmmo Regenerator!"));
-		ACS_ExecuteAlways(324,0,2,0,0); // 100xp
-		AddCredits(GetCredits (PlayerNumber()), 200);	
-		Log (s:pname (-1), s:" destroys GDI Ammo Regen Cache.");
-		GivePoints (POINTS_RESEARCH);
-		ACS_ExecuteAlways (930, 0, BUILDING_AMMOREGEN, TEAM_BLUE);
+		SetFont( "SMALLFONT" );
+	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cFGDI \cKAmmo Regenerator!" ) );
+		ACS_ExecuteAlways( 324, 0, 2, 0, 0 ); // 100xp
+		AddCredits( GetCredits( PlayerNumber() ), 200 );
+Log( s: pname( -1 ), s: " destroys GDI Ammo Regen Cache." );
+		GivePoints( POINTS_RESEARCH );
+		ACS_ExecuteAlways( 930, 0, BUILDING_AMMOREGEN, TEAM_BLUE );
 	}
 }
 
 //Check if it's not at limit
-script 346 (int Type, int Team) {
-	SetResultValue(1);
-	switch (Type) {
+script 346( int Type, int Team )
+{
+	SetResultValue( 1 );
+	
+	switch( Type )
+	{
 	case 0:
-		if (TurretLimit() >= MaxTurrets[Team]) SetResultValue(0);
+	
+		if( TurretLimit() >= MaxTurrets[Team] ) SetResultValue( 0 );
+		
 		break;
 	case 1:
-		if (RazorWireLimit() >= MaxRazorWire) SetResultValue(0);
+	
+		if( RazorWireLimit() >= MaxRazorWire ) SetResultValue( 0 );
+		
 		break;
 	case 2:
-		if (MineLimit() >= MaxProxy) SetResultValue(0);
+	
+		if( MineLimit() >= MaxProxy ) SetResultValue( 0 );
+		
 		break;
 	case 3:
+	
 		// if (MiniRefinery[Team]) SetResultValue (0);
-		if (ThingCount (T_NONE, 900+Team) != 0) SetResultValue (0);
+		if( ThingCount( T_NONE, 900 + Team ) != 0 ) SetResultValue( 0 );
+		
 		break;
 	case 4:
-		if (GlobalMedic[Team]) SetResultValue (0);
+	
+		if( GlobalMedic[Team] ) SetResultValue( 0 );
+		
 		break;
 	case 5:
-		if (MiniRavenLimit() >= MaxMechs) SetResultValue (0);
+	
+		if( MiniRavenLimit() >= MaxMechs ) SetResultValue( 0 );
+		
 		break;
 	case 6:
-		if (GlobalAmmo[Team]) SetResultValue (0);
+	
+		if( GlobalAmmo[Team] ) SetResultValue( 0 );
+		
 		break;
 	case 21:
-		if (Team == 0 && Portals[0] && Portals[1]) SetResultValue (0);
-		if (Team == 1 && Portals[2] && Portals[3]) SetResultValue (0);
+	
+		if( Team == 0 && Portals[0] && Portals[1] ) SetResultValue( 0 );
+		
+		if( Team == 1 && Portals[2] && Portals[3] ) SetResultValue( 0 );
+		
 		break;
 	}
 }
 
-script 347 (int Type) {
-	if(Type == 0)
-		IntelMessage ("At limit!");
-	if(Type == 1)
-		IntelMessage ("You cannot afford this.");
+script 347( int Type )
+{
+	if( Type == 0 )
+		IntelMessage( "At limit!" );
+		
+	if( Type == 1 )
+		IntelMessage( "You cannot afford this." );
 }
 
 
 // [SP] This script is used to determine whether a utility is in his own base or not, and to give "UtilityOutOfRange" if he's not.
-script 370 (void)
+script 370( void )
 {
 	bool IsInBase;
-	if ( PlayerTeam() == TEAM_RED )
+	
+	if( PlayerTeam() == TEAM_RED )
 	{
-		if (CheckActorDistance(0,201,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,203,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,205,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,207,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,209,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,214,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,900,MaxTurretDistance/4)) { IsInBase = true; }
-		else if (CheckActorDistance(0,902,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,904,MaxTurretDistance)) { IsInBase = true; }
-		else { IsInBase = false; }
-		if ( IsInBase )
+		if( CheckActorDistance( 0, 201, MaxTurretDistance ) )
 		{
-			if (CheckActorDistance(0,101,MinEnemyTurretDistance)) { IsInBase = false; }
-			else if (CheckActorDistance(0,103,MinEnemyTurretDistance)) { IsInBase = false; }
-			else if (CheckActorDistance(0,105,MinEnemyTurretDistance)) { IsInBase = false; }
-			else if (CheckActorDistance(0,107,MinEnemyTurretDistance)) { IsInBase = false; }
-			else if (CheckActorDistance(0,109,MinEnemyTurretDistance)) { IsInBase = false; }
-			else if (CheckActorDistance(0,114,MinEnemyTurretDistance)) { IsInBase = false; }
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 203, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 205, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 207, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 209, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 214, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 900, MaxTurretDistance / 4 ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 902, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 904, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else
+		{
+			IsInBase = false;
+		}
+		
+		if( IsInBase )
+		{
+			if( CheckActorDistance( 0, 101, MinEnemyTurretDistance ) )
+			{
+				IsInBase = false;
+			}
+			else if( CheckActorDistance( 0, 103, MinEnemyTurretDistance ) )
+			{
+				IsInBase = false;
+			}
+			else if( CheckActorDistance( 0, 105, MinEnemyTurretDistance ) )
+			{
+				IsInBase = false;
+			}
+			else if( CheckActorDistance( 0, 107, MinEnemyTurretDistance ) )
+			{
+				IsInBase = false;
+			}
+			else if( CheckActorDistance( 0, 109, MinEnemyTurretDistance ) )
+			{
+				IsInBase = false;
+			}
+			else if( CheckActorDistance( 0, 114, MinEnemyTurretDistance ) )
+			{
+				IsInBase = false;
+			}
 		}
 	}
 	else
 	{
-		if (CheckActorDistance(0,101,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,103,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,105,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,107,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,109,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,114,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,901,MaxTurretDistance/4)) { IsInBase = true; }
-		else if (CheckActorDistance(0,903,MaxTurretDistance)) { IsInBase = true; }
-		else if (CheckActorDistance(0,905,MaxTurretDistance)) { IsInBase = true; }
-		else { IsInBase = false; }
-		if ( IsInBase )
+		if( CheckActorDistance( 0, 101, MaxTurretDistance ) )
 		{
-			if (CheckActorDistance(0,201,MinEnemyTurretDistance)) { IsInBase = false; }
-			else if (CheckActorDistance(0,203,MinEnemyTurretDistance)) { IsInBase = false; }
-			else if (CheckActorDistance(0,205,MinEnemyTurretDistance)) { IsInBase = false; }
-			else if (CheckActorDistance(0,207,MinEnemyTurretDistance)) { IsInBase = false; }
-			else if (CheckActorDistance(0,209,MinEnemyTurretDistance)) { IsInBase = false; }
-			else if (CheckActorDistance(0,214,MinEnemyTurretDistance)) { IsInBase = false; }
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 103, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 105, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 107, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 109, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 114, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 901, MaxTurretDistance / 4 ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 903, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else if( CheckActorDistance( 0, 905, MaxTurretDistance ) )
+		{
+			IsInBase = true;
+		}
+		else
+		{
+			IsInBase = false;
+		}
+		
+		if( IsInBase )
+		{
+			if( CheckActorDistance( 0, 201, MinEnemyTurretDistance ) )
+			{
+				IsInBase = false;
+			}
+			else if( CheckActorDistance( 0, 203, MinEnemyTurretDistance ) )
+			{
+				IsInBase = false;
+			}
+			else if( CheckActorDistance( 0, 205, MinEnemyTurretDistance ) )
+			{
+				IsInBase = false;
+			}
+			else if( CheckActorDistance( 0, 207, MinEnemyTurretDistance ) )
+			{
+				IsInBase = false;
+			}
+			else if( CheckActorDistance( 0, 209, MinEnemyTurretDistance ) )
+			{
+				IsInBase = false;
+			}
+			else if( CheckActorDistance( 0, 214, MinEnemyTurretDistance ) )
+			{
+				IsInBase = false;
+			}
 		}
 	}
+	
 	//if ( IsInBase )
 	//	Log(s:"In base");
 	//else
 	//	Log(s:"Too far away");
-	if ( CheckInventory("UtilityOutOfRange") == 1 && IsInBase == true )
-		TakeInventory("UtilityOutOfRange",1);
-	else if ( CheckInventory("UtilityOutOfRange") == 0 && IsInBase == false )
-		GiveInventory("UtilityOutOfRange",1);
+	if( CheckInventory( "UtilityOutOfRange" ) == 1 && IsInBase == true )
+		TakeInventory( "UtilityOutOfRange", 1 );
+	else if( CheckInventory( "UtilityOutOfRange" ) == 0 && IsInBase == false )
+		GiveInventory( "UtilityOutOfRange", 1 );
 }
 
 // determine do we have adv turrets
-script 971 (void) {
-	SetResultValue (1);
-	if (AdvancedTurrets[1-PlayerTeam()]) {SetResultValue(0);}
+script 971( void )
+{
+	SetResultValue( 1 );
+	
+	if( AdvancedTurrets[1 - PlayerTeam()] )
+	{
+		SetResultValue( 0 );
+	}
 }
 
-function bool CheckActorDistance(int Source, int Target, int Range)
+function bool CheckActorDistance( int Source, int Target, int Range )
 {
 	// [SP] If either object does not exist, then we're really not close to anything.
-	if ( ThingCount(T_NONE,Target) == 0 || ThingCount(T_NONE,Source) == 0 )
+	if( ThingCount( T_NONE, Target ) == 0 || ThingCount( T_NONE, Source ) == 0 )
 		return false;
+		
 	// [SP] Check the distance between two objects using Pythagorean theorum - except do not root the squares, it makes the check faster
-	int Dist = msqr(GetActorX(Source) - GetActorX(Target)>>16);
-	Dist += msqr(GetActorY(Source) - GetActorY(Target)>>16);
-	Dist += msqr(GetActorZ(Source) - GetActorZ(Target)>>16);
-	if ( Dist <= msqr(Range) && GetCVar("aow_debug") == 1)
-		Log(s:"I'm close to object ",d:Target);
-	if ( Dist <= msqr(Range) )
+	int Dist = msqr( GetActorX( Source ) - GetActorX( Target ) >> 16 );
+	Dist += msqr( GetActorY( Source ) - GetActorY( Target ) >> 16 );
+	Dist += msqr( GetActorZ( Source ) - GetActorZ( Target ) >> 16 );
+	
+	if( Dist <= msqr( Range ) && GetCVar( "aow_debug" ) == 1 )
+Log( s: "I'm close to object ", d: Target );
+
+	if( Dist <= msqr( Range ) )
 		return true;
+		
 	return false;
 }
 
 //BUILD with Utility (check for cash)
-script 695 (int Type)
+script 695( int Type )
 {
-	if (IsAdmin[PlayerNumber()]) {
-		SetResultValue(1);
+	if( IsAdmin[PlayerNumber()] )
+	{
+		SetResultValue( 1 );
 		terminate;
 	}
 	
-	if(Type == 0) //TURRET
+	if( Type == 0 ) //TURRET
 	{
-		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,50,0,0))
+		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 50, 0, 0 ) )
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
 			//HudMessage(s:"Insufficient funds!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-			SetResultValue(0);			
+			SetResultValue( 0 );
 		}
 		else
 		{
-			SpendCredits (50);
-			SetResultValue(1);
-		}	
+			SpendCredits( 50 );
+			SetResultValue( 1 );
+		}
 	}
-	if(Type == 1) //POWERUP CACHE
+	
+	if( Type == 1 ) //POWERUP CACHE
 	{
-		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,250,0,0))
+		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 250, 0, 0 ) )
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
 			//HudMessage(s:"Insufficient funds!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-			SetResultValue(0);			
+			SetResultValue( 0 );
 		}
 		else
 		{
-			SpendCredits (250);
-			SetResultValue(1);
-		}	
+			SpendCredits( 250 );
+			SetResultValue( 1 );
+		}
 	}
-	if(Type == 2) //MINI REFINERY
+	
+	if( Type == 2 ) //MINI REFINERY
 	{
-		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,2250,0,0))
+		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 2250, 0, 0 ) )
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
 			//HudMessage(s:"Insufficient funds!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-			SetResultValue(0);			
+			SetResultValue( 0 );
 		}
 		else
 		{
-			SpendCredits (2250);
-			SetResultValue(1);
-		}	
+			SpendCredits( 2250 );
+			SetResultValue( 1 );
+		}
 	}
-	if(Type == 3) //ANTI-MECH TURRET
+	
+	if( Type == 3 ) //ANTI-MECH TURRET
 	{
-		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,80,0,0))
+		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 80, 0, 0 ) )
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
 			//HudMessage(s:"Insufficient funds!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-			SetResultValue(0);			
+			SetResultValue( 0 );
 		}
 		else
 		{
-			SpendCredits (80);
-			SetResultValue(1);
-		}	
+			SpendCredits( 80 );
+			SetResultValue( 1 );
+		}
 	}
-	if(Type == 4) //MINES
+	
+	if( Type == 4 ) //MINES
 	{
-		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,80,0,0))
+		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 80, 0, 0 ) )
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
 			//HudMessage(s:"Insufficient funds!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-			SetResultValue(0);			
+			SetResultValue( 0 );
 		}
 		else
 		{
-			SpendCredits (80);
-			SetResultValue(1);
-		}	
+			SpendCredits( 80 );
+			SetResultValue( 1 );
+		}
 	}
-	if(Type == 5) //REPAIR TURRET
+	
+	if( Type == 5 ) //REPAIR TURRET
 	{
-		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,125,0,0))
+		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 125, 0, 0 ) )
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
 			//HudMessage(s:"Insufficient funds!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-			SetResultValue(0);			
+			SetResultValue( 0 );
 		}
 		else
 		{
-			SpendCredits (125);
-			SetResultValue(1);
-		}	
+			SpendCredits( 125 );
+			SetResultValue( 1 );
+		}
 	}
-	if(Type == 6) //ADVANCED/KLAXON TURRET
+	
+	if( Type == 6 ) //ADVANCED/KLAXON TURRET
 	{
-		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,100,0,0))
+		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 100, 0, 0 ) )
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
 			//HudMessage(s:"Insufficient funds!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-			SetResultValue(0);			
+			SetResultValue( 0 );
 		}
 		else
 		{
-			SpendCredits (100);
-			SetResultValue(1);
-		}	
+			SpendCredits( 100 );
+			SetResultValue( 1 );
+		}
 	}
-	if(Type == 7) //REGENERATION CACHE
+	
+	if( Type == 7 ) //REGENERATION CACHE
 	{
-		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,2250,0,0))
+		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 2250, 0, 0 ) )
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
 			//HudMessage(s:"Insufficient funds!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-			SetResultValue(0);			
+			SetResultValue( 0 );
 		}
 		else
 		{
-			SpendCredits (2250);
-			SetResultValue(1);
-		}	
+			SpendCredits( 2250 );
+			SetResultValue( 1 );
+		}
 	}
-	if(Type == 8) //RAVEN MECH
+	
+	if( Type == 8 ) //RAVEN MECH
 	{
-		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,1400,0,0))
+		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 1400, 0, 0 ) )
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
 			//HudMessage(s:"Insufficient funds!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-			SetResultValue(0);			
+			SetResultValue( 0 );
 		}
 		else
 		{
-			SpendCredits (1400);
-			SetResultValue(1);
-		}	
+			SpendCredits( 1400 );
+			SetResultValue( 1 );
+		}
 	}
-	if(Type == 9) //RAVEN COMPANION
+	
+	if( Type == 9 ) //RAVEN COMPANION
 	{
-		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,150,0,0))
+		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 150, 0, 0 ) )
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
 			//HudMessage(s:"Insufficient funds!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-			SetResultValue(0);			
+			SetResultValue( 0 );
 		}
 		else
 		{
-			SpendCredits (150);
-			SetResultValue(1);
-		}	
+			SpendCredits( 150 );
+			SetResultValue( 1 );
+		}
 	}
-	if(Type == 10) //MISSILE TURRET
+	
+	if( Type == 10 ) //MISSILE TURRET
 	{
-		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,200,0,0))
+		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 200, 0, 0 ) )
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
 			//HudMessage(s:"Insufficient funds!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-			SetResultValue(0);			
+			SetResultValue( 0 );
 		}
 		else
 		{
-			SpendCredits (200);
-			SetResultValue(1);
-		}	
+			SpendCredits( 200 );
+			SetResultValue( 1 );
+		}
 	}
-	if(Type == 11) //WOLVERINE MECH
+	
+	if( Type == 11 ) //WOLVERINE MECH
 	{
-		if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330,1600,0,0))
+		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 1600, 0, 0 ) )
 		{
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
 			//HudMessage(s:"Insufficient funds!"; HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-			SetResultValue(0);			
+			SetResultValue( 0 );
 		}
 		else
 		{
-			SpendCredits (1600);
-			SetResultValue(1);
-		}	
+			SpendCredits( 1600 );
+			SetResultValue( 1 );
+		}
 	}
 }
 
 // [Dusk] same as above but custom amount
-script 694 (int amount) {
-	if (IsAdmin[PlayerNumber()]) {
-		SetResultValue(1);
+script 694( int amount )
+{
+	if( IsAdmin[PlayerNumber()] )
+	{
+		SetResultValue( 1 );
 		terminate;
 	}
 	
-	if(GetCredits (PlayerNumber()) < ACS_ExecuteWithResult(330, amount, 0, 0)) {
-		SetResultValue(0);			
-	} else {
-		SpendCredits (amount);
-		SetResultValue(1);
+	if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, amount, 0, 0 ) )
+	{
+		SetResultValue( 0 );
+	}
+	else
+	{
+		SpendCredits( amount );
+		SetResultValue( 1 );
 	}
 }
 
 // [Dusk] Floating platform's check for space. These are not supposed to be built inside buildings.
-script 750 (void) {
+script 750( void )
+{
 	int canbuild = 0;
-	int levelnum = GetLevelInfo (LEVELINFO_LEVELNUM);
-	int height = GetActorCeilingZ (0) - GetActorFloorZ (0);
-	switch (levelnum) {
-		case 19:
-			// Valley
-			if (CheckActorCeilingTexture (0, "F_SKY1") || CheckActorCeilingTexture (0, "N_ROCK13"))
+	int levelnum = GetLevelInfo( LEVELINFO_LEVELNUM );
+	int height = GetActorCeilingZ( 0 ) - GetActorFloorZ( 0 );
+	
+	switch( levelnum )
+	{
+	case 19:
+	
+		// Valley
+		if( CheckActorCeilingTexture( 0, "F_SKY1" ) || CheckActorCeilingTexture( 0, "N_ROCK13" ) )
+			canbuild = 1;
+			
+		break;
+	case 50:
+	
+		// Mercury
+		if( CheckActorCeilingTexture( 0, "F_SKY1" ) || GetActorLightLevel( 0 ) <= 128 )
+		{
+			if( height >= 256.0 )
 				canbuild = 1;
-			break;
-		case 50:
-			// Mercury
-			if (CheckActorCeilingTexture (0, "F_SKY1") || GetActorLightLevel (0) <= 128) {
-				if (height >= 256.0) 
-					canbuild = 1;
-			} else {
-				if (height >= 384.0)
-					canbuild = 1;
-			}
-			break;
-		default:
-			// any other map
-			if (height >= 300.0)
+		}
+		else
+		{
+			if( height >= 384.0 )
 				canbuild = 1;
-			break;
+		}
+		
+		break;
+	default:
+	
+		// any other map
+		if( height >= 300.0 )
+			canbuild = 1;
+			
+		break;
 	}
-	SetResultValue (canbuild);
+	
+	SetResultValue( canbuild );
 }

@@ -1,243 +1,308 @@
 // [SP] This allows a spectator to spawn outside of the team selection room
-script 940 (int which) NET CLIENTSIDE {
-	if (PlayerInGame (PlayerNumber())) {
+script 940( int which ) NET CLIENTSIDE
+{
+	if( PlayerInGame( PlayerNumber() ) )
+	{
 		DisplayCross();
-		SETFONT("BigFont");
-		HudMessage(s:"You are not a spectator!";
-			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
+		SETFONT( "BigFont" );
+	HudMessage( s: "You are not a spectator!";
+		HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
 		terminate;
 	}
 	
-	switch (Which) {
+	switch( Which )
+	{
 	case 0:
-		Teleport(random(1,2));
+		Teleport( random( 1, 2 ) );
 		break;
 	case 1:
-		FadeTo(0,0,0,0.0,0.0);
+		FadeTo( 0, 0, 0, 0.0, 0.0 );
 		break;
 	}
 }
 
 // [Dusk] allows players to switch to the losing team
-script 942 (void) NET {
+script 942( void ) NET
+{
 	// You sorta need a team first
-	if (!PlayerInGame (PlayerNumber())) {
+	if( !PlayerInGame( PlayerNumber() ) )
+	{
 		DisplayCross();
-		SETFONT("BigFont");
-		HudMessage(s:"Can't use this as a spectator!";
-			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
+		SETFONT( "BigFont" );
+		HudMessage( s: "Can't use this as a spectator!";
+			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
 		terminate;
 	}
 	
 	// Not during warm-up
-	if (Timer() <= 5*60*35) {
+	if( Timer() <= 5 * 60 * 35 )
+	{
 		DisplayCross();
-		SETFONT("BigFont");
-		HudMessage(s:"Too early to use this!";
-			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
+		SETFONT( "BigFont" );
+		HudMessage( s: "Too early to use this!";
+			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
 		terminate;
 	}
 	
 	int score;
-	if (PlayerTeam() == TEAM_BLUE) {
-		if (RedCount() + 1 >= BlueCount()) {
+	
+	if( PlayerTeam() == TEAM_BLUE )
+	{
+		if( RedCount() + 1 >= BlueCount() )
+		{
 			DisplayCross();
-			SETFONT("BigFont");
-			HudMessage(s:"There is already enough players on Nod!";
-				HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
+			SETFONT( "BigFont" );
+			HudMessage( s: "There is already enough players on Nod!";
+				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
 			terminate;
 		}
 		
-		if (RedScore() > BlueScore()) {
+		if( RedScore() > BlueScore() )
+		{
 			DisplayCross();
-			SETFONT("BigFont");
-			HudMessage(s:"Nod has more buildings than GDI!";
-				HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
+			SETFONT( "BigFont" );
+			HudMessage( s: "Nod has more buildings than GDI!";
+				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
 			terminate;
 		}
 		
-		score = BlueCount() - RedCount() - 1 + ((BaseLeft[1] - BaseLeft[0]) * 2);
+		score = BlueCount() - RedCount() - 1 + ( ( BaseLeft[1] - BaseLeft[0] ) * 2 );
 		
-		TakeInventory ("IsBlue", 1);
-		GiveInventory ("IsRed", 1);
-	} else if (PlayerTeam() == TEAM_RED) {
-		if (BlueCount() + 1 >= RedCount()) {
+		TakeInventory( "IsBlue", 1 );
+		GiveInventory( "IsRed", 1 );
+	}
+	else if( PlayerTeam() == TEAM_RED )
+	{
+		if( BlueCount() + 1 >= RedCount() )
+		{
 			DisplayCross();
-			SETFONT("BigFont");
-			HudMessage(s:"There is already enough players on GDI!";
-				HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
+			SETFONT( "BigFont" );
+			HudMessage( s: "There is already enough players on GDI!";
+				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
 			terminate;
 		}
 		
-		if (BlueScore() > RedScore()) {
+		if( BlueScore() > RedScore() )
+		{
 			DisplayCross();
-			SETFONT("BigFont");
-			HudMessage(s:"GDI has more buildings than Nod!";
-				HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
+			SETFONT( "BigFont" );
+			HudMessage( s: "GDI has more buildings than Nod!";
+				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
 			terminate;
 		}
 		
-		score = RedCount() - BlueCount() - 1 + ((BaseLeft[0] - BaseLeft[1]) * 2);
+		score = RedCount() - BlueCount() - 1 + ( ( BaseLeft[0] - BaseLeft[1] ) * 2 );
 		
-		TakeInventory ("IsRed", 1);
-		GiveInventory ("IsBlue", 1);
+		TakeInventory( "IsRed", 1 );
+		GiveInventory( "IsBlue", 1 );
 	}
 	
 	// logs and notices
 	str newteam, newcolor;
-	if (PlayerTeam() == TEAM_BLUE) {
+	
+	if( PlayerTeam() == TEAM_BLUE )
+	{
 		newteam = "GDI";
 		newcolor = "\cF";
-	} else {
+	}
+	else {
 		newteam = "Nod";
 		newcolor = "\cG";
 	}
 	
-	IntelMessageBold (strparam (n:0, s:" switches to ", s:newcolor, s:newteam));
-	Log (s:pname (-1), s:" switches to ", s:newteam, s:" team. (Score: ", d:score, s:")");
+	IntelMessageBold( strparam( n: 0, s: " switches to ", s: newcolor, s: newteam ) );
+	Log( s: pname( -1 ), s: " switches to ", s: newteam, s: " team. (Score: ", d: score, s: ")" );
 	
-	Player_SetTeam (!PlayerTeam());
+	Player_SetTeam( !PlayerTeam() );
 	
-	Teleport (70 + PlayerTeam());
-	GiveInventory("IsInSpawnRoom",1);
+	Teleport( 70 + PlayerTeam() );
+	GiveInventory( "IsInSpawnRoom", 1 );
 	
 	// Resign, if necessary
 	// TODO: is this really needed?
-	if (CheckInventory ("HasClass"))
-		ACS_ExecuteAlways (95, 0);
-	
+	if( CheckInventory( "HasClass" ) )
+		ACS_ExecuteAlways( 95, 0 );
+		
 	// reward
-	delay (35*2);
-	AddExperience (score*50);
-	delay (35);
-	LocalAmbientSound ("powerup/credsound", 255);
-	AwardCredits (score * 200);
+	delay( 35 * 2 );
+	AddExperience( score * 50 );
+	delay( 35 );
+	LocalAmbientSound( "powerup/credsound", 255 );
+	AwardCredits( score * 200 );
 }
 
 // This allows players to sell weapons. Kinda like partial resign.
-script 950 (void) NET {
-	if (!PlayerInGame (PlayerNumber())) {
-		DisplayCross();
-		SETFONT("BigFont");
-		HudMessage(s:"... join up first.";
-			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
+script 950( void ) NET
+{
+	if( !PlayerInGame( PlayerNumber() ) )
 		terminate;
-	}
 	
-	if (CheckInventory ("IsMech")) {
-		DisplayCross();
-		SETFONT("BigFont");
-		HudMessage(s:"You can't sell a mech!";
-			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
+	if( CheckInventory( "IsMech" ) )
 		terminate;
-	}
 	
-	int classid = CheckInventory ("ClassID");
+	int classid = CheckInventory( "ClassID" );
 	int price = 0;
 	str weapon;
 	
-	if (CheckWeapon ("Boomstick")) {
-		if (WS_CheckClass (classid, CLASS_SHOTGUNNER) || WS_CheckClass (classid, CLASS_MEDIC)
-			|| WS_CheckClass (classid, CLASS_DEMOEXPERT)) terminate;
+	if( CheckWeapon( "Boomstick" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_SHOTGUNNER ) || WS_CheckClass( classid, CLASS_MEDIC )
+		|| WS_CheckClass( classid, CLASS_DEMOEXPERT ) ) terminate;
+		
 		price = 25;
 		weapon = "Boomstick";
-	} else if (CheckWeapon ("Rifle")) {
-		if (WS_CheckClass (classid, CLASS_RIFLEMAN) || WS_CheckClass (classid, CLASS_COMMANDO)) terminate;
+	}
+	else if( CheckWeapon( "Rifle" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_RIFLEMAN ) || WS_CheckClass( classid, CLASS_COMMANDO ) ) terminate;
+		
 		price = 25; // low price because it can be utility-built
 		weapon = "Rifle";
-	} else if (CheckWeapon ("LaserRifle")) {
+	}
+	else if( CheckWeapon( "LaserRifle" ) )
+	{
 		price = 25; // only through pickups, never a primary
 		weapon = "LaserRifle";
-	} else if (CheckWeapon ("GaussRifle")) {
-		if (WS_CheckClass (classid, CLASS_GAUSSGUNNER) || WS_CheckClass (classid, CLASS_COMMANDO)) terminate;
+	}
+	else if( CheckWeapon( "GaussRifle" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_GAUSSGUNNER ) || WS_CheckClass( classid, CLASS_COMMANDO ) ) terminate;
+		
 		price = 150;
 		weapon = "GaussRifle";
-	} else if (CheckWeapon ("GrenadeLauncher")) {
-		if (WS_CheckClass (classid, CLASS_GRENADIER)) terminate;
+	}
+	else if( CheckWeapon( "GrenadeLauncher" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_GRENADIER ) ) terminate;
+		
 		price = 125;
 		weapon = "GrenadeLauncher";
-	} else if (CheckWeapon ("MissileLauncher")) {
-		if (WS_CheckClass (classid, CLASS_ROCKETEER) || WS_CheckClass (classid, CLASS_COMMANDO)) terminate;
+	}
+	else if( CheckWeapon( "MissileLauncher" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_ROCKETEER ) || WS_CheckClass( classid, CLASS_COMMANDO ) ) terminate;
+		
 		price = 125;
 		weapon = "MissileLauncher";
-	} else if (CheckWeapon ("LaserChaingun")) {
-		if (WS_CheckClass (classid, CLASS_LASERCHAINGUNNER)) terminate;
+	}
+	else if( CheckWeapon( "LaserChaingun" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_LASERCHAINGUNNER ) ) terminate;
+		
 		price = 175;
 		weapon = "LaserChaingun";
-	} else if (CheckWeapon ("ArtilleryCannon")) {
-		if (WS_CheckClass (classid, CLASS_ARTILLERY)) terminate;
+	}
+	else if( CheckWeapon( "ArtilleryCannon" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_ARTILLERY ) ) terminate;
+		
 		price = 150;
 		weapon = "ArtilleryCannon";
-	} else if (CheckWeapon ("ChemicalSprayer")) {
-		if (WS_CheckClass (classid, CLASS_CHEMWARRIOR)) terminate;
+	}
+	else if( CheckWeapon( "ChemicalSprayer" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_CHEMWARRIOR ) ) terminate;
+		
 		price = 125;
 		weapon = "ChemicalSprayer";
-	} else if (CheckWeapon ("TiberiumAutorifleWeak")) {
+	}
+	else if( CheckWeapon( "TiberiumAutorifleWeak" ) )
+	{
 		price = 75; // never a primary
 		weapon = "TiberiumAutorifleWeak";
-	} else if (CheckWeapon ("SubMachineGun")) {
-		if (WS_CheckClass (classid, CLASS_GUNMAN)) terminate;
+	}
+	else if( CheckWeapon( "SubMachineGun" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_GUNMAN ) ) terminate;
+		
 		price = 25;
 		weapon = "SubMachineGun";
-	} else if (CheckWeapon ("Flamer")) {
-		if (WS_CheckClass (classid, CLASS_FLAMER)) terminate;
+	}
+	else if( CheckWeapon( "Flamer" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_FLAMER ) ) terminate;
+		
 		price = 125;
 		weapon = "Flamer";
-	} else if (CheckWeapon ("ShockRifle")) {
-		if (WS_CheckClass (classid, CLASS_SHOCKTROOPER)) terminate;
+	}
+	else if( CheckWeapon( "ShockRifle" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_SHOCKTROOPER ) ) terminate;
+		
 		price = 150;
 		weapon = "ShockRifle";
-	} else if (CheckWeapon ("SniperRifleWeak")) {
+	}
+	else if( CheckWeapon( "SniperRifleWeak" ) )
+	{
 		price = 125; // only through pickups, never a primary
 		weapon = "SniperRifleWeak";
-	} else if (CheckWeapon ("PlasmaGun")) {
-		if (WS_CheckClass (classid, CLASS_PLASMAGUNNER)) terminate;
+	}
+	else if( CheckWeapon( "PlasmaGun" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_PLASMAGUNNER ) ) terminate;
+		
 		price = 200;
 		weapon = "PlasmaGun";
-	} else if (CheckWeapon ("MachineGun")) {
-		if (WS_CheckClass (classid, CLASS_MACHINEGUNNER)) terminate;
+	}
+	else if( CheckWeapon( "MachineGun" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_MACHINEGUNNER ) ) terminate;
+		
 		price = 25; // low price because it can be utility-built
 		weapon = "MachineGun";
-	} else if (CheckWeapon ("GatlingGun")) {
-		if (WS_CheckClass (classid, CLASS_MINIGUNNER) || WS_CheckClass (classid, CLASS_COMMANDO)) terminate;
+	}
+	else if( CheckWeapon( "GatlingGun" ) )
+	{
+		if( WS_CheckClass( classid, CLASS_MINIGUNNER ) || WS_CheckClass( classid, CLASS_COMMANDO ) ) terminate;
+		
 		price = 100;
 		weapon = "GatlingGun";
-	} else if (CheckWeapon ("EagerBeaver")) {
+	}
+	else if( CheckWeapon( "EagerBeaver" ) )
+	{
 		price = 125; // never a primary
 		weapon = "EagerBeaver";
-	} else {
-		DisplayCross ();
-		SetFont ("BIGFONT");
-		HudMessage (s:"You can't sell that!";
-			HUDMSG_FADEOUT, 240+PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);		
+	}
+	else {
+		DisplayCross();
+		SetFont( "BIGFONT" );
+		HudMessage( s: "You can't sell that!";
+			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
 		terminate;
 	}
-
-	TakeInventory (weapon, 1);
-	GiveCredits (-1, price);
-	LocalAmbientSound ("powerup/credsound", 127);
-	IntelMessage (strparam (s:"You have sold your ", s:weapon, s:" for \cq$\cd", d:price));
-	Log (s:pname (-1), s:" sells ", s:weapon, s:" for $", d:price);
+	
+	TakeInventory( weapon, 1 );
+	GiveCredits( -1, price );
+	LocalAmbientSound( "powerup/credsound", 127 );
+	IntelMessage( strparam( s: "You have sold your ", s: weapon, s: " for \cq$\cd", d: price ) );
+	Log( s: pname( -1 ), s: " sells ", s: weapon, s: " for $", d: price );
 }
 
-function bool WS_CheckClass (int a, int b) {
-	if (a == b) {
-		Error ("You can't sell a class' primary weapon!");
+function bool WS_CheckClass( int a, int b )
+{
+	if( a == b )
+	{
+		Error( "You can't sell a class' primary weapon!" );
 		return true;
 	}
+	
 	return false;
 }
 
 // This allows players to see their speed factor.
-function int GetSpeedFactor (void) {
-	int f = GetSpeed ();
-	if (CheckInventory ("PowerSpeedUpgrade")) f = FixedMul (f, 1.25);
-	if (CheckInventory ("PowerFatigue")) f = FixedMul (f, 0.55);
-	if (CheckInventory ("PowerTimeGunBoost")) f = FixedMul (f, 1.4);
-	if (CheckInventory ("PowerTimeGunSlow")) f = FixedMul (f, 0.6);
+function int GetSpeedFactor( void )
+{
+	int f = GetSpeed();
+	
+	if( CheckInventory( "PowerSpeedUpgrade" ) ) f = FixedMul( f, 1.25 );
+	if( CheckInventory( "PowerFatigue" ) ) f = FixedMul( f, 0.55 );
+	if( CheckInventory( "PowerTimeGunBoost" ) ) f = FixedMul( f, 1.4 );
+	if( CheckInventory( "PowerTimeGunSlow" ) ) f = FixedMul( f, 0.6 );
+	
 	return f;
 }
 
-script 921 (void) NET CLIENTSIDE {
-	Log (s:"My speed is ", f:GetSpeedFactor ());
+script 921( void ) NET CLIENTSIDE
+{
+	Log( s: "My speed is ", f: GetSpeedFactor() );
 }

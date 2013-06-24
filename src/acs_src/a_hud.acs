@@ -6,37 +6,44 @@
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
 // display credits/experience, manage self-heal
-script 5 RESPAWN {
-	while (PlayerInGame (PlayerNumber()) && GetHealth() > 0) {
+script 5 RESPAWN
+{
+	while( PlayerInGame( PlayerNumber() ) && GetHealth() > 0 )
+	{
 		ShowStatus();
 		
-		delay (35);
-		if (!CheckWeapon("StealthLaserRifle") && !CheckWeapon("Knife"))
-			ACS_ExecuteAlways (310, 0, 3);
+		delay( 35 );
+		
+		if( !CheckWeapon( "StealthLaserRifle" ) && !CheckWeapon( "Knife" ))
+			ACS_ExecuteAlways( 310, 0, 3 );
 	}
 }
 
-function void ShowStatus(void) {
+function void ShowStatus( void )
+{
 	str color = cond( PlayerTeam() == TEAM_BLUE, "\cN", "\cA" );
 	
 	SetFont( "SMALLFONT" );
 	HudMessage( s:color, s:"Credits: \cQ$\cD", d:GetCredits( PlayerNumber() ), s:"\n",
-		s:color, s:"Experience: \cD",d:Experience[PlayerNumber()], s:"\cQ/\cD",d:GetExpNeed(), s:" XP", s:"\n",
+		s:color, s:"Experience: \cD", d:Experience[PlayerNumber()], s:"\cQ/\cD", d:GetExpNeed(), s:" XP", s:"\n",
 		s:RankTitles[Rank[PlayerNumber()]];
-		HUDMSG_PLAIN, 50+PlayerNumber(), CR_WHITE, -0.685, -0.805, 1.5 );
-	
+			HUDMSG_PLAIN, 50 + PlayerNumber(), CR_WHITE, -0.685, -0.805, 1.5 );
+				
 	SetFont( GetRankPic() );
-	HudMessage( s:"a";
-		HUDMSG_PLAIN, 5000+PlayerNumber(), CR_LIGHTBLUE, -0.92, -0.78, 1.5 );
+	HudMessage( s: "a";
+		HUDMSG_PLAIN, 5000 + PlayerNumber(), CR_LIGHTBLUE, -0.92, -0.78, 1.5 );
 }
 
-script 111 (int what) {
+script 111( int what )
+{
 	int amount;
-	switch( what ) {
+	
+	switch( what )
+	{
 	case 0:
 		// donation message
-		SetFont ("SMALLFONT");
-		IntelMessage (strparam (s:"You have been donated \cQ$\cD100\cJ\nby ", n:Donor[PlayerNumber()] + 1));
+		SetFont( "SMALLFONT" );
+		IntelMessage( strparam( s:"You have been donated \cQ$\cD100\cJ\nby ", n:Donor[PlayerNumber()] + 1 ));
 		break;
 	}
 }

@@ -8,172 +8,201 @@
  * of this and call it your own. Thanks!
  */
 
-script 320 (int Which)
+script 320( int Which )
 {
 	//SetHudSize(1680,1050,0);
-	if(Which == 0)
+	if( Which == 0 )
 	{
-		FadeTo(128,0,0,0.6,0.0);
-		FadeTo(128,0,0,0.0,1.0);
-	}	
-	else if(Which == 1)
+		FadeTo( 128, 0, 0, 0.6, 0.0 );
+		FadeTo( 128, 0, 0, 0.0, 1.0 );
+	}
+	else if( Which == 1 )
 	{
-		FadeTo(128,128,0,0.5,0.0);
-		FadeTo(128,128,0,0.0,1.0);
-	}	
-	else if(Which == 2)
+		FadeTo( 128, 128, 0, 0.5, 0.0 );
+		FadeTo( 128, 128, 0, 0.0, 1.0 );
+	}
+	else if( Which == 2 )
 	{
-		FadeTo(0,125,0,0.5,0.0);
-		FadeTo(0,125,0,0.0,1.0);
-	}	
-	else if(Which == 4)
+		FadeTo( 0, 125, 0, 0.5, 0.0 );
+		FadeTo( 0, 125, 0, 0.0, 1.0 );
+	}
+	else if( Which == 4 )
 	{
-		FadeTo(128,0,0,0.6,0.0);
-		FadeTo(128,0,0,0.0,1.0);
+		FadeTo( 128, 0, 0, 0.6, 0.0 );
+		FadeTo( 128, 0, 0, 0.0, 1.0 );
 	}
 }
 
 //Self heal health
-script SC_SelfHealHealth (void) {
+script SC_SelfHealHealth( void )
+{
 	int cooldown = 30;
 	int i;
 	
 	// Give half the health now
-	HealThing (SELFHEALHEALTH / 2);
+	HealThing( SELFHEALHEALTH / 2 );
 	
 	// And then give the rest over time
-	for (i = 0; i < SELFHEALHEALTH / 2; ++i) {
-		HealThing (1);
-		delay (35);
+	for( i = 0; i < SELFHEALHEALTH / 2; ++i )
+	{
+		HealThing( 1 );
+		delay( 35 );
 	}
 }
 
 // Jumpjet fuel drain
-script 331 (void) {
-	delay (35);
-	while (CheckInventory ("JumpjetSwitch") && GetHealth() > 0) {
-		TakeInventory ("JumpjetFuel", 1);
-		delay (35);
+script 331( void )
+{
+	delay( 35 );
+	
+	while( CheckInventory( "JumpjetSwitch" ) && GetHealth() > 0 )
+	{
+		TakeInventory( "JumpjetFuel", 1 );
+		delay( 35 );
 	}
 }
 
 // [SP] Player goes spectator.
-script 941 (int Player) DISCONNECT {
-	Thing_ChangeTID (3800+Player, 0);
+script 941( int Player ) DISCONNECT
+{
+	Thing_ChangeTID( 3800 + Player, 0 );
 }
 
-script 948 (int time, int display) SetResultValue (TimeDelay (time, display));
-script 949 (int display) SetResultValue (TimeDelay (TimedC4Delay, display));
+script 948( int time, int display ) SetResultValue( TimeDelay( time, display ) );
+script 949( int display ) SetResultValue( TimeDelay( TimedC4Delay, display ) );
 
-function bool TimeDelay (int time, bool display) {
-	if (Time * 35 * 60 > Timer()) {
-		int TimeRemaining = (Time * 35 * 60 - Timer()) / 35;
-		if (Display) {
+function bool TimeDelay( int time, bool display )
+{
+	if( Time * 35 * 60 > Timer() )
+	{
+		int TimeRemaining = ( Time * 35 * 60 - Timer() ) / 35;
+		
+		if( Display )
+		{
 			DisplayCross();
-			SetFont ("BIGFONT");
-			HudMessage (s:"You must wait \cK", d:TimeRemaining, s:"\c- seconds!";
-				HUDMSG_FADEOUT, 240+PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+			SetFont( "BIGFONT" );
+			HudMessage( s: "You must wait \cK", d: TimeRemaining, s: "\c- seconds!";
+				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
 		}
+		
 		return 0;
 	}
+	
 	return 1;
 }
 
 // [Dusk] beacon timer reset due to it being placed underwater
-script 957 (int Team) {
-	if (Team == 0) {
+script 957( int Team )
+{
+	if( Team == 0 )
+	{
 		LastPurchasedBeacon[2] = 0;
-		IntelMessageBold ("Some \cGNod mong\cJ planted a beacon \cNunderwater");
-		delay (3*35);
-		IntelMessageBold ("\cGNod\cJ free to \cDrepurchase\n\cANuclear Strike Beacon");
-	} else {
+		IntelMessageBold( "Some \cGNod mong\cJ planted a beacon \cNunderwater" );
+		delay( 3 * 35 );
+		IntelMessageBold( "\cGNod\cJ free to \cDrepurchase\n\cANuclear Strike Beacon" );
+	}
+	else
+	{
 		LastPurchasedBeacon[1] = 0;
-		IntelMessageBold ("Some \cFGDI mong\cJ planted a beacon \cNunderwater");
-		delay (3*35);
-		IntelMessageBold ("\cFGDI\cJ free to \cDrepurchase\n\cNIon Cannon Beacon");
+		IntelMessageBold( "Some \cFGDI mong\cJ planted a beacon \cNunderwater" );
+		delay( 3 * 35 );
+		IntelMessageBold( "\cFGDI\cJ free to \cDrepurchase\n\cNIon Cannon Beacon" );
 	}
 }
 
-// returns renderer
-script 910 (void) {SetResultValue (GetCVar ("vid_renderer"));}
+// [Dusk] returns renderer
+script 910( void )
+{
+	SetResultValue( GetCVar( "vid_renderer" ) );
+}
 
-// c4 explodes
-script 978 (int p) {
-	if (p <= 0) terminate;
+// [Dusk] C4 explodes
+script 978( int p )
+{
+	if( p <= 0 ) terminate;
 	
 	int c4team = TEAM_BLUE;
-	if (CheckInventory ("IsRed")) c4team = TEAM_RED;
+	
+	if( CheckInventory( "IsRed" ) ) c4team = TEAM_RED;
 	
 	int hit;
 	int range = 96;
 	
-	if (c4team == TEAM_BLUE) {
-		if (CheckActorDistance(0, 201, range)) hit = true;
-		else if (CheckActorDistance(0, 203, range)) hit = true;
-		else if (CheckActorDistance(0, 205, range)) hit = true;
-		else if (CheckActorDistance(0, 207, range)) hit = true;
-		else if (CheckActorDistance(0, 209, range)) hit = true;
-		else if (CheckActorDistance(0, 214, range)) hit = true;
-		else if (CheckActorDistance(0, 900, range)) hit = true;
-		else if (CheckActorDistance(0, 902, range)) hit = true;
-		else if (CheckActorDistance(0, 904, range)) hit = true;
-	} else {
-		if (CheckActorDistance(0, 101, range)) hit = true;
-		else if (CheckActorDistance(0, 103, range)) hit = true;
-		else if (CheckActorDistance(0, 105, range)) hit = true;
-		else if (CheckActorDistance(0, 107, range)) hit = true;
-		else if (CheckActorDistance(0, 109, range)) hit = true;
-		else if (CheckActorDistance(0, 114, range)) hit = true;
-		else if (CheckActorDistance(0, 901, range)) hit = true;
-		else if (CheckActorDistance(0, 903, range)) hit = true;
-		else if (CheckActorDistance(0, 905, range)) hit = true;
+	if( c4team == TEAM_BLUE )
+	{
+		if( CheckActorDistance( 0, 201, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 203, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 205, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 207, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 209, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 214, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 900, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 902, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 904, range ) ) hit = true;
+	}
+	else
+	{
+		if( CheckActorDistance( 0, 101, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 103, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 105, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 107, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 109, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 114, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 901, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 903, range ) ) hit = true;
+		else if( CheckActorDistance( 0, 905, range ) ) hit = true;
 	}
 	
-	if (hit) {
-		SetActivatorToTarget (0); // award the player the points, not the C4
-		Team_GivePoints (c4team, p, false);
+	if( hit )
+	{
+		SetActivatorToTarget( 0 ); // award the player the points, not the C4
+		Team_GivePoints( c4team, p, false );
 	}
 }
 
 // [Dusk] Missile launcher targeter
-script 963 (void) CLIENTSIDE {
-	if (ActivatorTID () != 3800 + consoleplayer)
+script 963( void ) CLIENTSIDE
+{
+	if( ActivatorTID() != 3800 + consoleplayer )
 		terminate;
-	
+		
 	int mytid = 3800 + consoleplayer;
 	int t;
-	int team = PlayerTeam ();
+	int team = PlayerTeam();
 	
-	while (CheckWeapon ("MissileLauncher") && GetHealth () > 0) {
-		SetActivatorToTarget (0);
-		t = ActivatorTID ();
+	while( CheckWeapon( "MissileLauncher" ) && GetHealth() > 0 )
+	{
+		SetActivatorToTarget( 0 );
+		t = ActivatorTID();
 		
-		if (t != mytid && t >= 3800 && t <= 3831 && CheckActorInventory (t, "StealthMode") != 2 &&
-			GetPlayerInfo (t-3800, PLAYERINFO_TEAM) != team) {
-			
-			SetFont ("TARGHAIR");
-			HudMessageBold (s:"a";
-				HUDMSG_FADEOUT, 0, CR_UNTRANSLATED, -0.5, -0.5, HM_2TICS, HM_3TICS);
-			AmbientSound ("missilelauncher/see", 127);
-			delay (4);
+		if( t != mytid && t >= 3800 && t <= 3831 && CheckActorInventory( t, "StealthMode" ) != 2 &&
+		GetPlayerInfo( t - 3800, PLAYERINFO_TEAM ) != team )
+		{
+		
+			SetFont( "TARGHAIR" );
+			HudMessageBold( s: "a";
+				HUDMSG_FADEOUT, 0, CR_UNTRANSLATED, -0.5, -0.5, HM_2TICS, HM_3TICS );
+			AmbientSound( "missilelauncher/see", 127 );
+			delay( 4 );
 		}
 		
-		SetActivator (mytid);
-		delay (1);
+		SetActivator( mytid );
+		delay( 1 );
 	}
 }
 
 // [Dusk] Sniper rifle zoom effect
-script SC_CL_SniperZoom (void) CLIENTSIDE {
+script SC_CL_SniperZoom( void ) CLIENTSIDE
+{
 	// Fade in
-	FadeTo (0, 0, 0, 1.0, 0.1);
-	delay ((0.1 * 35) >> 16);
+	FadeTo( 0, 0, 0, 1.0, 0.1 );
+	delay( ( 0.1 * 35 ) >> 16 );
 	
-	delay (5);
+	delay( 5 );
 	
 	// Fade out
-	if (CheckInventory ("IsZoomed"))
-		FadeTo (255, 0, 0, 0.2, 0.3);
+	if( CheckInventory( "IsZoomed" ) )
+		FadeTo( 255, 0, 0, 0.2, 0.3 );
 	else
-		FadeTo (0, 0, 0, 0, 0.3);
+		FadeTo( 0, 0, 0, 0, 0.3 );
 }

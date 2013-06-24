@@ -1,117 +1,151 @@
 // Clientside effects and designation actors
 int ChemSmokers[MAXPLAYERS];
 
-script 943 OPEN CLIENTSIDE {
-	// [SP] This script allows clients to keep track of what player# they are
-	ConsoleCommand ("puke 944");
+script 943 OPEN CLIENTSIDE
+{
+	consoleplayer = ConsolePlayerNumber();
 	
-	delay (5);
+	delay( 5 );
 	
-	// get outside the spawn room
-	if (!PlayerInGame (PlayerNumber ()))
-		ConsoleCommand ("puke 940");
+	// [Dusk] Get outside the spawn room
+	if( !PlayerInGame( PlayerNumber() ) )
+		ConsoleCommand( "puke 940" );
 	
-	delay (5);
+	delay( 5 );
 	
-	// effects + hud
-	ConsoleCommand ("puke 366");
-	
-	// bodycount clock
-	// ConsoleCommand ("puke 368");
-	
-	// building HUD
-	ConsoleCommand ("puke 945");
+	// [Dusk] Effects + hud
+	ConsoleCommand( "puke 366" );
 }
 
-script 944 (void) NET CLIENTSIDE {ConsolePlayer = PlayerNumber();}
-script 946 (void) NET CLIENTSIDE {Log(s:"I am ", s:pname (-1));}
+script 946( void ) NET CLIENTSIDE {
+	Log( s:"I am ", s:pname( -1 ) );
+}
 
-script 366 (void) NET CLIENTSIDE {
-	if (PlayerIsBot(PlayerNumber())) terminate;
-	if (ConsolePlayer == -1) terminate;
+script 366( void ) NET CLIENTSIDE
+{
+	if( PlayerIsBot( PlayerNumber() ) || consoleplayer == -1 )
+		terminate;
 	
 	// if (GetCVAR ("aow_nofriendinfo") <= 0) ConsoleCommand ("set aow_nofriendinfo 0");
 	
 	int teammate, i;
-	while (1) {
-		delay (32);
-		SpawnSpotForced ("TiberiumChemSmoke", 402, 0, 0);
+	
+	while( 1 )
+	{
+		delay( 32 );
+		SpawnSpotForced( "TiberiumChemSmoke", 402, 0, 0 );
 		
 		// display smoke on tib-carrying players
-		for (i = 0; i < MAXPLAYERS; i++) {
-			if (CheckActorInventory (3800+i, "TiberiumCrystal") && !ChemSmokers[i])
-				ACS_ExecuteAlways (355, 0, i, 0);
+		for( i = 0; i < MAXPLAYERS; i++ )
+		{
+			if( CheckActorInventory( 3800 + i, "TiberiumCrystal" ) && !ChemSmokers[i] )
+				ACS_ExecuteAlways( 355, 0, i, 0 );
 		}
 		
 		// see friendly stealths
-		for (i = 0; i < MAXPLAYERS; i++) {
-			teammate = GetPlayerInfo (i, PLAYERINFO_TEAM) == GetPlayerInfo (ConsolePlayer, PLAYERINFO_TEAM);
-			if (!PlayerInGame (ConsolePlayer)) teammate = 1; // spects
-			if (CheckActorProperty (3800+i, APROP_RenderStyle, STYLE_None) && teammate && i != ConsolePlayer)
-				ACS_ExecuteAlways (355, 0, i, 1);
+		for( i = 0; i < MAXPLAYERS; i++ )
+		{
+			teammate = GetPlayerInfo( i, PLAYERINFO_TEAM ) == GetPlayerInfo( ConsolePlayer, PLAYERINFO_TEAM );
+			
+			if( !PlayerInGame( ConsolePlayer ) ) teammate = 1; // spects
+			
+			if( CheckActorProperty( 3800 + i, APROP_RenderStyle, STYLE_None ) && teammate && i != ConsolePlayer )
+				ACS_ExecuteAlways( 355, 0, i, 1 );
 		}
 		
 		// jumpjet fire
-		for (i = 0; i < MAXPLAYERS; i++) {
-			if (CheckActorInventory (3800+i, "JumpjetSwitch") && !ChemSmokers[i])
-				ACS_ExecuteAlways (355, 0, i, 2);
+		for( i = 0; i < MAXPLAYERS; i++ )
+		{
+			if( CheckActorInventory( 3800 + i, "JumpjetSwitch" ) && !ChemSmokers[i] )
+				ACS_ExecuteAlways( 355, 0, i, 2 );
 		}
 	}
 }
 
-script 355 (int i, int what) CLIENTSIDE {
+script 355( int i, int what ) CLIENTSIDE
+{
 	int x;
-	switch (what) {
+	
+	switch( what )
+	{
 	case 0:
 		// chem smoke for tiberium players
 		
-		// no double running
-		if (ChemSmokers[i]) terminate;
+		// Only run one instance of this
+		if( ChemSmokers[i] )
+			terminate;
+		
 		ChemSmokers[i] = 1;
 		
-		for (x = 0; x < 5; x++) {
-			if (!CheckActorInventory (3800+i, "TiberiumCrystal")) {ChemSmokers[i] = 0; terminate;}
-			SpawnSpotForced ("TiberiumChemSmokePlayer", 3800+i, 0, GetActorAngle(3800+i)>>8);
-			delay (6);
+		for( x = 0; x < 5; x++ )
+		{
+			if( !CheckActorInventory( 3800 + i, "TiberiumCrystal" ) )
+			{
+				ChemSmokers[i] = 0;
+				terminate;
+			}
+			
+			SpawnSpotForced( "TiberiumChemSmokePlayer", 3800 + i, 0, GetActorAngle( 3800 + i ) >> 8 );
+			delay( 6 );
 		}
+		
 		ChemSmokers[i] = 0;
 		break;
-	
+		
 	case 1:
 		// visible friendly stealths
-		SetActorProperty (3800+i, APROP_RenderStyle, STYLE_Translucent);
-		SetActorProperty (3800+i, APROP_Alpha, 0.4);
-		for (x = 0; x < 6; x++) {
-			if (!CheckActorProperty (3800+i, APROP_RenderStyle, STYLE_Translucent)) terminate;
-			if (CheckActorInventory (3800+i, "StealthMode") != 1) terminate;
-			SetActorProperty (3800+i, APROP_Alpha, 0.4 + (random(0,10) << 16)/10); // flicker a bit :P
-			delay (5);
+		SetActorProperty( 3800 + i, APROP_RenderStyle, STYLE_Translucent );
+		SetActorProperty( 3800 + i, APROP_Alpha, 0.4 );
+		
+		for( x = 0; x < 6; x++ )
+		{
+			if( !CheckActorProperty( 3800 + i, APROP_RenderStyle, STYLE_Translucent ) ) terminate;
+			
+			if( CheckActorInventory( 3800 + i, "StealthMode" ) != 1 ) terminate;
+			
+			SetActorProperty( 3800 + i, APROP_Alpha, 0.4 + ( random( 0, 10 ) << 16 ) / 10 ); // flicker a bit :P
+			delay( 5 );
 		}
-		SetActorProperty (3800+i, APROP_RenderStyle, STYLE_None);
-		SetActorProperty (3800+i, APROP_Alpha, 0.0);
+		
+		SetActorProperty( 3800 + i, APROP_RenderStyle, STYLE_None );
+		SetActorProperty( 3800 + i, APROP_Alpha, 0.0 );
 		break;
-	
+		
 	case 2:
+	
 		// jumpjet fire
 		// ChemSmokers[] is used here as well - no conflicts can happen since no
 		// player can be harvester and have jumpjet at the same time.
-		if (ChemSmokers[i]) terminate;
+		if( ChemSmokers[i] )
+			terminate;
+		
 		ChemSmokers[i] = 1;
 		
-		for (x = 0; x < 10; x++) {
-			if (!CheckActorInventory (3800+i, "JumpjetSwitch")) {ChemSmokers[i] = 0; terminate;}
-			SpawnSpotForced ("JumpjetFire", 3800+i, 0, GetActorAngle(3800+i)>>8);
-			delay (3);
+		for( x = 0; x < 10; x++ )
+		{
+			if( !CheckActorInventory( 3800 + i, "JumpjetSwitch" ) )
+			{
+				ChemSmokers[i] = 0;
+				terminate;
+			}
+			
+			SpawnSpotForced( "JumpjetFire", 3800 + i, 0, GetActorAngle( 3800 + i ) >> 8 );
+			delay( 3 );
 		}
+		
 		ChemSmokers[i] = 0;
 		break;
 	}
 }
 
-script 400 OPEN CLIENTSIDE {
-	while (1) {
-		if (!GetCVAR ("hud_scale"))
-			ConsoleCommand("set hud_scale true");
-		delay(1);
+// [Dusk] TODO: Check if this can be removed
+script 400 OPEN CLIENTSIDE
+{
+	while( 1 )
+	{
+		if( !GetCVAR( "hud_scale" ) )
+			ConsoleCommand( "set hud_scale true" );
+			
+		delay( 1 );
 	}
 }

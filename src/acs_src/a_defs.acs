@@ -1,19 +1,19 @@
 /*
  * CLASS DEFINITIONS
- * 
- * Class identifiers are defined as a consecutive list of constants in aow2scrp.acs. 
+ *
+ * Class identifiers are defined as a consecutive list of constants in aow2scrp.acs.
  * This function inits classes by setting values in the two-dimensional Classes
  * array. The array is accessed using constant keys (CK_NAME et al)
- * 
+ *
  * The c variable is first init to set the class identifier (this way it doesn't have
  * to be copied and changed every time properties are copied from one class to another)
  * Technically this doesn't have to be done but it results in less gray hair.
- * 
+ *
  * To add items, the AddClassItem function is used. Don't alter CK_NUMITEMS directly under
  * any circumstance! It will be set automagically. The first item added to the class defines
  * the primary weapon - the default weapon the player will be holding after the class is
  * purchased.
- * 
+ *
  * Class keys:
  * - CK_NAME:     Name of the class, e.g. "Gunman"
  * - CK_SPEED:    Speed factor of the class. 1.0 is default AOW player speed
@@ -28,25 +28,26 @@
  * ---- CF_SUPPORT:    Class is support and deals less damage.
  * ---- (more to follow)
  * - CK_NUMITEMS: Amount of items the class has (again, don't set this directly!)
- * 
+ *
  * After CK_NUMITEMS (which is the last key), the class definition in the table is continued with
  * CK_NUMITEMS amount of name-and-amount pairs. The GetClassItemName and GetClassItemAmount functions
  * should be used to access these item definitions. They take the class id and item number (which in turn
  * ranges [0, CK_NUMITEMS - 1])
  */
 
-function void LoadClassDefinitions (void) {
+function void LoadClassDefinitions( void )
+{
 	int c;
 	
 	c = CLASS_GUNMAN;
 	Classes[c][CK_NAME] = "Gunman";
-	AddClassItem (c, "SubMachineGun", 1);
+	AddClassItem( c, "SubMachineGun", 1 );
 	
 	c = CLASS_ENGINEER;
 	Classes[c][CK_NAME] = "Engineer";
 	Classes[c][CK_SPEED] = 0.8;
-	Classes[c][CK_FLAGS] = (CF_SUPPORT | CF_ENHANCEDC4);
-	AddClassItem (c, "RepairGun", 1);
+	Classes[c][CK_FLAGS] = ( CF_SUPPORT | CF_ENHANCEDC4 );
+	AddClassItem( c, "RepairGun", 1 );
 	
 	c = CLASS_MINIGUNNER;
 	Classes[c][CK_NAME] = "Minigunner";
@@ -54,8 +55,8 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_SPEED] = 0.7;
 	Classes[c][CK_ARMORNUM] = 1;
 	Classes[c][CK_GERNADES] = 2;
-	AddClassItem (c, "GatlingGun", 1);
-	AddClassItem (c, "MachineGunAmmo", 400);
+	AddClassItem( c, "GatlingGun", 1 );
+	AddClassItem( c, "MachineGunAmmo", 400 );
 	
 	c = CLASS_TECHNICIAN;
 	Classes[c][CK_NAME] = "Technician";
@@ -63,9 +64,9 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_SPEED] = 0.8;
 	Classes[c][CK_ARMORNUM] = 1;
 	Classes[c][CK_GERNADES] = 2;
-	Classes[c][CK_FLAGS] = (CF_SUPPORT | CF_ENHANCEDC4);
-	AddClassItem (c, "RepairGun", 1);
-	AddClassItem (c, "RepairGunUpgrade", 1);
+	Classes[c][CK_FLAGS] = ( CF_SUPPORT | CF_ENHANCEDC4 );
+	AddClassItem( c, "RepairGun", 1 );
+	AddClassItem( c, "RepairGunUpgrade", 1 );
 	
 	c = CLASS_FLAMER;
 	Classes[c][CK_NAME] = "Flamer";
@@ -75,18 +76,18 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_ARMORMOD] = ARMOD_FIRE;
 	Classes[c][CK_GERNADES] = 2;
 	Classes[c][CK_DEP] = DEP_BARRACKS;
-	AddClassItem (c, "Flamer", 1);
-	AddClassItem (c, "FlamerAmmo", 400);
-	AddClassItem (c, "PhosphorusGrenadeAmmo", 4);
+	AddClassItem( c, "Flamer", 1 );
+	AddClassItem( c, "FlamerAmmo", 400 );
+	AddClassItem( c, "PhosphorusGrenadeAmmo", 4 );
 	
 	c = CLASS_RIFLEMAN;
 	Classes[c][CK_NAME] = "Rifleman";
 	Classes[c][CK_COST] = 200;
 	Classes[c][CK_SPEED] = 0.9;
 	Classes[c][CK_ARMORNUM] = 1;
-	AddClassItem (c, "Rifle", 1);
-	AddClassItem (c, "RifleAmmo", 30);
-	AddClassItem (c, "RifleGrenadeAmmo", 4);
+	AddClassItem( c, "Rifle", 1 );
+	AddClassItem( c, "RifleAmmo", 30 );
+	AddClassItem( c, "RifleGrenadeAmmo", 4 );
 	
 	c = CLASS_MACHINEGUNNER;
 	Classes[c][CK_NAME] = "Machinegunner";
@@ -94,8 +95,8 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_SPEED] = 0.9;
 	Classes[c][CK_GERNADES] = 2;
 	Classes[c][CK_ARMORNUM] = 1;
-	AddClassItem (c, "MachineGun", 1);
-	AddClassItem (c, "MachineGunAmmo", 400);
+	AddClassItem( c, "MachineGun", 1 );
+	AddClassItem( c, "MachineGunAmmo", 400 );
 	
 	c = CLASS_GRENADIER;
 	Classes[c][CK_NAME] = "Grenadier";
@@ -105,11 +106,11 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_ARMORMOD] = ARMOD_EXPLO;
 	Classes[c][CK_DEP] = DEP_BARRACKS;
-	AddClassItem (c, "GrenadeLauncher", 1);
-	AddClassItem (c, "GrenadeAmmo", 40);
-	AddClassItem (c, "Rifle", 1);
-	AddClassItem (c, "RifleAmmo", 20);
-	AddClassItem (c, "RifleGrenadeAmmo", 2);
+	AddClassItem( c, "GrenadeLauncher", 1 );
+	AddClassItem( c, "GrenadeAmmo", 40 );
+	AddClassItem( c, "Rifle", 1 );
+	AddClassItem( c, "RifleAmmo", 20 );
+	AddClassItem( c, "RifleGrenadeAmmo", 2 );
 	
 	c = CLASS_ROCKETEER;
 	Classes[c][CK_NAME] = "Rocket Soldier";
@@ -119,11 +120,11 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_ARMORMOD] = ARMOD_EXPLO;
 	Classes[c][CK_DEP] = DEP_BARRACKS;
-	AddClassItem (c, "MissileLauncher", 1);
-	AddClassItem (c, "MissileAmmo", 40);
-	AddClassItem (c, "Rifle", 1);
-	AddClassItem (c, "RifleAmmo", 20);
-	AddClassItem (c, "RifleGrenadeAmmo", 2);
+	AddClassItem( c, "MissileLauncher", 1 );
+	AddClassItem( c, "MissileAmmo", 40 );
+	AddClassItem( c, "Rifle", 1 );
+	AddClassItem( c, "RifleAmmo", 20 );
+	AddClassItem( c, "RifleGrenadeAmmo", 2 );
 	
 	c = CLASS_STEALTH;
 	Classes[c][CK_NAME] = "Stealth Trooper";
@@ -132,9 +133,9 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_GERNADES] = 1;
 	Classes[c][CK_ARMORNUM] = -1;
 	Classes[c][CK_ARMORMOD] = ARMOD_LASER;
-	AddClassItem (c, "StealthLaserRifle", 1);
-	AddClassItem (c, "LaserRifleAmmo", 200);
-	AddClassItem (c, "Knife", 1);
+	AddClassItem( c, "StealthLaserRifle", 1 );
+	AddClassItem( c, "LaserRifleAmmo", 200 );
+	AddClassItem( c, "Knife", 1 );
 	
 	c = CLASS_GAUSSGUNNER;
 	Classes[c][CK_NAME] = "Gauss Gunner";
@@ -144,11 +145,11 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_ARMORMOD] = ARMOD_LASER;
 	Classes[c][CK_DEP] = DEP_BARRACKS;
-	AddClassItem (c, "GaussRifle", 1);
-	AddClassItem (c, "Rifle", 1);
-	AddClassItem (c, "RifleAmmo", 40);
-	AddClassItem (c, "RifleGrenadeAmmo", 0);
-	AddClassItem (c, "GaussRifleAmmo", 50);
+	AddClassItem( c, "GaussRifle", 1 );
+	AddClassItem( c, "Rifle", 1 );
+	AddClassItem( c, "RifleAmmo", 40 );
+	AddClassItem( c, "RifleGrenadeAmmo", 0 );
+	AddClassItem( c, "GaussRifleAmmo", 50 );
 	
 	c = CLASS_CHEMWARRIOR;
 	Classes[c][CK_NAME] = "Chem Warrior";
@@ -158,10 +159,10 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_ARMORMOD] = ARMOD_CHEM;
 	Classes[c][CK_DEP] = DEP_BARRACKS;
-	AddClassItem (c, "ChemicalSprayer", 1);
-	AddClassItem (c, "ChemicalAmmo", 200);
-	AddClassItem (c, "ChemicalGrenadeAmmo", 4);
-	AddClassItem (c, "SubMachineGun", 1);
+	AddClassItem( c, "ChemicalSprayer", 1 );
+	AddClassItem( c, "ChemicalAmmo", 200 );
+	AddClassItem( c, "ChemicalGrenadeAmmo", 4 );
+	AddClassItem( c, "SubMachineGun", 1 );
 	
 	c = CLASS_SHOCKTROOPER;
 	Classes[c][CK_NAME] = "Shock Trooper";
@@ -171,8 +172,8 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_ARMORMOD] = ARMOD_LASER;
 	Classes[c][CK_DEP] = DEP_CENTRE;
-	AddClassItem (c, "ShockRifle", 1);
-	AddClassItem (c, "GeneporiumCharge", 400);
+	AddClassItem( c, "ShockRifle", 1 );
+	AddClassItem( c, "GeneporiumCharge", 400 );
 	
 	c = CLASS_COMMANDO;
 	Classes[c][CK_NAME] = "Commando";
@@ -181,31 +182,31 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_GERNADES] = 4;
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_C4] = 2;
-	Classes[c][CK_FLAGS] = (CF_ENHANCEDC4 | CF_CANTPILOT);
+	Classes[c][CK_FLAGS] = ( CF_ENHANCEDC4 | CF_CANTPILOT );
 	Classes[c][CK_DEP] = DEP_CENTRE;
-	AddClassItem (c, "GaussRifle", 1);
-	AddClassItem (c, "GaussRifleAmmo", 15);
-	AddClassItem (c, "MissileLauncher", 1);
-	AddClassItem (c, "MissileAmmo", 15);
-	AddClassItem (c, "GatlingGun", 1);
-	AddClassItem (c, "MachineGunAmmo", 200);
-	AddClassItem (c, "Rifle", 1);
-	AddClassItem (c, "RifleAmmo", 20);
-	AddClassItem (c, "RifleGrenadeAmmo", 4);
+	AddClassItem( c, "GaussRifle", 1 );
+	AddClassItem( c, "GaussRifleAmmo", 15 );
+	AddClassItem( c, "MissileLauncher", 1 );
+	AddClassItem( c, "MissileAmmo", 15 );
+	AddClassItem( c, "GatlingGun", 1 );
+	AddClassItem( c, "MachineGunAmmo", 200 );
+	AddClassItem( c, "Rifle", 1 );
+	AddClassItem( c, "RifleAmmo", 20 );
+	AddClassItem( c, "RifleGrenadeAmmo", 4 );
 	
 	c = CLASS_SHOTGUNNER;
 	Classes[c][CK_NAME] = "Shotgunner";
 	Classes[c][CK_SPEED] = 0.8;
-	AddClassItem (c, "Boomstick", 1);
-	AddClassItem (c, "ShotgunAmmo", 50);
+	AddClassItem( c, "Boomstick", 1 );
+	AddClassItem( c, "ShotgunAmmo", 50 );
 	
 	c = CLASS_SUICIDEBOMBER;
 	Classes[c][CK_NAME] = "Suicide Bomber";
 	Classes[c][CK_COST] = 1750;
 	Classes[c][CK_C4] = 0;
 	Classes[c][CK_GERNADES] = 0;
-	Classes[c][CK_FLAGS] = (CF_CANTPILOT);
-	AddClassItem (c, "BombPack", 1);
+	Classes[c][CK_FLAGS] = ( CF_CANTPILOT );
+	AddClassItem( c, "BombPack", 1 );
 	
 	c = CLASS_SNIPER;
 	Classes[c][CK_NAME] = "Sniper";
@@ -214,50 +215,50 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_DEP] = DEP_CENTRE;
 	Classes[c][CK_ARMORNUM] = 1;
 	Classes[c][CK_GERNADES] = 2;
-	AddClassItem (c, "SniperRifle", 1);
-	AddClassItem (c, "SniperAmmo", 50);
+	AddClassItem( c, "SniperRifle", 1 );
+	AddClassItem( c, "SniperAmmo", 50 );
 	
 	c = CLASS_UTILITYGUY;
 	Classes[c][CK_NAME] = "Utility Guy";
 	Classes[c][CK_COST] = 650;
 	Classes[c][CK_SPEED] = 0.75;
-	Classes[c][CK_FLAGS] = (CF_SUPPORT | CF_ENHANCEDC4 | CF_CANTPILOT);
+	Classes[c][CK_FLAGS] = ( CF_SUPPORT | CF_ENHANCEDC4 | CF_CANTPILOT );
 	Classes[c][CK_GERNADES] = 2; // why does a support class have two nades? :?
 	Classes[c][CK_ARMORNUM] = 2;
-	AddClassItem (c, "UtilityGun", 1);
-	AddClassItem (c, "Utility_Ammo", 75);
-	AddClassItem (c, "RepairGun", 1);
+	AddClassItem( c, "UtilityGun", 1 );
+	AddClassItem( c, "Utility_Ammo", 75 );
+	AddClassItem( c, "RepairGun", 1 );
 	
 	c = CLASS_DEMOEXPERT;
 	Classes[c][CK_NAME] = "Demolitions Expert";
 	Classes[c][CK_COST] = 550;
 	Classes[c][CK_SPEED] = 0.75;
-	Classes[c][CK_FLAGS] = (CF_SUPPORT | CF_ENHANCEDC4 | CF_CANTPILOT);
+	Classes[c][CK_FLAGS] = ( CF_SUPPORT | CF_ENHANCEDC4 | CF_CANTPILOT );
 	Classes[c][CK_C4] = 4;
 	Classes[c][CK_GERNADES] = 4;
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_ARMORMOD] = ARMOD_EXPLO;
-	AddClassItem (c, "BombSquadGun", 1);
-	AddClassItem (c, "ProxyMine", 6);
-	AddClassItem (c, "ProxyMineCount", 6);
-	AddClassItem (c, "RemoteC4", 1);
-	AddClassItem (c, "RemoteC4Ammo", 5);
-	AddClassItem (c, "Boomstick", 1);
-	AddClassItem (c, "ShotgunAmmo", 50);
+	AddClassItem( c, "BombSquadGun", 1 );
+	AddClassItem( c, "ProxyMine", 6 );
+	AddClassItem( c, "ProxyMineCount", 6 );
+	AddClassItem( c, "RemoteC4", 1 );
+	AddClassItem( c, "RemoteC4Ammo", 5 );
+	AddClassItem( c, "Boomstick", 1 );
+	AddClassItem( c, "ShotgunAmmo", 50 );
 	
 	c = CLASS_MEDIC;
 	Classes[c][CK_NAME] = "Field Medic";
 	Classes[c][CK_COST] = 300;
 	Classes[c][CK_SPEED] = 0.85;
-	Classes[c][CK_FLAGS] = (CF_SUPPORT | CF_HEALTHREGEN);
+	Classes[c][CK_FLAGS] = ( CF_SUPPORT | CF_HEALTHREGEN );
 	Classes[c][CK_GERNADES] = 2;
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_ARMORMOD] = ARMOD_CHEM;
-	AddClassItem (c, "HealGun", 1);
-	AddClassItem (c, "HealingRadiusItem", 1);
-	AddClassItem (c, "HealingRadiusCount", 1);
-	AddClassItem (c, "TiberiumAutorifleWeak", 1);
-	AddClassItem (c, "TE21CalAmmo", 200);
+	AddClassItem( c, "HealGun", 1 );
+	AddClassItem( c, "HealingRadiusItem", 1 );
+	AddClassItem( c, "HealingRadiusCount", 1 );
+	AddClassItem( c, "TiberiumAutorifleWeak", 1 );
+	AddClassItem( c, "TE21CalAmmo", 200 );
 	
 	c = CLASS_LASERCHAINGUNNER;
 	Classes[c][CK_NAME] = "Laser Chaingunner";
@@ -267,8 +268,8 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_GERNADES] = 2;
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_ARMORMOD] = ARMOD_LASER;
-	AddClassItem (c, "LaserChaingun", 1);
-	AddClassItem (c, "LaserChaingunAmmo", 400);
+	AddClassItem( c, "LaserChaingun", 1 );
+	AddClassItem( c, "LaserChaingunAmmo", 400 );
 	
 	c = CLASS_JUMPJET;
 	Classes[c][CK_NAME] = "Jet Trooper";
@@ -277,13 +278,13 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_DEP] = DEP_BARRACKS;
 	Classes[c][CK_GERNADES] = 2;
 	Classes[c][CK_ARMORNUM] = 2;
-	AddClassItem (c, "MachineGun", 1);
-	AddClassItem (c, "MachineGunAmmo", 400);
-	AddClassItem (c, "Rifle", 1);
-	AddClassItem (c, "RifleAmmo", 30);
-	AddClassItem (c, "RifleGrenadeAmmo", 4);
-	AddClassItem (c, "Jetpack", 1);
-	AddClassItem (c, "JetpackFuel", 100);
+	AddClassItem( c, "MachineGun", 1 );
+	AddClassItem( c, "MachineGunAmmo", 400 );
+	AddClassItem( c, "Rifle", 1 );
+	AddClassItem( c, "RifleAmmo", 30 );
+	AddClassItem( c, "RifleGrenadeAmmo", 4 );
+	AddClassItem( c, "Jetpack", 1 );
+	AddClassItem( c, "JetpackFuel", 100 );
 	
 	c = CLASS_TIBRIFLE;
 	Classes[c][CK_NAME] = "Tiberium Gunner";
@@ -293,16 +294,16 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_GERNADES] = 2;
 	Classes[c][CK_ARMORNUM] = 1;
 	Classes[c][CK_ARMORMOD] = ARMOD_CHEM;
-	AddClassItem (c, "TiberiumAutorifle", 1);
-	AddClassItem (c, "TE21CalAmmo", 200);
+	AddClassItem( c, "TiberiumAutorifle", 1 );
+	AddClassItem( c, "TE21CalAmmo", 200 );
 	
 	c = CLASS_DOUBLESHOTGUNNER;
 	Classes[c][CK_NAME] = "Double Shotgunner";
 	Classes[c][CK_COST] = 200;
 	Classes[c][CK_SPEED] = 0.8;;
 	Classes[c][CK_ARMORNUM] = 1;
-	AddClassItem (c, "DoubleShotgun", 1);
-	AddClassItem (c, "ShotgunAmmo", 50);
+	AddClassItem( c, "DoubleShotgun", 1 );
+	AddClassItem( c, "ShotgunAmmo", 50 );
 	
 	c = CLASS_PLASMAGUNNER;
 	Classes[c][CK_NAME] = "Plasma Gunner";
@@ -312,9 +313,9 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_GERNADES] = 2;
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_ARMORMOD] = ARMOD_LASER;
-	Classes[c][CK_FLAGS] = (CF_ENHANCEDC4);
-	AddClassItem (c, "PlasmaGun", 1);
-	AddClassItem (c, "PlasmaRifleAmmo", 200);
+	Classes[c][CK_FLAGS] = ( CF_ENHANCEDC4 );
+	AddClassItem( c, "PlasmaGun", 1 );
+	AddClassItem( c, "PlasmaRifleAmmo", 200 );
 	
 	c = CLASS_ARTILLERY;
 	Classes[c][CK_NAME] = "Artillery Soldier";
@@ -324,11 +325,11 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_GERNADES] = 2;
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_ARMORMOD] = ARMOD_EXPLO;
-	AddClassItem (c, "ArtilleryCannon",1);
-	AddClassItem (c, "ArtilleryShellAmmo",30);
-	AddClassItem (c, "Rifle",1);
-	AddClassItem (c, "RifleAmmo",20);
-	AddClassItem (c, "RifleGrenadeAmmo",2);
+	AddClassItem( c, "ArtilleryCannon", 1 );
+	AddClassItem( c, "ArtilleryShellAmmo", 30 );
+	AddClassItem( c, "Rifle", 1 );
+	AddClassItem( c, "RifleAmmo", 20 );
+	AddClassItem( c, "RifleGrenadeAmmo", 2 );
 	
 	c = CLASS_TIMECOP;
 	Classes[c][CK_NAME] = "Time Cop";
@@ -338,11 +339,11 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_GERNADES] = 4;
 	Classes[c][CK_ARMORNUM] = 2;
 	Classes[c][CK_C4] = 2;
-	Classes[c][CK_FLAGS] = (CF_ENHANCEDC4);
-	AddClassItem (c, "TimeGun", 1);
-	AddClassItem (c, "TimeGunAmmo", 100);
-	AddClassItem (c, "MachineGun", 1);
-	AddClassItem (c, "MachineGunAmmo", 50);
+	Classes[c][CK_FLAGS] = ( CF_ENHANCEDC4 );
+	AddClassItem( c, "TimeGun", 1 );
+	AddClassItem( c, "TimeGunAmmo", 100 );
+	AddClassItem( c, "MachineGun", 1 );
+	AddClassItem( c, "MachineGunAmmo", 50 );
 	
 	c = CLASS_ADVHARVESTER;
 	Classes[c][CK_NAME] = "Advanced Harvester";
@@ -352,16 +353,16 @@ function void LoadClassDefinitions (void) {
 	Classes[c][CK_GERNADES] = 2;
 	Classes[c][CK_ARMORNUM] = 1;
 	Classes[c][CK_ARMORMOD] = ARMOD_CHEM;
-	Classes[c][CK_FLAGS] = (CF_HARVESTER | CF_SUPPORT);
-	AddClassItem (c, "MachineGun", 1);
-	AddClassItem (c, "MachineGunAmmo", 160);
-	AddClassItem (c, "SubMachineGun", 1);
+	Classes[c][CK_FLAGS] = ( CF_HARVESTER | CF_SUPPORT );
+	AddClassItem( c, "MachineGun", 1 );
+	AddClassItem( c, "MachineGunAmmo", 160 );
+	AddClassItem( c, "SubMachineGun", 1 );
 	
 	c = CLASS_HARVESTER;
 	Classes[c][CK_NAME] = "Tiberium Harvester";
 	Classes[c][CK_SPEED] = 0.65;
 	Classes[c][CK_DEP] = DEP_REFINERY;
 	Classes[c][CK_ARMORMOD] = ARMOD_CHEM;
-	Classes[c][CK_FLAGS] = (CF_HARVESTER | CF_SUPPORT);
-	AddClassItem (c, "SubMachineGun", 1);
+	Classes[c][CK_FLAGS] = ( CF_HARVESTER | CF_SUPPORT );
+	AddClassItem( c, "SubMachineGun", 1 );
 }
