@@ -231,7 +231,7 @@ script 96( int type )
 		if( type == 2 )
 			dest = 210;
 			
-		if( !MechEnabled )
+		if( !GetCVAR( "aow_mechs" ))
 		{
 			DisplayCross();
 			SETFONT( "BigFont" );

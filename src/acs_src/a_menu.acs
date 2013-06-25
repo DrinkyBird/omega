@@ -27,7 +27,7 @@ script 970( void )
 	if( MoreTurrets[team] )
 		GiveInventory( "GotMoreTurrets", 1 );
 		
-	if( !MechEnabled )
+	if( !GetCVAR( "aow_mechs" ))
 		GiveInventory( "NoMechs", 1 );
 		
 	if( UsePortals )
@@ -59,7 +59,7 @@ script 969( int sel0, int sel1 ) NET
 	// THIS CHECK IS ONLY A HINT AND SHOULD NOT BE RELIED UPON
 	// [Dusk] Gah. Did I really write this?
 	if( ( sel0 != 2 || sel1 < 4 || AdvancedTurrets[1 - PlayerTeam()] == 1 ) &&
-	( sel0 != 1 || sel1 < 6 || MechEnabled ) &&
+	( sel0 != 1 || sel1 < 6 || GetCVAR( "aow_mechs" )) &&
 	( sel0 != 2 || ( sel1 == 2 || sel1 == 3 ) || TurretLimit() < TurretLimitMax() ) &&
 	( sel0 != 2 || sel1 != 2 || MineLimit() < 50 ) &&
 	( sel0 != 2 || sel1 != 3 || MiniRavenLimit() < 5 ) &&

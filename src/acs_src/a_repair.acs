@@ -78,7 +78,7 @@ script 650( int amount, int repairtype, int turret )
 			GivePoints( 1 );
 		}
 		
-		if( !( RepairBonus[pn] % 10 ) ) GiveCredits( -1, CreditRepairAmount );
+		if( !( RepairBonus[pn] % 10 ) ) GiveCredits( -1, GetCVAR( "aow_repairbonus" ));
 		
 		ACS_ExecuteAlways( 930, 0, what, tteam ); // update the hud
 	}
@@ -121,7 +121,7 @@ script 650( int amount, int repairtype, int turret )
 		{
 			SetActivator( 3800 + pn );
 			
-			if( MedicBonus[pn] < MedicBonusNeed )
+			if( MedicBonus[pn] < GetCVAR( "aow_medicbonusneed" ))
 			{
 				MedicBonus[pn] += bonus;
 			}
@@ -133,7 +133,8 @@ script 650( int amount, int repairtype, int turret )
 				GivePoints( 1 );
 			}
 			
-			if( !( MedicBonus[pn] % 6 ) ) GiveCredits( -1, CreditRepairAmount );
+			if( !( MedicBonus[pn] % 6 ))
+				GiveCredits( -1, GetCVAR( "aow_repairbonus" ));
 		}
 	}
 }

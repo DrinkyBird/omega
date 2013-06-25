@@ -69,7 +69,7 @@ script 941( int Player ) DISCONNECT
 }
 
 script 948( int time, int display ) SetResultValue( TimeDelay( time, display ) );
-script 949( int display ) SetResultValue( TimeDelay( TimedC4Delay, display ) );
+script 949( int display ) SetResultValue( TimeDelay( GetCVar( "aow_c4delay" ), display ) );
 
 function bool TimeDelay( int time, bool display )
 {

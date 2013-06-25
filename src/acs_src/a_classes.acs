@@ -88,9 +88,10 @@ function void PurchaseClass( int c )
 	}
 	
 	// Check time cops
-	if( c == CLASS_TIMECOP && MaxTimeCopsPerTeam > 0 && NumTimeCops[team] >= MaxTimeCopsPerTeam )
+	int maxtimecops = GetCVAR( "aow_maxtimecopsperteam" );
+	if( c == CLASS_TIMECOP && maxtimecops > 0 && NumTimeCops[team] >= maxtimecops )
 	{
-		if( MaxTimeCopsPerTeam == 1 )
+		if( maxtimecops == 1 )
 			Error( "You already have a time cop in-field!" );
 		else
 			Error( strparam( s:"You already have ", d:NumTimeCops[team], s: " time cops in-field!" ));
@@ -325,7 +326,8 @@ script 37( int Team )
 		terminate;
 	}
 	
-	if( NumPlasmaCannons[Team] >= MaxCannonsPerTeam && MaxCannonsPerTeam != -1 )
+	int maxcannons = GetCVAR( "aow_maxcannonsperteam" );
+	if( maxcannons != -1 && NumPlasmaCannons[Team] >= maxcannons )
 	{
 		DisplayCross();
 		SETFONT( "BigFont" );
@@ -334,21 +336,16 @@ script 37( int Team )
 		terminate;
 	}
 	
-	if( Timer() < CannonPurchaseDelay )
+	int delaytime = GetCVAR( "aow_plasmapurchasedelay" ) * 35 * 60;
+	if( Timer() < delaytime )
 	{
-		DisplayCross();
-		SETFONT( "BigFont" );
-		//int mins = (CannonPurchaseDelay - Timer())/(35*60);
-		//int secs = 59 - (Timer()/35)%60;
-		
-		HudMessage( s:"You must wait \cF", d:( CannonPurchaseDelay - Timer() ) / 60,
-			s:" seconds\nbefore you can get one of these!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+		Error( strparam( s:"You must wait \cF", d:( delaytime - Timer() ) / 60,
+			s:" seconds\nbefore you can get one of these!" ));
 		terminate;
 	}
 	
-	if( !IsSecondPress( "WEAP01", cost ) ) terminate;
-	if( !CheckCredits( cost ) ) terminate;
+	if( !IsSecondPress( "WEAP01", cost )) terminate;
+	if( !CheckCredits( cost )) terminate;
 	
 	TakeInventory( "PurchaseToken", 1 );
 	SpendCredits( cost );
@@ -363,7 +360,7 @@ script 37( int Team )
 	GiveInventory( "PlasmaCannon", 1 );
 	GiveInventory( "PlasmaCannonAmmo", 10 );
 	SetWeapon( "PlasmaCannon" );
-	Log( s: pname( -1 ), s: " purchases Plasma Cannon." );
+	Log( s:pname( -1 ), s:" purchases Plasma Cannon." );
 	RecountPlasma();
 }
 
@@ -478,7 +475,7 @@ script 55( int Team )
 		terminate;
 	}
 	
-	BlueBeaconTime = BeaconPurchaseDelay - ( Timer() - LastPurchasedBeacon[1] ) / 35;
+	BlueBeaconTime = ( GetCVAR( "aow_beaconpurchasedelay" ) * 60 ) - ( Timer() - LastPurchasedBeacon[1] ) / 35;
 	
 	if( BlueBeaconTime <= 0 )
 		BlueBeaconCooldown = false;
@@ -530,7 +527,7 @@ script 56( int Team )
 	if( MitigateDoublePress() ) terminate;
 	
 	RedBeaconCooldown = true;
-	RedBeaconTime = BeaconPurchaseDelay - ( Timer() - LastPurchasedBeacon[2] ) / 35;
+	RedBeaconTime = ( GetCVAR( "aow_beaconpurchasedelay" ) * 60 ) - ( Timer() - LastPurchasedBeacon[2] ) / 35;
 	
 	if( RedBeaconTime <= 0 )
 		RedBeaconCooldown = false;

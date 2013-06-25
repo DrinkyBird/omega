@@ -93,10 +93,12 @@ script 80( int mech )
 		ammo = "GuardianAmmoPackage";
 	}
 	
-	if( MitigateDoublePress() ) terminate;
-	if( !CheckFactory( !PlayerTeam() ) ) terminate;
+	if( MitigateDoublePress() )
+		terminate;
 	
-	if( mech == MECH_GUARDIAN && GuardianCount() >= GuardianLimit && !IsAdmin[PlayerNumber()] )
+	if( !CheckFactory( !PlayerTeam() )) terminate;
+	
+	if( mech == MECH_GUARDIAN && GuardianCount() >= GetCVAR( "aow_guardianlimit" ) && !!IsAdmin[PlayerNumber()] )
 	{
 		Error( "At limit!" );
 		terminate;
@@ -106,9 +108,14 @@ script 80( int mech )
 		if( !CheckAdvMechResearch( !PlayerTeam() ) )
 			terminate;
 	
-	if( !CheckFreeHanger( PlayerTeam() )) terminate;
-	if( !IsSecondPress( card, cost )) terminate;
-	if( !CheckCredits( cost )) terminate;
+	if( !CheckFreeHanger( PlayerTeam() ))
+		terminate;
+	
+	if( !IsSecondPress( card, cost ))
+		terminate;
+	
+	if( !CheckCredits( cost ))
+		terminate;
 	
 	TakeInventory( "PurchaseToken", 1 );
 	

@@ -72,8 +72,8 @@ script 66( int Team )
 	
 	if( !CheckFactory( Team ) ) terminate;
 	
-	// [sp] mechs not allowed!
-	if( !MechEnabled )
+	// [SP] mechs not allowed!
+	if( !GetCVAR( "aow_mechs" ))
 	{
 		Error( "Mechs have been disabled for this map!" );
 		terminate;

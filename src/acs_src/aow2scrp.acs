@@ -248,21 +248,19 @@ int PlayerNeedsSwitched;
 int LastPurchasedCannon[MAXPLAYERS];
 int LastPurchasedBeacon[3];
 int NumPlasmaCannons[3];
-int MaxCannonsPerTeam;
-int CannonPurchaseDelay;
 
 // [SP] Time Cop tracking
 int LastPurchasedTimeCop[MAXPLAYERS];
 int NumTimeCops[3];
-int MaxTimeCopsPerTeam;
-
-int TimedC4Delay;
 
 int UsePortals = 1;
-// [Dusk] this is used to determine which portal is alive *and* active
+// [Dusk] This is used to determine which portal is alive *and* active
 // a portal is considered inactive when it has no destinaton
 int Portals[4] = {0};
-// used to determine when a player has teleported in the last 18 tics. prevents teleporting multiple times.
+
+// [Dusk] Used to determine when a player has teleported in the last 18
+// tics, preventing teleporting multiple times.
+// TODO: make a `powerup`
 int HasTeleported[MAXPLAYERS];
 
 int LastMenu[MAXPLAYERS] = {0}; // [SP] This is to fix double-pressing on mech switches, causing a huge cost to the buyer.
@@ -310,27 +308,11 @@ bool AdvancedTurrets[2]; //Allows construction of high level Turrets //Costs $20
 bool MoreTurrets[2]; //Increases Turret cap by 10 //Costs $2000
 int MaxTurrets[2] = {15, 15};
 
-int GuardianLimit;
-
-int StartCredits;
-int CreditFlow;
-int CreditFlowPower;
-int CreditFragAward;
-int CreditAwardTime;
-int CreditAwardAmount;
-int CreditRepairAmount;
-
-bool MechEnabled;
 bool GettingMech[2];
 bool SuddenDeath = False;
 bool TicketPool = False;
 int Tickets[2];
 int StartingTickets;
-int TournamentMode;
-int BeaconPurchaseDelay;
-
-int TeamStayTime;
-bool TeamUnbalanceCompensation[2];
 
 bool RedBeaconCooldown = False;
 bool BlueBeaconCooldown = False;
@@ -341,11 +323,10 @@ int GameOver;
 
 bool CrateTime = True;
 
-int PlayerSpeeds[MAXPLAYERS];
-int MechGetter[2]; // which player is in the hanger?
+int PlayerSpeeds[MAXPLAYERS]; // [Dusk] Keep track of speeds of individual players to work around a bug
+int MechGetter[2]; // [Dusk] Who is in the hanger?
 
-int PlasmaCooldownTime; // plasma cannon cooldown time (CVar)
-int PlasmaCooldown[MAXPLAYERS]; // same for plasma cannon (internal)
+int PlasmaCooldown[MAXPLAYERS]; // [Dusk] Time until players can buy another plasma cannon
 
 int MaxRazorWire = 20;
 int MaxProxy = 50;
@@ -354,7 +335,6 @@ int MaxCrates = 15;
 
 int RepairBonus[MAXPLAYERS];
 int MedicBonus[MAXPLAYERS];
-int MedicBonusNeed;
 int AIMarines[2] = {0}; // compensation-spawned only
 
 int AIMarineCount = 0; // how many AI marines are there overall?

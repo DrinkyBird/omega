@@ -54,6 +54,7 @@ script 999 OPEN
 	
 	Tickets[0] = StartingTickets;
 	Tickets[1] = StartingTickets;
+	TicketPool = GetCVAR( "aow_ticketpool" );
 	
 	SetLineSpecial( 159, 80, 342, 0, 0, 0, 0 );
 	
@@ -166,33 +167,11 @@ script 599 OPEN
 	// [Dusk] Sudden death degeneration
 	if( GetCVAR( "aow_degeneration" ) <= 0 ) ConsoleCommand( "set aow_degeneration 0" );
 	if( GetCVAR( "aow_degenerationinterval" ) <= 0 ) ConsoleCommand( "set aow_degenerationinterval 10" );
-	if( GetCVAR( "aow_tournamentmode" ) <= 0 ) ConsoleCommand( "set aow_tournamentmode 0" );
 	if( GetCVAR( "aow_disablemechs" ) <= 0 ) ConsoleCommand( "set aow_disablemechs 0" );
 	if( GetCVAR( "aow_surrendermode" ) <= 0 ) ConsoleCommand( "set aow_surrendermode 0" );
 	
 	// [Dusk] How much score does destroying a building award you, in addition to difference?
 	if( GetCVAR( "aow_buildingpoints" ) <= 0 ) ConsoleCommand( "set aow_buildingpoints 125" );
-	
-	// TODO: get rid of these variables and replace with direct GetCVAR calls
-	StartCredits = GetCVAR( "aow_startcredits" );
-	CreditFlow = GetCVAR( "aow_credflow" );
-	CreditFlowPower = GetCVAR( "aow_powercredflow" );
-	CreditFragAward = GetCVAR( "aow_creditfrag" );
-	CreditAwardTime = GetCVAR( "aow_bonustime" );
-	CreditAwardAmount = GetCVAR( "aow_bonusamount" );
-	CreditRepairAmount = GetCVAR( "aow_repairbonus" );
-	GuardianLimit = GetCVAR( "aow_guardianlimit" );
-	MechEnabled = GetCVAR( "aow_mechs" );
-	TicketPool = GetCVAR( "aow_ticketpool" );
-	TeamStayTime = GetCVAR( "aow_teamstaytime" );
-	CannonPurchaseDelay = GetCVAR( "aow_plasmapurchasedelay" ) * 35 * 60;
-	MaxCannonsPerTeam = GetCVAR( "aow_maxcannonsperteam" );
-	MaxTimeCopsPerTeam = GetCVAR( "aow_maxtimecopsperteam" );
-	TournamentMode = GetCVAR( "aow_tournamentmode" );
-	BeaconPurchaseDelay = GetCVAR( "aow_beaconpurchasedelay" ) * 60;
-	PlasmaCooldownTime = GetCVAR( "aow_plasmacooldown" ) * 35 * 60;
-	TimedC4Delay = GetCVar( "aow_c4delay" );
-	MedicBonusNeed = GetCVAR( "aow_medicbonusneed" );
 	
 	delay( 35 * 5 );
 	restart;
@@ -210,14 +189,14 @@ script 4 OPEN
 		if( GotPlant[0] == 1 ) p += 25;
 		if( GotRefinery[0] == 1 ) p += 50;
 		if( MiniRefinery[0] == 1 ) p += 75;
-		redflow = ( CreditFlow * p ) / 100;
+		redflow = ( GetCVAR( "aow_credflow" ) * p ) / 100;
 		
 		p = 25;
 		
 		if( GotPlant[1] == 1 ) p += 25;
 		if( GotRefinery[1] == 1 ) p += 50;
 		if( MiniRefinery[1] == 1 ) p += 75;
-		blueflow = ( CreditFlow * p ) / 100;
+		blueflow = ( GetCVAR( "aow_credflow" ) * p ) / 100;
 		
 		for( i = 0; i < MAXPLAYERS; i++ )
 		{
@@ -341,7 +320,7 @@ script 303 OPEN
 
 function void InitPlayer( void )
 {
-	SetCredits( PlayerNumber(), StartCredits );
+	SetCredits( PlayerNumber(), GetCVAR( "aow_startcredits" ));
 	Experience[PlayerNumber()] = 0;
 	Rank[PlayerNumber()] = RANK_PRIVATE;
 	Surrender[PlayerNumber()] = False;

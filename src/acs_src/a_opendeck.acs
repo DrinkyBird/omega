@@ -20,7 +20,8 @@ script 955( int action )
 	{
 		if( CheckInventory( "CrateChooserReady" ) ) terminate;
 		
-		if( !MechEnabled ) GiveInventory( "NoMechs", 1 );
+		if( !GetCVAR( "aow_mechs" ))
+			GiveInventory( "NoMechs", 1 );
 		
 		GiveInventory( "CrateChooserReady", 1 );
 		terminate;
@@ -57,7 +58,7 @@ script 955( int action )
 		case 12: ACS_ExecuteAlways( 309, 0, 38, 1 ); break;
 		case 13:
 		
-			if( !MechEnabled )
+			if( !GetCVAR( "aow_mechs" ))
 			{
 				DisplayCross();
 				SETFONT( "BigFont" );

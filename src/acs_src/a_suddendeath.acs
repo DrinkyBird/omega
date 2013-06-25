@@ -58,11 +58,11 @@ script 997( void )
 			SetMusic( "razorub2" );
 	}
 	
-	Log( s: "=== Sudden Death begins ===" );
+	Log( s:"=== Sudden Death begins ===" );
 	
-	if( !TournamentMode )
-		GiveToAll( "BeaconItem", 1 );
-		
+	// Nukes for everybody!
+	GiveToAll( "BeaconItem", 1 );
+	
 	SetFont( "BIGFONT" );
 	HudMessageBold( s: "\cgSUDDEN DEATH!\n\nNo more repairs can be done\nEvery death counts!";
 		HUDMSG_FADEOUT, 15001, CR_YELLOW,

@@ -137,7 +137,7 @@ script 309( int Crate, int Override )
 			restart;
 		}
 		
-		amount = CreditAwardAmount + ( GetCredits( -1 ) / 4 );
+		amount = GetCVAR( "aow_bonusamount" ) + ( GetCredits( -1 ) / 4 );
 		IntelMessage( strparam( s:"Bonus credits! You get \cQ$\cD", d:amount, s:"!" ) );
 		LocalAmbientSound( "powerup/cred", 255 );
 		Delay( 4 );
@@ -217,7 +217,7 @@ script 309( int Crate, int Override )
 		
 	case 9:
 	case 25:
-		if(( CheckInventory( "PowerInvulnerable" ) && !Override ) || TournamentMode )
+		if( CheckInventory( "PowerInvulnerable" ) && !Override )
 		{
 			crate = 0;
 			restart;
@@ -245,12 +245,6 @@ script 309( int Crate, int Override )
 		{
 			crate = 0;
 			restart;
-		}
-		
-		if( TournamentMode )  // [SP] This crate is forbidden in tournament mode
-		{
-			ACS_ExecuteAlways( 309, 0 );
-			terminate;
 		}
 		
 		LocalAmbientSound( "powerup/kama", 255 );
@@ -555,7 +549,10 @@ script 309( int Crate, int Override )
 		break;
 	case 45:
 	
-		if( !Override && ( CrateTime || CheckInventory( "IsMech" ) || !MechEnabled || CheckInventory( "GuardianPowerup" ) ) )
+		if( !Override && ( CrateTime ||
+			CheckInventory( "IsMech" ) ||
+			!GetCVAR( "aow_mechs" ) ||
+			CheckInventory( "GuardianPowerup" )))
 		{
 			crate = 0;
 			restart;
@@ -679,13 +676,10 @@ script 309( int Crate, int Override )
 		break;
 	
 	case 55:
-		if( Timer() < 10 * 60 * 35 || CheckInventory( "CrateChooser" ) || TournamentMode )
+		if(( Timer() < 10 * 60 * 35 || CheckInventory( "CrateChooser" )) && !Override )
 		{
-			if( !Override )
-			{
-				Crate = 0;
-				restart;
-			}
+			Crate = 0;
+			restart;
 		}
 		
 		IntelMessage( "\cKOPEN DECK!" );

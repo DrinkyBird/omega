@@ -27,7 +27,7 @@ script 994 DEATH
 	
 	// [Dusk] Activate plasma cannon cooldown now if the player had a plasma cannon
 	if( CheckInventory( "PlasmaCannon" ) )
-		PlasmaCooldown[PlayerNumber()] = Timer() + PlasmaCooldownTime;
+		PlasmaCooldown[PlayerNumber()] = Timer() + ( GetCVAR( "aow_plasmacooldown" ) * 35 * 60 );
 	
 	// [Dusk] Infantry is worth one point, mechs are 3 or 4 points.
 	int points = 1;
@@ -76,7 +76,7 @@ script 994 DEATH
 		ACS_ExecuteAlways( 931, 0 );
 		
 		LocalAmbientSound( "game/boink", 127 );
-		GiveCredits( -1, CreditFragAward );
+		GiveCredits( -1, GetCVAR( "aow_creditfrag" ));
 		AddExperience( 50 );
 		
 		delay( 5 );
