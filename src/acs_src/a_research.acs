@@ -9,9 +9,7 @@
 script 65( int Team )
 {
 	int cost = 2000;
-	
 	if( MitigateDoublePress() ) terminate;
-	
 	if( EnhancedRefining[Team] )
 	{
 		Error( "This has already been researched!" );
@@ -47,19 +45,7 @@ script 65( int Team )
 	HudMessage( s: "\ciResearch Complete!"; HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	// if (GetLevelInfo (LEVELINFO_LEVELNUM) != 50 || GetLevelInfo (LEVELINFO_LEVELNUM) != 18) Floor_LowerToLowest (0, 45);
 	
-	SetFont( "SMALLFONT" );
-	
-	if( Team == 0 )
-	{
-		IntelMessageBold( "\cGNod\c- researches \cDEnhanced Refining!" );
-		Log( s: pname( -1 ), s: " researches Enhanced Refining for Nod." );
-	}
-	else
-	{
-		IntelMessageBold( "\cFGDI\c- researches \cDEnhanced Refining!" );
-		Log( s: pname( -1 ), s: " researches Enhanced Refining for GDI." );
-	}
-	
+	Log( s: pname( -1 ), s: " researches Enhanced Refining for ", s:TeamNames[team] );
 	EnhancedRefining[Team] = True;
 }
 
@@ -111,20 +97,7 @@ script 66( int Team )
 	
 	SETFONT( "BigFont" );
 	HudMessage( s: "\ciResearch Complete!"; HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
-	
-	SetFont( "SMALLFONT" );
-	
-	if( Team == 0 )
-	{
-		IntelMessageBold( "\cGNod\cJ researches \cKAdvanced Mechs!" );
-		Log( s: pname( -1 ), s: " researches Advanced Mechs for Nod" );
-	}
-	else
-	{
-		IntelMessageBold( "\cFGDI\cJ researches \cKAdvanced Mechs!" );
-		Log( s: pname( -1 ), s: " researches Advanced Mechs for GDI" );
-	}
-	
+	Log( s: pname( -1 ), s: " researches Advanced Mechs for ", s:TeamNames[team] );
 	AdvancedMechResearch[Team] = True;
 }
 
@@ -351,19 +324,7 @@ script 72( int Team )
 	HudMessage( s: "\ciResearch Complete!";
 		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	
-	SetFont( "SMALLFONT" );
-	
-	if( Team == 0 )
-	{
-		IntelMessageBold( "\cGNod\c- researches \cKAdvanced Turrets!" );
-		Log( s: pname( -1 ), s: " researches Advanced Turrets for Nod" );
-	}
-	else
-	{
-		IntelMessageBold( "\cFGDI\c- researches \cKAdvanced Turrets!" );
-		Log( s: pname( -1 ), s: " researches Advanced Turrets for GDI" );
-	}
-	
+	Log( s:pname( -1 ), s:" researches Advanced Turrets for ", s:TeamNames[team] );
 	AdvancedTurrets[Team] = True;
 }
 
@@ -412,17 +373,7 @@ script 73( int Team )
 	
 	SetFont( "SMALLFONT" );
 	
-	if( Team == TEAM_RED )
-	{
-		IntelMessageBold( "\cGNod\c- researches \cKIncreased Turret Support!" );
-		Log( s: pname( -1 ), s: " researches More Turrets for Nod" );
-	}
-	else
-	{
-		IntelMessageBold( "\cFGDI\c- researches \cKIncreased Turret Support!" );
-		Log( s: pname( -1 ), s: " researches More Turrets for GDI" );
-	}
-	
+	Log( s:pname( -1 ), s:" researches More Turrets for ", s:TeamNames[team] );
 	MoreTurrets[Team] = True;
 	MaxTurrets[Team] += 5;
 }

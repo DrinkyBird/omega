@@ -30,8 +30,10 @@ script 110( int Team )
 	
 	TakeInventory( "TiberiumCrystal", 1 );
 	
-	if( EnhancedRefining[Team] ) GiveCredits( -1, 50 );
-	else GiveCredits( -1, 25 );
+	if( EnhancedRefining[Team] )
+		GiveCredits( -1, 50 );
+	else
+		GiveCredits( -1, 25 );
 	
 	AddExperience( 75 );
 	
