@@ -4,8 +4,8 @@ script 101( VOID )
 	Thing_Destroy( 100, 0 );
 	Thing_Destroy( 101, 0 );
 	ACS_ExecuteAlways( 99, 0, TEAM_BLUE );
-	GotBarracks[1] = False;
-	BaseLeft[1]--;
+	GotBarracks[TEAM_BLUE] = False;
+	BaseLeft[TEAM_BLUE]--;
 	SetLineTexture( 1, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
 	SetLineTexture( 3, SIDE_FRONT, TEXTURE_MIDDLE, "MCT3" );
 	ReddenSector( 1 );
@@ -28,8 +28,8 @@ script 102( VOID )
 	Thing_Destroy( 102, 0 );
 	Thing_Destroy( 103, 0 );
 	ACS_ExecuteAlways( 99, 0, TEAM_BLUE );
-	GotRefinery[1] = False;
-	BaseLeft[1]--;
+	GotRefinery[TEAM_BLUE] = False;
+	BaseLeft[TEAM_BLUE]--;
 	SetLineTexture( 5, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
 	ReddenSector( 5 );
 	
@@ -52,8 +52,8 @@ script 103( void )
 	Thing_Remove( 104 );
 	Thing_Destroy( 105, 0 );
 	ACS_ExecuteAlways( 99, 0, TEAM_BLUE );
-	GotPlant[1] = False;
-	BaseLeft[1]--;
+	GotPlant[TEAM_BLUE] = False;
+	BaseLeft[TEAM_BLUE]--;
 	SetLineTexture( 7, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
 	SetLineTexture( 3, SIDE_FRONT, TEXTURE_MIDDLE, "MCT3" );
 	ReddenSector( 7 );
@@ -77,8 +77,8 @@ script 104( VOID )
 	Thing_Destroy( 106, 0 );
 	Thing_Destroy( 107, 0 );
 	ACS_ExecuteAlways( 99, 0, TEAM_BLUE );
-	GotFactory[1] = False;
-	BaseLeft[1]--;
+	GotFactory[TEAM_BLUE] = False;
+	BaseLeft[TEAM_BLUE]--;
 	SetLineTexture( 9, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
 	ReddenSector( 9 );
 	ReddenSector( 10 );
@@ -99,7 +99,7 @@ script 104( VOID )
 script 105( VOID )
 {
 	//Thing_Remove(109);
-	GotRepair[1] = False;
+	GotRepair[TEAM_BLUE] = False;
 	ReddenSector( 13 );
 	ReddenSector( 14 );
 	SetActorProperty( 109, APROP_Health, 0 );
@@ -122,8 +122,8 @@ script 114( VOID )
 	Thing_Destroy( 114, 0 );
 	Thing_Destroy( 115, 0 );
 	ACS_ExecuteAlways( 99, 0, TEAM_BLUE );
-	GotObelisk[1] = False;
-	BaseLeft[1]--;
+	GotObelisk[TEAM_BLUE] = False;
+	BaseLeft[TEAM_BLUE]--;
 	ReddenSector( 19 );
 	SetLineTexture( 11, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
 	
@@ -145,8 +145,8 @@ script 201( VOID )
 	Thing_Destroy( 201, 0 );
 	ACS_ExecuteAlways( 99, 0, TEAM_RED );
 	
-	GotBarracks[0] = False;
-	BaseLeft[0]--;
+	GotBarracks[TEAM_RED] = False;
+	BaseLeft[TEAM_RED]--;
 	
 	SetLineTexture( 2, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
 	SetLineTexture( 4, SIDE_FRONT, TEXTURE_MIDDLE, "MCT3" );
@@ -170,8 +170,8 @@ script 202( VOID )
 	Thing_Destroy( 202, 0 );
 	Thing_Destroy( 203, 0 );
 	ACS_ExecuteAlways( 99, 0, TEAM_RED );
-	GotRefinery[0] = False;
-	BaseLeft[0]--;
+	GotRefinery[TEAM_RED] = False;
+	BaseLeft[TEAM_RED]--;
 	SetLineTexture( 6, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
 	ReddenSector( 6 );
 	
@@ -192,8 +192,8 @@ script 203( VOID )
 	Thing_Destroy( 204, 0 );
 	Thing_Destroy( 205, 0 );
 	ACS_ExecuteAlways( 99, 0, TEAM_RED );
-	GotPlant[0] = False;
-	BaseLeft[0]--;
+	GotPlant[TEAM_RED] = False;
+	BaseLeft[TEAM_RED]--;
 	SetLineTexture( 8, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
 	SetLineTexture( 4, SIDE_FRONT, TEXTURE_MIDDLE, "MCT3" );
 	ReddenSector( 8 );
@@ -216,8 +216,8 @@ script 204( VOID )
 	Thing_Destroy( 206, 0 );
 	Thing_Destroy( 207, 0 );
 	ACS_ExecuteAlways( 99, 0, TEAM_RED );
-	GotFactory[0] = False;
-	BaseLeft[0]--;
+	GotFactory[TEAM_RED] = False;
+	BaseLeft[TEAM_RED]--;
 	SetLineTexture( 10, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
 	ReddenSector( 11 );
 	ReddenSector( 12 );
@@ -237,7 +237,7 @@ script 204( VOID )
 //---------------------------RED REPAIR FACILITY DEATH
 script 205( VOID )
 {
-	GotRepair[0] = False;
+	GotRepair[TEAM_RED] = False;
 	ReddenSector( 15 );
 	ReddenSector( 16 );
 	SetActorProperty( 209, APROP_Health, 0 );
@@ -260,16 +260,16 @@ script 214( VOID )
 	Thing_Destroy( 214, 0 );
 	Thing_Destroy( 215, 0 );
 	ACS_ExecuteAlways( 99, 0, TEAM_RED );
-	GotObelisk[0] = False;
-	BaseLeft[0]--;
+	GotObelisk[TEAM_RED] = False;
+	BaseLeft[TEAM_RED]--;
 	ReddenSector( 20 );
 	SetLineTexture( 12, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
 	
 	SetFont( "BIGFONT" );
 	
-	HudMessageBold( s:"The \cgNod Obelisk\cd has been destroyed!!";
+	HudMessageBold( s:"The \cGObelisk of Light\cd has been destroyed!!";
 		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
-	Log( s:pname( -1 ), s:" destroys Nod Obelisk." );
+	Log( s:pname( -1 ), s:" destroys Obelisk of Light." );
 	AwardBuildingDestruction( TEAM_BLUE, false );
 	ACS_ExecuteAlways( 930, 0, BUILDING_OBELISK, TEAM_RED );
 	
@@ -280,7 +280,7 @@ script 214( VOID )
 script 97( int Structure, int Team ) CLIENTSIDE
 {
 	// stfu during degeneration
-	if( SuddenDeath && GetCVar( "aow_degeneration" ) ) terminate;
+	if( SuddenDeath && GetCVar( "aow_degeneration" )) terminate;
 	
 	if( Timer() > LastAttackMessage + 35 * 15 )
 	{
@@ -383,7 +383,7 @@ function void AwardBuildingDestruction( int team, int small )
 		if( d < 0 )
 			points = 0;
 		else
-			points = ( ratio * ( d + GetCVAR( "aow_buildingpoints" ) ) ) >> 16;
+			points = ( ratio * ( d + GetCVAR( "aow_buildingpoints" ))) >> 16;
 	}
 	else
 		points = 40;
@@ -393,4 +393,57 @@ function void AwardBuildingDestruction( int team, int small )
 	// [Dusk] Update the building HUD now. The building was destroyed so we
 	// need to update unconditionally.
 	DrawBuildingHud();
+}
+
+// [Dusk] Get a building's TID
+function int GetBuildingTID( int b, int team )
+{
+	switch( b )
+	{
+	case BUILDING_BARRACKS:
+		return cond( team == TEAM_RED, 201, 101 );
+	
+	case BUILDING_REFINERY:
+		return cond( team == TEAM_RED, 203, 103 );
+	
+	case BUILDING_RESCENTRE:
+		return cond( team == TEAM_RED, 205, 105 );
+	
+	case BUILDING_FACTORY:
+		return cond( team == TEAM_RED, 207, 107 );
+	
+	case BUILDING_OBELISK:
+		return cond( team == TEAM_RED, 214, 114 );
+	
+	case BUILDING_REPAIR:
+		return cond( team == TEAM_RED, 209, 109 );
+	
+	case BUILDING_MINIREF:
+		return cond( team == TEAM_RED, 900, 901 );
+	
+	case BUILDING_HEALTHREGEN:
+		return cond( team == TEAM_RED, 902, 903 );
+	
+	case BUILDING_AMMOREGEN:
+		return cond( team == TEAM_RED, 904, 905 );
+	
+	case BUILDING_PORTAL:
+		return cond( team == TEAM_RED, TID_PORTAL_RED1, TID_PORTAL_BLUE1 );
+	
+	case BUILDING_PORTAL_2:
+		return cond( team == TEAM_RED, TID_PORTAL_RED2, TID_PORTAL_BLUE2 );
+	}
+	
+	Log( s:"GetBuildingTID: Unknown b number ", d:b );
+	return 0;
+}
+
+// [Dusk] Get a building's name
+function str GetBuildingName( int b, int team )
+{
+	// Blue's `obelisk` shalt be called something else
+	if( b == BUILDING_OBELISK && team == TEAM_BLUE )
+		return "some gizmo";
+	
+	return BuildingNames[b];
 }

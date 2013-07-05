@@ -113,18 +113,18 @@
 #define HP_REGENS 10000
 #define HP_PORTAL 3000
 
-#define BUILDING_ALL -1
-
-#define BUILDING_BARRACKS 0
-#define BUILDING_REFINERY 1
-#define BUILDING_RESCENTRE 2
-#define BUILDING_FACTORY 3
-#define BUILDING_REPAIR 4
-#define BUILDING_OBELISK 5
-#define BUILDING_MINIREF 6
-#define BUILDING_HEALTHREGEN 7
-#define BUILDING_AMMOREGEN 8
-#define BUILDING_PORTAL 9
+#define BUILDING_ALL            -1
+#define BUILDING_BARRACKS        0
+#define BUILDING_REFINERY        1
+#define BUILDING_RESCENTRE       2
+#define BUILDING_FACTORY         3
+#define BUILDING_REPAIR          4
+#define BUILDING_OBELISK         5
+#define BUILDING_MINIREF         6
+#define BUILDING_HEALTHREGEN     7
+#define BUILDING_AMMOREGEN       8
+#define BUILDING_PORTAL          9
+#define BUILDING_PORTAL_2       10
 
 // TODO: move these to 1000+ range
 #define TID_BARRACKS_BLUE 101
@@ -214,6 +214,21 @@ int BaseTIDs[18] =
 	TID_MINIREF_BLUE, TID_MINIREF_RED,
 	TID_HEALTHREGEN_BLUE, TID_HEALTHREGEN_RED,
 	TID_AMMOREGEN_BLUE, TID_AMMOREGEN_RED
+};
+
+str BuildingNames[11] =
+{
+	"Barracks",
+	"Refinery",
+	"Research Centre",
+	"War Factory",
+	"Obelisk of Light",
+	"Repair Facility",
+	"Mini-Refinery",
+	"Health Regen.",
+	"Ammo Regen.",
+	"Teleporter #1",
+	"Teleporter #2"
 };
 
 str TeamNames[2] = {"GDI", "Nod"};
