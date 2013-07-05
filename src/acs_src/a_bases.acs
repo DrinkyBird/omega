@@ -447,3 +447,20 @@ function str GetBuildingName( int b, int team )
 	
 	return BuildingNames[b];
 }
+
+// [Dusk]
+function bool IsMinorBuilding( int b )
+{
+	switch( b )
+	{
+	case BUILDING_REPAIR:
+	case BUILDING_MINIREF:
+	case BUILDING_HEALTHREGEN:
+	case BUILDING_AMMOREGEN:
+	case BUILDING_PORTAL:
+	case BUILDING_PORTAL_2:
+		return true;
+	}
+	
+	return false;
+}

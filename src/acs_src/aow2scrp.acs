@@ -23,12 +23,15 @@
 
 #define SELFHEALHEALTH 50
 
-// [Dusk] intel HudMessage coords
+// [Dusk] Intel HudMessage coords
 #define INTEL_XPOS 0.5
 #define INTEL_YPOS 0.055
 #define INTEL_YPOS2 0.0475
 
-// [Dusk] rank stuff
+// [Dusk] Spacing between SMALLFONT rows, in HUDMessage units
+#define SMALLSPACE 0.015
+
+// [Dusk] Rank stuff
 #define RANK_PRIVATE 0
 #define RANK_CORPORAL 1
 #define RANK_SERGEANT 2
@@ -222,8 +225,8 @@ str BuildingNames[11] =
 	"Refinery",
 	"Research Centre",
 	"War Factory",
-	"Obelisk of Light",
 	"Repair Facility",
+	"Obelisk of Light",
 	"Mini-Refinery",
 	"Health Regen.",
 	"Ammo Regen.",
