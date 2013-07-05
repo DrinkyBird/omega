@@ -150,20 +150,14 @@ script 950( void ) NET
 	Log( s:pname( -1 ), s:" sells ", s:weapon, s:" for $", d:price );
 }
 
-// This allows players to see their speed factor.
-function int GetSpeedFactor( void )
+// [Dusk] This allows players to see their speed factor.
+script 921( void ) NET CLIENTSIDE
 {
 	int f = GetSpeed();
-	
 	if( CheckInventory( "PowerSpeedUpgrade" )) f = FixedMul( f, 1.25 );
 	if( CheckInventory( "PowerFatigue" )) f = FixedMul( f, 0.55 );
 	if( CheckInventory( "PowerTimeGunBoost" )) f = FixedMul( f, 1.4 );
 	if( CheckInventory( "PowerTimeGunSlow" )) f = FixedMul( f, 0.6 );
 	
-	return f;
-}
-
-script 921( void ) NET CLIENTSIDE
-{
-	Log( s: "My speed is ", f: GetSpeedFactor() );
+	Log( s: "My speed is ", f:f );
 }
