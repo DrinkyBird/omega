@@ -21,15 +21,15 @@ script 93( int unused, int silent )
 	GiveInventory( "Backpack", 1 ); // [Dusk] TODO: heh..
 	
 	if( CheckInventory( "HealingRadiusCount" ) > 0 )
-		SetInventory( "HealingRadiusItem", CheckInventory( "HealingRadiusCount" ) );
+		SetInventory( "HealingRadiusItem", CheckInventory( "HealingRadiusCount" ));
 	
 	if( CheckInventory( "ProxyMineCount" ) > 0 )
-		SetInventory( "ProxyMine", CheckInventory( "ProxyMineCount" ) );
+		SetInventory( "ProxyMine", CheckInventory( "ProxyMineCount" ));
 	
 	if( CheckInventory( "TimedC4Count" ) > 0 )
-		SetInventory( "TimedC4", CheckInventory( "TimedC4Count" ) );
+		SetInventory( "TimedC4", CheckInventory( "TimedC4Count" ));
 	
-	if( !CheckInventory( "IsMech" ) )
+	if( !CheckInventory( "IsMech" ))
 		SetHealth( GetSpawnHealth() );
 	
 	if( !silent )
@@ -44,17 +44,13 @@ script 93( int unused, int silent )
 // TELEPORT BACK TO FIELD
 script 94( int Team )
 {
-	if( !CheckInventory( "HasClass" ) )
+	if( !CheckInventory( "HasClass" ))
 	{
-		DisplayCross();
-		SETFONT( "BigFont" );
-		HudMessage( s: "You can't leave without choosing a class!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+		Error( "You can't leave without choosing a class!" );
 		terminate;
 	}
 	
 	TakeInventory( "IsInSpawnRoom", 1 );
-	
 	ACS_ExecuteAlways( 961, 0, Team );
 }
 
@@ -82,28 +78,28 @@ script 95( int unused, int force )
 	SetActorProperty( 0, APROP_RenderStyle, STYLE_Normal );
 	SetActorProperty( 0, APROP_Alpha, 1.0 );
 	
-	RefundCredits( CheckInventory( "Refunds" ) );
+	RefundCredits( CheckInventory( "Refunds" ));
 	SetInventory( "Refunds", 0 );
 	
-	if( CheckInventory( "JumpjetSwitch" ) ) GiveInventory( "JumpjetDeactivate", 1 );
-	if( CheckInventory( "PlasmaCannon" ) ) bool HasPlasma = True;
-	if( CheckInventory( "ArtilleryCannon" ) ) bool HasArtillery = True;
-	if( CheckInventory( "TiberiumAutorifleWeak" ) ) bool HasTiberiumAutorifle = True;
-	if( CheckInventory( "IonCannonBeacon" ) || CheckInventory( "NuclearStrikeBeacon" ) ) bool HasSuperWeapon = True;
-	if( CheckInventory( "EagerBeaver" ) ) bool HasChainsaw = True;
-	if( CheckInventory( "BombPack" ) ) bool HasKamikaze = True;
+	if( CheckInventory( "JumpjetSwitch" )) GiveInventory( "JumpjetDeactivate", 1 );
+	if( CheckInventory( "PlasmaCannon" )) bool HasPlasma = True;
+	if( CheckInventory( "ArtilleryCannon" )) bool HasArtillery = True;
+	if( CheckInventory( "TiberiumAutorifleWeak" )) bool HasTiberiumAutorifle = True;
+	if( CheckInventory( "IonCannonBeacon" ) || CheckInventory( "NuclearStrikeBeacon" )) bool HasSuperWeapon = True;
+	if( CheckInventory( "EagerBeaver" )) bool HasChainsaw = True;
+	if( CheckInventory( "BombPack" )) bool HasKamikaze = True;
 	
 	// ClearInventory doesn't reset the fade, hack around it
-	if( CheckInventory( "PowerTimeGunFloat" ) || CheckInventory( "PowerTimeGunBoost" ) || CheckInventory( "IsTeleporting" ) )
+	if( CheckInventory( "PowerTimeGunFloat" ) || CheckInventory( "PowerTimeGunBoost" ) || CheckInventory( "IsTeleporting" ))
 		bool HasTimeGunPositiveEffect = 1;
 		
-	if( CheckInventory( "PowerTimeGunWeaken" ) || CheckInventory( "PowerTimeGunSlow" ) )
+	if( CheckInventory( "PowerTimeGunWeaken" ) || CheckInventory( "PowerTimeGunSlow" ))
 		bool HasTimeGunNegativeEffect = 1;
 		
-	if( CheckInventory( "PowerInvulnerable" ) )
+	if( CheckInventory( "PowerInvulnerable" ))
 		bool HasIronCurtain = True;
 		
-	if( CheckInventory( "PowerBerserk" ) )
+	if( CheckInventory( "PowerBerserk" ))
 		bool HasBerserk = True;
 		
 	TakeInventory( "PowerTimeGunBoost", 1 );
@@ -208,7 +204,7 @@ script 96( int type )
 		terminate;
 	}
 	
-	if( CheckInventory( "IsMech" ) )
+	if( CheckInventory( "IsMech" ))
 	{
 		DisplayCross();
 		SETFONT( "BigFont" );
@@ -243,14 +239,14 @@ script 96( int type )
 			terminate;
 		}
 		
-		if( !CheckFactory( type - 2 ) )
+		if( !CheckFactory( type - 2 ))
 		{
 			delay( 5 );
 			ACS_ExecuteAlways( 96, 0, type - 2 );
 			terminate;
 		}
 		
-		if( CheckInventory( "PowerBerserk" ) )
+		if( CheckInventory( "PowerBerserk" ))
 		{
 			DisplayCross();
 			SetFont( "BIGFONT" );
@@ -261,7 +257,7 @@ script 96( int type )
 			terminate;
 		}
 		
-		if( CheckInventory( "HighUpgrade" ) )
+		if( CheckInventory( "HighUpgrade" ))
 		{
 			DisplayCross();
 			SetFont( "BIGFONT" );
@@ -282,7 +278,7 @@ script 96( int type )
 		if( type == 4 )
 			dest = 211;
 		
-		if( !CheckPlant( type - 4 ) )
+		if( !CheckPlant( type - 4 ))
 		{
 			delay( 5 );
 			ACS_ExecuteAlways( 96, 0, type - 4 );
@@ -292,7 +288,7 @@ script 96( int type )
 		GiveInventory( "IsInSpawnRoom", 1 );
 	}
 	
-	if( !Teleport( dest ) )
+	if( !Teleport( dest ))
 	{
 		SpawnSpotForced( "AntiUtilityExplosion", dest, 0, 0 );
 		delay( 10 );

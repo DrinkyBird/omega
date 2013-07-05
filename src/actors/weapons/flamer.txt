@@ -54,7 +54,6 @@ actor Flamer : AOWWeapon 21047 {
 	
 	Fire:
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
-		TNT1 A 0 A_JumpIfInventory ("InMenu", 1, "Ready")
 		FL_R E 0 A_JumpIfInventory("IsBlue",1,"FireBlue")
 		FL_R E 4 A_PlaySound ("flamer2/up", CHAN_WEAPON)
 		FL_R E 0 A_GunFlash
@@ -101,7 +100,6 @@ actor Flamer : AOWWeapon 21047 {
 	
 	AltFire:
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "AltRejected")
-		TNT1 A 0 A_JumpIfInventory ("InMenu", 1, "AltRejected")
 		TNT1 A 0 A_JumpIfNoAmmo ("AltRejected")
 		TNT1 A 0 A_JumpIfInventory("IsBlue", 1, "AltFireBlue")
 		FL_R E 15

@@ -25,7 +25,6 @@ actor BFG2704 : AOWWeapon replaces BFG9000 {
 		wait
 	Fire:
 		BFGG A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
-		BFGG A 0 A_JumpIfInventory ("InMenu", 1, "Ready")
 		BFGG A 20 A_BFGSound
 		BFGG B 10 A_GunFlash
 		BFGG B 1 A_FireCustomMissile("BFGBetaShot1", (random(-10, 10) * 0.75), 0, 0, 8, 0, (random(-10, 10) * 0.9))

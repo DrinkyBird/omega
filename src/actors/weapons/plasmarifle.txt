@@ -59,7 +59,6 @@ ACTOR PlasmaGun : AOWWeapon replaces PlasmaRifle 21087 {
 	
 	Fire:
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
-		TNT1 A 0 A_JumpIfInventory ("InMenu", 1, "Ready")
 		ENRG A 0 A_JumpIfInventory("PlasmaHeat",100,"Overheat")
 		ENRG A 0 A_JumpIfInventory("IsBlue",1,"FireBlue")
 		ENRG A 1 A_GunFlash
