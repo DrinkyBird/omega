@@ -178,6 +178,7 @@
 
 // TODO: populate this list
 #define SC_SelfHealHealth         816
+#define SC_CL_ObeliskTrail        822
 #define SC_TargetInfo             899
 #define SC_JetpackToggle          907
 #define SC_CL_SniperZoom          916

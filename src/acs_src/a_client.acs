@@ -149,3 +149,104 @@ script 400 OPEN CLIENTSIDE
 		delay( 1 );
 	}
 }
+
+// =============================================================================
+// [Dusk] Spawns a trail of type actors from src to dest, with interval units
+// in between (with a cap of 128 trail actors at most).
+function bool SpawnTrail( int src, int dest, str type, int interval, int rand,
+	int xoff0, int yoff0, int zoff0, int xoff1, int yoff1, int zoff1 )
+{
+	// The server may not do this
+	if( consoleplayer == -1 )
+		return false;
+	
+	int x, y, z;
+	
+	// 0 means self
+	if( !src ) src = ActivatorTID ();
+	if( !dest ) dest = ActivatorTID ();
+	
+	if( src == dest )
+	{
+		Log( s:"SpawnTrail: Can't trail to ourselves!" );
+		return false;
+	}
+	
+	// From where to where?
+	int x0 = GetActorX( src );
+	int y0 = GetActorY( src );
+	int z0 = GetActorZ( src );
+	int a0 = GetActorAngle( src );
+	int x1 = GetActorX( dest );
+	int y1 = GetActorY( dest );
+	int z1 = GetActorZ( dest );
+	int a1 = GetActorAngle( dest );
+	
+	// Apply offsets
+	x0 += FixedMul( cos( a0 + 0.25 ), xoff0 ) + FixedMul( cos( a0 ), yoff0 );
+	y0 += FixedMul( sin( a0 + 0.25 ), xoff0 ) + FixedMul( sin( a0 ), yoff0 );
+	z0 += zoff0;
+	x1 += FixedMul( cos( a1 + 0.25 ), xoff1 ) + FixedMul( cos( a1 ), yoff1 );
+	y1 += FixedMul( sin( a1 + 0.25 ), xoff1 ) + FixedMul( sin( a1 ), yoff1 );
+	z1 += zoff1;
+	
+	int d = AproxDistance( src, dest );
+	
+	// How many trail actors to spawn?
+	int n = ( d >> 16 ) / interval;
+	int cap = 128;
+	
+	if( n > cap )
+		n = cap;
+	
+	// Nothing to spawn!
+	if( n <= 0 )
+		return false;
+	
+	// Distance between current point and first flare
+	int dx0 = ( x1 - x0 ) / n;
+	int dy0 = ( y1 - y0 ) / n;
+	int dz0 = ( z1 - z0 ) / n;
+	
+	// Randomize initial distance so particles won't take the same spots
+	// on continuous beams. That just looks awkward.
+	int r = random( -5, 5 ) * 0.1;
+	x0 += FixedMul( r, dx0 );
+	y0 += FixedMul( r, dy0 );
+	z0 += FixedMul( r, dz0 );
+	
+	// Randomize the distance a bit
+	if( rand > 7 )
+		n += random( -1, 1 );
+	
+	// Information gathered, actually spawn the flares now
+	for( int i = 0; i < n; ++i )
+	{
+		x = x0 + i * dx0;
+		y = y0 + i * dy0;
+		z = z0 + i * dz0;
+		
+		if( rand > 0 )
+		{
+			x += random( -rand, rand ) * 0.5;
+			y += random( -rand, rand ) * 0.5;
+			z += random( -rand, rand ) * 0.5;
+		}
+		
+		Spawn( type, x, y, z );
+		// Log (d:i, s:": ", f:x,s:", ", f:y,s:", ",f:z);
+	}
+	
+	return true;
+}
+
+script SC_CL_ObeliskTrail( int type ) CLIENTSIDE
+{
+	switch( type )
+	{
+	case 0:
+		// Obelisk beam
+		SpawnTrail( 0, 215, "ObeliskTrail", 32, 0, 0, 0, 0, 0, 0, 0 );
+		break;
+	}
+}

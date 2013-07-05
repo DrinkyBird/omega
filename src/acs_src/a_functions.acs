@@ -731,3 +731,17 @@ function str pname( int p )
 	
 	return strparam( n:p + 1, s:" (#", d:p, s:", ", s:TeamNames[GetPlayerInfo( p, PLAYERINFO_TEAM )], s:")" );
 }
+
+// ============================================================================
+// [Dusk] AproxDistance: Doom's P_AproxDistance, converted to ACS.
+// It's faster, but less accurate than distance().
+function int AproxDistance( int t1, int t2 )
+{
+	int dx = abs(GetActorX( t1 ) - GetActorX( t2 ));
+	int dy = abs(GetActorY( t1 ) - GetActorY( t2 ));
+	
+	if( dx < dy )
+		return dy + ( dx / 2 );
+	
+	return dx + ( dy / 2 );
+}

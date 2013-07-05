@@ -276,6 +276,7 @@ actor ObeliskShotRed : FastProjectile {
 		stop
 	Death:
 		TNT1 A 0 A_SpawnItemEx ("PlasmaFlameCluster", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
+		TNT1 A 0 ACS_ExecuteAlways( 822, 0 )
 		TNT1 A 3 bright A_Explode (250, 256, 0)
 		stop
 	}
@@ -290,6 +291,7 @@ actor ObeliskShotRedInfantry : ObeliskShotRed {
 		stop
 	Death:
 		TNT1 A 0 A_SpawnItemEx ("PlasmaFlameCluster", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
+		TNT1 A 0 ACS_ExecuteAlways( 822, 0 )
 		TNT1 A 3 bright A_Explode (50, 256, 0)
 		stop
 	}
@@ -301,6 +303,22 @@ actor ObeliskShotBlue : ObeliskShotRed {
 
 actor ObeliskShotBlueInfantry : ObeliskShotRedInfantry {
 	Translation "112:120=200:207"
+}
+
+actor ObeliskTrail
+{
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	RenderStyle Add
+	Alpha 0.7
+	Scale 0.4
+	
+	States
+	{
+	Spawn:
+		CACH B 1 BRIGHT A_FadeOut( 0.15 )
+		wait
+	}
 }
 
 // ------------------------
