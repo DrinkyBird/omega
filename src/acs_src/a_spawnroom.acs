@@ -107,12 +107,17 @@ script 95( int unused, int force )
 	SetPlayerProperty( 0, 0, PROP_FLY );
 	SetPlayerProperty( 0, 0, PROP_FROZEN );
 	
+	// [Dusk] Stop all sounds to cut any looping sounds that might still end up
+	// looping once ClearInventory is called.
+	GiveInventory( "StopAllSounds", 1 );
+	
 	ClearInventory();
 	GiveInventory( "Ingame", 1 );
 	
-	// prevents the hud from flashing blue for the two ticks delayed below
-	// it still flashes though :/
-	if( PlayerTeam() == TEAM_RED ) GiveInventory( "IsRed", 1 );
+	// [Dusk] Prevents the hud from flashing blue for the two ticks delayed
+	// below. It still flashes a bit, though :/
+	if( PlayerTeam() == TEAM_RED )
+		GiveInventory( "IsRed", 1 );
 	
 	// [SP] Insanity resign fix - after insanity is removed, clear inventory again
 	delay( 2 );
