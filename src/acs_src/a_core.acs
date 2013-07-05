@@ -177,7 +177,7 @@ script 599 OPEN
 	restart;
 }
 
-// credit flow
+// Credit flow
 script 4 OPEN
 {
 	int i, p, redflow, blueflow;
@@ -218,7 +218,7 @@ script 10 RESPAWN
 {
 	if( StartTime[PlayerNumber()] == 0 )
 		InitPlayer();
-		
+	
 	GiveInventory( "Ingame", 1 );
 	GiveInventory( "IsInSpawnRoom", 1 );
 	SetInventory( "IsBlue", PlayerTeam() == TEAM_BLUE );
@@ -237,7 +237,7 @@ script 10 RESPAWN
 
 script 11 ENTER
 {
-	// This player's joining might throw off team balance, so check that now.
+	// [Dusk] This player's joining might throw off team balance, so check that now.
 	CheckTeamBalance();
 	
 	delay( 5 );
@@ -292,14 +292,13 @@ Script 8( int Gone ) DISCONNECT
 	{
 		Surrender[gone] = false;
 		
-		if( PlayersTeam[Gone] == TEAM_RED )
-			IntelMessageBold( strparam( s: "\cD", d: SurrenderCount( TEAM_RED ), s: "\cQ/\cD",
-				d: RedCount(), s: " ", s: "\cJof \cGNod\cJ\n have voted to surrender" ));
-		else if( PlayersTeam[Gone] == TEAM_BLUE )
-			IntelMessageBold( strparam( s: "\cD", d: SurrenderCount( TEAM_BLUE ), s: "\cQ/\cD",
-				d: BlueCount(), s: " ", s: "\cJof \cFGDI\cJ\n have voted to surrender" ));
+		int t = PlayersTeam[gone];
+		IntelMessageBold( strparam( s:"\cD", d:SurrenderCount( t ), s:" \cQof\cD ",
+			d:GetTeamProperty( t, TPROP_NumPlayers ), s:"\cJ of ",
+			s:GetTeamProperty( t, TPROP_TextColor ), s:TeamNames[t],
+			s:"\n have voted to surrender." ));
 	}
-	else   // % of players surrendering could now be higher. Al demands a recount!
+	else // % of players surrendering could now be higher. Al demands a recount!
 		ACS_Execute( 751, 0 );
 		
 	// Check teams for possible imbalance

@@ -122,7 +122,6 @@
 #define BUILDING_REPAIR 4
 #define BUILDING_OBELISK 5
 #define BUILDING_MINIREF 6
-#define BUILDING_HPREGEN 7 // deprecated
 #define BUILDING_HEALTHREGEN 7
 #define BUILDING_AMMOREGEN 8
 #define BUILDING_PORTAL 9
@@ -233,7 +232,17 @@ int Flags[3];
 int Credits[MAXPLAYERS];
 int Experience[MAXPLAYERS];
 int Rank[MAXPLAYERS];
-str RankTitles[8];
+str RankTitles[8] = {
+	"Private",
+	"Corporal",
+	"Sergeant",
+	"Master Sgt.",
+	"Officer",
+	"Lieutenant",
+	"Major",
+	"General",
+};
+
 int PlayersTeam[MAXPLAYERS];
 bool IsAdmin[MAXPLAYERS];
 bool Surrender[MAXPLAYERS];
@@ -279,15 +288,6 @@ bool GotPlant[2];
 bool GotRepair[2];
 bool GotObelisk[2];
 int MiniRefinery[2];
-int RefineryHealth[2];
-int BarracksHealth[2];
-int FactoryHealth[2];
-int PlantHealth[2];
-int RepairHealth[2];
-int ObeliskHealth[2];
-int MiniRefHealth[2];
-int GlobalMedicHealth[2];
-int GlobalAmmoHealth[2];
 int BaseLeft[2];
 
 int BaseHUDUpdate;
