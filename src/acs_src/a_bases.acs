@@ -99,7 +99,6 @@ script 104( VOID )
 script 105( VOID )
 {
 	//Thing_Remove(109);
-	BaseHUDUpdate = 1;
 	GotRepair[1] = False;
 	ReddenSector( 13 );
 	ReddenSector( 14 );
@@ -238,7 +237,6 @@ script 204( VOID )
 //---------------------------RED REPAIR FACILITY DEATH
 script 205( VOID )
 {
-	BaseHUDUpdate = 1;
 	GotRepair[0] = False;
 	ReddenSector( 15 );
 	ReddenSector( 16 );
@@ -354,7 +352,7 @@ function void AwardBuildingDestruction( int team, int small )
 		}
 	}
 	
-	// restore activator for point awarding
+	// [Dusk] Restore activator for point awarding
 	SetActivator( activator );
 	
 	if( BaseLeft [team] <= 0 )
@@ -391,4 +389,8 @@ function void AwardBuildingDestruction( int team, int small )
 		points = 40;
 	
 	Team_GivePoints( team, points, false );
+	
+	// [Dusk] Update the building HUD now. The building was destroyed so we
+	// need to update unconditionally.
+	DrawBuildingHud();
 }

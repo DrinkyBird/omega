@@ -73,8 +73,6 @@ script 969( int sel0, int sel1 ) NET
 	delay( 8 );
 	TakeInventory( "InUtilMenu", 1 );
 	SetPlayerProperty( 0, 0, PROP_FROZEN );
-	
-	if( Developer ) GiveInventory( "Utility_Percent", 75 );
 }
 
 // MENU LOOP

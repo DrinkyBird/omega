@@ -218,17 +218,7 @@ int BaseTIDs[18] =
 
 str TeamNames[2] = {"GDI", "Nod"};
 
-int Developer;
-int DeveloperSafetyLock;
-int ConnectionEpoch;
-
 int EventScripts;
-
-int GameMode;
-int BodycountTimelimit;
-
-int Flags[3];
-
 int Credits[MAXPLAYERS];
 int Experience[MAXPLAYERS];
 int Rank[MAXPLAYERS];
@@ -248,6 +238,7 @@ bool IsAdmin[MAXPLAYERS];
 bool Surrender[MAXPLAYERS];
 int LastSurrenderTime[MAXPLAYERS];
 
+// [Dusk]
 int FirstBlood;
 
 // [SP] Keep track of when player joins game for purposes of team balance
@@ -290,11 +281,7 @@ bool GotObelisk[2];
 int MiniRefinery[2];
 int BaseLeft[2];
 
-int BaseHUDUpdate;
-int NextTicketUpdate;
 int LastAttackMessage;
-int LastTickets[2];
-int LastClientRequest;
 int MaxTurretDistance = 2500;
 int MinEnemyTurretDistance = 1500;
 
