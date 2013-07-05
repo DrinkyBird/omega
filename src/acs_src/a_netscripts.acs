@@ -1,7 +1,7 @@
 // [SP] This allows a spectator to spawn outside of the team selection room
 script 940( int which ) NET CLIENTSIDE
 {
-	if( PlayerInGame( PlayerNumber() ) )
+	if( PlayerInGame( PlayerNumber() ))
 	{
 		DisplayCross();
 		SETFONT( "BigFont" );
@@ -13,7 +13,7 @@ script 940( int which ) NET CLIENTSIDE
 	switch( Which )
 	{
 	case 0:
-		Teleport( random( 1, 2 ) );
+		Teleport( random( 1, 2 ));
 		break;
 	case 1:
 		FadeTo( 0, 0, 0, 0.0, 0.0 );
@@ -25,7 +25,7 @@ script 940( int which ) NET CLIENTSIDE
 script 942( void ) NET
 {
 	// You sorta need a team first
-	if( !PlayerInGame( PlayerNumber() ) )
+	if( !PlayerInGame( PlayerNumber() ))
 	{
 		DisplayCross();
 		SETFONT( "BigFont" );
@@ -110,7 +110,7 @@ script 942( void ) NET
 		newcolor = "\cG";
 	}
 	
-	IntelMessageBold( strparam( n: 0, s: " switches to ", s: newcolor, s: newteam ) );
+	IntelMessageBold( strparam( n: 0, s: " switches to ", s: newcolor, s: newteam ));
 	Log( s: pname( -1 ), s: " switches to ", s: newteam, s: " team. (Score: ", d: score, s: ")" );
 	
 	Player_SetTeam( !PlayerTeam() );
@@ -120,7 +120,7 @@ script 942( void ) NET
 	
 	// Resign, if necessary
 	// TODO: is this really needed?
-	if( CheckInventory( "HasClass" ) )
+	if( CheckInventory( "HasClass" ))
 		ACS_ExecuteAlways( 95, 0 );
 		
 	// reward
@@ -134,159 +134,66 @@ script 942( void ) NET
 // This allows players to sell weapons. Kinda like partial resign.
 script 950( void ) NET
 {
-	if( !PlayerInGame( PlayerNumber() ) )
+	if( !PlayerInGame( PlayerNumber() ))
 		terminate;
 	
-	if( CheckInventory( "IsMech" ) )
+	if( CheckInventory( "IsMech" ))
 		terminate;
 	
-	int classid = CheckInventory( "ClassID" );
 	int price = 0;
-	str weapon;
+	str weapon = "";
 	
-	if( CheckWeapon( "Boomstick" ) )
+	// Make the price be 25% of the cost of the first found class which
+	// uses this weapon as the primary weapon. Make it at least be $25.
+	for( int i = 0; i < NUM_CLASSES; ++i )
 	{
-		if( WS_CheckClass( classid, CLASS_SHOTGUNNER ) || WS_CheckClass( classid, CLASS_MEDIC )
-		|| WS_CheckClass( classid, CLASS_DEMOEXPERT ) ) terminate;
+		if( !CheckWeapon( GetClassItemName( i, 0 )))
+			continue;
 		
-		price = 25;
-		weapon = "Boomstick";
-	}
-	else if( CheckWeapon( "Rifle" ) )
-	{
-		if( WS_CheckClass( classid, CLASS_RIFLEMAN ) || WS_CheckClass( classid, CLASS_COMMANDO ) ) terminate;
+		weapon = GetClassItemName( i, 0 );
+		price = Classes[i][CK_COST] / 4;
+	
+		if( price < 25 )
+			price = 25;
 		
-		price = 25; // low price because it can be utility-built
-		weapon = "Rifle";
+		break;
 	}
-	else if( CheckWeapon( "LaserRifle" ) )
+	
+	// Also let these weapons be sold too
+	if( i >= NUM_CLASSES )
 	{
-		price = 25; // only through pickups, never a primary
-		weapon = "LaserRifle";
-	}
-	else if( CheckWeapon( "GaussRifle" ) )
-	{
-		if( WS_CheckClass( classid, CLASS_GAUSSGUNNER ) || WS_CheckClass( classid, CLASS_COMMANDO ) ) terminate;
-		
-		price = 150;
-		weapon = "GaussRifle";
-	}
-	else if( CheckWeapon( "GrenadeLauncher" ) )
-	{
-		if( WS_CheckClass( classid, CLASS_GRENADIER ) ) terminate;
-		
-		price = 125;
-		weapon = "GrenadeLauncher";
-	}
-	else if( CheckWeapon( "MissileLauncher" ) )
-	{
-		if( WS_CheckClass( classid, CLASS_ROCKETEER ) || WS_CheckClass( classid, CLASS_COMMANDO ) ) terminate;
-		
-		price = 125;
-		weapon = "MissileLauncher";
-	}
-	else if( CheckWeapon( "LaserChaingun" ) )
-	{
-		if( WS_CheckClass( classid, CLASS_LASERCHAINGUNNER ) ) terminate;
-		
-		price = 175;
-		weapon = "LaserChaingun";
-	}
-	else if( CheckWeapon( "ArtilleryCannon" ) )
-	{
-		if( WS_CheckClass( classid, CLASS_ARTILLERY ) ) terminate;
-		
-		price = 150;
-		weapon = "ArtilleryCannon";
-	}
-	else if( CheckWeapon( "ChemicalSprayer" ) )
-	{
-		if( WS_CheckClass( classid, CLASS_CHEMWARRIOR ) ) terminate;
-		
-		price = 125;
-		weapon = "ChemicalSprayer";
-	}
-	else if( CheckWeapon( "TiberiumAutorifleWeak" ) )
-	{
-		price = 75; // never a primary
-		weapon = "TiberiumAutorifleWeak";
-	}
-	else if( CheckWeapon( "SubMachineGun" ) )
-	{
-		if( WS_CheckClass( classid, CLASS_GUNMAN ) ) terminate;
-		
-		price = 25;
-		weapon = "SubMachineGun";
-	}
-	else if( CheckWeapon( "Flamer" ) )
-	{
-		if( WS_CheckClass( classid, CLASS_FLAMER ) ) terminate;
-		
-		price = 125;
-		weapon = "Flamer";
-	}
-	else if( CheckWeapon( "ShockRifle" ) )
-	{
-		if( WS_CheckClass( classid, CLASS_SHOCKTROOPER ) ) terminate;
-		
-		price = 150;
-		weapon = "ShockRifle";
-	}
-	else if( CheckWeapon( "SniperRifleWeak" ) )
-	{
-		price = 125; // only through pickups, never a primary
-		weapon = "SniperRifleWeak";
-	}
-	else if( CheckWeapon( "PlasmaGun" ) )
-	{
-		if( WS_CheckClass( classid, CLASS_PLASMAGUNNER ) ) terminate;
-		
-		price = 200;
-		weapon = "PlasmaGun";
-	}
-	else if( CheckWeapon( "MachineGun" ) )
-	{
-		if( WS_CheckClass( classid, CLASS_MACHINEGUNNER ) ) terminate;
-		
-		price = 25; // low price because it can be utility-built
-		weapon = "MachineGun";
-	}
-	else if( CheckWeapon( "GatlingGun" ) )
-	{
-		if( WS_CheckClass( classid, CLASS_MINIGUNNER ) || WS_CheckClass( classid, CLASS_COMMANDO ) ) terminate;
-		
-		price = 100;
-		weapon = "GatlingGun";
-	}
-	else if( CheckWeapon( "EagerBeaver" ) )
-	{
-		price = 125; // never a primary
-		weapon = "EagerBeaver";
-	}
-	else {
-		DisplayCross();
-		SetFont( "BIGFONT" );
-		HudMessage( s: "You can't sell that!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
-		terminate;
+		if( CheckWeapon( "Handgun" ))
+		{
+			price = 25;
+			weapon = "Handgun";
+		}
+		else if( CheckWeapon( "EagerBeaver" ))
+		{
+			price = 125;
+			weapon = "EagerBeaver";
+		}
+		else if( CheckWeapon( "PlasmaCannon" ))
+		{
+			price = 375;
+			weapon = "PlasmaCannon";
+		}
+		else if( CheckWeapon( "LaserRifle" ))
+		{
+			price = 75;
+			weapon = "LaserRifle";
+		}
+		else
+		{
+			Error( "You can't sell that!" );
+			terminate;
+		}
 	}
 	
 	TakeInventory( weapon, 1 );
 	GiveCredits( -1, price );
 	LocalAmbientSound( "powerup/credsound", 127 );
-	IntelMessage( strparam( s: "You have sold your ", s: weapon, s: " for \cq$\cd", d: price ) );
-	Log( s: pname( -1 ), s: " sells ", s: weapon, s: " for $", d: price );
-}
-
-function bool WS_CheckClass( int a, int b )
-{
-	if( a == b )
-	{
-		Error( "You can't sell a class' primary weapon!" );
-		return true;
-	}
-	
-	return false;
+	IntelMessage( strparam( s:"You have sold your ", s:weapon, s:" for \cq$\cd", d: price ));
+	Log( s:pname( -1 ), s:" sells ", s:weapon, s:" for $", d:price );
 }
 
 // This allows players to see their speed factor.
@@ -294,10 +201,10 @@ function int GetSpeedFactor( void )
 {
 	int f = GetSpeed();
 	
-	if( CheckInventory( "PowerSpeedUpgrade" ) ) f = FixedMul( f, 1.25 );
-	if( CheckInventory( "PowerFatigue" ) ) f = FixedMul( f, 0.55 );
-	if( CheckInventory( "PowerTimeGunBoost" ) ) f = FixedMul( f, 1.4 );
-	if( CheckInventory( "PowerTimeGunSlow" ) ) f = FixedMul( f, 0.6 );
+	if( CheckInventory( "PowerSpeedUpgrade" )) f = FixedMul( f, 1.25 );
+	if( CheckInventory( "PowerFatigue" )) f = FixedMul( f, 0.55 );
+	if( CheckInventory( "PowerTimeGunBoost" )) f = FixedMul( f, 1.4 );
+	if( CheckInventory( "PowerTimeGunSlow" )) f = FixedMul( f, 0.6 );
 	
 	return f;
 }
