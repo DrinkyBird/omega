@@ -64,7 +64,7 @@ function void AwardCredits( int amount )
 	
 	if( IsAdmin[p] )
 		return;
-		
+	
 	IncrCredits( p, amount );
 	IntelMessage( strparam( s: "You have been awarded with \cQ$\cD", d:amount ));
 }
@@ -74,10 +74,10 @@ function void GiveCredits( int p, int amount )
 {
 	if( p < 0 )
 		p = PlayerNumber();
-		
+	
 	if( IsAdmin[p] )
 		return;
-		
+	
 	IncrCredits( p, amount );
 }
 
