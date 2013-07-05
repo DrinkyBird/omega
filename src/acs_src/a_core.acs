@@ -177,42 +177,6 @@ script 599 OPEN
 	restart;
 }
 
-// Credit flow
-script 4 OPEN
-{
-	int i, p, redflow, blueflow;
-	
-	while( 1 )
-	{
-		p = 25;
-		
-		if( GotPlant[TEAM_RED] == 1 ) p += 25;
-		if( GotRefinery[TEAM_RED] == 1 ) p += 50;
-		if( MiniRefinery[TEAM_RED] == 1 ) p += 75;
-		redflow = ( GetCVAR( "aow_credflow" ) * p ) / 100;
-		
-		p = 25;
-		
-		if( GotPlant[TEAM_BLUE] == 1 ) p += 25;
-		if( GotRefinery[TEAM_BLUE] == 1 ) p += 50;
-		if( MiniRefinery[TEAM_BLUE] == 1 ) p += 75;
-		blueflow = ( GetCVAR( "aow_credflow" ) * p ) / 100;
-		
-		for( i = 0; i < MAXPLAYERS; i++ )
-		{
-			if( PlayerInGame( i ) && GetActorHealth( 3800 + i ) > 0 )
-			{
-				if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_RED )
-					GiveCredits( i, redflow );
-				else if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_BLUE )
-					GiveCredits( i, blueflow );
-			}
-		}
-		
-		delay( 35 );
-	}
-}
-
 //Setting Player scripts
 script 10 RESPAWN
 {
