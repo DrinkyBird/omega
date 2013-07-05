@@ -21,113 +21,67 @@ script 940( int which ) NET CLIENTSIDE
 	}
 }
 
-// [Dusk] allows players to switch to the losing team
+// [Dusk] This allows players to switch to the losing team
 script 942( void ) NET
 {
 	// You sorta need a team first
 	if( !PlayerInGame( PlayerNumber() ))
-	{
-		DisplayCross();
-		SETFONT( "BigFont" );
-		HudMessage( s: "Can't use this as a spectator!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
 		terminate;
-	}
 	
 	// Not during warm-up
 	if( Timer() <= 5 * 60 * 35 )
 	{
-		DisplayCross();
-		SETFONT( "BigFont" );
-		HudMessage( s: "Too early to use this!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
+		Error( "Too early to use this!" );
 		terminate;
 	}
 	
 	int score;
+	int team = PlayerTeam();
+	int newteam = 1 - team;
+	int oldplayers = GetTeamProperty( team, TPROP_NumPlayers );
+	int newplayers = GetTeamProperty( newteam, TPROP_NumPlayers );
 	
-	if( PlayerTeam() == TEAM_BLUE )
+	if( newplayers + 1 >= oldplayers )
 	{
-		if( RedCount() + 1 >= BlueCount() )
-		{
-			DisplayCross();
-			SETFONT( "BigFont" );
-			HudMessage( s: "There is already enough players on Nod!";
-				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
-			terminate;
-		}
-		
-		if( RedScore() > BlueScore() )
-		{
-			DisplayCross();
-			SETFONT( "BigFont" );
-			HudMessage( s: "Nod has more buildings than GDI!";
-				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
-			terminate;
-		}
-		
-		score = BlueCount() - RedCount() - 1 + ( ( BaseLeft[1] - BaseLeft[0] ) * 2 );
-		
-		TakeInventory( "IsBlue", 1 );
-		GiveInventory( "IsRed", 1 );
+		Error( strparam( s:"There are already enough players on ", s:TeamNames[newteam], s:"!" ));
+		terminate;
 	}
-	else if( PlayerTeam() == TEAM_RED )
+	
+	if( BaseLeft[newteam] > BaseLeft[team] )
 	{
-		if( BlueCount() + 1 >= RedCount() )
-		{
-			DisplayCross();
-			SETFONT( "BigFont" );
-			HudMessage( s: "There is already enough players on GDI!";
-				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
-			terminate;
-		}
-		
-		if( BlueScore() > RedScore() )
-		{
-			DisplayCross();
-			SETFONT( "BigFont" );
-			HudMessage( s: "GDI has more buildings than Nod!";
-				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
-			terminate;
-		}
-		
-		score = RedCount() - BlueCount() - 1 + ( ( BaseLeft[0] - BaseLeft[1] ) * 2 );
-		
-		TakeInventory( "IsRed", 1 );
-		GiveInventory( "IsBlue", 1 );
+		Error( strparam( s:TeamNames[newteam], s:" has more buildings than ", s:TeamNames[team], s:"!" ));
+		terminate;
 	}
 	
-	// logs and notices
-	str newteam, newcolor;
+	score = GetTeamProperty( team, TPROP_NumPlayers) - GetTeamProperty( newteam, TPROP_NumPlayers ) - 1 +
+		(( BaseLeft[team] - BaseLeft[newteam] ) * 2 );
 	
-	if( PlayerTeam() == TEAM_BLUE )
-	{
-		newteam = "GDI";
-		newcolor = "\cF";
-	}
-	else {
-		newteam = "Nod";
-		newcolor = "\cG";
-	}
+	SetInventory( "IsBlue", newteam == TEAM_BLUE );
+	SetInventory( "IsRed",  newteam == TEAM_RED );
 	
-	IntelMessageBold( strparam( n: 0, s: " switches to ", s: newcolor, s: newteam ));
-	Log( s: pname( -1 ), s: " switches to ", s: newteam, s: " team. (Score: ", d: score, s: ")" );
+	// Logs and notices
+	str newcolor = cond( newteam == TEAM_BLUE, "\cF", "\cG" );
+	IntelMessageBold( strparam( n:0, s:" switches to ", s:newcolor, s:TeamNames[newteam] ));
+	Log( s:pname( -1 ), s: " switches to ", s:TeamNames[newteam], s:". (Score: ", d:score, s:")" );
 	
-	Player_SetTeam( !PlayerTeam() );
+	// Do the actual switch now
+	Player_SetTeam( newteam );
 	
 	Teleport( 70 + PlayerTeam() );
 	GiveInventory( "IsInSpawnRoom", 1 );
 	
-	// Resign, if necessary
-	// TODO: is this really needed?
-	if( CheckInventory( "HasClass" ))
-		ACS_ExecuteAlways( 95, 0 );
-		
-	// reward
+	// If we were carrying a beacon, swap that now.
+	if( CheckInventory( "IonCannonBeacon" ) || CheckInventory( "NuclearStrikeBeacon" ))
+	{
+		SetInventory( "IonCannonBeacon", newteam == TEAM_BLUE );
+		SetInventory( "NuclearStrikeBeacon", newteam == TEAM_RED );
+	}
+	
+	// Give the reward
 	delay( 35 * 2 );
 	AddExperience( score * 50 );
 	delay( 35 );
-	LocalAmbientSound( "powerup/credsound", 255 );
+	LocalAmbientSound( "powerup/credsound", 127 );
 	AwardCredits( score * 200 );
 }
 
