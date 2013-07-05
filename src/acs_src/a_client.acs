@@ -248,5 +248,10 @@ script SC_CL_ObeliskTrail( int type ) CLIENTSIDE
 		// Obelisk beam
 		SpawnTrail( 0, 215, "ObeliskTrail", 32, 0, 0, 0, 0, 0, 0, 0 );
 		break;
+	
+	case 1:
+		// `Blue Obelisk` beam
+		SpawnTrail( 0, 115, "ObeliskTrailBlue", 32, 0, 0, 0, 0, 0, 0, 0 );
+		break;
 	}
 }
