@@ -27,17 +27,12 @@ alias donationname "puke 334 1"
 alias donationgive "puke 334 2"
 alias surrender "puke 342"
 alias spectatorteleport "puke 940"
-alias spectatorflashfix "puke 940 1"
 alias whoami "puke 946"
 alias teamswitch "puke 942"
 alias showarmor "puke 981"
 alias showspeed "puke 921"
-// call this if base hud disappears
-alias rehash-clientfx "puke -366; puke -368"
 alias ejectmech "use mechejectbutton"
 alias dumpmarinestats "puke -967"
-// insta-refreshes the hud
-alias updatehud "puke -931"
 
 // RCON ADMIN COMMANDS
 alias gamemaster "puke 401 %1 3"
@@ -46,9 +41,6 @@ alias forcered "puke 401 %1 2"
 alias teamshuffle "puke 403"
 
 alias tournamentmode "set aow_tournamentmode 1;set aow_maxcannonsperteam 1;set aow_jugglimit 1;set aow_suddendeathtime 30;set aow_tickets 40;echo Tournament set-up complete - please restart the map."
-
-// DEVELOPER MODE. DO NOT USE IN PUBLIC GAMES.
-alias activatedeveloper "puke -404"
 
 // GAMEMASTER COMMANDS
 alias a_warp "puke 402 1 %1 %2"
