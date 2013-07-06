@@ -75,7 +75,7 @@
 #include "actors/mechs/mechbase.txt"
 #include "actors/mechs/mechflamer.txt"
 #include "actors/mechs/wolverine.txt"
-#include "actors/mechs/guardian.txt"
+#include "actors/mechs/juggernaut.txt"
 #include "actors/mechs/madcat.txt"
 #include "actors/mechs/orca.txt"
 #include "actors/mechs/raven.txt"
