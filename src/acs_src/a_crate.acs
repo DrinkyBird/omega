@@ -537,25 +537,25 @@ script 309( int Crate, int Override )
 		if( !Override && ( CrateTime ||
 			CheckInventory( "IsMech" ) ||
 			!GetCVAR( "aow_mechs" ) ||
-			CheckInventory( "GuardianPowerup" )))
+			CheckInventory( "JuggernautPowerup" )))
 		{
 			crate = 0;
 			restart;
 		}
 		
-		Log( s:pname( -1 ), s:" gets Guardian crate." );
-		GiveInventory( "GuardianPowerup", 1 );
+		Log( s:pname( -1 ), s:" gets Juggernaut crate." );
+		GiveInventory( "JuggernautPowerup", 1 );
 		GiveInventory( "FlamerAmmo", 200 );
 		GiveInventory( "NukeAmmo", 1 );
 		
 		LocalAmbientSound( "switch/lrm", 127 );
 		
 		if( PlayerTeam() == TEAM_RED )
-			IntelMessageBold( "\cGNod\cJ got \cKGuardian Crate!" );
+			IntelMessageBold( "\cGNod\cJ got \cKJuggernaut Crate!" );
 		else if( PlayerTeam() == TEAM_BLUE )
-			IntelMessageBold( "\cFGDI\cJ got \cKGuardian Crate!" );
+			IntelMessageBold( "\cFGDI\cJ got \cKJuggernaut Crate!" );
 		
-		IntelMessage( strparam( s:"\cJGuardian suit!\nPress \cF", k: "invuse", s:"\cJ to enter" ));
+		IntelMessage( strparam( s:"\cJJuggernaut suit!\nPress \cF", k: "invuse", s:"\cJ to enter" ));
 		break;
 	
 	case 46:

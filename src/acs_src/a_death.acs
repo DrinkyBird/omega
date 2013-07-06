@@ -42,7 +42,7 @@ script 994 DEATH
 		else if( CheckInventory( "WolverineWeapons" ) ||
 			CheckInventory( "MadCatWeapons" ) ||
 			CheckInventory( "TitanWeapons" ) ||
-			CheckInventory( "GuardianWeapons" ) )
+			CheckInventory( "JuggernautWeapons" ) )
 		{
 			points = 4;
 		}
@@ -92,12 +92,12 @@ script 994 DEATH
 	ACS_ExecuteAlways( 992, 0 );
 }
 
-// Guardian stomp health
+// Juggernaut stomp health
 script 923( void )
 {
 	SetActivatorToTarget( 0 );
 	
-	if( !CheckWeapon( "GuardianWeapons" ) ) terminate;
+	if( !CheckWeapon( "JuggernautWeapons" ) ) terminate;
 	
 	SetHealth( GetHealth() + 100 );
 	

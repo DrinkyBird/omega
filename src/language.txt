@@ -56,7 +56,7 @@ OB_ORCA = "%o was pinned down by %k's Orca.";
 OB_RAVEN = "%o was pecked by %k's Raven.";
 OB_MADCAT = "%o was surged by %k's Mad Cat.";
 OB_TITAN = "%o was crushed by %k's Titan.";
-OB_GUARDIAN = "%o couldn't get past %k's Guardian.";
+OB_JUGGERNAUT = "%o couldn't stop %k's Juggernaut MKII.";
 
 OB_MECHJUNK = "%o was caught playing with %k's junk.";
 OB_MECHEXPLOSION = "%o chose the wrong day to inspect %k's mech.";

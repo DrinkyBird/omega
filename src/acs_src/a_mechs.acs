@@ -88,9 +88,9 @@ script 80( int mech )
 	{
 		cost = 3000;
 		card = "MECH06";
-		morph = "GuardianSwitch";
-		nicename = "Guardian";
-		ammo = "GuardianAmmoPackage";
+		morph = "JuggernautSwitch";
+		nicename = "Juggernaut MKII";
+		ammo = "JuggernautAmmoPackage";
 	}
 	
 	if( MitigateDoublePress() )
@@ -98,7 +98,7 @@ script 80( int mech )
 	
 	if( !CheckFactory( !PlayerTeam() )) terminate;
 	
-	if( mech == MECH_GUARDIAN && GuardianCount() >= GetCVAR( "aow_guardianlimit" ) && !!IsAdmin[PlayerNumber()] )
+	if( mech == MECH_GUARDIAN && JuggernautCount() >= GetCVAR( "aow_guardianlimit" ) && !!IsAdmin[PlayerNumber()] )
 	{
 		Error( "At limit!" );
 		terminate;
@@ -325,7 +325,7 @@ script 314( void )
 		}
 	}
 	
-	if( CheckInventory( "GuardianWeapons" ) )
+	if( CheckInventory( "JuggernautWeapons" ) )
 	{
 		SetFont( "SMALLFONT" );
 		
@@ -412,9 +412,9 @@ script 315( void ) NET CLIENTSIDE
 		delay( 2 );
 		restart;
 	}
-	else if( CheckWeapon( "GuardianWeapons" ) )
+	else if( CheckWeapon( "JuggernautWeapons" ) )
 	{
-		// [Dusk] Guardian weapons. The nuke is an ion bomb for GDI
+		// [Dusk] Juggernaut weapons. The nuke is an ion bomb for GDI
 		str nukename = "NUKE";
 		
 		if( PlayerTeam() == TEAM_BLUE )
@@ -465,7 +465,7 @@ script 697( void )
 	if( CheckInventory( "WolverineWeapons" ) ) MechType = 3;
 	if( CheckInventory( "TitanWeapons" ) ) MechType = 4;
 	if( CheckInventory( "OrcaWeapons" ) ) MechType = 5;
-	if( CheckInventory( "GuardianWeapons" ) ) MechType = 6;
+	if( CheckInventory( "JuggernautWeapons" ) ) MechType = 6;
 	
 	int x = GetActorX( 0 );
 	int y = GetActorY( 0 );
@@ -512,9 +512,9 @@ script 697( void )
 	if( MechType == 5 )
 		SpawnSpotFacing( "EjectedOrcaSpawner", 3800 + PlayerNumber(), 0 );
 	
-	// Guardian
+	// Juggernaut
 	if( MechType == 6 )
-		SpawnSpotFacing( "EjectedGuardian", 3800 + PlayerNumber(), 0 );
+		SpawnSpotFacing( "EjectedJuggernaut", 3800 + PlayerNumber(), 0 );
 	
 	UnMorphActor( 0, 0 );
 	

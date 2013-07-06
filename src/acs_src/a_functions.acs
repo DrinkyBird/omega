@@ -534,7 +534,7 @@ function str DisplayName( int pn )
 		if( CheckActorInventory( tid, "WolverineWeapons" )) return "\cCWolverine";
 		if( CheckActorInventory( tid, "MadCatWeapons" ))    return "\cCMadCat";
 		if( CheckActorInventory( tid, "TitanWeapons" ))     return "\cCTitan";
-		if( CheckActorInventory( tid, "GuardianWeapons" ))  return "\cCGuardian";
+		if( CheckActorInventory( tid, "JuggernautWeapons" ))  return "\cCJuggernaut";
 	}
 	else if( CheckActorInventory( tid, "PowerBerserk" ) )
 		return "\cGBerserker";
@@ -575,14 +575,14 @@ function int SetActorInventory( int tid, str item, int count )
 }
 
 // [Dusk] Counts how many guardians you have
-function int GuardianCount( void )
+function int JuggernautCount( void )
 {
 	int n;
 	
 	for( int i = 0; i < MAXPLAYERS; i++ )
 	{
 		if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == PlayerTeam() &&
-				CheckActorInventory( 3800 + i, "PowerGuardian" ) )
+				CheckActorInventory( 3800 + i, "PowerJuggernaut" ) )
 			n++;
 	}
 	
