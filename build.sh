@@ -11,12 +11,13 @@ if [ -z "$(which acc)" ]; then
 fi
 
 revnum=$(git describe |sed "s/-/ /g" |awk '{printf $2}')
-
 if [ "$(git status --short)" != "" ]; then
 	revnum="${revnum}m"
 fi
 
-fname="omega_git-$revnum.pk3"
+branch=$( git rev-parse --abbrev-ref HEAD )
+
+fname="omega-$branch-r$revnum.pk3"
 
 if [ -e tmp ]; then
 	echo "tmp exists, delete it?"

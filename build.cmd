@@ -17,6 +17,9 @@ if "%descrb%"=="" (
 gitrevnum %descrb% >%tmp%
 set /p rnum=<%tmp%
 
+git rev-parse --abbrev-ref HEAD >%tmp%
+set /p branch=<%tmp%
+
 rem Run git status --short to see if it's modified
 git status --short >%tmp%
 set /p stat=<%tmp%
@@ -29,7 +32,7 @@ set ^"stat2=!stat:^
 rem Now do the checking
 if "%stat2%" NEQ "" set rnum=%rnum%m
 
-set fname=omega_git-%rnum%.pk3
+set fname=omega-%branch%-r%rnum%.pk3
 
 rem We don't need the temp file anymore
 del %tmp%
