@@ -134,9 +134,7 @@ function void PurchaseClass( int c )
 	TakeInventory( "PurchaseToken", 1 );
 	DisplayTick();
 	SpendCredits( cost );
-	SetFont( "BigFont" );
-	HudMessage( s: "You are a \cf", s: Classes[c][CK_NAME], s: "!";
-		HUDMSG_FADEOUT, 1800, CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
+	BigMessage( strparam( s: "You are a \cf", s: Classes[c][CK_NAME], s: "!" ));
 	
 	// The essentials
 	SetActorProperty( 0, APROP_SPEED, Classes[c][CK_SPEED] );
@@ -319,20 +317,14 @@ script 37( int Team )
 	
 	if( CheckInventory( "PlasmaCannon" ) )
 	{
-		DisplayCross();
-		SETFONT( "BigFont" );
-		HudMessage( s:"You already have a \cnPlasma Cannon\cr!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+		Error( "You already have a \cnPlasma Cannon\cr!" );
 		terminate;
 	}
 	
 	int maxcannons = GetCVAR( "aow_maxcannonsperteam" );
 	if( maxcannons != -1 && NumPlasmaCannons[Team] >= maxcannons )
 	{
-		DisplayCross();
-		SETFONT( "BigFont" );
-		HudMessage( s:"Your team already has too many of those!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+		Error( "Your team already has too many of those!" );
 		terminate;
 	}
 	
@@ -353,8 +345,7 @@ script 37( int Team )
 	NumPlasmaCannons[Team]++;
 	
 	DisplayTick();
-	SetFont( "BIGFONT" );
-	HudMessage( s: "You got \cnPlasma Cannon!";
+	BigMessage( s: "You got \cnPlasma Cannon!";
 		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	
 	GiveInventory( "PlasmaCannon", 1 );

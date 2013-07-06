@@ -23,9 +23,7 @@ Log( s: "Error: Player #", d: Player, s: " \"", n: Player + 1, s: "\c-\" is a bo
 		SetPlayerProperty( 0, 1, 1 );
 		SetPlayerProperty( 0, 1, 2 );
 		SetPlayerProperty( 0, 1, 3 );
-		SetFont( "BIGFONT" );
-	HudMessageBold( n: 0, s: "\c- becomes an \cGadministrator";
-						HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 2.0, 1.0 );
+		BigMessageBold( strparam ( n 0, s: "\c- becomes an \cGadministrator" ));
 Log( s: "*** \caWARNING!\c- Game Master mode activated for ", n: Player + 1, s: " \c-(IDX ", d: Player, s: ") - this has been logged in the server console." );
 	Log( s: "*** To deactivate this mode, you (or target) must either spectate or call a_exit in console." );
 	Log( s: "*** Please don't abuse this! Do what you need to do, then exit this mode immediately." );
@@ -33,8 +31,9 @@ Log( s: "*** \caWARNING!\c- Game Master mode activated for ", n: Player + 1, s: 
 		IsAdmin[Player] = true;
 		GiveInventory( "IsAdmin", 1 );
 		break;
-	case 1:
 	
+	case 1:
+		// [Dusk] TODO: merge 1 and 2
 		if( ThingCount( T_NONE, 3800 + Player ) == 0 )
 		{
 Log( s: "Player ", d: Player, s: " not found!" );
@@ -47,11 +46,9 @@ Log( s: "Player ", d: Player, s: " not found!" );
 			terminate;
 		}
 		
-		SetFont( "BIGFONT" );
-HudMessage( n: Player, s: "\c- has been forced to\n\cKchange team\c- by an \cQadmin.";
-					HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
+		BigMessageBold( strparam ( n: Player, s: "\c- has been forced to\nchange team by an admin." ));
 		Player_SetTeam( 0 );
-Log( s: pname( 0 ), s: " forced to change to GDI by admin." );
+		Log( s:pname( Player ), s:" forced to change to GDI by admin." );
 		delay( 1 );
 		Teleport( 70 );
 		GiveInventory( "HasClass", 1 );
@@ -60,8 +57,8 @@ Log( s: pname( 0 ), s: " forced to change to GDI by admin." );
 		GiveInventory( "IsBlue", 1 );
 		StartTime[Player] = -0x7FFFFFFF;
 		break;
+		
 	case 2:
-	
 		if( ThingCount( T_NONE, 3800 + Player ) == 0 )
 		{
 Log( s: "Player ", d: Player, s: " not found!" );
@@ -74,9 +71,7 @@ Log( s: "Player ", d: Player, s: " not found!" );
 			terminate;
 		}
 		
-		SetFont( "BIGFONT" );
-HudMessage( n: Player, s: "\c- has been forced to\n\cKchange team\c- by an \cQadmin.";
-					HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
+		BigMessageBold( strparam ( n: Player, s: "\c- has been forced to\nchange team by an admin." ));
 Log( s: pname( -1 ), s: " forced to change to Nod by admin." );
 		Player_SetTeam( 1 );
 		delay( 1 );
@@ -278,9 +273,7 @@ script 402( int Arg1, int Arg2, int Arg3 ) NET
 		SetPlayerProperty( 0, 0, 2 );
 		SetPlayerProperty( 0, 0, 3 );
 		SetActorProperty( 0, APROP_NoTarget, 0 );
-		SetFont( "BIGFONT" );
-		HudMessageBold( s:"Admin ", n:0, s:"\c- becomes a regular player again.";
-			HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 2.0, 1.0 );
+		BigMessageBold( strparam( s:"Admin ", n:0, s:"\c- becomes a regular player again." ));
 		Log( s: pname( -1 ), s: " exits admin mode." );
 		IsAdmin[PlayerNumber()] = false;
 		ACS_ExecuteAlways( 96, 0, 1 - PlayerTeam() ); // teleport to spawn room

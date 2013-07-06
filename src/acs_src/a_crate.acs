@@ -290,9 +290,7 @@ script 309( int Crate, int Override )
 			restart;
 		}
 		
-		SetFont( "BIGFONT" );
-		HudMessage( s:"RESIGNED";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.35, 2.0, 1.0 );
+		BigMessage( "\ciRESIGNED" );
 		LocalAmbientSound( "powerup/resi", 255 );
 		SetFont( "SMALLFONT" );
 		Delay( 10 );
@@ -408,9 +406,7 @@ script 309( int Crate, int Override )
 			restart;
 		}
 		
-		SetFont( "BIGFONT" );
-		HudMessage( s:"BOMB CRATE!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+		BigMessage( "BOMB CRATE!" );
 		
 		if( PlayerTeam() == TEAM_BLUE )
 			GiveInventory( "BombCrateFXGiverBlue", 1 );
@@ -714,8 +710,7 @@ script 309( int Crate, int Override )
 			restart;
 		}
 		
-		SetFont( "BIGFONT" );
-		HudMessage( s:"Disarm crate!"; HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+		BigMessage( "\cGDisarm crate!" );
 		SetFont( "SMALLFONT" );
 		Log( s:pname( -1 ), s:" gets disarm crate." );
 		

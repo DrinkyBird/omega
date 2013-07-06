@@ -37,8 +37,6 @@ script 110( int Team )
 	
 	AddExperience( 75 );
 	
-	SetFont( "BIGFONT" );
-	
 	// [Dusk] Determine the amount here instead of copying the message 4 times...
 	int bonus;
 	if( CheckInventory( "ClassID" ) == CLASS_ADVHARVESTER )
@@ -46,9 +44,7 @@ script 110( int Team )
 	else
 		bonus = GetCVar( cond( EnhancedRefining[Team], "aow_harvestbonusadv", "aow_harvestbonus" ));
 	
-	HudMessage( s:"You refined a \cDtiberium crystal!\c- Extra \cQ$\cD",
-		d:bonus, s:"\c- for you";
-		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 2.0, 1.0 );
+	BigMessage( strparam( s:"You refined a \cDtiberium crystal!\c- Extra \cQ$\cD", d:bonus, s:"\c- for you" ));
 	
 	GiveCredits( -5, bonus );
 	GivePoints( 1 );

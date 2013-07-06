@@ -261,16 +261,14 @@ script SC_PORTAL_FUNCTION( int idx )
 	}
 	
 	// prevent players from executing this multiple times
-	if( HasTeleported[PlayerNumber()] ) terminate;
+	if( HasTeleported[PlayerNumber()] )
+		terminate;
 	
 	// no quick cashups
 	if( CheckInventory( "IsHarvester" ) )
 	{
 		DisplayCross();
-		SetFont( "BIGFONT" );
-		HudMessage( s: "You can't go through\nportals as a harvester!";
-			HUDMSG_FADEOUT, 1800 + PlayerNumber(),
-			CR_RED, 0.5, 0.45, 2.0, 1.0 );
+		Error( "You can't go through portals as a harvester!" );
 		HasTeleported[PlayerNumber()] = true;
 		delay( 35 );
 		HasTeleported[PlayerNumber()] = false;
@@ -280,26 +278,7 @@ script SC_PORTAL_FUNCTION( int idx )
 	// yeah no
 	if( CheckInventory( "IsMech" ) )
 	{
-		DisplayCross();
-		SetFont( "BIGFONT" );
-		HudMessage( s: "You can't go through\nportals in a mech!";
-			HUDMSG_FADEOUT, 1800 + PlayerNumber(),
-			CR_RED, 0.5, 0.45, 2.0, 1.0 );
-		HasTeleported[PlayerNumber()] = true;
-		delay( 35 );
-		HasTeleported[PlayerNumber()] = false;
-		terminate;
-	}
-	
-	// check that a destination exists - this is by now only
-	// a sanity check as inactive portals are non-solid
-	if( !ThingCount( 0, 1500 + dest ) )
-	{
-		DisplayCross();
-		SetFont( "BIGFONT" );
-		HudMessage( s: "There is no destination portal!";
-			HUDMSG_FADEOUT, 1800 + PlayerNumber(),
-			CR_RED, 0.5, 0.45, 2.0, 1.0 );
+		Error( "You can't go through portals in a mech!" );
 		HasTeleported[PlayerNumber()] = true;
 		delay( 35 );
 		HasTeleported[PlayerNumber()] = false;

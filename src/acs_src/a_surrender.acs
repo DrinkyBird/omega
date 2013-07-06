@@ -79,9 +79,7 @@ script 751( void )
 	if( ( count > BlueCount() / 2 && ( BlueCount() <= 6 && RedCount() != 0 ) ) ||
 			( count >= BlueCount() - 3 && ( BlueCount() > 6 && RedCount() != 0 ) ) )
 	{
-		SetFont( "BIGFONT" );
-		HudMessage( s:"\cFSteel Talons surrender";
-			HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0 );
+		BigMessage( "\cFSteel Talons surrender" );
 		FreezeBold();
 		delay( 35 * 2 );
 		Thing_Destroy( 101 );
@@ -103,9 +101,7 @@ script 751( void )
 	if( ( count > RedCount() / 2 && RedCount() <= 6 && BlueCount() != 0 ) ||
 		( count >= RedCount() - 3 && RedCount() > 6 && BlueCount() != 0 ) )
 	{
-		SetFont( "BIGFONT" );
-		HudMessage( s:"\cGBlack Hand surrenders";
-			HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0 );
+		BigMessage( "\cGBlack Hand surrenders" );
 		FreezeBold();
 		delay( 35 * 2 );
 		Thing_Destroy( 201 );

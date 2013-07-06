@@ -63,11 +63,7 @@ script 997( void )
 	// Nukes for everybody!
 	GiveToAll( "BeaconItem", 1 );
 	
-	SetFont( "BIGFONT" );
-	HudMessageBold( s: "\cgSUDDEN DEATH!\n\nNo more repairs can be done\nEvery death counts!";
-		HUDMSG_FADEOUT, 15001, CR_YELLOW,
-		INTEL_XPOS, 0.25, 7.0, 1.0 );
-		
+	BigMessageBold( "\cgSUDDEN DEATH!\n\nNo more repairs can be done\nEvery death counts!" );
 	int degeneration = GetCVar( "aow_degeneration" );
 	int degeninterval = GetCVar( "aow_degenerationinterval" );
 	

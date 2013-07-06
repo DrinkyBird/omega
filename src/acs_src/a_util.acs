@@ -136,8 +136,8 @@ HudMessage( s: "\cFLimit: \cJ", d: RazorWireLimit(), s: " \cK/\cJ ", d: MaxRazor
 	if( Type == 4 )
 	{
 		SetFont( "BIGFONT" );
-HudMessage( s: "\cFLimit: \cJ", d: TurretLimit(), s: " \cK/\cJ ", d: MaxTurrets[1 - PlayerTeam()];
-					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
+		HudMessage( s: "\cFLimit: \cJ", d: TurretLimit(), s: " \cK/\cJ ", d: MaxTurrets[1 - PlayerTeam()];
+			HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
 	
 	if( Type == 5 )
@@ -224,8 +224,8 @@ HudMessage( s: "\cFLimit: \cJ", d: MineLimit(), s: " \cK/\cJ ", d: MaxProxy;
 	if( Type == 7 )
 	{
 		SetFont( "BIGFONT" );
-HudMessage( s: "\cFLimit: \cJ", d: MiniRavenLimit(), s: " \cK/\cJ ", d: MaxMechs;
-					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
+		HudMessage( s: "\cFLimit: \cJ", d: MiniRavenLimit(), s: " \cK/\cJ ", d: MaxMechs;
+			HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
 	
 	if( Type == 8 )
