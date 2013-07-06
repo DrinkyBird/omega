@@ -54,10 +54,7 @@ script 309( int Crate, int Override )
 			restart;
 		}
 		
-		SetFont( "SMALLFONT" );
-		HudMessage( s:"\cKArmor upgraded!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0 );
+		IntelMessage( "\cKArmor upgraded!" );
 		LocalAmbientSound( "powerup/armr", 255 );
 		SetArmorGrade( 1, AGF_ADDITIVE | ARMOD_NOCHANGE );
 		Log( s:pname( -1 ), s:" gets Armor Upgrade crate." );
@@ -70,10 +67,7 @@ script 309( int Crate, int Override )
 
 		if( PlayerTeam() == TEAM_RED )
 		{
-			HudMessageBold( s:"\cGNod\cJ got \cDBase Miracle!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0 );
-			
+			IntelMessageBold( "\cGNod\cJ got \cDBase Miracle!" );
 			if( GotBarracks[0] ) SetActorHealth( 201, GetActorSpawnHealth( 201 ) );
 			if( GotRefinery[0] ) SetActorHealth( 203, GetActorSpawnHealth( 203 ) );
 			if( GotPlant[0] ) SetActorHealth( 205, GetActorSpawnHealth( 205 ) );
@@ -82,10 +76,7 @@ script 309( int Crate, int Override )
 		}
 		else if( PlayerTeam() == TEAM_BLUE )
 		{
-			HudMessageBold( s:"\cFGDI\cJ got \cDBase Miracle!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0 );
-			
+			IntelMessageBold( "\cFGDI\cJ got \cDBase Miracle!" );
 			if( GotBarracks[1] ) SetActorHealth( 101, GetActorSpawnHealth( 101 ) );
 			if( GotRefinery[1] ) SetActorHealth( 103, GetActorSpawnHealth( 103 ) );
 			if( GotPlant[1] ) SetActorHealth( 105, GetActorSpawnHealth( 105 ) );
@@ -535,9 +526,7 @@ script 309( int Crate, int Override )
 		}
 		
 		SetFont( "SMALLFONT" );
-		HudMessage( s:"\cUBulletproof Vest!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0 );
+		IntelMessage( "\cUBulletproof Vest!" );
 		LocalAmbientSound( "powerup/resistbullet", 255 );
 		LocalAmbientSound( "misc/armor_pkup", 127 );
 		GiveInventory( "BulletArmor", 1 );
@@ -561,20 +550,12 @@ script 309( int Crate, int Override )
 		
 		LocalAmbientSound( "switch/lrm", 127 );
 		
-		SetFont( "SMALLFONT" );
-		
 		if( PlayerTeam() == TEAM_RED )
-			HudMessageBold( s:"\cGNod\cJ got \cKGuardian Crate!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0 );
+			IntelMessageBold( "\cGNod\cJ got \cKGuardian Crate!" );
 		else if( PlayerTeam() == TEAM_BLUE )
-			HudMessageBold( s:"\cFGDI\cJ got \cKGuardian Crate!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0 );
-							
-			HudMessage( s:"\cJGuardian suit!\nPress \cF", k: "invuse", s:"\cJ to enter";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS2, 2.0, 1.0 );
+			IntelMessageBold( "\cFGDI\cJ got \cKGuardian Crate!" );
+		
+		IntelMessage( strparam( s:"\cJGuardian suit!\nPress \cF", k: "invuse", s:"\cJ to enter" ));
 		break;
 	
 	case 46:
@@ -584,25 +565,18 @@ script 309( int Crate, int Override )
 			restart;
 		}
 		
-		SetFont( "SMALLFONT" );
 		GiveInventory( "BerserkSwitch", 1 );
+		
+		// [Dusk] Workaround, the hue doesn't seem to show up properly otherwise
 		delay( 5 );
 		GiveInventory( "BerserkHue", 1 );
 		
-		SetFont( "SMALLFONT" );
-		
 		if( PlayerTeam() == TEAM_RED )
-			HudMessageBold( s:"\cFGDI\cJ got \cGBerserk!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0 );
+			IntelMessageBold( "\cFGDI\cJ got \cGBerserk!" );
 		else if( PlayerTeam() == TEAM_BLUE )
-			HudMessageBold( s:"\cGNod\cJ got \cGBerserk!";
-				HUDMSG_FADEOUT, 15000, CR_WHITE,
-				INTEL_XPOS, INTEL_YPOS, 2.0, 1.0 );
+			IntelMessageBold( "\cGNod\cJ got \cGBerserk!" );
 		
-		HudMessage( s:"\cGBerserk!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0 );
+		IntelMessage( "\cGBerserk!" );
 		Log( s:pname( -1 ), s:" gets Berserk Crate." );
 		break;
 	
@@ -614,10 +588,7 @@ script 309( int Crate, int Override )
 			restart;
 		}
 		
-		SetFont( "SMALLFONT" );
-		HudMessage( s:"\cAHealing Radius!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0 );
+		IntelMessage( "\cAHealing Radius!" );
 		GiveInventory( "HealingRadiusItem", 1 );
 		ACS_ExecuteAlways( 352, 0 );
 		Log( s:pname( -1 ), s:" gets Healing Radius crate." );
@@ -633,11 +604,7 @@ script 309( int Crate, int Override )
 			restart;
 		}
 		
-		SetFont( "SMALLFONT" );
-		HudMessage( s:"\cKA chainsaw! Find some meat!";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS, 2.0, 1.0 );
-		
+		IntelMessage( "\cKA chainsaw! Find some meat!" );
 		GiveInventory( "EagerBeaver", 1 );
 		Log( s:pname( -1 ), s:" gets Chainsaw crate." );
 		

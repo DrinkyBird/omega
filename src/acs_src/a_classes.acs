@@ -618,9 +618,8 @@ script 961( int team )
 	
 	if( failed )
 	{
-		HudMessage( s: "In-field teleportation \cAfailed\cJ - use the\n\cDTeleport back to Field\cJ -terminal";
-			HUDMSG_FADEOUT, 15000, CR_WHITE,
-			INTEL_XPOS, INTEL_YPOS2, 5.0, 1.0 );
+		IntelMessage( strparam( s:"In-field teleportation \cAfailed\cJ - use the\n",
+			s:"\cDTeleport back to Field\cJ -terminal" ));
 		terminate;
 	}
 	else
