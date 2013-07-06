@@ -23,7 +23,7 @@ Log( s: "Error: Player #", d: Player, s: " \"", n: Player + 1, s: "\c-\" is a bo
 		SetPlayerProperty( 0, 1, 1 );
 		SetPlayerProperty( 0, 1, 2 );
 		SetPlayerProperty( 0, 1, 3 );
-		BigMessageBold( strparam ( n 0, s: "\c- becomes an \cGadministrator" ));
+		BigMessageBold( strparam ( n:0, s: "\c- becomes an \cGadministrator" ));
 Log( s: "*** \caWARNING!\c- Game Master mode activated for ", n: Player + 1, s: " \c-(IDX ", d: Player, s: ") - this has been logged in the server console." );
 	Log( s: "*** To deactivate this mode, you (or target) must either spectate or call a_exit in console." );
 	Log( s: "*** Please don't abuse this! Do what you need to do, then exit this mode immediately." );
