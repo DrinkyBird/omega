@@ -56,19 +56,25 @@ actor GeneporiumCharge : Ammo {
 	}
 }
 
-actor VoltagePuff {
-	renderstyle Add
-	alpha 0.5
-	+NOBLOCKMAP +NOGRAVITY
-	+PUFFONACTORS +ALWAYSPUFF
-	+CLIENTSIDEONLY +NOINTERACTION
+actor VoltagePuff
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+PUFFONACTORS
+	+ALWAYSPUFF
+	+CLIENTSIDEONLY
+	+NOINTERACTION
 	+FORCEXYBILLBOARD
+	RenderStyle Add
+	Alpha 0.5
 	DamageType "Laser"
 	Scale 1.2
-	states {
+	
+	States
+	{
 	Spawn:
 		VOLX A 2 bright
-		VOLX A 0 A_SpawnItemEx("VoltageDecay",0,0,0,0,0,0,0,128,192)
+		VOLX A 0 A_SpawnItemEx( "VoltageDecay", 0, 0, 0, 0, 0, 0, 0, 128, 192 )
 		VOLX BCDEFEDCB 2 bright
 		stop
 	}
