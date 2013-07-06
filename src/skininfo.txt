@@ -157,9 +157,9 @@ hidden = True
 }
 
 {
-name = "Guardian"
+name = "Juggernaut"
 sprite = TERM
 scale = 1.8
-class = "Guardian"
+class = "JUggernaut"
 hidden = True
 }

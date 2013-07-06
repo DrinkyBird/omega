@@ -91,7 +91,7 @@ actor MechStepDamageStrong : MechStepDamageWeak {
 	}  
 }
 
-actor MechStepGuardian : MechStepDamageWeak {
+actor MechStepJuggernaut : MechStepDamageWeak {
 	+EXTREMEDEATH
 	-TELESTOMP
 	damagetype "MechStomp"

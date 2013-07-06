@@ -21,7 +21,6 @@ actor BaseTerminalOutside {
 	DamageFactor "ChemicalSpecial", 0.0
 	DamageFactor "Laser", 0.0
 	DamageFactor "RazorWire", 0.0
-	DamageFactor "AntiArmor", 0.0
 	DamageFactor "Time", 0.0
 	DamageFactor "Disarm", 0.0
 	DamageFactor "Mechstomp", 0.0
@@ -48,23 +47,23 @@ actor BaseTerminalOutside {
 		stop
 	
 	Pain:
-		TNT1 A 0
 		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 1)
 		goto Idle
 	
 	Pain.Fire:
-		TNT1 A 0
 		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], random(0, 1))
 		goto Idle
 	
 	Pain.MassDriver:
 	Pain.Explosion:
-		TNT1 A 0
 		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 30)
 		goto Idle
 	
+	Pain.AntiArmor:
+		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 60)
+		goto Idle
+	
 	Pain.Superweapon:
-		TNT1 A 0
 		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 3000)
 		goto Idle
 	}

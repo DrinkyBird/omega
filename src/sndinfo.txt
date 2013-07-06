@@ -60,7 +60,7 @@ rc50/boltopen			rc50blto
 rc50/boltclose			rc50bltc
 $rolloff 			rc50/fire	500 3000
 
-// Artillery cannon (incl. Guardian's)
+// Artillery cannon (incl. Juggernaut's)
 artillery/fire1			ds80mm1
 artillery/fire2			ds80mm2
 $random artillery/fire		{artillery/fire1 artillery/fire2}
@@ -554,19 +554,19 @@ $playersound	mech	other	*usefail	blanksnd
 $playersound	mech	other	*taunt	    	blanksnd
 
 
-$playeralias	guardian	male	*death		guardian/death
-$playeralias	guardian	male	*xdeath		guardian/death
-$playeralias	guardian	male	*gibbed		guardian/death
-$playeralias	guardian	male	*pain100	guardian/pain
-$playersounddup	guardian	male	*pain75		*pain100
-$playersounddup	guardian	male	*pain50		*pain100
-$playersounddup	guardian	male	*pain25		*pain100
-$playersound	guardian	male	*grunt		blanksnd
-$playersounddup	guardian	male	*land		*grunt
-$playersound	guardian	male	*jump		blanksnd
-$playersound	guardian	male	*fist		blanksnd
-$playersound	guardian	male	*usefail	blanksnd
-$playeralias	guardian	male	*taunt	    	guardian/sight
+$playeralias	juggernaut	male	*death		juggernaut/death
+$playeralias	juggernaut	male	*xdeath		juggernaut/death
+$playeralias	juggernaut	male	*gibbed		juggernaut/death
+$playeralias	juggernaut	male	*pain100	juggernaut/pain
+$playersounddup	juggernaut	male	*pain75		*pain100
+$playersounddup	juggernaut	male	*pain50		*pain100
+$playersounddup	juggernaut	male	*pain25		*pain100
+$playersound	juggernaut	male	*grunt		blanksnd
+$playersounddup	juggernaut	male	*land		*grunt
+$playersound	juggernaut	male	*jump		blanksnd
+$playersound	juggernaut	male	*fist		blanksnd
+$playersound	juggernaut	male	*usefail	blanksnd
+$playeralias	juggernaut	male	*taunt	    	juggernaut/sight
 
 $random Lightning/Strike {Lightning/1 Lightning/2 Lightning/3 Lightning/4 Lightning/5}
 Lightning/1 DSTHUD1
@@ -663,18 +663,18 @@ stealth/death7		stldth7
 
 turret/sight		turrsit
 
-$random guardian/death		    { misc/dsjudth1 misc/dsjudth2 misc/dsjudth3 misc/dsjudth4 misc/dsjudth5 }
+$random juggernaut/death		    { misc/dsjudth1 misc/dsjudth2 misc/dsjudth3 misc/dsjudth4 misc/dsjudth5 }
 misc/dsjudth1           dsjudth1
 misc/dsjudth2           dsjudth2
 misc/dsjudth3           dsjudth3
 misc/dsjudth4           dsjudth4
 misc/dsjudth5           dsjudth5
-$random guardian/sight	{ misc/dsjugsit misc/dsjugsi2 misc/dsjugsi3 misc/dsjugsi4}
+$random juggernaut/sight	{ misc/dsjugsit misc/dsjugsi2 misc/dsjugsi3 misc/dsjugsi4}
 misc/dsjugsit           dsjugsit
 misc/dsjugsi2           dsjugsi2
 misc/dsjugsi3           dsjugsi3
 misc/dsjugsi4           dsjugsi4
-$random guardian/pain		    { misc/dsjupai1 misc/dsjupai2 misc/dsjupai3 misc/dsjupai4 }
+$random juggernaut/pain		    { misc/dsjupai1 misc/dsjupai2 misc/dsjupai3 misc/dsjupai4 }
 misc/dsjupai1           dsjupai1
 misc/dsjupai2           dsjupai2
 misc/dsjupai3           dsjupai3

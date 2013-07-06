@@ -28,7 +28,7 @@ actor BaseTerminal {
 	DamageFactor "ChemicalSpecial", 0.0
 	DamageFactor "Laser", 1.0
 	DamageFactor "RazorWire", 0.0
-	DamageFactor "AntiArmor", 0.25
+	DamageFactor "AntiArmor", 1.55
 	DamageFactor "Time", 1.0
 	DamageFactor "Disarm", 0.0
 	DamageFactor "Superweapon", 1.0
