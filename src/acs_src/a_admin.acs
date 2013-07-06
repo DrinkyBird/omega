@@ -1,87 +1,56 @@
 // [SP] NOTICE: This is an administrator 'puke' script. USE WITH CARE! This can be abused very easily.
-script 401( int Player, int Action )
+script 401( int Player, int Action, int arg )
 {
 	SetActivator( 3800 + Player );
 	
 	switch( Action )
 	{
 	case 3:
-	
 		if( ThingCount( T_NONE, 3800 + Player ) == 0 )
 		{
-Log( s: "Error: Player #", d: Player, s: " not found!" );
+			Log( s: "Error: no such player" );
 			terminate;
 		}
 		
 		if( PlayerIsBot( Player ) )
 		{
-Log( s: "Error: Player #", d: Player, s: " \"", n: Player + 1, s: "\c-\" is a bot." );
+			Log( s: "Error: ", s:pname( Player ), s:" is a bot." );
 			terminate;
 		}
 		
-		//Player_SetTeam(255);
 		SetPlayerProperty( 0, 1, 1 );
 		SetPlayerProperty( 0, 1, 2 );
 		SetPlayerProperty( 0, 1, 3 );
-		BigMessageBold( strparam ( n:0, s: "\c- becomes an \cGadministrator" ));
-Log( s: "*** \caWARNING!\c- Game Master mode activated for ", n: Player + 1, s: " \c-(IDX ", d: Player, s: ") - this has been logged in the server console." );
-	Log( s: "*** To deactivate this mode, you (or target) must either spectate or call a_exit in console." );
-	Log( s: "*** Please don't abuse this! Do what you need to do, then exit this mode immediately." );
+		BigMessageBold( strparam ( n:Player + 1, s: "\c- becomes an \cGadministrator" ));
+		Log( s: "*** \caWARNING!\c- Game Master mode activated for ", s:pname( Player ), 
+			 s:" - this has been logged in the server console." );
+		Log( s: "*** To deactivate this mode, you (or target) must either spectate or call a_exit in console." );
+		Log( s: "*** Please don't abuse this! Do what you need to do, then exit this mode immediately." );
 		GiveInventory( "AdministratorSwitch", 1 );
 		IsAdmin[Player] = true;
 		GiveInventory( "IsAdmin", 1 );
 		break;
 	
 	case 1:
-		// [Dusk] TODO: merge 1 and 2
-		if( ThingCount( T_NONE, 3800 + Player ) == 0 )
+		// [Dusk] Merged the two team-based scripts to one
+		if( !PlayerInGame( player ))
 		{
-Log( s: "Player ", d: Player, s: " not found!" );
+			Log( s: "Player ", d: Player, s: " not found!" );
 			terminate;
 		}
 		
-		if( PlayerTeam() == 0 )
+		if( PlayerTeam() == arg )
 		{
-	Log( s: pname( Player ), s: " is already on GDI." );
+			Log( s: pname( Player ), s: " is already on ", s:TeamNames[arg] );
 			terminate;
 		}
 		
-		BigMessageBold( strparam ( n: Player, s: "\c- has been forced to\nchange team by an admin." ));
-		Player_SetTeam( 0 );
-		Log( s:pname( Player ), s:" forced to change to GDI by admin." );
-		delay( 1 );
-		Teleport( 70 );
-		GiveInventory( "HasClass", 1 );
-		ACS_ExecuteAlways( 95, 0, 0, 0, 0 );
-		TakeInventory( "IsRed", 1 );
-		GiveInventory( "IsBlue", 1 );
+		BigMessageBold( strparam ( n:Player, s: "\c- has been forced to change to ", s:TeamNames[arg], s:" by an admin." ));
+		Log( s:pname( Player ), s:" forced to change to ", s:TeamNames[arg], s:" by admin." );
+		ChangePlayerTeam( Player, arg );
 		StartTime[Player] = -0x7FFFFFFF;
 		break;
 		
-	case 2:
-		if( ThingCount( T_NONE, 3800 + Player ) == 0 )
-		{
-Log( s: "Player ", d: Player, s: " not found!" );
-			terminate;
-		}
-		
-		if( PlayerTeam() == 1 )
-		{
-	Log( s: pname( Player ), s: " is already on Nod." );
-			terminate;
-		}
-		
-		BigMessageBold( strparam ( n: Player, s: "\c- has been forced to\nchange team by an admin." ));
-Log( s: pname( -1 ), s: " forced to change to Nod by admin." );
-		Player_SetTeam( 1 );
-		delay( 1 );
-		Teleport( 71 );
-		GiveInventory( "HasClass", 1 );
-		ACS_ExecuteAlways( 95, 0, 0, 0, 0 );
-		TakeInventory( "IsBlue", 1 );
-		GiveInventory( "IsRed", 1 );
-		StartTime[Player] = -0x7FFFFFFF;
-		break;
 	case 0:
 	
 		switch( Player )
@@ -89,9 +58,7 @@ Log( s: pname( -1 ), s: " forced to change to Nod by admin." );
 		case 3:
 		Log( s: "Usage: gamemaster <IDX> (use 'playerinfo' to get IDX numbers)" );
 		case 1:
-		Log( s: "Usage: forceblue <IDX> (use 'playerinfo' to get IDX numbers)" );
-		case 2:
-		Log( s: "Usage: forcered <IDX> (use 'playerinfo' to get IDX numbers)" );
+		Log( s: "Usage: forceblue / forcegdi / forcered / forcenod <IDX> (use 'playerinfo' to get IDX numbers)" );
 		default:
 		Log( s: "Please don't puke this script directly! Use the provided ccmd's - it's for your sanity's own good!" );
 		}
@@ -206,19 +173,7 @@ script 402( int Arg1, int Arg2, int Arg3 ) NET
 	
 	case 10:
 		// Set Team
-		Player_SetTeam( Arg2 );
-		
-		if( Arg2 == TEAM_BLUE )
-		{
-			TakeInventory( "IsRed", 1 );
-			GiveInventory( "IsBlue", 1 );
-		}
-		else
-		{
-			GiveInventory( "IsRed", 1 );
-			TakeInventory( "IsBlue", 1 );
-		}
-		
+		ChangePlayerTeam( PlayerNumber(), arg2 );
 		break;
 	
 	case 11:
@@ -233,25 +188,25 @@ script 402( int Arg1, int Arg2, int Arg3 ) NET
 		break;
 	
 	case 13:
-		// Admin pistol - rotate fire
+		// [Dusk] Admin pistol - rotate fire
 		if( CheckInventory( "AdminPistolRotation" ) == 2 )
 			TakeInventory( "AdminPistolRotation", 2 );
 		else
 			GiveInventory( "AdminPistolRotation", 1 );
-			
+		
 		switch( CheckInventory( "AdminPistolRotation" ) )
 		{
 		case 0:
-		HudMessage( s: "Normal mode";
-						HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 1.0, 0.5 );
+			HudMessage( s: "Normal mode";
+				HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 1.0, 0.5 );
 			break;
 		case 1:
-		HudMessage( s: "\cJRepair / Disarm mode";
-						HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 1.0, 0.5 );
+			HudMessage( s: "\cJRepair / Disarm mode";
+				HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 1.0, 0.5 );
 			break;
 		case 2:
-		HudMessage( s: "Deconstruction mode";
-						HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 1.0, 0.5 );
+			HudMessage( s: "Deconstruction mode";
+				HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 1.0, 0.5 );
 			break;
 		}
 		
@@ -274,7 +229,7 @@ script 402( int Arg1, int Arg2, int Arg3 ) NET
 		SetPlayerProperty( 0, 0, 3 );
 		SetActorProperty( 0, APROP_NoTarget, 0 );
 		BigMessageBold( strparam( s:"Admin ", n:0, s:"\c- becomes a regular player again." ));
-		Log( s: pname( -1 ), s: " exits admin mode." );
+		Log( s:pname( -1 ), s:" exits admin mode." );
 		IsAdmin[PlayerNumber()] = false;
 		ACS_ExecuteAlways( 96, 0, 1 - PlayerTeam() ); // teleport to spawn room
 		delay( 5 );
@@ -346,20 +301,7 @@ script 403( void )
 			numblue++;
 			
 		SetActivator( 3800 + i );
-		Log( s:"[SHUFFLE] ", s:pname( -1 ), s:" is now on ", s:TeamNames[newteam], s:"." );
-		changed = GetPlayerInfo( i, PLAYERINFO_TEAM ) != newteam;
-		
-		if( changed )
-			Player_SetTeam( newteam );
-		
-		if( !IsAdmin [i] && changed )
-		{
-			if( CheckInventory( "HasClass" ) )
-				Teleport( 1 + PlayerTeam() );
-			else
-				Teleport( 70 + PlayerTeam() );
-		}
-		
+		ChangePlayerTeam( i, newteam );
 		delay( 5 );
 	}
 	

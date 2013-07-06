@@ -51,24 +51,14 @@ function void CheckTeamBalance( void )
 		
 		log( s:"Team auto-switcher: switching out ", n:switchee + 1,
 			s:"\c- to ", s:TeamNames[lesserteam] );
-	 
-		SetActivator( 3800 + switchee );
-		Player_SetTeam( lesserteam );
 		
-		SetInventory( "IsRed", lesserteam == TEAM_RED );
-		SetInventory( "IsBlue", lesserteam == TEAM_BLUE );
-		
-		// [Dusk] If they are in field right now, send them to their new
-		// team's base rather than into the spawn room.
-		if( CheckInventory( "IsInSpawnRoom" ) )
-			Teleport( 70 + ( lesserteam == TEAM_RED ) );
-		else
-			Teleport( 1 + ( lesserteam == TEAM_RED ) );
+		ChangePlayerTeam( switchee, lesserteam );
 		
 		if(( Timer() - StartTime[i] ) > TICRATE )
 		{
 			// If the player was already in-game for a bit, tell him why
 			// he's suddenly being switched out.
+			SetActivator( 3800 + switchee );
 			BigMessage( "You have been switched to even out teams." );
 		}
 		

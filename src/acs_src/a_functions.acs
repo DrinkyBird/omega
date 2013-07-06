@@ -761,3 +761,38 @@ function int AproxDistance( int t1, int t2 )
 	
 	return dx + ( dy / 2 );
 }
+
+// ============================================================================
+// [Dusk] Clean way to change a player's team. Don't use Player_SetTeam!
+function void ChangePlayerTeam( int p, int newteam )
+{
+	if( !PlayerInGame( p ) || GetPlayerTeam( p ) == newteam || newteam < 0 || newteam > 1 )
+		return;
+	
+	ACS_ExecuteWithResult( 891, p, newteam );
+}
+
+// [Dusk] Separate script so as not to mess with the activator.
+script 891( int p, int newteam )
+{
+	Log( s:pname( p ), s:" is now on ", s:TeamNames[newteam], s:"." );
+	
+	SetActivator( 3800 + p );
+	Player_SetTeam( newteam );
+	SetInventory( "IsBlue", newteam == TEAM_BLUE );
+	SetInventory( "IsRed",  newteam == TEAM_RED );
+	
+	// If they are in field right now, send them to their new
+	// team's base, otherwise, into the spawn room.
+	if( CheckInventory( "IsInSpawnRoom" ) )
+		Teleport( 70 + ( newteam == TEAM_RED ) );
+	else
+		Teleport( 1 + ( newteam == TEAM_RED ) );
+	
+	// If we were carrying a beacon, swap that now.
+	if( CheckInventory( "IonCannonBeacon" ) || CheckInventory( "NuclearStrikeBeacon" ))
+	{
+		SetInventory( "IonCannonBeacon", newteam == TEAM_BLUE );
+		SetInventory( "NuclearStrikeBeacon", newteam == TEAM_RED );
+	}
+}

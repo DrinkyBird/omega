@@ -56,26 +56,12 @@ script 942( void ) NET
 	score = GetTeamProperty( team, TPROP_NumPlayers) - GetTeamProperty( newteam, TPROP_NumPlayers ) - 1 +
 		(( BaseLeft[team] - BaseLeft[newteam] ) * 2 );
 	
-	SetInventory( "IsBlue", newteam == TEAM_BLUE );
-	SetInventory( "IsRed",  newteam == TEAM_RED );
-	
 	// Logs and notices
 	str newcolor = cond( newteam == TEAM_BLUE, "\cF", "\cG" );
 	IntelMessageBold( strparam( n:0, s:" switches to ", s:newcolor, s:TeamNames[newteam] ));
 	Log( s:pname( -1 ), s: " switches to ", s:TeamNames[newteam], s:". (Score: ", d:score, s:")" );
 	
-	// Do the actual switch now
-	Player_SetTeam( newteam );
-	
-	Teleport( 70 + PlayerTeam() );
-	GiveInventory( "IsInSpawnRoom", 1 );
-	
-	// If we were carrying a beacon, swap that now.
-	if( CheckInventory( "IonCannonBeacon" ) || CheckInventory( "NuclearStrikeBeacon" ))
-	{
-		SetInventory( "IonCannonBeacon", newteam == TEAM_BLUE );
-		SetInventory( "NuclearStrikeBeacon", newteam == TEAM_RED );
-	}
+	ChangePlayerTeam( PlayerNumber(), newteam );
 	
 	// Give the reward
 	delay( 35 * 2 );
