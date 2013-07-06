@@ -28,7 +28,6 @@ actor GrenadeLauncher : AOWWeapon 21046 {
 		wait
 	Fire:
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
-		TNT1 A 0 A_JumpIfInventory ("InMenu", 1, "Ready")
 		GREN A 5 A_PlayWeaponSound ("grenade/fire")
 		GREN GH 1
 		GREN I 0 A_GunFlash
@@ -46,7 +45,6 @@ actor GrenadeLauncher : AOWWeapon 21046 {
 		goto Ready
 	AltFire:
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
-		TNT1 A 0 A_JumpIfInventory ("InMenu", 1, "Ready")
 		GREN A 4 A_PlayWeaponSound ("grenade/fire")
 		GREN GH 1
 		GREN I 0 A_GunFlash
@@ -110,6 +108,21 @@ actor GrenadeBounce : GrenadeGrenade {
 		SGRN A 0 bright A_SpawnItemEx ("PulseBallSmokePuff", -25)
 		SGRN A 2 bright A_Countdown
 		loop
+	}
+}
+
+actor GrenadeAmmo : Ammo
+{
+	Inventory.Amount 6
+	Inventory.MaxAmount 40
+	Ammo.BackpackAmount 5
+	Ammo.BackpackMaxAmount 40
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		stop
 	}
 }
 
