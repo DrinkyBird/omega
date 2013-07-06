@@ -28,6 +28,10 @@
 #define INTEL_YPOS 0.055
 #define INTEL_YPOS2 0.0475
 
+#define HID_ENTER         1000 // 1000 - 1001
+#define HID_BIGMESSAGE    1080
+#define HID_CLASSTEXT     1090 // 1090 - 1091
+
 // [Dusk] Spacing between SMALLFONT rows, in HUDMessage units
 #define SMALLSPACE 0.015
 

@@ -119,9 +119,9 @@ function void PurchaseClass( int c )
 		}
 		else
 		{
-			// [Dusk] Clear the card out once the class is purchased
-			HudMessage( s:"";
-				HUDMSG_PLAIN, 2100 + PlayerNumber(), CR_UNTRANSLATED, 0.0, 0.0, 0.01 );
+			// [Dusk] Clear the info text out once the class is purchased
+			ClearHudMessage( HID_CLASSTEXT );
+			ClearHudMessage( HID_CLASSTEXT + 1 );
 		}
 	}
 	
@@ -653,12 +653,17 @@ function str GetSpeedMeter( int c )
 
 function void DrawClassInfoText( int c )
 {
+	// Clear the entry messages if they're still there.
+	ClearHudMessage( HID_ENTER );
+	ClearHudMessage( HID_ENTER + 1 );
+	ClearHudMessage( HID_BIGMESSAGE );
+	
 	int cflags = Classes[c][CK_FLAGS];
 	int cspeed = Classes[c][CK_SPEED];
 	
 	SetFont( "BIGFONT" );
 	HUDMessage( s: Classes[c][CK_NAME];
-		HUDMSG_FADEOUT, 1090, CR_WHITE, -0.3, -0.3, 5.0, 1.0 );
+		HUDMSG_FADEOUT, HID_CLASSTEXT, CR_WHITE, -0.3, -0.3, 5.0, 1.0 );
 	
 	SetFont( "SMALLFONT" );
 	str body = strparam(
@@ -677,6 +682,5 @@ function void DrawClassInfoText( int c )
 		body = strparam( s:body, s:"\n- ", d:amount, s:"x ", s:item );
 	}
 	
-	HUDMessage( s:body;
-		HUDMSG_FADEOUT, 1091, CR_WHITE, -0.3, -0.35, 5.0, 1.0 );
+	HUDMessage( s:body; HUDMSG_FADEOUT, HID_CLASSTEXT + 1, CR_WHITE, -0.3, -0.35, 5.0, 1.0 );
 }

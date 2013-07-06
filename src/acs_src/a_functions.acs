@@ -600,13 +600,18 @@ function void Error( str text )
 function void BigMessage( str text )
 {
 	SetFont( "BIGFONT" );
-	HudMessage( s:text; HUDMSG_FADEOUT, 240, CR_WHITE, 0.5, 0.45, 2.0, 1.0 );
+	HudMessage( s:text; HUDMSG_FADEOUT, HID_BIGMESSAGE, CR_WHITE, 0.5, 0.45, 2.0, 1.0 );
 }
 
 function void BigMessageBold( str text )
 {
 	SetFont( "BIGFONT" );
-	HudMessageBold( s:text; HUDMSG_FADEOUT, 240, CR_WHITE, 0.5, 0.45, 2.0, 1.0 );
+	HudMessageBold( s:text; HUDMSG_FADEOUT, HID_BIGMESSAGE, CR_WHITE, 0.5, 0.45, 2.0, 1.0 );
+}
+
+function void ClearHudMessage( int id )
+{
+	HudMessage( s:""; HUDMSG_PLAIN, id, 0, 0, 0, 0.001 );
 }
 
 function void ReddenSector( int tag )
