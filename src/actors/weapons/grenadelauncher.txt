@@ -1,99 +1,92 @@
 // Grenade launcher
+// achtung achtung bloax is a faggot
 actor GrenadeLauncher : AOWWeapon 21046 {
-	+NOAUTOFIRE
-	obituary "$OB_GRENADE" // "%o ate %k's grenade."
-	inventory.pickupmessage "You got the grenade launcher!"
-	weapon.selectionorder 12
-	weapon.kickback 100
-	weapon.ammotype "GrenadeAmmo"
-	weapon.ammouse 1
-	weapon.ammotype2 "GrenadeAmmo"
-	weapon.ammouse2 1
-	weapon.ammogive 2
-	weapon.preferredskin "MarineRevenant"
-	
+	+WEAPON.NOAUTOAIM
+	Obituary "$OB_GRENADE"
+	Inventory.PickupMessage "You got the grenade launcher!"
+	Weapon.SelectionOrder 12
+	Weapon.KickBack 100
+	Weapon.AmmoType "GrenadeAmmo"
+	Weapon.AmmoUse 1
+	Weapon.AmmoType2 "GrenadeAmmo"
+	Weapon.AmmoUse2 1
+	Weapon.AmmoGive 2
+	Weapon.PreferredSkin "MarineAssaultGrenade"
+	Tag "Grenade Launcher"
 	States {
 	Spawn:
 		GREN X -1
 		stop
-	
 	Select:
 		GREN A 1 A_Raise
 		wait
-	
 	Deselect:
 		GREN A 1 A_Lower
 		wait
-	
 	Ready:
 		GREN A 1 A_WeaponReady
 		wait
-	
 	Fire:
-		TNT1 A 0 A_JumpIfInventory("IsInSpawnRoom",1,"Ready")
-		GREN A 6
+		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
+		TNT1 A 0 A_JumpIfInventory ("InMenu", 1, "Ready")
 		GREN A 5 A_PlayWeaponSound ("grenade/fire")
 		GREN GH 1
 		GREN I 0 A_GunFlash
 		GREN I 1 A_FireCustomMissile ("GrenadeGrenade", 0, 1, 12)
-		GREN DEF 2
-		GREN EDABC 1
+		GREN D 0 Radius_Quake(7,random(5,6),0,1,0)
+		GREN D 2
+		GREN E 2
+		GREN FF 2
+		GREN F 2
+		GREN F 2
+		GREN E 2
+		GREN D 2
+		GREN ABC 2
 		GREN A 0 A_ReFire
 		goto Ready
-	
 	AltFire:
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
-		goto Ready
-		GREN A 7
+		TNT1 A 0 A_JumpIfInventory ("InMenu", 1, "Ready")
 		GREN A 4 A_PlayWeaponSound ("grenade/fire")
 		GREN GH 1
 		GREN I 0 A_GunFlash
 		GREN I 1 A_FireCustomMissile ("GrenadeBounce", 0, 1, 12)
-		GREN DEF 2
+		GREN DEFFFFF 2
 		GREN EDABC 1
 		GREN A 0 A_ReFire
 		goto Ready
 	}
 }
 
-// The Orca still uses this
+// orca still uses this
 actor GrenadeSwitch : Inventory {}
-
-actor GrenadeAmmo : Ammo {
-	Inventory.Amount 6
-	Inventory.MaxAmount 40
-	Ammo.BackpackAmount 5
-	Ammo.BackpackMaxAmount 40
-	states {
-	Spawn:
-		TNT1 A 0
-		stop
-	}
-}
 
 actor GrenadeGrenade {
 	PROJECTILE
-	-RANDOMIZE
 	-NOGRAVITY
-	+LOWGRAVITY
+ 	+EXTREMEDEATH
 	Radius 11
-	Height 8
-	Speed 35
-	Damage (25)
-	DamageType "Rifle"
-	SeeSound ""
+	Height 11
+	Speed 38
+	Damage (50)
+	RenderStyle Normal
+	Alpha 0.8
+	Gravity 0.8
+	DamageType "Explosion"
 	DeathSound "weapons/rocklx"
-	Obituary "$OB_GRENADE" // "%o ate %k's grenade."
+	Obituary "$OB_GRENADE"
 	Decal "Scorch"
-	
-	States {
+	states {
 	Spawn:
+		SGRN A 0 bright A_FadeIn(0.01) //[Bloax] How fast the arc gets steeper.
+		SGRN A 0 bright A_SetGravity(0.85*(Alpha*Alpha)) //[Bloax] What's the maximum gravity.
+		// High gravity but low alpha would make the floor be magnets at some point.
+		// - While a low gravity but high alpha would result in a somewhat more constant arc. [/Theory]
 		SGRN A 2 bright A_SpawnItemEx ("PulseBallSmokePuff", -25)
 		loop
-	
 	Death:
 		TNT1 B 0 bright A_NoGravity
-		TNT1 B 0 bright A_Explode(55,128,1)
+		TNT1 B 0 bright A_Explode(148,256,1) //20% less damage than Missile Launcher due to higher RoF
 		TNT1 B 0 bright A_RadiusThrust(384,128,1) //Weeee
 		TNT1 A 5 A_SpawnItemEx ("ExplosionMain")
 		stop
@@ -101,19 +94,22 @@ actor GrenadeGrenade {
 }
 
 actor GrenadeBounce : GrenadeGrenade {
-	+DOOMBOUNCE
-	-LOWGRAVITY
-	Obituary "$OB_GRENADE_ALT" // "%o played catch with %k's grenade."
-	Damage (5)
-	BounceCount 2
-	
-	States {
-	Death:
-		TNT1 A 0 bright A_NoGravity
-		TNT1 A 0 bright A_Explode (40, 96, 1)
-		TNT1 A 0 bright A_RadiusThrust(384,128,1) //Wee
-		TNT1 A 5 A_SpawnItemEx ("ExplosionMain")
-		stop
+	+HEXENBOUNCE
+	+BOUNCEONACTORS
+	Damage (0)
+	Speed 30
+	Gravity 0.8
+	BounceFactor 0.40
+	// A timed fuse of three seconds.
+	// [Bloax] Now shorter because three seconds in a firefight is an eternity.
+	ReactionTime 33
+	Obituary "$OB_GRENADE_ALT"
+	states {
+	Spawn:
+		SGRN A 0 bright A_CheckFloor(2)
+		SGRN A 0 bright A_SpawnItemEx ("PulseBallSmokePuff", -25)
+		SGRN A 2 bright A_Countdown
+		loop
 	}
 }
 
