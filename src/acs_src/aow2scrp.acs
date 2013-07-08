@@ -45,14 +45,15 @@
 #define RANK_MAJOR 6
 #define RANK_COMMANDO 7
 
-// [Dusk] these determine xp requirements for level-up
-#define XPREQ_CORPORAL 250
-#define XPREQ_SERGEANT 500
-#define XPREQ_MASTERSGT 1000
-#define XPREQ_OFFICER 1500
-#define XPREQ_LIEUTENANT 2000
-#define XPREQ_MAJOR 2500
-#define XPREQ_COMMANDO 3250
+// [Dusk] Experience numbers
+#define MAX_XP 3250
+#define XPREQ_CORPORAL      250
+#define XPREQ_SERGEANT      500
+#define XPREQ_MASTERSGT    1000
+#define XPREQ_OFFICER      1500
+#define XPREQ_LIEUTENANT   2000
+#define XPREQ_MAJOR        2500
+#define XPREQ_COMMANDO   MAX_XP
 
 // class ids
 #define CLASS_NONE 0
@@ -185,6 +186,7 @@
 // TODO: populate this list
 #define SC_SelfHealHealth         816
 #define SC_CL_ObeliskTrail        822
+#define SC_UpdateCreditDisplay    827
 #define SC_TargetInfo             899
 #define SC_JetpackToggle          907
 #define SC_CL_SniperZoom          916

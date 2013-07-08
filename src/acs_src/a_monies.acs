@@ -3,11 +3,13 @@ function int IncrCredits( int p, int amount )
 {
 	if( IsAdmin[PlayerNumber()] )
 		return false;
-		
+	
 	Credits[p] += amount;
 	
 	if( Credits[p] > GetCVAR( "aow_creditlimit" ) && GetCVAR( "aow_creditlimit" ) > 0 )
 		Credits[p] = GetCVAR( "aow_creditlimit" );
+	
+	ShowStatus( p );
 	
 	return true;
 }
@@ -16,12 +18,14 @@ function int DecrCredits( int p, int amount )
 {
 	if( IsAdmin[PlayerNumber()] )
 		return false;
-		
+	
 	Credits[p] -= amount;
 	
 	if( Credits[p] < 0 )
 		Credits[p] = 0;
-		
+	
+	ShowStatus( p );
+	
 	return true;
 }
 
@@ -75,7 +79,7 @@ function int GetCredits( int p )
 	if( p < 0 )
 		p = PlayerNumber();
 		
-	if( !PlayerInGame( p ) )
+	if( !PlayerInGame( p ))
 		return 0;
 		
 	return Credits[p];
@@ -88,7 +92,7 @@ Script 32( int amount, int i )
 		terminate;
 		
 	GiveCredits( i, amount );
-	IntelMessageBold( strparam( s: "\cRServer \cJhas given \cQ$\cD", d: amount, s: " \cJto ", n: i + 1 ) );
+	IntelMessageBold( strparam( s: "\cRServer \cJhas given \cQ$\cD", d: amount, s: " \cJto ", n: i + 1 ));
 }
 
 // Backpacks and credit items use this to give the player credits
@@ -177,14 +181,18 @@ function void SetCredits( int p, int amount )
 {
 	if( IsAdmin[PlayerNumber()] )
 		return;
-		
+	
 	if( amount < 0 )
 		amount = 0;
-		
+	
 	if( amount > 10000 )
 		amount = 10000;
-		
-	Credits[p] = amount;
+	
+	if( Credits[p] != amount )
+	{
+		Credits[p] = amount;
+		ShowStatus( p );
+	}
 }
 
 Function int AddCredits( int Player, int NewCredits )
@@ -192,8 +200,8 @@ Function int AddCredits( int Player, int NewCredits )
 	if( IsAdmin[PlayerNumber()] )
 		return -1;
 		
-	if( IncrCredits( PlayerNumber(), NewCredits ) )
-		IntelMessage( strparam( s: "You have been awarded with \cQ$\cD", d: NewCredits ) );
+	if( IncrCredits( PlayerNumber(), NewCredits ))
+		IntelMessage( strparam( s: "You have been awarded with \cQ$\cD", d: NewCredits ));
 	
 	return NewCredits;
 }
@@ -203,8 +211,8 @@ Function int RefundCredits( int NewCredits )
 	if( IsAdmin[PlayerNumber()] )
 		return -1;
 		
-	if( IncrCredits( PlayerNumber(), NewCredits ) )
-		IntelMessage( strparam( s: "You have been refunded with \cQ$\cD", d: NewCredits ) );
+	if( IncrCredits( PlayerNumber(), NewCredits ))
+		IntelMessage( strparam( s: "You have been refunded with \cQ$\cD", d: NewCredits ));
 	
 	return NewCredits;
 }

@@ -5,14 +5,15 @@
 //Experience add
 Function void AddExperience( int XP )
 {
-	if( IsAdmin[PlayerNumber()] )
+	if( IsAdmin[PlayerNumber()] || Experience[PlayerNumber()] == MAX_XP )
 	{
 		return;
 	}
 	
 	Experience[PlayerNumber()] += XP;
 	
-	if( Experience[PlayerNumber()] > 3250 ) Experience[PlayerNumber()] = 3250;
+	if( Experience[PlayerNumber()] > MAX_XP )
+		Experience[PlayerNumber()] = MAX_XP;
 	
 	SetFont( "SMALLFONT" );
 	HudMessage( s:"You have gained \cD", d:XP, s:" \cQXP";
@@ -20,6 +21,7 @@ Function void AddExperience( int XP )
 		0.5, 0.59, 2.0, 1.0 );
 	
 	ACS_ExecuteAlways( 7, 0 );
+	ShowStatus( PlayerNumber() );
 }
 
 function int GetExpNeed( void )
