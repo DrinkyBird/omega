@@ -743,7 +743,15 @@ function void IntelMessageBold( str text )
 function str pname( int p )
 {
 	if( p == -1 )
+	{
 		p = PlayerNumber();
+		
+		// If PlayerNumber returned -1, this is not a player, thus return
+		// whatever n:0 says about this thing.
+		if( p == -1 )
+			return strparam( n:0 );
+	}
+	
 	
 	return strparam( n:p + 1, s:" (#", d:p, s:", ", s:TeamNames[GetPlayerInfo( p, PLAYERINFO_TEAM )], s:")" );
 }

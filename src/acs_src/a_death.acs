@@ -50,7 +50,6 @@ script 994 DEATH
 	
 	int killer_t = ACS_ExecuteWithResult( 964, 5 );
 	int killer_p = ACS_ExecuteWithResult( 964, 9 );
-	// Log (s:pname (-1), s:"\c-: I am ", d:ActivatorTID(), s:" and was killed by ", d:killer_t, s:" (", n:killer_p+1, s:")");
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * KILLER POV STARTS HERE
@@ -59,6 +58,8 @@ script 994 DEATH
 	int n0 = PlayerNumber();
 	int t0 = PlayerTeam();
 	SetActivatorToTarget( 0 );
+	
+	// Log( s:pname( n0 ), s:" was killed by ", s:pname( -1 ));
 	
 	if(( ActivatorTID() < 3800 || ActivatorTID() > 3831 ) && ActivatorTID() != 9999 )
 		terminate;
