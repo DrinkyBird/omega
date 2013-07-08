@@ -35,7 +35,7 @@ actor Utility_MiniRefCacheRed {
 	DamageFactor "RazorWire",        1.0
 	DamageFactor "Superweapon",      1.0
 	DamageFactor "FireSpecial",      1.0
-	DamageFactor "ChemicalSpecial",  1.0
+	DamageFactor "ChemicalSpecial",  0.0
 	DamageFactor "Mechstomp",        1.0
 	DamageFactor "Monster",          0.0
 	DesignatedTeam 1
