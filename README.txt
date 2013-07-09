@@ -16,3 +16,5 @@ Make sure to edit the PATH environment variable in your Windows settings. Don't 
 6. Edit in the folder where your git.exe is, like so: ";C:\Program Files (x86)\Git\cmd" without the quotes.
 7. Reboot (or maybe just log in/out) your PC to apply.
 8. Your build.cmd should be working.
+
+this is a test
