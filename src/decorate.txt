@@ -13,6 +13,7 @@
 #include "actors/crucial/terminals.txt"
 #include "actors/crucial/btos.txt"
 #include "actors/crucial/berserk.txt"
+#include "actors/crucial/teslacoil.txt"
 #include "actors/effects/casings.txt"
 #include "actors/effects/gore.txt"
 #include "actors/effects/misceffects.txt"

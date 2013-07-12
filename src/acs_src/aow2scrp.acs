@@ -159,17 +159,14 @@
 #define TID_AMMOREGEN_RED 904
 
 // new tids
-#define TID_PORTAL_BLUE1 1500
-#define TID_PORTAL_BLUE2 1501
-#define TID_PORTAL_RED1 1502
-#define TID_PORTAL_RED2 1503
-#define TID_PORTAL_TELEDEST 1504
-// 1504 - 1505
-#define TID_PORTAL_FX 1508
-// 1508 - 1511
-// 1512 - 1519 is free
-#define TID_MARINE 1520
-// 1520 - 1544
+#define TID_PORTAL_BLUE1        1500
+#define TID_PORTAL_BLUE2        1501
+#define TID_PORTAL_RED1         1502
+#define TID_PORTAL_RED2         1503
+#define TID_PORTAL_TELEDEST     1504 // - 1507
+#define TID_PORTAL_FX           1508 // - 1511
+#define TID_MARINE              1520 // - 1544
+#define TID_TESLACOIL_ORB       1600
 
 #define TARGETINFO_X			0  // X-coordinate
 #define TARGETINFO_Y			1  // Y-coordinate

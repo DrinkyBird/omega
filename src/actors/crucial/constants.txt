@@ -32,3 +32,4 @@ const int SC_PORTAL_INIT = 936;
 const int SC_PORTAL_FUNCTION = 937;
 const int SC_MARINE_DEATH = 968;
 const int SC_SETPITCH = 979;
+const int TID_TESLACOIL_ORB = 1600;

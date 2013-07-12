@@ -149,12 +149,15 @@ actor BlueObeliskThing 21213 {
 	States {
 	Spawn:
 		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx ("TeslaCoilOrb", 0,0,0, 0,0,0, 0, SXF_NOCHECKPOSITION)
 		TNT1 A 0 Thing_ChangeTID (0, 115)
 		TNT1 A 0 A_ChangeFlag("ISMONSTER",1)
 		TNT1 A 0 A_GiveInventory("IsBlue",1)
+	Idle:
 		TNT1 A 0 A_TakeInventory("ObeliskCharged",1)
 		TNT1 A 8 A_Look
 		loop
+	
 	See:
 		TNT1 A 0 A_Chase("","",CHF_DONTMOVE)
 		TNT1 A 0 A_GiveInventory("IsBlue",1)
@@ -162,20 +165,24 @@ actor BlueObeliskThing 21213 {
 		TNT1 A 3 A_FaceTarget
 		TNT1 A 2 A_JumpIfTargetInLOS("Missile")
 		TNT1 A 2 A_ClearTarget
-		goto Spawn
+		goto Idle
+	
 	See2:
 		TNT1 A 2 A_ClearTarget
 		goto See
+	
 	MissileCheck:
 		TNT1 AA 0 A_JumpIfInTargetInventory("IsRed",1,"MissileGo")
 		TNT1 A 0 
 		goto See
+	
 	Missile:
 		TNT1 A 0 
 		TNT1 A 1 A_JumpIfInTargetInventory("IsBlue",1,"See2")
 		TNT1 A 1 A_JumpIfCloser(30000,"MissileGo")
 		TNT1 A 0 
 		goto See2
+	
 	MissileGo:
 		TNT1 A 0 A_JumpIfInTargetInventory("IsMech",1,"MissileGoMech")
 		TNT1 A 0 A_JumpIfInventory("ObeliskCharged",1,"MissileCharged")
@@ -190,6 +197,7 @@ actor BlueObeliskThing 21213 {
 		TNT1 A 70 A_FaceTarget
 		TNT1 A 0 A_TakeInventory("ObeliskCharged",15)
 		goto See
+	
 	MissileCharged:
 		TNT1 A 15
 		TNT1 A 0 A_PlaySoundEx("tesla/fire","Weapon",0)
@@ -198,6 +206,7 @@ actor BlueObeliskThing 21213 {
 		TNT1 A 70 A_FaceTarget
 		TNT1 A 0 A_TakeInventory("ObeliskCharged",15)
 		goto See
+	
 	MissileGoMech:
 		TNT1 A 0 A_JumpIfInventory("ObeliskCharged",1,"MissileChargedMech")
 		TNT1 A 0 A_FaceTarget
@@ -211,6 +220,7 @@ actor BlueObeliskThing 21213 {
 		TNT1 A 70 A_FaceTarget
 		TNT1 A 0 A_TakeInventory("ObeliskCharged",15)
 		goto See
+	
 	MissileChargedMech:
 		TNT1 A 15
 		TNT1 A 0 A_PlaySoundEx("tesla/fire","Weapon",0)
@@ -219,8 +229,9 @@ actor BlueObeliskThing 21213 {
 		TNT1 A 70 A_FaceTarget
 		TNT1 A 0 A_TakeInventory("ObeliskCharged",15)
 		goto See
-	Death:	
-		TNT1 A 5
+	
+	Death:
+		TNT1 A 0 Thing_Remove (TID_TESLACOIL_ORB)
 		stop
 	}
 }
