@@ -38,8 +38,7 @@ OB_MISSILELAUNCHER = "%o was blown out of %p boots by %k's missile.";
 OB_MINE = "%o played living minesweeper.";
 OB_MINEBARREL = "%o was mined down into the ground by %k.";
 OB_NUKE = "%o was disintegrated by %k's \cgNuclear Strike.";
-OB_OBELISK_BLUE = "%o was vaporized by the \chBlue Obelisk\c-.";
-OB_OBELISK_RED = "%o was vaporized by the \cgRed Obelisk\c-.";
+OB_OBELISK = "%o was vaporized by the \cgObelisk of Light\c-.";
 OB_PLASMARIFLE = "%o was liquified by %k's plasma gun.";
 OB_PLASMACANNON_RED = "%o was annihilated by %k's \caplasma cannon.";
 OB_PLASMACANNON_BLUE = "%o was annihilated by %k's \cnplasma cannon.";
@@ -49,6 +48,7 @@ OB_RIFLE = "%o was crippled by %k's rifle.";
 OB_SEEKERMISSILE = "%o was sought and found by %k's seeker missile.";
 OB_SNIPER = "%o found %k's bullet in %p head.";
 OB_SUBBY = "%o was tickled by %k's sub-machinegun.";
+OB_TESLACOIL = "%o was overloaded by the \cFTesla Coil\c-.";
 
 // =============================================================================
 // Mech obits

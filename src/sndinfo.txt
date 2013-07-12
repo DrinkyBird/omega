@@ -218,10 +218,16 @@ $random Weapons/PlasmaShot	{ Weapons/PlasmaShot1 Weapons/PlasmaShot2 Weapons/Pla
 Weapons/PlasmaShot1		dsplrf1
 Weapons/PlasmaShot2		dsplrf2
 Weapons/PlasmaShot3		dsplrf2
+
 obelisk/charge			obelpowr
 obelisk/fire			obelray1
+tesla/charge			teslchrg
+tesla/fire				teslfire
 $rolloff 			obelisk/charge	2000 13500
 $rolloff 			obelisk/fire	2000 13500
+$rolloff 			tesla/charge	2000 13500
+$rolloff 			tesla/fire		2000 13500
+
 $random buggy/rocket			{ buggy/rocket1 buggy/rocket2 buggy/rocket3 buggy/rocket4 buggy/rocket5 buggy/rocket6 }
 buggy/rocket1 			vrocweaa
 buggy/rocket2 			vrocweab

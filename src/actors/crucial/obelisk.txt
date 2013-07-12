@@ -31,9 +31,10 @@ actor RedObeliskThing 21214 {
 	Mass 999999
 	Speed 0
 	PainChance 0
-	Tag "Red Obelisk Eye"
-	Obituary "$OB_OBELISK_RED"
+	Tag "Obelisk of Light"
+	Obituary "$OB_OBELISK"
 	DesignatedTeam 1
+	
 	States {
 	Spawn:
 		TNT1 A 0
@@ -143,8 +144,8 @@ actor BlueObeliskThing 21213 {
 	Speed 0
 	PainChance 0
 	DesignatedTeam 0
-	Tag "Blue Obelisk Eye"
-	Obituary "$OB_OBELISK_BLUE" // "%o was vaporized by the \chBlue Obelisk\c-."
+	Tag "Tesla Coil"
+	Obituary "$OB_TESLACOIL"
 	States {
 	Spawn:
 		TNT1 A 0
@@ -179,52 +180,44 @@ actor BlueObeliskThing 21213 {
 		TNT1 A 0 A_JumpIfInTargetInventory("IsMech",1,"MissileGoMech")
 		TNT1 A 0 A_JumpIfInventory("ObeliskCharged",1,"MissileCharged")
 		TNT1 A 0 A_FaceTarget
-		TNT1 A 70 A_PlaySoundEx("obelisk/charge","Voice",0)
+		TNT1 A 70 A_PlaySoundEx("tesla/charge","Voice",0)
 		TNT1 A 0 A_GiveInventory("ObeliskCharged",15)
 		TNT1 A 0 A_CposRefire
-		TNT1 A 0 A_PlaySoundEx("obelisk/fire","Weapon",0)
-		TNT1 A 0 A_PlaySoundEx("obelisk/charge","Body",0)
+		TNT1 A 0 A_PlaySoundEx("tesla/fire","Weapon",0)
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_SpawnItemEx("ObbyFlareBlue")
 		TNT1 A 0 A_CustomMissile("ObeliskShotBlueInfantry",12,0)
 		TNT1 A 70 A_FaceTarget
 		TNT1 A 0 A_TakeInventory("ObeliskCharged",15)
-		TNT1 A 0 A_PlaySoundEx("obelisk/charge","Voice",0)
 		goto See
 	MissileCharged:
 		TNT1 A 15
-		TNT1 A 0 A_PlaySoundEx("obelisk/fire","Weapon",0)
-		TNT1 A 0 A_PlaySoundEx("obelisk/charge","Body",0)
+		TNT1 A 0 A_PlaySoundEx("tesla/fire","Weapon",0)
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_CustomMissile("ObeliskShotBlueInfantry",12,0)
 		TNT1 A 70 A_FaceTarget
 		TNT1 A 0 A_TakeInventory("ObeliskCharged",15)
-		TNT1 A 0 A_PlaySoundEx("obelisk/charge","Voice",0)
 		goto See
 	MissileGoMech:
 		TNT1 A 0 A_JumpIfInventory("ObeliskCharged",1,"MissileChargedMech")
 		TNT1 A 0 A_FaceTarget
-		TNT1 A 70 A_PlaySoundEx("obelisk/charge","Voice",0)
+		TNT1 A 70 A_PlaySoundEx("tesla/charge","Voice",0)
 		TNT1 A 0 A_GiveInventory("ObeliskCharged",15)
 		TNT1 A 0 A_CposRefire
-		TNT1 A 0 A_PlaySoundEx("obelisk/fire","Weapon",0)
-		TNT1 A 0 A_PlaySoundEx("obelisk/charge","Body",0)
+		TNT1 A 0 A_PlaySoundEx("tesla/fire","Weapon",0)
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_SpawnItemEx("ObbyFlareBlue")
 		TNT1 A 0 A_CustomMissile("ObeliskShotBlue",12,0)
 		TNT1 A 70 A_FaceTarget
 		TNT1 A 0 A_TakeInventory("ObeliskCharged",15)
-		TNT1 A 0 A_PlaySoundEx("obelisk/charge","Voice",0)
 		goto See
 	MissileChargedMech:
 		TNT1 A 15
-		TNT1 A 0 A_PlaySoundEx("obelisk/fire","Weapon",0)
-		TNT1 A 0 A_PlaySoundEx("obelisk/charge","Body",0)
+		TNT1 A 0 A_PlaySoundEx("tesla/fire","Weapon",0)
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_CustomMissile("ObeliskShotBlue",12,0)
 		TNT1 A 70 A_FaceTarget
 		TNT1 A 0 A_TakeInventory("ObeliskCharged",15)
-		TNT1 A 0 A_PlaySoundEx("obelisk/charge","Voice",0)
 		goto See
 	Death:	
 		TNT1 A 5
@@ -240,7 +233,7 @@ Actor ObbyFlare {
 	States {
 	Spawn:
 		CACH B 8 BRIGHT
-		CACH B 1 BRIGHT A_Fadeout(0.05)
+		CACH B 1 BRIGHT A_FadeOut (0.05)
 		Wait
 	}
 }
@@ -249,7 +242,7 @@ Actor ObbyFlareBlue : ObbyFlare {
 	States {
 	Spawn:
 		PPCX A 8 BRIGHT
-		PPCX A 1 BRIGHT A_Fadeout(0.05)
+		PPCX A 1 BRIGHT A_FadeOut (0.05)
 		Wait
 	}
 }
@@ -258,29 +251,28 @@ actor ObeliskCharged : Inventory {
 	inventory.maxamount 15
 }
 
-actor ObeliskShotRed : FastProjectile
-{
+actor ObeliskShotRed : FastProjectile {
 	PROJECTILE
 	DONTHURTSHOOTER
 	-RANDOMIZE
 	+NOEXTREMEDEATH
 	+THRUGHOST
-	
 	Radius 13
 	Height 8
 	Speed 2000
-	Damage ( 250 )
+	Damage (250)
 	DamageType "Explosion"
 	Translation "192:207=169:189", "240:246=45:47", "112:127=176:191"
-	states {
+	
+	States {
 	Spawn:
 		TNT1 A -1
 		stop
 	Death:
-		TNT1 A 0 ACS_ExecuteAlways( 822, 0 )
+		TNT1 A 0 ACS_ExecuteAlways (822, 0)
 	CommonDeath:
-		TNT1 A 0 A_SpawnItemEx( "PlasmaFlameCluster", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION )
-		TNT1 A 3 bright A_Explode( 250, 256, 0 )
+		TNT1 A 0 A_SpawnItemEx ("PlasmaFlameCluster", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
+		TNT1 A 3 bright A_Explode (250, 256, 0)
 		stop
 	}
 }
@@ -293,7 +285,7 @@ actor ObeliskShotRedInfantry : ObeliskShotRed {
 		TNT1 A -1
 		stop
 	Death:
-		TNT1 A 0 ACS_ExecuteAlways( 822, 0 )
+		TNT1 A 0 ACS_ExecuteAlways (822, 0)
 	CommonDeath:
 		TNT1 A 0 A_SpawnItemEx( "PlasmaFlameCluster", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION )
 		TNT1 A 3 bright A_Explode (50, 256, 0)
@@ -304,10 +296,9 @@ actor ObeliskShotRedInfantry : ObeliskShotRed {
 actor ObeliskShotBlue : ObeliskShotRed {
 	Translation "112:120=200:207"
 	
-	States
-	{
+	States {
 	Death:
-		TNT1 A 0 ACS_ExecuteAlways( 822, 0, 1 )
+		TNT1 A 0 ACS_ExecuteAlways (822, 0, 1)
 		goto CommonDeath
 	}
 }
@@ -315,37 +306,33 @@ actor ObeliskShotBlue : ObeliskShotRed {
 actor ObeliskShotBlueInfantry : ObeliskShotRedInfantry {
 	Translation "112:120=200:207"
 	
-	States
-	{
+	States {
 	Death:
-		TNT1 A 0 ACS_ExecuteAlways( 822, 0, 1 )
+		TNT1 A 0 ACS_ExecuteAlways (822, 0, 1)
 		goto CommonDeath
 	}
 }
 
-actor ObeliskTrail
-{
+actor ObeliskTrail {
 	+CLIENTSIDEONLY
 	+NOINTERACTION
 	RenderStyle Add
 	Alpha 0.7
-	Scale 0.4
+	Scale 0.6
 	
-	States
-	{
+	States {
 	Spawn:
-		CACH B 1 BRIGHT A_FadeOut( 0.1 )
+		CACH B 1 BRIGHT A_FadeOut (0.1)
 		wait
 	}
 }
 
-actor ObeliskTrailBlue : ObeliskTrail
-{
-	States
-	{
+actor ObeliskTrailBlue : ObeliskTrail {
+	Scale 1.2
+	States {
 	Spawn:
-		PPCX A 1 BRIGHT A_FadeOut( 0.1 )
-		wait
+		VOLX ABCDEF 1 BRIGHT A_FadeOut (0.1)
+		stop
 	}
 }
 
