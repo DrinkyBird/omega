@@ -116,7 +116,7 @@ script 105( VOID )
 	AwardBuildingDestruction( TEAM_RED, true );
 }
 
-//---------------------------BLUE OBELISK DEATH
+//---------------------------TESLA COIL DEATH
 script 114( VOID )
 {
 	Thing_Destroy( 114, 0 );
@@ -129,10 +129,13 @@ script 114( VOID )
 	
 	SetFont( "BIGFONT" );
 	
-	HudMessageBold( s:"The \cFGDI Obelisk\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
-	Log( s:pname( -1 ), s:" destroys GDI Obelisk." );
+	HudMessageBold( s:"The \cFTesla Coil\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
+	Log( s:pname( -1 ), s:" destroys GDI Tesla Coil." );
 	AwardBuildingDestruction( TEAM_RED, false );
 	ACS_ExecuteAlways( 930, 0, BUILDING_OBELISK, TEAM_BLUE );
+	
+	// [Dusk] Remove the coil orb
+	Thing_Remove (TID_TESLACOIL_ORB);
 	
 	if( EventScripts )
 		ACS_ExecuteAlways( 960, 0, ACTION_DESTROY_OBELISK, TEAM_BLUE );
