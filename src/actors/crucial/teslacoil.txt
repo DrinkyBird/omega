@@ -1,0 +1,128 @@
+// [Dusk] This file is based on the TPortal's definitions, by Z86
+Actor TeslaCoilOrb {
+	+NOINTERACTION
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+NOTELEPORT
+	+FORCEXYBILLBOARD
+	RenderStyle Add
+	Alpha 0.8
+	Scale 0.25
+	
+	States {
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 Thing_ChangeTID (0, TID_TESLACOIL_ORB)
+		TNT1 A 0 A_PlaySound ("tesla/idle", 5, 1, 1)
+		goto Ready
+	
+	Ready:
+		ORBP ABCDCB 1 bright A_SpawnItem ("TeslaCoilMistSpawner", 0, 32)
+		ORBP A 0 A_SpawnItemEx ("TeslaCoilLightningWaveSpawner", 0, 0, 32, 0, 0, 0, 0, 0, 160)
+		loop
+	}
+}
+
+Actor VisualSpecialEffect
+{
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+NOTELEPORT
+	+FORCEXYBILLBOARD
+}
+
+Actor TeslaCoilMist : VisualSpecialEffect {
+	RenderStyle Add
+	Alpha 0.25
+	Scale 0.225
+	States {
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_Jump (256, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+	Loopy:
+		MIST ABCDEFGHIJKLMOOPQR 1 bright A_FadeOut(0.01)
+		loop
+	}
+}
+
+Actor TeslaCoilMistSpawner : VisualSpecialEffect {
+	States {
+	Spawn:
+		TNT1 A 0
+		TNT1 AA 0 A_SpawnItemEx ("TeslaCoilMist", Random (-14, 14), Random (-14, 14), Random (-14, 14), 
+			0.012 * Random (-50, 50), 0.012 * Random (-50, 50), 0.012 * Random (-50, 50), 0, 0, 24)
+		stop
+	}
+}
+
+Actor TeslaCoilLightning : VisualSpecialEffect
+{
+	RenderStyle Add
+	Alpha 0.7
+	States {
+	Spawn:
+		TNT1 A 0 // Huh, that's the jump...
+		TNT1 A 0 A_Jump (256,
+			1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+			17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
+			33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
+			49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64,
+			65, 66, 67, 68, 69, 70, 71, 72)
+	Select:
+		BLL1 ABCDEFGHIJKLMNOPQR 0 A_Jump (256, "Fade")
+		BLL2 ABCDEFGHIJKLMNOPQR 0 A_Jump (256, "Fade")
+		BLL3 ABCDEFGHIJKLMNOPQR 0 A_Jump (256, "Fade")
+		BLL4 ABCDEFGHIJKLMNOPQR 0 A_Jump (256, "Fade")
+	Fade:
+		"----" A 1 bright A_FadeOut (0.15)
+		loop
+	}
+}
+
+Actor TeslaCoilLightningSmall : TeslaCoilLightning {
+	Scale 0.2
+}
+
+Actor TeslaCoilLightningMedium : TeslaCoilLightning {
+	Scale 0.3
+}
+
+Actor TeslaCoilLightningLarge : TeslaCoilLightning {
+	Scale 0.4
+}
+
+Actor TeslaCoilLightningHuge : TeslaCoilLightning {
+	Scale 0.5
+}
+
+// A wave of lightning
+Actor TeslaCoilLightningWave : VisualSpecialEffect {
+	States {
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx ("TeslaCoilLightningSmall", Random(-2, 2), Random(-2, 2), Random(-2, 2), 0, 0, 0, 0, 0, 32)
+		TNT1 A 0 A_SpawnItemEx ("TeslaCoilLightningMedium", Random(-3, 3), Random(-3, 3), Random(-3, 3), 0, 0, 0, 0, 0, 56)
+		TNT1 A 0 A_SpawnItemEx ("TeslaCoilLightningLarge", Random(-4, 4), Random(-4, 4), Random(-3, 3), 0, 0, 0, 0, 0, 96)
+		TNT1 A 0 A_SpawnItemEx ("TeslaCoilLightningHuge", Random(-5, 5), Random(-5, 5), Random(-5, 5), 0, 0, 0, 0, 0, 144)
+		stop
+	}
+}
+
+// Spawns lightning waves
+Actor TeslaCoilLightningWaveSpawner : VisualSpecialEffect {
+	States {
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound ("tesla/zap")
+		TNT1 A 2 A_SpawnItem ("TeslaCoilLightningWave")
+		TNT1 A 1 A_SpawnItem ("TeslaCoilLightningWave")
+		TNT1 A 3 A_SpawnItem ("TeslaCoilLightningWave")
+		TNT1 A 5 A_SpawnItem ("TeslaCoilLightningWave")
+		TNT1 A 1 A_SpawnItem ("TeslaCoilLightningWave")
+		TNT1 A 2 A_SpawnItem ("TeslaCoilLightningWave")
+		TNT1 A 4 A_SpawnItem ("TeslaCoilLightningWave")
+		stop
+	}
+}
