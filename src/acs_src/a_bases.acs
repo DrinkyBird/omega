@@ -443,7 +443,7 @@ function str GetBuildingName( int b, int team )
 {
 	// Blue's `obelisk` shalt be called something else
 	if( b == BUILDING_OBELISK && team == TEAM_BLUE )
-		return "some gizmo";
+		return "Tesla Coil";
 	
 	return BuildingNames[b];
 }
