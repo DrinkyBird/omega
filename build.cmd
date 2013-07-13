@@ -40,13 +40,15 @@ del %tmp%
 md tmp
 pushd tmp
 	md acs
+	md actors
 	pushd acs
 		echo Compiling ACS
 		acc -I ..\..\utils\acc ..\..\src\acs_src\aow2scrp.acs aow2scrp.o >nul 2>nul
 		if not exist aow2scrp.o goto acsfail
 	popd
 	
-	zip -r1 ..\%fname% acs >nul
+	..\utils\acsconstants.exe ..\src\acs_src\aow2scrp.acs actors\acsconstants.txt
+	zip -r1 ..\%fname% acs actors >nul
 popd
 rmdir tmp /s /q >nul
 

@@ -60,7 +60,7 @@ Actor RedTiberiumRifleman	//Red Tiberium Rifleman
 		MGMR A 0 //Dummy frame needed.
 		MGMR A 0 A_GiveInventory("IsRed", 1)
 		MGMR A 0 A_ChangeFlag("Friendly", 0)//Execute ACS script(s) here.
-		MGMR A 0 ACS_ExecuteAlways (985, 0, 1, ARMOD_HALFCHEM)
+		MGMR A 0 ACS_ExecuteAlways (985, 0, 1, ARMOD_CHEM)
 		MGMR A 0 ACS_ExecuteAlways (SC_MARINE_INIT, 0)
 		Goto EnablePushablePreIdle
 

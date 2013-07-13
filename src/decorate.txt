@@ -1,4 +1,5 @@
-// don't edit the load order unless you know what you're doing
+// [Dusk] Don't edit the load order unless you know what you're doing
+#include "actors/acsconstants.txt" // [Dusk] auto-generated
 #include "actors/crucial/constants.txt"
 #include "actors/crucial/skeletal.txt"
 
