@@ -121,12 +121,12 @@ actor OrcaWeapons : AOWWeapon {
 		MHUD B 0 A_GunFlash
 		MHUD B 0 A_FireCustomMissile ("OrcaFlash", 0, 0, 0, -32)
 		MHUD B 0 A_JumpIfInventory ("IsBlue", 1, "FireBlue")
-		MHUD B 3 BRIGHT A_FireBullets (2.2, 2.2, -1, 7, "RiflePuff", 1, 3000)
+		MHUD B 3 BRIGHT A_FireBullets (2.2, 2.2, -1, 14, "RiflePuff", FBF_USEAMMO|FBF_NORANDOM, 3000)
 		MHUD A 2 A_Refire
 		Goto Ready
 	
 	FireBlue:
-		MHUD B 3 BRIGHT A_FireBullets (2.2, 2.2, -1, 7, "RiflePuff", 1, 3000)
+		MHUD B 3 BRIGHT A_FireBullets (2.2, 2.2, -1, 14, "RiflePuff", FBF_USEAMMO|FBF_NORANDOM, 3000)
 		MHUD A 2 A_Refire
 		Goto Ready
 	
