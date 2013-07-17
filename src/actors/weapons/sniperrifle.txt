@@ -33,7 +33,7 @@ actor SniperRifle : AOWWeapon {
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
 		TNT1 A 0 A_JumpIfInventory ("IsZoomed", 1, "FireZoomed")
 		SNIP A 0 A_GunFlash
-		SNIF F 0 A_FireBullets (5.0, 5.0, -1, 25, "RiflePuff")
+		SNIF F 0 A_FireBullets (5.0, 5.0, -1, 75, "RiflePuff", FBF_USEAMMO|FBF_NORANDOM)
 	Reload:
 		SNIF F 2 BRIGHT
 		SNIE A 8
@@ -95,7 +95,7 @@ actor SniperRifleWeak : SniperRifle 21081 {
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
 		SNIE AA 0 A_JumpIfInventory ("IsZoomed", 1, "FireZoomed")
 		SNIP F 0 A_GunFlash
-		SNIF F 0 A_FireBullets (5.0, 5.0, -1, 17, "RiflePuff")
+		SNIF F 0 A_FireBullets (5.0, 5.0, -1, 50, "RiflePuff", FBF_USEAMMO|FBF_NORANDOM)
 		goto Reload
 	
 	FireZoomed:

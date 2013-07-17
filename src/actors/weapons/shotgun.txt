@@ -24,8 +24,8 @@ actor Boomstick : AOWWeapon replaces Shotgun 21080 {
 		SHTG A 0 Bright A_PlaySound ("weapons/shotgf", CHAN_WEAPON)
 		SHTG A 0 Bright A_GunFlash
 		SHTG A 0 Bright Radius_Quake (3, random (3, 5), 0, 1, 0)
-		SHTG A 0 Bright A_FireBullets (5.5, 5.5, 2, 6, "HandgunPuff", 0, 350)
-		SHTG A 1 Bright A_FireBullets (5.5, 5.5, 6, 4, "HandgunPuff", 1, 1000)
+		SHTG A 0 Bright A_FireBullets (5.5, 5.5, 2, 12, "HandgunPuff", FBF_NORANDOM, 350)
+		SHTG A 1 Bright A_FireBullets (5.5, 5.5, 6, 8, "HandgunPuff", FBF_USEAMMO|FBF_NORANDOM, 1000)
 		SHTG A 1 Bright Offset (0, 41)
 		SHTG A 1 Bright Offset (0, 45)
 		SHTG A 1 Bright Offset (0, 49)
