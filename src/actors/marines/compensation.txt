@@ -1,5 +1,6 @@
 // AI Marines related to compensation
 actor BlueBackup : RandomSpawner {
+	designatedteam 0
 	dropitem "BlueRocketSoldier"
 	dropitem "BlueSuperShotgunner"
 	dropitem "BlueTiberiumRifleman"
@@ -8,6 +9,7 @@ actor BlueBackup : RandomSpawner {
 }
 
 actor RedBackup : RandomSpawner {
+	designatedteam 1
 	dropitem "RedRocketSoldier"
 	dropitem "RedSuperShotgunner"
 	dropitem "RedTiberiumRifleman"

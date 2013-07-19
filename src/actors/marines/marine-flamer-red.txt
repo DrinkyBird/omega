@@ -59,7 +59,7 @@ Actor RedFlamerDude
 	Spawn:
 		PFLM A 0 //Dummy frame needed.
 		PFLM A 0 A_GiveInventory("IsRed", 1)
-		PFLM A 0 A_ChangeFlag("Friendly", 0)//Execute ACS script(s) here.
+		PFLM A 0 //A_ChangeFlag("Friendly", 0)//Execute ACS script(s) here.
 		PFLM A 0 ACS_ExecuteAlways (985, 0, 1, ARMOD_FIRE)
 		PFLM A 0 ACS_ExecuteAlways (SC_MARINE_INIT, 0)
 		Goto EnablePushablePreIdle

@@ -59,7 +59,7 @@ Actor BluePlasmaGunner	//Red Tiberium Rifleman
 	Spawn:
 		PLA6 A 0 //Dummy frame needed.
 		PLA6 A 0 A_GiveInventory("IsBlue", 1)
-		PLA6 A 0 A_ChangeFlag("Friendly", 0)//Execute ACS script(s) here.
+		PLA6 A 0 //A_ChangeFlag("Friendly", 0)//Execute ACS script(s) here.
 		PLA6 A 0 ACS_ExecuteAlways (985, 0, 1, ARMOD_LASER)
 		PLA6 A 0 ACS_ExecuteAlways (SC_MARINE_INIT, 0)
 		Goto EnablePushablePreIdle
