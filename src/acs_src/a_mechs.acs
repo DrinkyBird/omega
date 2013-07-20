@@ -510,11 +510,11 @@ script 697( void )
 	
 	//Orca
 	if( MechType == 5 )
-		SpawnSpotFacing( "EjectedOrcaSpawner", TID_Player + PlayerNumber(), 0 );
+		SpawnSpotFacing( "EjectedOrcaSpawner", ActivatorTID(), 0 );
 	
 	// Juggernaut
 	if( MechType == 6 )
-		SpawnSpotFacing( "EjectedJuggernaut", TID_Player + PlayerNumber(), 0 );
+		SpawnSpotFacing( "EjectedJuggernaut", ActivatorTID(), 0 );
 	
 	UnMorphActor( 0, 0 );
 	
