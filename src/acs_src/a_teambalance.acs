@@ -9,16 +9,14 @@
  */
 
 // [Dusk] Rewritten this for the most part..
-function void CheckTeamBalance( void )
-{
+function void CheckTeamBalance( void ) {
 	int i, delta, lesserteam, switchee, switcheetime;
 	int PlayerStayTics = GetCVAR( "aow_teamstaytime" ) * MINUTETICS;
 	
 	if( GetCVar( "aow_noteamswitcher" ) )
 		return;
 		
-	while( true )
-	{
+	while( true ) {
 		delta = RedCount() - BlueCount();
 		
 		if( abs( delta ) <= 1 )
@@ -30,16 +28,14 @@ function void CheckTeamBalance( void )
 		switchee = MAXPLAYERS;
 		switcheetime = 0;
 		
-		for( i = 0; i < MAXPLAYERS; i++ )
-		{
+		for( i = 0; i < MAXPLAYERS; i++ ) {
 			if( !PlayerInGame( i ) || IsAdmin[i] || GetPlayerTeam( i ) == lesserteam )
 				continue; // not a player on the greater team
 			
 			// Find the player with least start time. The player also must have been in
 			// the game for a certain amount of time, after that, he's locked into his team
 			// and cannot be switched.
-			if( StartTime[i] > switcheetime && Timer() - StartTime[i] < PlayerStayTics )
-			{
+			if( StartTime[i] > switcheetime && Timer() - StartTime[i] < PlayerStayTics ) {
 				switchee = i;
 				switcheetime = StartTime[i];
 			}
@@ -54,8 +50,7 @@ function void CheckTeamBalance( void )
 		
 		ChangePlayerTeam( switchee, lesserteam );
 		
-		if(( Timer() - StartTime[i] ) > TICRATE )
-		{
+		if(( Timer() - StartTime[i] ) > TICRATE ) {
 			// If the player was already in-game for a bit, tell him why
 			// he's suddenly being switched out.
 			SetActivator( TID_Player + switchee );

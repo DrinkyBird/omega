@@ -10,8 +10,7 @@
 
 int Donor[MAXPLAYERS];
 
-function int DonateCredits( int Player, int NewCredits )
-{
+function int DonateCredits( int Player, int NewCredits ) {
 	DecrCredits( PlayerNumber(), NewCredits );
 	IncrCredits( CheckInventory( "DonationName" ), NewCredits );
 	
@@ -27,8 +26,7 @@ function int DonateCredits( int Player, int NewCredits )
 	return NewCredits;
 }
 
-function void ShowCurrentDonationMenu( void )
-{
+function void ShowCurrentDonationMenu( void ) {
 	int DonationName = CheckInventory( "DonationName" );
 	
 	if( DonationName >= MAXPLAYERS )
@@ -51,8 +49,7 @@ function void ShowCurrentDonationMenu( void )
 
 
 //Donations
-script 333( void ) NET
-{
+script 333( void ) NET {
 	if( CheckInventory( "DonateMenu" ) == 0 || !PlayerInGame( PlayerNumber () ))
 		terminate;
 		
@@ -63,19 +60,16 @@ script 333( void ) NET
 	
 }
 
-script 334( int Which ) NET
-{
+script 334( int Which ) NET {
 	int CheckValid = 1;
 	
 	if( CheckInventory( "InGame" ) == 0 )
 		terminate;
 		
-	if( Which == 1 && CheckInventory( "DonateMenu" ) == 1 )
-	{
+	if( Which == 1 && CheckInventory( "DonateMenu" ) == 1 ) {
 		GiveInventory( "DonationName", 1 );
 		
-		while( CheckValid )
-		{
+		while( CheckValid ) {
 			if( GetPlayerInfo( 0 + CheckInventory( "DonationName" ), PLAYERINFO_TEAM ) != PlayerTeam() )
 				GiveInventory( "DonationName", 1 );
 			else
@@ -87,10 +81,8 @@ script 334( int Which ) NET
 		
 		ShowCurrentDonationMenu();
 	}
-	else if( Which == 2 && CheckInventory( "DonateMenu" ) == 1 )
-	{
-		if( GetPlayerInfo( 0 + CheckInventory( "DonationName" ), PLAYERINFO_TEAM ) != PlayerTeam() )
-		{
+	else if( Which == 2 && CheckInventory( "DonateMenu" ) == 1 ) {
+		if( GetPlayerInfo( 0 + CheckInventory( "DonationName" ), PLAYERINFO_TEAM ) != PlayerTeam() ) {
 			Error( "That player is not on your team!!" );
 			terminate;
 		}
@@ -98,31 +90,27 @@ script 334( int Which ) NET
 		if( CheckInventory( "DonationName" ) == PlayerNumber() )
 			terminate;
 		
-		if( Credits[PlayerNumber()] < 100 )
-		{
+		if( Credits[PlayerNumber()] < 100 ) {
 			Error( "You can't afford this!" );
 			terminate;
 		}
 		
 		DonateCredits( CheckInventory( "DonationName" ), 100 );
 	}
-	else if( Which == 3 )
-	{
+	else if( Which == 3 ) {
 		SETFONT( "SMALLFONT" );
 		HudMessage( s:"You have been donated \cf$100";
 			HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0 );
 	}
 }
 
-script 335( void ) NET
-{
+script 335( void ) NET {
 	int CheckValid = 1;
 	
 	if( CheckInventory( "InGame" ) == 0 )
 		terminate;
 		
-	if( CheckInventory( "DonateMenu" ) == 1 )
-	{
+	if( CheckInventory( "DonateMenu" ) == 1 ) {
 		TakeInventory( "DonateMenu", 1 );
 		
 		// [Dusk] Clear the donation menu
@@ -130,12 +118,10 @@ script 335( void ) NET
 			HUDMSG_PLAIN, 6000 + PlayerNumber(), CR_Green, 0.0, 0.2, 0.4 );
 		terminate;
 	}
-	else
-	{
+	else {
 		GiveInventory( "DonateMenu", 1 );
 		
-		while( CheckValid )
-		{
+		while( CheckValid ) {
 			if( GetPlayerInfo( 0 + CheckInventory( "DonationName" ), PLAYERINFO_TEAM ) != PlayerTeam() )
 				GiveInventory( "DonationName", 1 );
 			else

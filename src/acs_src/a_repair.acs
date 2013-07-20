@@ -42,8 +42,7 @@ script 650( int amount, int repairtype, int turret ) {
 		}
 	}
 	
-	if( what != -1 && tteam == team )
-	{
+	if( what != -1 && tteam == team ) {
 		if( repairtype != REPAIRTYPE_REPAIR ) terminate;
 		if( SuddenDeath && tid < 900 ) terminate;
 		
@@ -152,24 +151,20 @@ script 651( void ) {
 	int what = -1;
 	int tteam = -1;
 	
-	if( tid == TID_PORTAL_BLUE1 || tid == TID_PORTAL_BLUE2 )
-	{
+	if( tid == TID_PORTAL_BLUE1 || tid == TID_PORTAL_BLUE2 ) {
 		// blue portal
 		what = BUILDING_PORTAL;
 		tteam = TEAM_BLUE;
 	}
-	else if( tid == TID_PORTAL_RED1 || tid == TID_PORTAL_RED2 )
-	{
+	else if( tid == TID_PORTAL_RED1 || tid == TID_PORTAL_RED2 ) {
 		// red portal
 		what = BUILDING_PORTAL;
 		tteam = TEAM_RED;
 	}
 	
 	/* FIXME: argh! */
-	for( int i = 0; i < 18; i++ )
-	{
-		if( tid == BaseTIDs[i] )
-		{
+	for( int i = 0; i < 18; i++ ) {
+		if( tid == BaseTIDs[i] ) {
 			what = i / 2;
 			tteam = i % 2;
 		}
@@ -191,8 +186,7 @@ script 651( void ) {
 }
 
 // FRIEND HEALTH DISPLAY
-script 654( void ) CLIENTSIDE
-{
+script 654( void ) CLIENTSIDE {
 	if( PlayerNumber() != ConsolePlayer ) terminate;
 	
 	int myteam = PlayerTeam();

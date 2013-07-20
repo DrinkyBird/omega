@@ -78,8 +78,7 @@ script SC_InventoryItemUse( int action, int team ) {
 		y = GetActorY( 0 );
 		z = GetActorZ( 0 ) + 32.0;
 		
-		if( Spawn( marine, x, y, z ))
-		{
+		if( Spawn( marine, x, y, z )) {
 			Spawn( "TeleportFog", x, y, z );
 			SetActorState( 0, "Done" );
 			terminate;
@@ -118,11 +117,9 @@ int IsBeingHealed[MAXPLAYERS];
 script SC_HealingRadius( int action, int i ) {
 	int shp, n;
 	
-	switch( action )
-	{
+	switch( action ) {
 	case HEALRAD_SEEK:
-		for( i = 0; i < MAXPLAYERS; i++ )
-		{
+		for( i = 0; i < MAXPLAYERS; i++ ) {
 			if( GetActorHealth( TID_Player + i ) < GetActorSpawnHealth( TID_Player + i ) && !CheckActorInventory( TID_Player + i, "IsMech" ))
 				if( CheckActorDistance( 0, TID_Player + i, HEALRAD_RANGE ) && !IsBeingHealed[i] )
 					ACS_ExecuteAlways( SC_HealingRadius, 0, HEALRAD_HEAL, i );

@@ -1,8 +1,7 @@
 // Clientside effects and designation actors
 int ChemSmokers[MAXPLAYERS];
 
-script 943 OPEN CLIENTSIDE
-{
+script 943 OPEN CLIENTSIDE {
 	consoleplayer = ConsolePlayerNumber();
 	
 	delay( 5 );
@@ -21,8 +20,7 @@ script 946( void ) NET CLIENTSIDE {
 	Log( s:"I am ", s:pname( -1 ) );
 }
 
-script 366( void ) NET CLIENTSIDE
-{
+script 366( void ) NET CLIENTSIDE {
 	if( PlayerIsBot( PlayerNumber() ) || consoleplayer == -1 )
 		terminate;
 	
@@ -30,21 +28,18 @@ script 366( void ) NET CLIENTSIDE
 	
 	int teammate, i;
 	
-	while( 1 )
-	{
+	while( 1 ) {
 		delay( 32 );
 		SpawnSpotForced( "TiberiumChemSmoke", 402, 0, 0 );
 		
 		// display smoke on tib-carrying players
-		for( i = 0; i < MAXPLAYERS; i++ )
-		{
+		for( i = 0; i < MAXPLAYERS; i++ ) {
 			if( CheckActorInventory( TID_Player + i, "TiberiumCrystal" ) && !ChemSmokers[i] )
 				ACS_ExecuteAlways( 355, 0, i, 0 );
 		}
 		
 		// see friendly stealths
-		for( i = 0; i < MAXPLAYERS; i++ )
-		{
+		for( i = 0; i < MAXPLAYERS; i++ ) {
 			teammate = GetPlayerInfo( i, PLAYERINFO_TEAM ) == GetPlayerInfo( ConsolePlayer, PLAYERINFO_TEAM );
 			
 			if( !PlayerInGame( ConsolePlayer ) ) teammate = 1; // spects
@@ -54,20 +49,17 @@ script 366( void ) NET CLIENTSIDE
 		}
 		
 		// jumpjet fire
-		for( i = 0; i < MAXPLAYERS; i++ )
-		{
+		for( i = 0; i < MAXPLAYERS; i++ ) {
 			if( CheckActorInventory( TID_Player + i, "JumpjetSwitch" ) && !ChemSmokers[i] )
 				ACS_ExecuteAlways( 355, 0, i, 2 );
 		}
 	}
 }
 
-script 355( int i, int what ) CLIENTSIDE
-{
+script 355( int i, int what ) CLIENTSIDE {
 	int x;
 	
-	switch( what )
-	{
+	switch( what ) {
 	case 0:
 		// chem smoke for tiberium players
 		
@@ -77,10 +69,8 @@ script 355( int i, int what ) CLIENTSIDE
 		
 		ChemSmokers[i] = 1;
 		
-		for( x = 0; x < 5; x++ )
-		{
-			if( !CheckActorInventory( TID_Player + i, "TiberiumCrystal" ) )
-			{
+		for( x = 0; x < 5; x++ ) {
+			if( !CheckActorInventory( TID_Player + i, "TiberiumCrystal" ) ) {
 				ChemSmokers[i] = 0;
 				terminate;
 			}
@@ -97,8 +87,7 @@ script 355( int i, int what ) CLIENTSIDE
 		SetActorProperty( TID_Player + i, APROP_RenderStyle, STYLE_Translucent );
 		SetActorProperty( TID_Player + i, APROP_Alpha, 0.4 );
 		
-		for( x = 0; x < 6; x++ )
-		{
+		for( x = 0; x < 6; x++ ) {
 			if( !CheckActorProperty( TID_Player + i, APROP_RenderStyle, STYLE_Translucent ) ) terminate;
 			
 			if( CheckActorInventory( TID_Player + i, "StealthMode" ) != 1 ) terminate;
@@ -121,10 +110,8 @@ script 355( int i, int what ) CLIENTSIDE
 		
 		ChemSmokers[i] = 1;
 		
-		for( x = 0; x < 10; x++ )
-		{
-			if( !CheckActorInventory( TID_Player + i, "JumpjetSwitch" ) )
-			{
+		for( x = 0; x < 10; x++ ) {
+			if( !CheckActorInventory( TID_Player + i, "JumpjetSwitch" ) ) {
 				ChemSmokers[i] = 0;
 				terminate;
 			}
@@ -139,10 +126,8 @@ script 355( int i, int what ) CLIENTSIDE
 }
 
 // [Dusk] TODO: Check if this can be removed
-script 400 OPEN CLIENTSIDE
-{
-	while( 1 )
-	{
+script 400 OPEN CLIENTSIDE {
+	while( 1 ) {
 		if( !GetCVAR( "hud_scale" ) )
 			ConsoleCommand( "set hud_scale true" );
 			
@@ -154,8 +139,7 @@ script 400 OPEN CLIENTSIDE
 // [Dusk] Spawns a trail of type actors from src to dest, with interval units
 // in between (with a cap of 128 trail actors at most).
 function bool SpawnTrail( int src, int dest, str type, int interval, int rand,
-	int xoff0, int yoff0, int zoff0, int xoff1, int yoff1, int zoff1 )
-{
+	int xoff0, int yoff0, int zoff0, int xoff1, int yoff1, int zoff1 ) {
 	// The server may not do this
 	if( consoleplayer == -1 )
 		return false;
@@ -166,8 +150,7 @@ function bool SpawnTrail( int src, int dest, str type, int interval, int rand,
 	if( !src ) src = ActivatorTID ();
 	if( !dest ) dest = ActivatorTID ();
 	
-	if( src == dest )
-	{
+	if( src == dest ) {
 		Log( s:"SpawnTrail: Can't trail to ourselves!" );
 		return false;
 	}
@@ -220,14 +203,12 @@ function bool SpawnTrail( int src, int dest, str type, int interval, int rand,
 		n += random( -1, 1 );
 	
 	// Information gathered, actually spawn the flares now
-	for( int i = 0; i < n; ++i )
-	{
+	for( int i = 0; i < n; ++i ) {
 		x = x0 + i * dx0;
 		y = y0 + i * dy0;
 		z = z0 + i * dz0;
 		
-		if( rand > 0 )
-		{
+		if( rand > 0 ) {
 			x += random( -rand, rand ) * 0.5;
 			y += random( -rand, rand ) * 0.5;
 			z += random( -rand, rand ) * 0.5;
@@ -240,10 +221,8 @@ function bool SpawnTrail( int src, int dest, str type, int interval, int rand,
 	return true;
 }
 
-script SC_CL_ObeliskTrail( int type ) CLIENTSIDE
-{
-	switch( type )
-	{
+script SC_CL_ObeliskTrail( int type ) CLIENTSIDE {
+	switch( type ) {
 	case 0:
 		// Obelisk beam
 		SpawnTrail( 0, 215, "ObeliskTrail", 32, 0, 0, 0, 0, 0, 0, 0 );

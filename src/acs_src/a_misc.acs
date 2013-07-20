@@ -8,34 +8,28 @@
  * of this and call it your own. Thanks!
  */
 
-script 320( int Which )
-{
+script 320( int Which ) {
 	//SetHudSize(1680,1050,0);
-	if( Which == 0 )
-	{
+	if( Which == 0 ) {
 		FadeTo( 128, 0, 0, 0.6, 0.0 );
 		FadeTo( 128, 0, 0, 0.0, 1.0 );
 	}
-	else if( Which == 1 )
-	{
+	else if( Which == 1 ) {
 		FadeTo( 128, 128, 0, 0.5, 0.0 );
 		FadeTo( 128, 128, 0, 0.0, 1.0 );
 	}
-	else if( Which == 2 )
-	{
+	else if( Which == 2 ) {
 		FadeTo( 0, 125, 0, 0.5, 0.0 );
 		FadeTo( 0, 125, 0, 0.0, 1.0 );
 	}
-	else if( Which == 4 )
-	{
+	else if( Which == 4 ) {
 		FadeTo( 128, 0, 0, 0.6, 0.0 );
 		FadeTo( 128, 0, 0, 0.0, 1.0 );
 	}
 }
 
 //Self heal health
-script SC_SelfHealHealth( void )
-{
+script SC_SelfHealHealth( void ) {
 	int cooldown = 30;
 	int i;
 	
@@ -43,28 +37,24 @@ script SC_SelfHealHealth( void )
 	HealThing( SELFHEALHEALTH / 2 );
 	
 	// And then give the rest over time
-	for( i = 0; i < SELFHEALHEALTH / 2; ++i )
-	{
+	for( i = 0; i < SELFHEALHEALTH / 2; ++i ) {
 		HealThing( 1 );
 		delay( 35 );
 	}
 }
 
 // Jumpjet fuel drain
-script 331( void )
-{
+script 331( void ) {
 	delay( 35 );
 	
-	while( CheckInventory( "JumpjetSwitch" ) && GetHealth() > 0 )
-	{
+	while( CheckInventory( "JumpjetSwitch" ) && GetHealth() > 0 ) {
 		TakeInventory( "JumpjetFuel", 1 );
 		delay( 35 );
 	}
 }
 
 // [SP] Player goes spectator.
-script 941( int Player ) DISCONNECT
-{
+script 941( int Player ) DISCONNECT {
 	Thing_ChangeTID( TID_Player + Player, 0 );
 }
 
@@ -72,10 +62,8 @@ script 941( int Player ) DISCONNECT
 script 948( int time, int display ) SetResultValue( TimeDelay( time, display ) );
 script 949( int display ) SetResultValue( TimeDelay( GetCVar( "aow_c4delay" ), display ) );
 
-function bool TimeDelay( int time, bool display )
-{
-	if( Time * 35 * 60 > Timer() )
-	{
+function bool TimeDelay( int time, bool display ) {
+	if( Time * 35 * 60 > Timer() ) {
 		int TimeRemaining = ( Time * 35 * 60 - Timer() ) / 35;
 		
 		if( Display )
@@ -88,17 +76,14 @@ function bool TimeDelay( int time, bool display )
 }
 
 // [Dusk] beacon timer reset due to it being placed underwater
-script 957( int Team )
-{
-	if( Team == 0 )
-	{
+script 957( int Team ) {
+	if( Team == 0 ) {
 		LastPurchasedBeacon[2] = 0;
 		IntelMessageBold( "Some \cGNod mong\cJ planted a beacon \cNunderwater" );
 		delay( 3 * 35 );
 		IntelMessageBold( "\cGNod\cJ free to \cDrepurchase\n\cANuclear Strike Beacon" );
 	}
-	else
-	{
+	else {
 		LastPurchasedBeacon[1] = 0;
 		IntelMessageBold( "Some \cFGDI mong\cJ planted a beacon \cNunderwater" );
 		delay( 3 * 35 );
@@ -107,14 +92,12 @@ script 957( int Team )
 }
 
 // [Dusk] returns renderer
-script 910( void )
-{
+script 910( void ) {
 	SetResultValue( GetCVar( "vid_renderer" ) );
 }
 
 // [Dusk] C4 explodes
-script 978( int p )
-{
+script 978( int p ) {
 	if( p <= 0 ) terminate;
 	
 	int c4team = TEAM_BLUE;
@@ -124,8 +107,7 @@ script 978( int p )
 	int hit;
 	int range = 96;
 	
-	if( c4team == TEAM_BLUE )
-	{
+	if( c4team == TEAM_BLUE ) {
 		if( CheckActorDistance( 0, 201, range ) ) hit = true;
 		else if( CheckActorDistance( 0, 203, range ) ) hit = true;
 		else if( CheckActorDistance( 0, 205, range ) ) hit = true;
@@ -136,8 +118,7 @@ script 978( int p )
 		else if( CheckActorDistance( 0, 902, range ) ) hit = true;
 		else if( CheckActorDistance( 0, 904, range ) ) hit = true;
 	}
-	else
-	{
+	else {
 		if( CheckActorDistance( 0, 101, range ) ) hit = true;
 		else if( CheckActorDistance( 0, 103, range ) ) hit = true;
 		else if( CheckActorDistance( 0, 105, range ) ) hit = true;
@@ -149,8 +130,7 @@ script 978( int p )
 		else if( CheckActorDistance( 0, 905, range ) ) hit = true;
 	}
 	
-	if( hit )
-	{
+	if( hit ) {
 		SetActivatorToTarget( 0 ); // award the player the points, not the C4
 		Team_GivePoints( c4team, p, false );
 	}
@@ -171,8 +151,7 @@ script 963( void ) CLIENTSIDE {
 		p = PlayerNumber();
 		
 		if( t != mytid && p != -1 && CheckActorInventory( t, "StealthMode" ) != 2 &&
-			GetPlayerInfo( t - TID_Player, PLAYERINFO_TEAM ) != team )
-		{
+			GetPlayerInfo( t - TID_Player, PLAYERINFO_TEAM ) != team ) {
 		
 			SetFont( "TARGHAIR" );
 			HudMessageBold( s: "a";
@@ -187,8 +166,7 @@ script 963( void ) CLIENTSIDE {
 }
 
 // [Dusk] Sniper rifle zoom effect
-script SC_CL_SniperZoom( void ) CLIENTSIDE
-{
+script SC_CL_SniperZoom( void ) CLIENTSIDE {
 	// Fade in
 	FadeTo( 0, 0, 0, 1.0, 0.1 );
 	delay( ( 0.1 * 35 ) >> 16 );

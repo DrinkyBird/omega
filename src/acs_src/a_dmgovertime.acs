@@ -1,6 +1,5 @@
 //Player burnt and is burning script, unfortunately the killer who set the player alight is not awarded for this.
-script 360( void )
-{
+script 360( void ) {
 	delay( 1 );
 	
 	if( CheckInventory( "CrispyPlayer" ))
@@ -11,8 +10,7 @@ script 360( void )
 	
 	// [Dusk] Damage but don't kill the player, since otherwise he'd "kill himself"
 	// This way the true killer is more likely to get the frag.
-	while( n > 0 && GetHealth() > 3 )
-	{
+	while( n > 0 && GetHealth() > 3 ) {
 		Thing_Damage2( 0, 3, "FireSpecial" );
 		delay( 5 );
 		n--;
@@ -22,8 +20,7 @@ script 360( void )
 }
 
 //Player poisoned and is burning script, unfortunately the killer who set the player alight is not awarded for this.
-script 361( void )
-{
+script 361( void ) {
 	delay( 1 );
 	
 	if( CheckInventory( "CrispyPlayer2" ))
@@ -32,8 +29,7 @@ script 361( void )
 	GiveInventory( "CrispyPlayer2", 1 );
 	int n = 10;
 	
-	while( n > 0 && GetHealth() > 7 )
-	{
+	while( n > 0 && GetHealth() > 7 ) {
 		Thing_Damage2( 0, 7, "ChemicalSpecial" );
 		delay( 8 );
 		n--;

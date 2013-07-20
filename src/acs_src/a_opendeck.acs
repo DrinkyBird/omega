@@ -11,13 +11,11 @@
 // [Dusk] TODO: this thing is a pretty damn big hack. Needs to be able
 // to detect whether you can get a certain crate instead of forcing the desired
 // crate effect - that's just dumb.
-script 955( int action )
-{
+script 955( int action ) {
 	if( !CheckWeapon( "CrateChooser" ) ) terminate;
 	
 	// INIT
-	if( action == 0 )
-	{
+	if( action == 0 ) {
 		if( CheckInventory( "CrateChooserReady" ) ) terminate;
 		
 		if( !GetCVAR( "aow_mechs" ))
@@ -28,8 +26,7 @@ script 955( int action )
 	}
 	
 	// ROTATE
-	if( action == 1 )
-	{
+	if( action == 1 ) {
 		if( CheckInventory( "CrateChooserRotation" ) == 21 )
 			TakeInventory( "CrateChooserRotation", 21 );
 		else
@@ -39,10 +36,8 @@ script 955( int action )
 	}
 	
 	// USE
-	if( action == 2 )
-	{
-		switch( CheckInventory( "CrateChooserRotation" ) )
-		{
+	if( action == 2 ) {
+		switch( CheckInventory( "CrateChooserRotation" ) ) {
 		case 0: ACS_ExecuteAlways( 309, 0, 1, 1 ); break;
 		case 1: ACS_ExecuteAlways( 309, 0, 3, 1 ); break;
 		case 2: ACS_ExecuteAlways( 309, 0, 4, 1 ); break;
@@ -58,8 +53,7 @@ script 955( int action )
 		case 12: ACS_ExecuteAlways( 309, 0, 38, 1 ); break;
 		case 13:
 		
-			if( !GetCVAR( "aow_mechs" ))
-			{
+			if( !GetCVAR( "aow_mechs" )) {
 				DisplayCross();
 				SETFONT( "BigFont" );
 			HudMessage( s: "Mechs have been disabled for this map!";
@@ -87,13 +81,11 @@ script 955( int action )
 }
 
 // HUD
-script 954( void ) NET CLIENTSIDE
-{
+script 954( void ) NET CLIENTSIDE {
 	str CrateNote = "";
 	int id;
 	
-	while( CheckWeapon( "CrateChooser" ) && GetActorProperty( ActivatorTID(), APROP_HEALTH ) >= 0 )
-	{
+	while( CheckWeapon( "CrateChooser" ) && GetActorProperty( ActivatorTID(), APROP_HEALTH ) >= 0 ) {
 		id = CheckInventory( "CrateChooserRotation" );
 		CrateNote = "";
 		
@@ -131,22 +123,19 @@ script 954( void ) NET CLIENTSIDE
 	}
 }
 
-function str CrateChooserColor( int id )
-{
+function str CrateChooserColor( int id ) {
 	bool disabled = false;
 	
 	if( id == 13 && CheckInventory( "NoMechs" ) )
 		disabled = true;
 	
-	if( CheckInventory( "CrateChooserRotation" ) == id )
-	{
+	if( CheckInventory( "CrateChooserRotation" ) == id ) {
 		if( disabled )
 			return "\cU";
 		
 		return "\cD";
 	}
-	else
-	{
+	else {
 		if( disabled )
 			return "\cM";
 		

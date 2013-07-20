@@ -8,10 +8,8 @@
  * of this and call it your own. Thanks!
  */
 
-function int Portal_GetDestination( int idx )
-{
-	switch( idx )
-	{
+function int Portal_GetDestination( int idx ) {
+	switch( idx ) {
 	case 0:
 		return 1;
 	case 1:
@@ -26,18 +24,14 @@ function int Portal_GetDestination( int idx )
 }
 
 // Portal use this to request TIDs.
-script SC_PORTAL_TIDREQUEST( int team )
-{
-	if( team == TEAM_RED )
-	{
-		if( !ThingCount( 0, TID_PORTAL_RED1 ) )
-		{
+script SC_PORTAL_TIDREQUEST( int team ) {
+	if( team == TEAM_RED ) {
+		if( !ThingCount( 0, TID_PORTAL_RED1 ) ) {
 			Thing_ChangeTID( 0, TID_PORTAL_RED1 );
 			terminate;
 		}
 		
-		if( !ThingCount( 0, TID_PORTAL_RED2 ) )
-		{
+		if( !ThingCount( 0, TID_PORTAL_RED2 ) ) {
 			Thing_ChangeTID( 0, TID_PORTAL_RED2 );
 			terminate;
 		}
@@ -45,16 +39,13 @@ script SC_PORTAL_TIDREQUEST( int team )
 		// what is this i don't even
 		SetActorState( 0, "Disapproved" );
 	}
-	else
-	{
-		if( !ThingCount( 0, TID_PORTAL_BLUE1 ) )
-		{
+	else {
+		if( !ThingCount( 0, TID_PORTAL_BLUE1 ) ) {
 			Thing_ChangeTID( 0, TID_PORTAL_BLUE1 );
 			terminate;
 		}
 		
-		if( !ThingCount( 0, TID_PORTAL_BLUE2 ) )
-		{
+		if( !ThingCount( 0, TID_PORTAL_BLUE2 ) ) {
 			Thing_ChangeTID( 0, TID_PORTAL_BLUE2 );
 			terminate;
 		}
@@ -63,8 +54,7 @@ script SC_PORTAL_TIDREQUEST( int team )
 	}
 }
 
-script SC_PORTAL_INIT( void )
-{
+script SC_PORTAL_INIT( void ) {
 	int disapproved;
 	int angle, x, y, z, z2;
 	int tid;
@@ -73,8 +63,7 @@ script SC_PORTAL_INIT( void )
 	// check if we're supposed to have these in the first place
 	if( !UsePortals )
 		disapproved = 3;
-	else
-	{
+	else {
 		x = GetActorX( 0 );
 		y = GetActorY( 0 );
 		z = GetActorFloorZ( 0 );
@@ -96,8 +85,7 @@ script SC_PORTAL_INIT( void )
 		if( ThingCount( 0, TID_PORTAL_RED1 ) == 1 && !Portals[2] && PlayerTeam() == TEAM_RED ) idx = 2;
 		if( ThingCount( 0, TID_PORTAL_RED2 ) == 1 && !Portals[3] && PlayerTeam() == TEAM_RED ) idx = 3;
 		
-		if( idx == -1 )
-		{
+		if( idx == -1 ) {
 			// this should -NEVER- happen
 			Log( s: "Warning: Failed to determine portal IDX during init! Something's going nuts here!" );
 			disapproved = 6;
@@ -114,8 +102,7 @@ script SC_PORTAL_INIT( void )
 		if( ( idx == 0 && Portals[1] && CheckActorDistance( TID_PORTAL_BLUE1, TID_PORTAL_BLUE2, PortalMinDistance ) ) ||
 			( idx == 1 && Portals[0] && CheckActorDistance( TID_PORTAL_BLUE2, TID_PORTAL_BLUE1, PortalMinDistance ) ) ||
 			( idx == 2 && Portals[3] && CheckActorDistance( TID_PORTAL_RED1, TID_PORTAL_RED2, PortalMinDistance ) ) ||
-			( idx == 3 && Portals[2] && CheckActorDistance( TID_PORTAL_RED2, TID_PORTAL_RED1, PortalMinDistance ) ) )
-		{
+			( idx == 3 && Portals[2] && CheckActorDistance( TID_PORTAL_RED2, TID_PORTAL_RED1, PortalMinDistance ) ) ) {
 			disapproved = 4;
 		}
 		
@@ -127,12 +114,10 @@ script SC_PORTAL_INIT( void )
 		if( CheckActorFloorTexture( tid, "F_SKY1" ) ) disapproved = 5;
 	}
 	
-	if( disapproved )
-	{
+	if( disapproved ) {
 		SetActorState( tid, "Disapproved" );
 		
-		switch( disapproved )
-		{
+		switch( disapproved ) {
 		case 1:
 			IntelMessage( "The other portal is too far away!" );
 			break;
@@ -170,13 +155,11 @@ script SC_PORTAL_INIT( void )
 	// What sphere color should we use?
 	int spheretype, fxtype;
 	
-	if( idx >= 2 )
-	{
+	if( idx >= 2 ) {
 		spheretype = "Utility_PortalSphereRed";
 		fxtype = "Utility_PortalFX";
 	}
-	else
-	{
+	else {
 		spheretype = "Utility_PortalSphereBlue";
 		fxtype = "Utility_PortalFXBlue";
 	}
@@ -203,8 +186,7 @@ script SC_PORTAL_INIT( void )
 	
 	// Does this portal have a link? If yes, send them both
 	// to active. Otherwise, set this inactive.
-	if( Portals[dest] )
-	{
+	if( Portals[dest] ) {
 		SetActorState( tid, "Active" );
 		SetActorState( tid_effects, "Init.Active" );
 		
@@ -212,8 +194,7 @@ script SC_PORTAL_INIT( void )
 		SetActorState( TID_PORTAL_FX + dest, "Active" );
 		Log( s: pname( -1 ), s: " constructs a portal and establishes a link." );
 	}
-	else
-	{
+	else {
 		SetActorState( tid, "Inactive" );
 		SetActorState( tid_effects, "Init.Inactive" );
 		Log( s: pname( -1 ), s: " constructs a portal end." );
@@ -224,19 +205,16 @@ script SC_PORTAL_INIT( void )
 }
 
 // Portal teleport function
-script SC_PORTAL_FUNCTION( int idx )
-{
+script SC_PORTAL_FUNCTION( int idx ) {
 	int dest = Portal_GetDestination( idx );
 	int tid = TID_PORTAL_BLUE1 + idx;
 	
 	// this script gets executed on both bump and death
-	if( !ThingCount( 0, tid ) )
-	{
+	if( !ThingCount( 0, tid ) ) {
 		Log( s: pname( -1 ), s: " destroys a portal." );
 
 		// teamkilling should not yield a reward...
-		if( idx >= 2 && PlayerTeam() == TEAM_BLUE || idx < 2 && PlayerTeam() == TEAM_RED )
-		{
+		if( idx >= 2 && PlayerTeam() == TEAM_BLUE || idx < 2 && PlayerTeam() == TEAM_RED ) {
 			ACS_ExecuteAlways( 324, 0, 1 ); // 50xp
 			AwardCredits( 200 );
 		}
@@ -248,8 +226,7 @@ script SC_PORTAL_FUNCTION( int idx )
 		
 		// [Dusk] tell the possible now-defunct destination
 		// that it lost connection.
-		if( Portals[dest] )
-		{
+		if( Portals[dest] ) {
 			SetActorState( TID_PORTAL_BLUE1 + dest, "Inactive" );
 			SetActorState( TID_PORTAL_FX + dest, "Inactive" );
 		}
@@ -265,8 +242,7 @@ script SC_PORTAL_FUNCTION( int idx )
 		terminate;
 	
 	// no quick cashups
-	if( CheckInventory( "IsHarvester" ) )
-	{
+	if( CheckInventory( "IsHarvester" ) ) {
 		DisplayCross();
 		Error( "You can't go through portals as a harvester!" );
 		HasTeleported[PlayerNumber()] = true;
@@ -276,8 +252,7 @@ script SC_PORTAL_FUNCTION( int idx )
 	}
 	
 	// yeah no
-	if( CheckInventory( "IsMech" ) )
-	{
+	if( CheckInventory( "IsMech" ) ) {
 		Error( "You can't go through portals in a mech!" );
 		HasTeleported[PlayerNumber()] = true;
 		delay( 35 );

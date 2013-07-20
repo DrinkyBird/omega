@@ -6,20 +6,17 @@
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
 //---------------------------RESEARCH ENHANCED REFINING
-script 65( int Team )
-{
+script 65( int Team ) {
 	int cost = 2000;
 	if( MitigateDoublePress() ) terminate;
-	if( EnhancedRefining[Team] )
-	{
+	if( EnhancedRefining[Team] ) {
 		Error( "This has already been researched!" );
 		terminate;
 	}
 	
 	if( !CheckPlant( Team ) ) terminate;
 	
-	if( !CheckInventory( "PurchaseToken" ) )
-	{
+	if( !CheckInventory( "PurchaseToken" ) ) {
 		GiveInventory( "PurchaseToken", 1 );
 		SetFont( "BIGFONT" );
 		HudMessage( s: "\cd----Enhanced Refining----
@@ -50,8 +47,7 @@ script 65( int Team )
 }
 
 //---------------------------ADVANCED MECH RESEARCH
-script 66( int Team )
-{
+script 66( int Team ) {
 	int cost = 2000;
 	
 	if( MitigateDoublePress() ) terminate;
@@ -59,22 +55,19 @@ script 66( int Team )
 	if( !CheckFactory( Team ) ) terminate;
 	
 	// [SP] mechs not allowed!
-	if( !GetCVAR( "aow_mechs" ))
-	{
+	if( !GetCVAR( "aow_mechs" )) {
 		Error( "Mechs have been disabled for this map!" );
 		terminate;
 	}
 	
-	if( AdvancedMechResearch[Team] )
-	{
+	if( AdvancedMechResearch[Team] ) {
 		Error( "This has already been researched!" );
 		terminate;
 	}
 	
 	if( !CheckPlant( Team ) ) terminate;
 	
-	if( CheckInventory( "PurchaseToken" ) == 0 )
-	{
+	if( CheckInventory( "PurchaseToken" ) == 0 ) {
 		GiveInventory( "PurchaseToken", 1 );
 		SetFont( "BIGFONT" );
 		HudMessage( s: "\cd----Advanced Mech Research----
@@ -107,22 +100,19 @@ script 67( void )
 
 
 //---------------------------HEALTH REGEN CACHE
-script 68( int Team )
-{
+script 68( int Team ) {
 	int cost = 2250;
 	
 	if( MitigateDoublePress() ) terminate;
 	
-	if( ( Team == 0 && ThingCount( T_NONE, 902 ) || ( Team == 1 && ThingCount( T_NONE, 903 ) ) ) )
-	{
+	if( ( Team == 0 && ThingCount( T_NONE, 902 ) || ( Team == 1 && ThingCount( T_NONE, 903 ) ) ) ) {
 		Error( "This has already been built!" );
 		terminate;
 	}
 	
 	if( !CheckPlant( team ) ) terminate;
 	
-	if( !CheckInventory( "PurchaseToken" ) )
-	{
+	if( !CheckInventory( "PurchaseToken" ) ) {
 		GiveInventory( "PurchaseToken", 1 );
 		SetFont( "BIGFONT" );
 		HudMessage( s: "\cd----Team Health Regeneration----
@@ -155,22 +145,19 @@ script 68( int Team )
 }
 
 //---------------------------AMMO REGEN CACHE
-script 69( int Team )
-{
+script 69( int Team ) {
 	int cost = 2250;
 	
 	if( MitigateDoublePress() ) terminate;
 	
-	if( ( Team == 0 && ThingCount( T_NONE, 904 ) || ( Team == 1 && ThingCount( T_NONE, 905 ) ) ) )
-	{
+	if( ( Team == 0 && ThingCount( T_NONE, 904 ) || ( Team == 1 && ThingCount( T_NONE, 905 ) ) ) ) {
 		Error( "This has already been built!" );
 		terminate;
 	}
 	
 	if( !CheckPlant( Team ) ) terminate;
 	
-	if( !CheckInventory( "PurchaseToken" ) )
-	{
+	if( !CheckInventory( "PurchaseToken" ) ) {
 		GiveInventory( "PurchaseToken", 1 );
 		SetFont( "BIGFONT" );
 		HudMessage( s: "\cd----Team Ammo Regeneration----
@@ -204,8 +191,7 @@ script 69( int Team )
 
 
 //---------------------------+1 TIMED C4
-script 70( int Team )
-{
+script 70( int Team ) {
 	int cost = 200;
 	
 	if( MitigateDoublePress() ) terminate;
@@ -236,8 +222,7 @@ script 70( int Team )
 }
 
 //---------------------------REPAIR GUN UPGRADE
-script 71( int Team )
-{
+script 71( int Team ) {
 	int cost = 200;
 	
 	if( MitigateDoublePress() ) terminate;
@@ -245,16 +230,14 @@ script 71( int Team )
 	if( CheckInventory( "RepairGunUpgrade" ) )
 		terminate;
 	
-	if( !CheckInventory( "RepairGun" ) )
-	{
+	if( !CheckInventory( "RepairGun" ) ) {
 		Error( "You must have a repair gun!" );
 		terminate;
 	}
 	
 	if( !CheckPlant( team ) ) terminate;
 	
-	if( !CheckInventory( "PurchaseToken" ) )
-	{
+	if( !CheckInventory( "PurchaseToken" ) ) {
 		GiveInventory( "PurchaseToken", 1 );
 		SetFont( "BIGFONT" );
 		HudMessage( s: "\cd----Repair Gun Upgrade----
@@ -285,22 +268,19 @@ script 71( int Team )
 
 
 //---------------------------ADVANCED TURRETS
-script 72( int Team )
-{
+script 72( int Team ) {
 	int cost = 2000;
 	
 	if( MitigateDoublePress() ) terminate;
 	
-	if( AdvancedTurrets[Team] )
-	{
+	if( AdvancedTurrets[Team] ) {
 		Error( "This has already been researched!" );
 		terminate;
 	}
 	
 	if( !CheckPlant( team ) ) terminate;
 	
-	if( CheckInventory( "PurchaseToken" ) == 0 )
-	{
+	if( CheckInventory( "PurchaseToken" ) == 0 ) {
 		GiveInventory( "PurchaseToken", 1 );
 		SetFont( "BIGFONT" );
 		HudMessage( s: "\cd----Advanced Turrets----
@@ -329,22 +309,19 @@ script 72( int Team )
 }
 
 //---------------------------MORE TURRETS
-script 73( int Team )
-{
+script 73( int Team ) {
 	int cost = 2000;
 	
 	if( MitigateDoublePress() ) terminate;
 	
-	if( MoreTurrets[Team] )
-	{
+	if( MoreTurrets[Team] ) {
 		Error( "This has already been researched!" );
 		terminate;
 	}
 	
 	if( !CheckPlant( team ) ) terminate;
 	
-	if( !CheckInventory( "PurchaseToken" ) )
-	{
+	if( !CheckInventory( "PurchaseToken" ) ) {
 		GiveInventory( "PurchaseToken", 1 );
 		SetFont( "BIGFONT" );
 		

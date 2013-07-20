@@ -8,8 +8,7 @@
 
 // -----------------------------------------------------------------------------
 // [Dusk] Adds an item to a class definition and bumps up CK_NUMITEMS
-function void AddClassItem( int class, str item, int amount )
-{
+function void AddClassItem( int class, str item, int amount ) {
 	// Get the amount of current items, from this we can figure
 	// where in the array do we insert the new item
 	int n = Classes[class][CK_NUMITEMS];
@@ -22,27 +21,23 @@ function void AddClassItem( int class, str item, int amount )
 }
 
 // -----------------------------------------------------------------------------
-function str GetClassItemName( int class, int inum )
-{
+function str GetClassItemName( int class, int inum ) {
 	int p = CK_NUMITEMS + 1 + ( inum * 2 );
 	return Classes[class][p];
 }
 
 // -----------------------------------------------------------------------------
-function int GetClassItemAmount( int class, int inum )
-{
+function int GetClassItemAmount( int class, int inum ) {
 	int p = CK_NUMITEMS + 1 + ( inum * 2 );
 	return Classes[class][p + 1];
 }
 
 // -----------------------------------------------------------------------------
-function void InitClasses( void )
-{
+function void InitClasses( void ) {
 	int c;
 	
 	// Init C4 and grenades to 1 globally
-	for( c = 0; c < NUM_CLASSES; c++ )
-	{
+	for( c = 0; c < NUM_CLASSES; c++ ) {
 		Classes[c][CK_C4] = 1;
 		Classes[c][CK_GERNADES] = 1;
 		Classes[c][CK_SPEED] = 1.0;
@@ -52,8 +47,7 @@ function void InitClasses( void )
 }
 
 // -----------------------------------------------------------------------------
-function void PurchaseClass( int c )
-{
+function void PurchaseClass( int c ) {
 	int team = PlayerTeam();
 	int cost = Classes[c][CK_COST];
 	
@@ -66,22 +60,18 @@ function void PurchaseClass( int c )
 	// Check dependencies
 	int dep = Classes[c][CK_DEP];
 	
-	if( !IsAdmin[PlayerNumber()] )
-	{
-		if( ( dep == DEP_BARRACKS || dep == DEP_CENTRE ) && !GotBarracks[Team] )
-		{
+	if( !IsAdmin[PlayerNumber()] ) {
+		if( ( dep == DEP_BARRACKS || dep == DEP_CENTRE ) && !GotBarracks[Team] ) {
 			Error( "Your \cFbarracks\c- has been destroyed!" );
 			return;
 		}
 		
-		if( dep == DEP_CENTRE && !GotPlant[Team] )
-		{
+		if( dep == DEP_CENTRE && !GotPlant[Team] ) {
 			Error( "Your \cFresearch centre\c- has been destroyed!" );
 			return;
 		}
 		
-		if( dep == DEP_REFINERY && !GotRefinery[Team] )
-		{
+		if( dep == DEP_REFINERY && !GotRefinery[Team] ) {
 			Error( "Your \cFrefinery\c- has been destroyed!" );
 			return;
 		}
@@ -89,8 +79,7 @@ function void PurchaseClass( int c )
 	
 	// Check time cops
 	int maxtimecops = GetCVAR( "aow_maxtimecopsperteam" );
-	if( c == CLASS_TIMECOP && maxtimecops > 0 && NumTimeCops[team] >= maxtimecops )
-	{
+	if( c == CLASS_TIMECOP && maxtimecops > 0 && NumTimeCops[team] >= maxtimecops ) {
 		if( maxtimecops == 1 )
 			Error( "You already have a time cop in-field!" );
 		else
@@ -99,17 +88,14 @@ function void PurchaseClass( int c )
 		return;
 	}
 	
-	if( CheckInventory( "HasClass" ) )
-	{
+	if( CheckInventory( "HasClass" ) ) {
 		Error( "You need to resign first!" );
 		return;
 	}
 	
 	// Show class information on the first press.
-	if( ( GetLevelInfo( LEVELINFO_LEVELNUM ) != 20 && GetLevelInfo( LEVELINFO_LEVELNUM ) != 21 ) )
-	{
-		if( !CheckInventory( "PurchaseToken" ) )
-		{
+	if( ( GetLevelInfo( LEVELINFO_LEVELNUM ) != 20 && GetLevelInfo( LEVELINFO_LEVELNUM ) != 21 ) ) {
+		if( !CheckInventory( "PurchaseToken" ) ) {
 			// [Dusk] Instead of a static graphic class card, draw dynamic info text
 			// This will always be accurate, while the class cards were hopelessly outdated.
 			ACS_ExecuteWithResult( 330, cost );
@@ -117,8 +103,7 @@ function void PurchaseClass( int c )
 			ACS_ExecuteAlways( 956, 0 );
 			return;
 		}
-		else
-		{
+		else {
 			// [Dusk] Clear the info text out once the class is purchased
 			ClearHudMessage( HID_CLASSTEXT );
 			ClearHudMessage( HID_CLASSTEXT + 1 );
@@ -146,8 +131,7 @@ function void PurchaseClass( int c )
 	GiveInventory( "ClassID", c );
 	GiveInventory( "Refunds", cost / 2 );
 	
-	if( Classes[c][CK_C4] > 0 )
-	{
+	if( Classes[c][CK_C4] > 0 ) {
 		GiveInventory( "TimedC4", Classes[c][CK_C4] );
 		GiveInventory( "TimedC4Count", Classes[c][CK_C4] );
 		
@@ -160,8 +144,7 @@ function void PurchaseClass( int c )
 	SetFragGrenades( Classes[c][CK_GERNADES] );
 	
 	// Give the class-specific items now
-	for( int i = 0; i < Classes[c][CK_NUMITEMS]; ++i )
-	{
+	for( int i = 0; i < Classes[c][CK_NUMITEMS]; ++i ) {
 		str itemname = GetClassItemName( c, i );
 		int itemamount = GetClassItemAmount( c, i );
 		GiveInventory( itemname, itemamount );
@@ -183,8 +166,7 @@ function void PurchaseClass( int c )
 		GiveInventory( "Grade0Damage", 1 );
 	
 	// Class-specific behavior:
-	switch( c )
-	{
+	switch( c ) {
 	case CLASS_STEALTH:
 		// Stealth trooper sounds
 		SetActorProperty( 0, APROP_DeathSound, "stealth/death" );
@@ -228,8 +210,7 @@ function void PurchaseClass( int c )
 		break;
 	}
 	
-	if( cflags & CF_HARVESTER )
-	{
+	if( cflags & CF_HARVESTER ) {
 		HudMessage( s:"Pick up \cctiberium crystals \cdand";
 			HUDMSG_FADEOUT, 1840, CR_GREEN, 0.5, 0.6, 2.0, 1.0 );
 					
@@ -250,12 +231,10 @@ function void PurchaseClass( int c )
 // -----------------------------------------------------------------------------
 // [Dusk] Delayed class sounds - in a script since functions cannot have latency.
 // These sounds are only played locally now.
-script 918( int n )
-{
+script 918( int n ) {
 	delay( 6 * TICRATE );
 	
-	switch( n )
-	{
+	switch( n ) {
 	case 0:
 		LocalAmbientSound( "misc/stealth", 127 );
 		break;
@@ -306,8 +285,7 @@ script 63( int Team ) PurchaseClass( CLASS_ADVHARVESTER );
 script 64( int Team ) PurchaseClass( CLASS_HARVESTER );
 
 //---------------------------PLASMA CANNON
-script 37( int Team )
-{
+script 37( int Team ) {
 	int cost = 1500;
 	
 	if( MitigateDoublePress()) terminate;
@@ -315,22 +293,19 @@ script 37( int Team )
 	if( !CheckPlant( Team )) terminate;
 	if( !CheckPlasmaCooldown()) terminate;
 	
-	if( CheckInventory( "PlasmaCannon" ) )
-	{
+	if( CheckInventory( "PlasmaCannon" ) ) {
 		Error( "You already have a \cnPlasma Cannon\cr!" );
 		terminate;
 	}
 	
 	int maxcannons = GetCVAR( "aow_maxcannonsperteam" );
-	if( maxcannons != -1 && NumPlasmaCannons[Team] >= maxcannons )
-	{
+	if( maxcannons != -1 && NumPlasmaCannons[Team] >= maxcannons ) {
 		Error( "Your team already has too many of those!" );
 		terminate;
 	}
 	
 	int delaytime = GetCVAR( "aow_plasmapurchasedelay" ) * 35 * 60;
-	if( Timer() < delaytime )
-	{
+	if( Timer() < delaytime ) {
 		Error( strparam( s:"You must wait \cF", d:( delaytime - Timer() ) / 60,
 			s:" seconds\nbefore you can get one of these!" ));
 		terminate;
@@ -355,12 +330,10 @@ script 37( int Team )
 }
 
 //---------------------------T-E 21cal RIFLE
-script 49( int Team )
-{
+script 49( int Team ) {
 	int cost = 300;
 	if( MitigateDoublePress() ) terminate;
-	if( CheckInventory( "TiberiumAutorifleWeak" ) || CheckInventory( "TiberiumAutorifle" ) )
-	{
+	if( CheckInventory( "TiberiumAutorifleWeak" ) || CheckInventory( "TiberiumAutorifle" ) ) {
 		Error( "You already have a \cdTiberium Autorifle!" );
 		terminate;
 	}
@@ -384,13 +357,11 @@ script 49( int Team )
 }
 
 //---------------------------CHAINSAW (was flashbangs)
-script 50( int Team )
-{
+script 50( int Team ) {
 	int cost = 250;
 	
 	if( MitigateDoublePress() ) terminate;
-	if( CheckInventory( "EagerBeaver" ) )
-	{
+	if( CheckInventory( "EagerBeaver" ) ) {
 		Error( "You already have the \cfChainsaw!" );
 		terminate;
 	}
@@ -414,13 +385,11 @@ script 50( int Team )
 }
 
 // ARTILLERY CANNON
-script 51( int Team )
-{
+script 51( int Team ) {
 	int cost = 550;
 	
 	if( MitigateDoublePress() ) terminate;
-	if( CheckInventory( "ArtilleryCannon" ) )
-	{
+	if( CheckInventory( "ArtilleryCannon" ) ) {
 		Error( "You already have an \cKArtillery Cannon!" );
 		terminate;
 	}
@@ -447,8 +416,7 @@ script 51( int Team )
 
 //-------------------- BLUE TEAM SUPERWEAPON
 //---------------------------ION CANNON BEACON
-script 55( int Team )
-{
+script 55( int Team ) {
 	if( PlayerTeam() == TEAM_RED )
 		terminate;
 	
@@ -456,8 +424,7 @@ script 55( int Team )
 	
 	if( MitigateDoublePress() ) terminate;
 	
-	if( CheckInventory( "IonCannonBeacon" ) )
-	{
+	if( CheckInventory( "IonCannonBeacon" ) ) {
 		DisplayCross();
 		SETFONT( "BigFont" );
 		HudMessage( s: "You already have the \cnIon Cannon Beacon\cr!";
@@ -472,8 +439,7 @@ script 55( int Team )
 	else
 		BlueBeaconCooldown = true;
 		
-	if( BlueBeaconCooldown )
-	{
+	if( BlueBeaconCooldown ) {
 		int mins = BlueBeaconTime / 60 - Timer() / ( 35 * 60 );
 		int secs = 59 - ( Timer() / 35 ) % 60;
 		
@@ -507,8 +473,7 @@ Log( s: pname( -1 ), s: " purchases Ion Cannon Beacon." );
 
 //-------------------- RED TEAM SUPERWEAPON
 //---------------------------NUCLEAR STRIKE BEACON
-script 56( int Team )
-{
+script 56( int Team ) {
 	if( PlayerTeam() == TEAM_BLUE )
 		terminate;
 	
@@ -522,14 +487,12 @@ script 56( int Team )
 	if( RedBeaconTime <= 0 )
 		RedBeaconCooldown = false;
 	
-	if( CheckInventory( "NuclearStrikeBeacon" ) )
-	{
+	if( CheckInventory( "NuclearStrikeBeacon" ) ) {
 		Error( "You already have the \ckNuclear Strike Beacon\cr!" );
 		terminate;
 	}
 	
-	if( RedBeaconCooldown )
-	{
+	if( RedBeaconCooldown ) {
 		Error( strparam( s:"You must wait \cF", d: RedBeaconTime, s: " seconds\nbefore you can get one of these!" ));
 		terminate;
 	}
@@ -559,20 +522,17 @@ script 56( int Team )
 }
 
 //---------------------------ARMOUR/DAMAGE UPGRADE
-script 57( int Team )
-{
+script 57( int Team ) {
 	int cost = 250;
 	
 	if( MitigateDoublePress() ) terminate;
 	
-	if( CheckInventory( "IsCommando" ) )
-	{
+	if( CheckInventory( "IsCommando" ) ) {
 		Error( "no u :I" );
 		terminate;
 	}
 	
-	if( CheckInventory( "HasArmorUpgrade" ) )
-	{
+	if( CheckInventory( "HasArmorUpgrade" ) ) {
 		Error( "You already have this \ccupgrade!" );
 		terminate;
 	}
@@ -602,22 +562,18 @@ script 57( int Team )
 // [Dusk] Attempt to teleport to field. Try multiple times so that if someone (or something)
 // is blocking one destination, we can still reach another.
 // TODO: ... or does Zandronum already do this?
-script 961( int team )
-{
+script 961( int team ) {
 	int tries, i;
 	bool failed = true;
 	
-	for( i = 0; i <= 9; i++ )
-	{
-		if( Teleport( 1 + team ) )
-		{
+	for( i = 0; i <= 9; i++ ) {
+		if( Teleport( 1 + team ) ) {
 			failed = false;
 			break;
 		}
 	}
 	
-	if( failed )
-	{
+	if( failed ) {
 		IntelMessage( strparam( s:"In-field teleportation \cAfailed\cJ - use the\n",
 			s:"\cDTeleport back to Field\cJ -terminal" ));
 		terminate;
@@ -627,18 +583,15 @@ script 961( int team )
 }
 
 // [Dusk] Helper function for DrawClassInfoText
-function str GetSpeedMeter( int c )
-{
+function str GetSpeedMeter( int c ) {
 	int speed = Classes[c][CK_SPEED];
 	str msg = strparam( s: "\cU[", s: FractionColor( speed - 0.5, 0.5 ) );
 	bool darkened = false;
 	
-	for( int i = 0; i < 10; ++i )
-	{
+	for( int i = 0; i < 10; ++i ) {
 		int step = 0.5 + ( i * 0.05 );
 		
-		if( step > Classes[c][CK_SPEED] && !darkened )
-		{
+		if( step > Classes[c][CK_SPEED] && !darkened ) {
 			msg = strparam( s: msg, s: "\cM" );
 			darkened = true;
 		}
@@ -650,8 +603,7 @@ function str GetSpeedMeter( int c )
 	return msg;
 }
 
-function void DrawClassInfoText( int c )
-{
+function void DrawClassInfoText( int c ) {
 	// Clear the entry messages if they're still there.
 	ClearHudMessage( HID_ENTER );
 	ClearHudMessage( HID_ENTER + 1 );
@@ -673,8 +625,7 @@ function void DrawClassInfoText( int c )
 		s:"\nGrenades:", d:Classes[c][CK_GERNADES], s:"\n"
 	);
 	
-	for( int i = 0; i < Classes[c][CK_NUMITEMS]; ++i )
-	{
+	for( int i = 0; i < Classes[c][CK_NUMITEMS]; ++i ) {
 		str item = GetClassItemName( c, i );
 		int amount = GetClassItemAmount( c, i );
 		

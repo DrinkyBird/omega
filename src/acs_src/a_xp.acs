@@ -3,10 +3,8 @@
 // --------------------------------------------------
 
 //Experience add
-Function void AddExperience( int XP )
-{
-	if( IsAdmin[PlayerNumber()] || Experience[PlayerNumber()] == MAX_XP )
-	{
+Function void AddExperience( int XP ) {
+	if( IsAdmin[PlayerNumber()] || Experience[PlayerNumber()] == MAX_XP ) {
 		return;
 	}
 	
@@ -24,10 +22,8 @@ Function void AddExperience( int XP )
 	ShowStatus( PlayerNumber() );
 }
 
-function int GetExpNeed( void )
-{
-	switch( Rank[PlayerNumber()] )
-	{
+function int GetExpNeed( void ) {
+	switch( Rank[PlayerNumber()] ) {
 	case RANK_PRIVATE:
 		return XPREQ_CORPORAL;
 	case RANK_CORPORAL:
@@ -49,10 +45,8 @@ function int GetExpNeed( void )
 	return -1;
 }
 
-function str GetRankPic( void )
-{
-	switch( Rank[PlayerNumber()] )
-	{
+function str GetRankPic( void ) {
+	switch( Rank[PlayerNumber()] ) {
 	case RANK_PRIVATE:
 		return "RANK01";
 	case RANK_CORPORAL:
@@ -75,12 +69,10 @@ function str GetRankPic( void )
 }
 
 // check for rankup
-script 7( void )
-{
+script 7( void ) {
 	bool RankedUp;
 	
-	if( Experience[PlayerNumber()] >= XPREQ_CORPORAL && Rank[PlayerNumber()] < RANK_CORPORAL )
-	{
+	if( Experience[PlayerNumber()] >= XPREQ_CORPORAL && Rank[PlayerNumber()] < RANK_CORPORAL ) {
 		LocalAmbientSound( "game/rank", 255 );
 		IntelMessage( strparam( s:"You have ranked up to \cDCorporal!" ) );
 		Rank[PlayerNumber()] = RANK_CORPORAL;
@@ -89,8 +81,7 @@ script 7( void )
 		GiveInventory( "PlayerRank", 1 );
 	}
 	
-	if( Experience[PlayerNumber()] >= XPREQ_SERGEANT && Rank[PlayerNumber()] < RANK_SERGEANT )
-	{
+	if( Experience[PlayerNumber()] >= XPREQ_SERGEANT && Rank[PlayerNumber()] < RANK_SERGEANT ) {
 		LocalAmbientSound( "game/rank", 255 );
 		IntelMessage( strparam( s:"You have ranked up to \cDSergeant!" ) );
 		Rank[PlayerNumber()] = RANK_SERGEANT;
@@ -99,8 +90,7 @@ script 7( void )
 		GiveInventory( "PlayerRank", 2 );
 	}
 	
-	if( Experience[PlayerNumber()] >= XPREQ_MASTERSGT && Rank[PlayerNumber()] < RANK_MASTERSGT )
-	{
+	if( Experience[PlayerNumber()] >= XPREQ_MASTERSGT && Rank[PlayerNumber()] < RANK_MASTERSGT ) {
 		LocalAmbientSound( "game/rank", 255 );
 		IntelMessage( strparam( s:"You have ranked up to \cDMaster Sergeant!" ) );
 		Rank[PlayerNumber()] = RANK_MASTERSGT;
@@ -109,8 +99,7 @@ script 7( void )
 		GiveInventory( "PlayerRank", 3 );
 	}
 	
-	if( Experience[PlayerNumber()] >= XPREQ_OFFICER && Rank[PlayerNumber()] < RANK_OFFICER )
-	{
+	if( Experience[PlayerNumber()] >= XPREQ_OFFICER && Rank[PlayerNumber()] < RANK_OFFICER ) {
 		LocalAmbientSound( "game/rank", 255 );
 		IntelMessage( strparam( s:"You have ranked up to \cDOfficer!" ) );
 		RankedUp = True;
@@ -119,8 +108,7 @@ script 7( void )
 		GiveInventory( "PlayerRank", 4 );
 	}
 	
-	if( Experience[PlayerNumber()] >= XPREQ_LIEUTENANT && Rank[PlayerNumber()] < RANK_LIEUTENANT )
-	{
+	if( Experience[PlayerNumber()] >= XPREQ_LIEUTENANT && Rank[PlayerNumber()] < RANK_LIEUTENANT ) {
 		LocalAmbientSound( "game/rank", 255 );
 		IntelMessage( strparam( s:"You have ranked up to \cDLieutenant!" ) );
 		RankedUp = True;
@@ -129,8 +117,7 @@ script 7( void )
 		GiveInventory( "PlayerRank", 5 );
 	}
 	
-	if( Experience[PlayerNumber()] >= XPREQ_MAJOR && Rank[PlayerNumber()] < RANK_MAJOR )
-	{
+	if( Experience[PlayerNumber()] >= XPREQ_MAJOR && Rank[PlayerNumber()] < RANK_MAJOR ) {
 		LocalAmbientSound( "game/rank", 255 );
 		IntelMessage( strparam( s:"You have ranked up to \cDMajor!" ) );
 		RankedUp = True;
@@ -139,8 +126,7 @@ script 7( void )
 		GiveInventory( "PlayerRank", 6 );
 	}
 	
-	if( Experience[PlayerNumber()] >= XPREQ_COMMANDO && Rank[PlayerNumber()] < RANK_COMMANDO )
-	{
+	if( Experience[PlayerNumber()] >= XPREQ_COMMANDO && Rank[PlayerNumber()] < RANK_COMMANDO ) {
 		LocalAmbientSound( "game/rank", 255 );
 		IntelMessage( strparam( s:"You have ranked up to \cDCommando!!" ) );
 		RankedUp = True;
@@ -154,20 +140,17 @@ script 7( void )
 }
 
 //Rank awards/checks
-script 91( void )
-{
+script 91( void ) {
 	ACS_Execute( 332, 0 );
 	
-	if( CheckInventory( "PowerBerserk" ) )
-	{
+	if( CheckInventory( "PowerBerserk" ) ) {
 		SetHealth( 200 );
 		terminate;
 	}
 	
 	if( CheckInventory( "IsMech" ) ) terminate;
 	
-	switch( Rank[PlayerNumber()] )
-	{
+	switch( Rank[PlayerNumber()] ) {
 	case RANK_CORPORAL:
 		SetMaxHealth( 100 );
 		break;
@@ -213,8 +196,7 @@ script 91( void )
 	if( Rank[PlayerNumber()] >= RANK_OFFICER )
 		GiveInventory( "EnhancedTimedC4", 1 );
 		
-	if( Rank[PlayerNumber()] >= RANK_MAJOR )
-	{
+	if( Rank[PlayerNumber()] >= RANK_MAJOR ) {
 		GiveInventory( "EagerBeaver", 1 );
 		
 		if( CheckWeapon( "Unarmed" ) )
@@ -223,8 +205,7 @@ script 91( void )
 			TakeInventory( "Unarmed", 1 );
 	}
 	
-	if( Rank[PlayerNumber()] == RANK_COMMANDO )
-	{
+	if( Rank[PlayerNumber()] == RANK_COMMANDO ) {
 		if( CheckInventory( "RepairGun" ) && !CheckInventory( "RepairGunUpgrade" ) )
 			GiveInventory( "RepairGunUpgrade", 1 );
 		else
@@ -232,10 +213,8 @@ script 91( void )
 	}
 }
 
-script 92( void )
-{
-	if( !CheckInventory( "InGame" ) )
-	{
+script 92( void ) {
+	if( !CheckInventory( "InGame" ) ) {
 		GiveInventory( "InGame", 1 );
 		ACS_ExecuteAlways( 5, 0 );
 		ACS_ExecuteAlways( 10, 0 );
@@ -244,20 +223,16 @@ script 92( void )
 }
 
 //Just add experience.
-Script 318( VOID )
-{
-	for( int i = 0; i < 5; i++ )
-	{
+Script 318( VOID ) {
+	for( int i = 0; i < 5; i++ ) {
 		LocalAmbientSound( "c4/use", 255 );
 		AddExperience( 50 );
 		Delay( 5 );
 	}
 }
 
-script 324( int n )
-{
-	while( n-- > 0 )
-	{
+script 324( int n ) {
+	while( n-- > 0 ) {
 		LocalAmbientSound( "c4/use", 127 );
 		AddExperience( 50 );
 		Delay( 5 );
@@ -265,10 +240,8 @@ script 324( int n )
 }
 
 //Bonuses for disarming C4.
-Script 328( int team )
-{
-	if( PlayerTeam() != team )
-	{
+Script 328( int team ) {
+	if( PlayerTeam() != team ) {
 		AddExperience( 10 );
 		AddCredits( GetCredits( PlayerNumber() ), 75 );
 		Team_GivePoints( PlayerTeam(), 2, false );
@@ -277,8 +250,7 @@ Script 328( int team )
 }
 
 //Bonuses for disarming Beacon.
-Script 350( int team )
-{
+Script 350( int team ) {
 	if( team == PlayerTeam() ) terminate;
 	
 	Team_GivePoints( PlayerTeam(), 10, false );
@@ -287,8 +259,7 @@ Script 350( int team )
 	Log( s:pname( -1 ), s:" disarms beacon." );
 }
 
-function void SetMaxHealth( int hp )
-{
+function void SetMaxHealth( int hp ) {
 	SetActorProperty( 0, APROP_Health, hp );
 	SetActorProperty( 0, APROP_SpawnHealth, hp );
 }

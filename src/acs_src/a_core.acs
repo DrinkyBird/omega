@@ -8,8 +8,7 @@
  * of this and call it your own. Thanks!
  */
 
-script 999 OPEN
-{
+script 999 OPEN {
 	delay( 1 );
 	
 	InitClasses();
@@ -65,8 +64,7 @@ script 999 OPEN
 	SpawnSpotForced( "TiberiumMapMarker", TID_TIBERIUM, 0, 0 );
 	
 	// wf unavailability
-	if( !ThingCount( T_NONE, 107 ) && !ThingCount( T_NONE, 207 ) )
-	{
+	if( !ThingCount( T_NONE, 107 ) && !ThingCount( T_NONE, 207 ) ) {
 		GotFactory[0] = 0;
 		GotFactory[1] = 0;
 		Team_GivePoints( TEAM_RED, 1, 0 );
@@ -87,8 +85,7 @@ script 999 OPEN
 	SetActorAngle( TID_TICKETCOUNTER_BLUE, StartingTickets );
 	SetActorAngle( TID_TICKETCOUNTER_RED, StartingTickets );
 	
-	if( TicketPool )
-	{
+	if( TicketPool ) {
 		SetActorSpeed( TID_TICKETCOUNTER_BLUE, StartingTickets );
 		SetActorSpeed( TID_TICKETCOUNTER_RED, StartingTickets );
 	}
@@ -99,8 +96,7 @@ script 999 OPEN
 }
 
 // Server settings
-script 599 OPEN
-{
+script 599 OPEN {
 	delay( 1 );
 	
 	// ==================================
@@ -178,8 +174,7 @@ script 599 OPEN
 }
 
 //Setting Player scripts
-script 10 RESPAWN
-{
+script 10 RESPAWN {
 	if( StartTime[PlayerNumber()] == 0 )
 		InitPlayer();
 	
@@ -189,8 +184,7 @@ script 10 RESPAWN
 	SetInventory( "IsRed", PlayerTeam() == TEAM_RED );
 	Thing_ChangeTID( 0, PlayerNumber() + TID_Player );
 	
-	if( GetPlayerInfo( PlayerNumber(), PLAYERINFO_GENDER ) == 1 )
-	{
+	if( GetPlayerInfo( PlayerNumber(), PLAYERINFO_GENDER ) == 1 ) {
 		SetActorProperty( 0, APROP_DeathSound, "female/death" );
 		GiveInventory( "IsFemale", 1 );
 	}
@@ -199,8 +193,7 @@ script 10 RESPAWN
 	SetWeapon( "Unarmed" );
 }
 
-script 11 ENTER
-{
+script 11 ENTER {
 	// [Dusk] This player's joining might throw off team balance, so check that now.
 	CheckTeamBalance();
 	
@@ -213,8 +206,7 @@ script 11 ENTER
 	SetInventory( "IsRed", PlayerTeam() == TEAM_RED );
 	Thing_ChangeTID( 0, PlayerNumber() + TID_Player );
 	
-	if( GetPlayerInfo( PlayerNumber(), PLAYERINFO_GENDER ) == 1 )
-	{
+	if( GetPlayerInfo( PlayerNumber(), PLAYERINFO_GENDER ) == 1 ) {
 		SetActorProperty( 0, APROP_DeathSound, "female/death" );
 		GiveInventory( "IsFemale", 1 );
 	}
@@ -225,8 +217,7 @@ script 11 ENTER
 }
 
 //--------------------------START UP MESSAGES
-script 301 ENTER CLIENTSIDE
-{
+script 301 ENTER CLIENTSIDE {
 	SetFont( "BIGFONT" );
 	HudMessage( s: "Welcome to \cFAll Out War 2!";
 		HUDMSG_FADEINOUT, HID_ENTER, CR_WHITE, 0.5, 0.3, 7.0, 0.5, 1.0 );
@@ -239,8 +230,7 @@ script 301 ENTER CLIENTSIDE
 	LocalAmbientSound( "voltlock/welcome", 127 );
 }
 
-Script 8( int Gone ) DISCONNECT
-{
+Script 8( int Gone ) DISCONNECT {
 	IsAdmin[gone] = false;
 	Experience[gone] = 0;
 	Rank[gone] = RANK_PRIVATE;
@@ -252,8 +242,7 @@ Script 8( int Gone ) DISCONNECT
 		if( MechGetter[i] == Gone && GettingMech[i] )
 			GettingMech[i] = 0;
 			
-	if( Surrender[gone] )
-	{
+	if( Surrender[gone] ) {
 		Surrender[gone] = false;
 		
 		int t = PlayersTeam[gone];
@@ -269,8 +258,7 @@ Script 8( int Gone ) DISCONNECT
 	CheckTeamBalance();
 }
 
-script 303 OPEN
-{
+script 303 OPEN {
 	// these maps are too small to have portals
 	delay( 5 );
 	int levelnum = GetLevelInfo( LEVELINFO_LEVELNUM );
@@ -281,8 +269,7 @@ script 303 OPEN
 	if( levelnum == 15 ) UsePortals = 0;
 }
 
-function void InitPlayer( void )
-{
+function void InitPlayer( void ) {
 	SetCredits( PlayerNumber(), GetCVAR( "aow_startcredits" ));
 	Experience[PlayerNumber()] = 0;
 	Rank[PlayerNumber()] = RANK_PRIVATE;

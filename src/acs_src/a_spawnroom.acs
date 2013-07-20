@@ -1,6 +1,5 @@
 // REFILL
-script 93( int unused, int silent )
-{
+script 93( int unused, int silent ) {
 	GiveInventory( "Backpack", 1 );
 	GiveInventory( "Backpack", 1 );
 	GiveInventory( "Backpack", 1 );
@@ -32,8 +31,7 @@ script 93( int unused, int silent )
 	if( !CheckInventory( "IsMech" ))
 		SetHealth( GetSpawnHealth() );
 	
-	if( !silent )
-	{
+	if( !silent ) {
 		SetFont( "BIGFONT" );
 		HudMessage( s: "Refilled!";
 			HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_YELLOW, 0.5, 0.45, 2.0, 1.0 );
@@ -42,10 +40,8 @@ script 93( int unused, int silent )
 }
 
 // TELEPORT BACK TO FIELD
-script 94( int Team )
-{
-	if( !CheckInventory( "HasClass" ))
-	{
+script 94( int Team ) {
+	if( !CheckInventory( "HasClass" )) {
 		Error( "You can't leave without choosing a class!" );
 		terminate;
 	}
@@ -55,12 +51,10 @@ script 94( int Team )
 }
 
 // RESIGN
-script 95( int unused, int force )
-{
+script 95( int unused, int force ) {
 	if( MitigateDoublePress() && !force ) terminate;
 	
-	if( !CheckInventory( "HasClass" ) && !force )
-	{
+	if( !CheckInventory( "HasClass" ) && !force ) {
 		DisplayCross();
 		SETFONT( "BigFont" );
 		HudMessage( s: "You don't have a class to resign from!";
@@ -133,20 +127,17 @@ script 95( int unused, int force )
 	SetActorProperty( 0, APROP_RenderStyle, STYLE_Normal );
 	SetActorProperty( 0, APROP_Alpha, 1.0 );
 	
-	if( HasPlasma )
-	{
+	if( HasPlasma ) {
 		GiveInventory( "PlasmaCannon", 1 );
 		GiveInventory( "PlasmaCannonAmmo", 10 );
 	}
 	
-	if( HasArtillery )
-	{
+	if( HasArtillery ) {
 		GiveInventory( "ArtilleryCannon", 1 );
 		GiveInventory( "ArtilleryShellAmmo", 30 );
 	}
 	
-	if( HasTiberiumAutorifle )
-	{
+	if( HasTiberiumAutorifle ) {
 		GiveInventory( "TiberiumAutorifleWeak", 1 );
 		GiveInventory( "TE21CalAmmo", 120 );
 	}
@@ -157,8 +148,7 @@ script 95( int unused, int force )
 	if( HasBerserk )
 		GiveInventory( "RedHueRemover", 1 );
 	
-	if( HasSuperWeapon )
-	{
+	if( HasSuperWeapon ) {
 		if( PlayerTeam() == TEAM_BLUE )
 			GiveInventory( "IonCannonBeacon", 1 );
 		else
@@ -193,15 +183,13 @@ script 95( int unused, int force )
 }
 
 // PURCHASE TERMINAL / RESEARCH TERMINAL / MECH PURCHASE TERMINAL
-script 96( int type )
-{
+script 96( int type ) {
 	if( MitigateDoublePress() )
 		terminate;
 	
 	int dest;
 	
-	if( PlayerTeam() == type % 2 )
-	{
+	if( PlayerTeam() == type % 2 ) {
 		DisplayCross();
 		SETFONT( "BigFont" );
 		HudMessage( s: "This is not your terminal!";
@@ -209,8 +197,7 @@ script 96( int type )
 		terminate;
 	}
 	
-	if( CheckInventory( "IsMech" ))
-	{
+	if( CheckInventory( "IsMech" )) {
 		DisplayCross();
 		SETFONT( "BigFont" );
 		HudMessage( s: "You can't use that in a mech!";
@@ -218,22 +205,19 @@ script 96( int type )
 		terminate;
 	}
 	
-	if( type <= 1 )
-	{
+	if( type <= 1 ) {
 		// PURCHASE TERMINAL
 		dest = 70 + !type;
 		GiveInventory( "IsInSpawnRoom", 1 );
 	}
-	else if( type <= 3 )
-	{
+	else if( type <= 3 ) {
 		// MECH PURCHASE
 		dest = 110;
 		
 		if( type == 2 )
 			dest = 210;
 			
-		if( !GetCVAR( "aow_mechs" ))
-		{
+		if( !GetCVAR( "aow_mechs" )) {
 			DisplayCross();
 			SETFONT( "BigFont" );
 			HudMessage( s: "Mechs have been disabled for this map!";
@@ -244,15 +228,13 @@ script 96( int type )
 			terminate;
 		}
 		
-		if( !CheckFactory( type - 2 ))
-		{
+		if( !CheckFactory( type - 2 )) {
 			delay( 5 );
 			ACS_ExecuteAlways( 96, 0, type - 2 );
 			terminate;
 		}
 		
-		if( CheckInventory( "PowerBerserk" ))
-		{
+		if( CheckInventory( "PowerBerserk" )) {
 			DisplayCross();
 			SetFont( "BIGFONT" );
 			HudMessage( s:"You can't pilot a mech while berserk!\nYou'll just tear the thing into pieces.";
@@ -262,8 +244,7 @@ script 96( int type )
 			terminate;
 		}
 		
-		if( CheckInventory( "HighUpgrade" ))
-		{
+		if( CheckInventory( "HighUpgrade" )) {
 			DisplayCross();
 			SetFont( "BIGFONT" );
 			HudMessage( s:"You have upgraded yourself in a\nway where you must resign!";
@@ -275,16 +256,14 @@ script 96( int type )
 		
 		GiveInventory( "IsInSpawnRoom", 1 );
 	}
-	else if( type <= 5 )
-	{
+	else if( type <= 5 ) {
 		// RESEARCH CENTRE
 		dest = 111;
 		
 		if( type == 4 )
 			dest = 211;
 		
-		if( !CheckPlant( type - 4 ))
-		{
+		if( !CheckPlant( type - 4 )) {
 			delay( 5 );
 			ACS_ExecuteAlways( 96, 0, type - 4 );
 			terminate;
@@ -293,15 +272,13 @@ script 96( int type )
 		GiveInventory( "IsInSpawnRoom", 1 );
 	}
 	
-	if( !Teleport( dest ))
-	{
+	if( !Teleport( dest )) {
 		SpawnSpotForced( "AntiUtilityExplosion", dest, 0, 0 );
 		delay( 10 );
 		Teleport( dest );
 	}
 }
 
-script 90( void )
-{
+script 90( void ) {
 	TakeInventory( "PurchaseToken", 1 );
 }

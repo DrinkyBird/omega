@@ -1,8 +1,6 @@
 // SURRENDER SCRIPT
-script 342( void ) NET
-{
-	if( !PlayerInGame( PlayerNumber() ) )
-	{
+script 342( void ) NET {
+	if( !PlayerInGame( PlayerNumber() ) ) {
 		DisplayCross();
 		SETFONT( "BigFont" );
 		HudMessage( s:"You can't surrender as a spectator!";
@@ -10,8 +8,7 @@ script 342( void ) NET
 		terminate;
 	}
 	
-	if( GetCVAR( "aow_surrendermode" ) == 2 )
-	{
+	if( GetCVAR( "aow_surrendermode" ) == 2 ) {
 		DisplayCross();
 		SETFONT( "BigFont" );
 		HudMessage( s:"Surrender is disabled!";
@@ -19,12 +16,9 @@ script 342( void ) NET
 		terminate;
 	}
 	
-	else if( GetCVAR( "aow_surrendermode" ) == 1 )
-	{
-		if( PlayerTeam() == TEAM_RED )
-		{
-			if( BaseLeft[0] >= 5 )
-			{
+	else if( GetCVAR( "aow_surrendermode" ) == 1 ) {
+		if( PlayerTeam() == TEAM_RED ) {
+			if( BaseLeft[0] >= 5 ) {
 				DisplayCross();
 				SETFONT( "BigFont" );
 				HudMessage( s:"It's too early to surrender!";
@@ -33,10 +27,8 @@ script 342( void ) NET
 			}
 		}
 		
-		if( PlayerTeam() == TEAM_BLUE )
-		{
-			if( BaseLeft[1] >= 5 )
-			{
+		if( PlayerTeam() == TEAM_BLUE ) {
+			if( BaseLeft[1] >= 5 ) {
 				DisplayCross();
 				SETFONT( "BigFont" );
 				HudMessage( s:"It's too early to surrender!";
@@ -46,8 +38,7 @@ script 342( void ) NET
 		}
 	}
 	
-	if( Timer() - LastSurrenderTime[PlayerNumber()] < 35 * SurrenderWaitTime )
-	{
+	if( Timer() - LastSurrenderTime[PlayerNumber()] < 35 * SurrenderWaitTime ) {
 		DisplayCross();
 		SETFONT( "BigFont" );
 		HudMessage( s:"Please wait to revote for surrender!";
@@ -70,8 +61,7 @@ script 342( void ) NET
 	ACS_Execute( 751, 0 );
 }
 
-script 751( void )
-{
+script 751( void ) {
 	int count;
 	
 	count = SurrenderCount( TEAM_BLUE );

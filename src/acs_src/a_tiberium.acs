@@ -1,20 +1,16 @@
 // determine should we pick up Tiberium or leave it there
-script 357( void )
-{
+script 357( void ) {
 	SetResultValue( 0 );
 	
-	if( CheckInventory( "IsHarvester" ) && !CheckInventory( "TiberiumCrystal" ) )
-	{
+	if( CheckInventory( "IsHarvester" ) && !CheckInventory( "TiberiumCrystal" ) ) {
 		SetResultValue( 1 );
 		IntelMessage( "\cJTake it back to \cQRefinery!" );
 	}
 }
 
 // Tiberium refining terminal
-script 110( int Team )
-{
-	if( Team == PlayerTeam() || PlayerTeam() < 0 || PlayerTeam() > 1 )
-	{
+script 110( int Team ) {
+	if( Team == PlayerTeam() || PlayerTeam() < 0 || PlayerTeam() > 1 ) {
 		Error( "This is not your terminal!" );
 		terminate;
 	}
@@ -22,8 +18,7 @@ script 110( int Team )
 	if( !CheckRefinery( Team ) )
 		terminate;
 	
-	if( !CheckInventory( "IsHarvester" ) || !CheckInventory( "TiberiumCrystal" ) )
-	{
+	if( !CheckInventory( "IsHarvester" ) || !CheckInventory( "TiberiumCrystal" ) ) {
 		Error( "You need to be a \cfHarvester \crand have \cdTiberium!" );
 		terminate;
 	}
@@ -50,8 +45,7 @@ script 110( int Team )
 	GivePoints( 1 );
 	int amount = 75;
 	
-	switch( GetCVAR( "aow_economy_mode" ) )
-	{
+	switch( GetCVAR( "aow_economy_mode" )) {
 	case 1:
 		amount = 75;
 		
@@ -70,10 +64,8 @@ script 110( int Team )
 		break;
 	}
 	
-	for( int i = 0; i < MAXPLAYERS; i++ )
-	{
-		if( PlayerInGame( i ) && GetPlayerInfo( i, PLAYERINFO_TEAM ) == PlayerTeam() )
-		{
+	for( int i = 0; i < MAXPLAYERS; i++ ) {
+		if( PlayerInGame( i ) && GetPlayerInfo( i, PLAYERINFO_TEAM ) == PlayerTeam() ) {
 			GiveCredits( i, amount );
 			SetActivator( TID_Player + i );
 			IntelMessage( strparam( s:"Your teammate has \cDrefined Tiberium\n",

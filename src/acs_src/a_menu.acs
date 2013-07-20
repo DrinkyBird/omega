@@ -7,8 +7,7 @@ int MenuSelection[2], MenuHorPos;
 // SERVER INTERACTION
 // Script #970 - server prepares client to utility menu usage
 // Utility gun AltFire calls this to activate the menu
-script 970( void )
-{
+script 970( void ) {
 	ActivatorSound( "switch/pulse", 127 );
 	
 	int team = 1 - PlayerTeam();
@@ -41,8 +40,7 @@ script 970( void )
 }
 
 // Script #969 - server receives selection from utility guy
-script 969( int sel0, int sel1 ) NET
-{
+script 969( int sel0, int sel1 ) NET {
 	int pn = PlayerNumber();
 	
 	if( !CheckInventory( "InUtilMenu" ) ) terminate;
@@ -64,8 +62,7 @@ script 969( int sel0, int sel1 ) NET
 	( sel0 != 2 || sel1 != 2 || MineLimit() < 50 ) &&
 	( sel0 != 2 || sel1 != 3 || MiniRavenLimit() < 5 ) &&
 	( sel0 != 3 || sel1 != 0 || RazorWireLimit() < 20 ) &&
-	( sel0 != 3 || sel1 != 2 || UsePortals ) )
-	{
+	( sel0 != 3 || sel1 != 2 || UsePortals ) ) {
 		TakeInventory( "CannotBuild", 1 );
 	}
 	
@@ -76,8 +73,7 @@ script 969( int sel0, int sel1 ) NET
 }
 
 // MENU LOOP
-script 965( void ) CLIENTSIDE
-{
+script 965( void ) CLIENTSIDE {
 	DisplayUtilHud();
 	LocalAmbientSound( "menu/prompt", 127 );
 	
@@ -86,43 +82,36 @@ script 965( void ) CLIENTSIDE
 	
 	int buttons, lethimbuild;
 	
-	while( CheckInventory( "InUtilMenu" ) )
-	{
+	while( CheckInventory( "InUtilMenu" ) ) {
 		buttons = GetPlayerInput( PlayerNumber(), INPUT_BUTTONS );
 		
-		if( buttons & BT_FORWARD )
-		{
+		if( buttons & BT_FORWARD ) {
 			MoveMenuCursorVertical( true );
 			delay( 5 );
 		}
 		
-		if( buttons & BT_BACK )
-		{
+		if( buttons & BT_BACK ) {
 			MoveMenuCursorVertical( false );
 			delay( 5 );
 		}
 		
-		if( buttons & BT_MOVERIGHT )
-		{
+		if( buttons & BT_MOVERIGHT ) {
 			MoveMenuCursorHorizontal( true );
 			delay( 5 );
 		}
 		
-		if( buttons & BT_MOVELEFT )
-		{
+		if( buttons & BT_MOVELEFT ) {
 			MoveMenuCursorHorizontal( false );
 			delay( 5 );
 		}
 		
-		if( buttons & BT_ATTACK || buttons & BT_ALTATTACK || GetActorProperty( 0, APROP_HEALTH ) <= 0 )
-		{
+		if( buttons & BT_ATTACK || buttons & BT_ALTATTACK || GetActorProperty( 0, APROP_HEALTH ) <= 0 ) {
 			lethimbuild =
 				( MenuSelection[0] != 2 || MenuSelection[1] < 4 || ( CheckInventory( "GotAdvTurrets" ) == 1 ) ) &&
 				( MenuSelection[0] != 1 || MenuSelection[1] < 5 || ( CheckInventory( "NoMechs" ) == 0 ) ) &&
 				( MenuSelection[0] != 3 || MenuSelection[1] != 2 || ( CheckInventory( "PortalsEnabled" ) ) );
 				
-			if( ( !( buttons & BT_ATTACK ) || lethimbuild || GetActorProperty( 0, APROP_HEALTH ) <= 0 ) && Timer() > MenuEpoch )
-			{
+			if( ( !( buttons & BT_ATTACK ) || lethimbuild || GetActorProperty( 0, APROP_HEALTH ) <= 0 ) && Timer() > MenuEpoch ) {
 				ConsoleCommand( strparam( s: "puke -969 ", d: MenuSelection[0], s: " ", d: MenuSelection[1] ) );
 				delay( 15 );
 			}
@@ -138,10 +127,8 @@ script 965( void ) CLIENTSIDE
 }
 
 // [Dusk] Cursor moves up/down
-function void MoveMenuCursorVertical( bool up )
-{
-	if( PlayerNumber() != ConsolePlayer )
-	{
+function void MoveMenuCursorVertical( bool up ) {
+	if( PlayerNumber() != ConsolePlayer ) {
 		return;
 	}
 	
@@ -150,12 +137,10 @@ function void MoveMenuCursorVertical( bool up )
 	int max = 3;
 	str item = 0;
 	
-	if( MenuHorPos )
-	{
+	if( MenuHorPos ) {
 		item = 1;
 		
-		switch( MenuSelection[0] )
-		{
+		switch( MenuSelection[0] ) {
 		case 0:
 			max = 5;
 			break;
@@ -173,15 +158,13 @@ function void MoveMenuCursorVertical( bool up )
 	else
 		MenuSelection[1] = 0;
 		
-	if( !up )
-	{
+	if( !up ) {
 		if( MenuSelection[item] == max )
 			MenuSelection[item] = 0;
 		else
 			MenuSelection[item]++;
 	}
-	else
-	{
+	else {
 		if( MenuSelection[item] == 0 )
 			MenuSelection[item] = max;
 		else
@@ -192,10 +175,8 @@ function void MoveMenuCursorVertical( bool up )
 }
 
 // [Dusk] Cursor moves right/left
-function void MoveMenuCursorHorizontal( bool right )
-{
-	if( PlayerNumber() != ConsolePlayer )
-	{
+function void MoveMenuCursorHorizontal( bool right ) {
+	if( PlayerNumber() != ConsolePlayer ) {
 		return;
 	}
 	
@@ -219,8 +200,7 @@ function void MoveMenuCursorHorizontal( bool right )
 #define UMENU_X4 -0.7
 #define UMENU_Y4 -0.425
 
-function void DisplayUtilHud( void )
-{
+function void DisplayUtilHud( void ) {
 	HudMessage( s: "\cFUTILITY GUN";
 		HUDMSG_PLAIN, 1, CR_UNTRANSLATED, UMENU_X1, UMENU_Y1, 0.0 );
 	HudMessage( s: UtilMenuItemColor( 0, 0 ), s: "CACHES\n",
@@ -231,8 +211,7 @@ function void DisplayUtilHud( void )
 	
 	int levelnum = GetLevelInfo( LEVELINFO_LEVELNUM );
 	
-	switch( MenuSelection[0] )
-	{
+	switch( MenuSelection[0] ) {
 	case 0:
 		HudMessage( s: UtilMenuItemColor( 1, 0 ), s: "AMMO CACHE\n",
 			s: UtilMenuItemColor( 1, 1 ), s: "MEDICAL CACHE\n",
@@ -242,8 +221,7 @@ function void DisplayUtilHud( void )
 			s: UtilMenuItemColor( 1, 5 ), s: "AMMO REGEN\n";
 			HUDMSG_PLAIN, 3, CR_UNTRANSLATED, UMENU_X3, UMENU_Y3, 0.0 );
 		
-		switch( MenuSelection[1] )
-		{
+		switch( MenuSelection[1] ) {
 		case 0:
 			HudMessage( s: "\cFAmmo Cache\n",
 				s: "Dispenses backpacks.\n\n\n\n\n",
@@ -315,8 +293,7 @@ function void DisplayUtilHud( void )
 			s: UtilMenuItemColor( 1, 7 ), s: "WOLVERINE\n";
 			HUDMSG_PLAIN, 3, CR_UNTRANSLATED, UMENU_X3, UMENU_Y3, 0.0 );
 		
-		switch( MenuSelection[1] )
-		{
+		switch( MenuSelection[1] ) {
 		case 0:
 			HudMessage( s: "\cFC4 Box\n",
 				s: "A box filled with various\n",
@@ -374,8 +351,7 @@ function void DisplayUtilHud( void )
 			break;
 		case 6:
 		
-			if( !CheckInventory( "NoMechs" ) )
-			{
+			if( !CheckInventory( "NoMechs" ) ) {
 				HudMessage( s: "\cFRaven mech\n",
 					s: "A basic, fast mech armed\n",
 					s: "with LRM-5:s and an AC2\n",
@@ -385,8 +361,7 @@ function void DisplayUtilHud( void )
 					s: "\cFHealth: \cD2000 \cQHP\n";
 					HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0 );
 			}
-			else
-			{
+			else {
 				HudMessage( s: "\cKRaven mech\n",
 					s: "\cUA basic, fast mech armed\n",
 					s: "\cUwith LRM-5:s and an AC2\n",
@@ -401,8 +376,7 @@ function void DisplayUtilHud( void )
 			break;
 		case 7:
 		
-			if( !CheckInventory( "NoMechs" ) )
-			{
+			if( !CheckInventory( "NoMechs" ) ) {
 				HudMessage( s: "\cFWolverine mech\n",
 					s: "A more powerful but slower\n",
 					s: "mech with LRM-10:s, a\n",
@@ -412,8 +386,7 @@ function void DisplayUtilHud( void )
 					s: "\cFHealth: \cD2000 \cQHP\n";
 					HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0 );
 			}
-			else
-			{
+			else {
 				HudMessage( s: "\cKWolverine mech\n",
 					s: "\cUA more powerful but slower\n",
 					s: "\cUmech with LRM-10:s, a\n",
@@ -440,8 +413,7 @@ function void DisplayUtilHud( void )
 			s: UtilMenuItemColor( 1, 7 ), s: "ARTILLERY TURRET\n";
 			HUDMSG_PLAIN, 3, CR_UNTRANSLATED, UMENU_X3, UMENU_Y3, 0.0 );
 		
-		switch( MenuSelection[1] )
-		{
+		switch( MenuSelection[1] ) {
 		case 0:
 			HudMessage( s: "\cFGun turret\n",
 				s: "Basic gattling gun-armed\n",
@@ -496,8 +468,7 @@ function void DisplayUtilHud( void )
 			break;
 		case 4:
 		
-			if( CheckInventory( "GotAdvTurrets" ) )
-			{
+			if( CheckInventory( "GotAdvTurrets" ) ) {
 				HudMessage( s: "\cFAdvanced Gun turret\n",
 					s: "An advanced, stronger\n",
 					s: "version of the gun turret\n",
@@ -511,8 +482,7 @@ function void DisplayUtilHud( void )
 					s: TurretsAtLimitWarning(), s: OutOfRangeWarning();
 					HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0 );
 			}
-			else
-			{
+			else {
 				HudMessage( s: "\cMAdvanced Gun turret\n",
 					s: "\cUAn advanced, stronger\n",
 					s: "\cUversion of the gun turret\n",
@@ -531,8 +501,7 @@ function void DisplayUtilHud( void )
 			break;
 		case 5:
 		
-			if( CheckInventory( "GotAdvTurrets" ) )
-			{
+			if( CheckInventory( "GotAdvTurrets" ) ) {
 				HudMessage( s: "\cFPrecision turret\n",
 					s: "A variant of the gun turret\n",
 					s: "that shoots accurate shots\n",
@@ -545,8 +514,7 @@ function void DisplayUtilHud( void )
 					s: TurretsAtLimitWarning(), s: OutOfRangeWarning();
 					HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0 );
 			}
-			else
-			{
+			else {
 				HudMessage( s: "\cMPrecision turret\n",
 					s: "\cUA variant of the gun turret\n",
 					s: "\cUthat shoots accurate shots\n",
@@ -563,8 +531,7 @@ function void DisplayUtilHud( void )
 			break;
 		
 		case 6:
-			if( CheckInventory( "GotAdvTurrets" ) )
-			{
+			if( CheckInventory( "GotAdvTurrets" ) ) {
 				HudMessage( s: "\cFRepair turret\n",
 				s: "A gun turret with a repair\n",
 				s: "gun. Place in front of MCTs\n",
@@ -577,8 +544,7 @@ function void DisplayUtilHud( void )
 				s: TurretsAtLimitWarning(), s: OutOfRangeWarning();
 				HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0 );
 			}
-			else
-			{
+			else {
 				HudMessage( s: "\cMRepair turret\n",
 					s: "\cUA gun turret with a repair\n",
 					s: "\cUgun. Place in front of MCTs\n",
@@ -595,8 +561,7 @@ function void DisplayUtilHud( void )
 			break;
 		
 		case 7:
-			if( CheckInventory( "GotAdvTurrets" ) )
-			{
+			if( CheckInventory( "GotAdvTurrets" ) ) {
 			HudMessage( s: "\cFArtillery turret\n",
 				s: "An anti-mech turret with\n",
 				s: "80mm shells. Won't react to\n",
@@ -610,8 +575,7 @@ function void DisplayUtilHud( void )
 				s: TurretsAtLimitWarning(), s: OutOfRangeWarning();
 				HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0 );
 			}
-			else
-			{
+			else {
 				HudMessage( s: "\cMArtillery turret\n",
 					s: "\cUAn anti-mech turret with\n",
 					s: "\cU80mm shells. Won't react to\n",
@@ -645,8 +609,7 @@ function void DisplayUtilHud( void )
 			s: UtilMenuItemColor( 1, 9 ), s: "3 STEPS DOWN\n";
 			HUDMSG_PLAIN, 3, CR_UNTRANSLATED, UMENU_X3, UMENU_Y3, 0.0 );
 		
-		switch( MenuSelection[1] )
-		{
+		switch( MenuSelection[1] ) {
 		case 0:
 			HudMessage( s: "\cFRazor wire\n",
 				s: "Four meters of razor\n",
@@ -671,8 +634,7 @@ function void DisplayUtilHud( void )
 			break;
 		case 2:
 		
-			if( CheckInventory( "PortalsEnabled" ) )
-			{
+			if( CheckInventory( "PortalsEnabled" ) ) {
 				HudMessage( s: "\cFPortal\n",
 					s: "Want a buildable two-way\n",
 					s: "teleport? Just make two of\n",
@@ -685,8 +647,7 @@ function void DisplayUtilHud( void )
 					s: LimitColour( 4, 1 ), s: "/", s: LimitColour( 4, 0 ), d: 2, s: " (one pair)";
 					HUDMSG_PLAIN, 4, CR_WHITE, UMENU_X4, UMENU_Y4, 0.0 );
 			}
-			else
-			{
+			else {
 				HudMessage( s: "\cKPortal\n",
 					s: "\cUWant a buildable two-way\n",
 					s: "\cUteleport? Just make two of\n",
@@ -780,10 +741,8 @@ function void DisplayUtilHud( void )
 	}
 }
 
-function str UtilMenuItemColor( int i, int j )
-{
-	if( !i && MenuSelection[0] == j )
-	{
+function str UtilMenuItemColor( int i, int j ) {
+	if( !i && MenuSelection[0] == j ) {
 		if( !MenuHorPos )
 			return "\cD";
 		else
@@ -794,8 +753,7 @@ function str UtilMenuItemColor( int i, int j )
 		return "\cQ";
 		
 	// [Dusk] Special case for unresearched adv. turrets
-	if( MenuSelection[0] == 2 && !CheckInventory( "GotAdvTurrets" ) && j >= 4 && i )
-	{
+	if( MenuSelection[0] == 2 && !CheckInventory( "GotAdvTurrets" ) && j >= 4 && i ) {
 		if( MenuHorPos && MenuSelection[1] == j )
 			return "\cU";
 		else
@@ -803,8 +761,7 @@ function str UtilMenuItemColor( int i, int j )
 	}
 	
 	// [Dusk] Special case for disabled mechs
-	if( MenuSelection[0] == 1 && CheckInventory( "NoMechs" ) && j >= 6 && i )
-	{
+	if( MenuSelection[0] == 1 && CheckInventory( "NoMechs" ) && j >= 6 && i ) {
 		if( MenuHorPos && MenuSelection[1] == j )
 			return "\cU";
 		else
@@ -812,36 +769,31 @@ function str UtilMenuItemColor( int i, int j )
 	}
 	
 	// [Dusk] Special case for portals in maps which they're not allowed in
-	if( MenuSelection[0] == 3 && !CheckInventory( "PortalsEnabled" ) && j == 2 && i )
-	{
+	if( MenuSelection[0] == 3 && !CheckInventory( "PortalsEnabled" ) && j == 2 && i ) {
 		if( MenuHorPos && MenuSelection[1] == j )
 			return "\cU";
 		else
 			return "\cM";
 	}
 	
-	if( i && MenuSelection[1] == j )
-	{
+	if( i && MenuSelection[1] == j ) {
 		if( MenuHorPos )
 			return "\cD";
 		else
 			return "\cJ";
 	}
 	
-	if( i && MenuSelection[1] != j && MenuHorPos )
-	{
+	if( i && MenuSelection[1] != j && MenuHorPos ) {
 		return "\cQ";
 	}
 	
 	return "\cU";
 }
 
-function int TurretLimit( void )
-{
+function int TurretLimit( void ) {
 	int limit;
 	
-	if( PlayerTeam() == TEAM_BLUE )
-	{
+	if( PlayerTeam() == TEAM_BLUE ) {
 		limit += ThingCountName( "Utility_GunTurretBlue", 0 );
 		limit += ThingCountName( "Utility_MechTurretBlue", 0 );
 		limit += ThingCountName( "Utility_KlaxonBlue", 0 );
@@ -849,8 +801,7 @@ function int TurretLimit( void )
 		limit += ThingCountName( "Utility_RepairGunTurretBlue", 0 );
 		limit += ThingCountName( "Utility_ArtilleryTurretBlue", 0 ) * 2;
 	}
-	else if( PlayerTeam() == TEAM_RED )
-	{
+	else if( PlayerTeam() == TEAM_RED ) {
 		limit += ThingCountName( "Utility_GunTurretRed", 0 );
 		limit += ThingCountName( "Utility_MechTurretRed", 0 );
 		limit += ThingCountName( "Utility_KlaxonRed", 0 );
@@ -862,40 +813,33 @@ function int TurretLimit( void )
 	return limit;
 }
 
-function int MineLimit( void )
-{
+function int MineLimit( void ) {
 	int limit;
 	
-	if( PlayerTeam() == TEAM_BLUE )
-	{
+	if( PlayerTeam() == TEAM_BLUE ) {
 		limit = ThingCountName( "ProxyMineBlue", 0 );
 	}
-	else if( PlayerTeam() == TEAM_RED )
-	{
+	else if( PlayerTeam() == TEAM_RED ) {
 		limit = ThingCountName( "ProxyMineRed", 0 );
 	}
 	
 	return limit;
 }
 
-function int MiniRavenLimit( void )
-{
+function int MiniRavenLimit( void ) {
 	int limit;
 	
-	if( PlayerTeam() == TEAM_BLUE )
-	{
+	if( PlayerTeam() == TEAM_BLUE ) {
 		limit = ThingCountName( "Utility_MiniRavenBlue", 0 );
 	}
-	else if( PlayerTeam() == TEAM_RED )
-	{
+	else if( PlayerTeam() == TEAM_RED ) {
 		limit = ThingCountName( "Utility_MiniRavenRed", 0 );
 	}
 	
 	return limit;
 }
 
-function int TurretLimitMax( void )
-{
+function int TurretLimitMax( void ) {
 	int limit = 15;
 	
 	if( CheckInventory( "GotMoreTurrets" ) )
@@ -904,64 +848,52 @@ function int TurretLimitMax( void )
 	return limit;
 }
 
-function int RazorWireLimit( void )
-{
+function int RazorWireLimit( void ) {
 	int limit;
 	
-	if( PlayerTeam() == TEAM_BLUE )
-	{
+	if( PlayerTeam() == TEAM_BLUE ) {
 		limit = ThingCountName( "Utility_RazorWireBlue", 0 );
 	}
-	else if( PlayerTeam() == TEAM_RED )
-	{
+	else if( PlayerTeam() == TEAM_RED ) {
 		limit = ThingCountName( "Utility_RazorWire", 0 );
 	}
 	
 	return limit;
 }
 
-function int PortalLimit( void )
-{
+function int PortalLimit( void ) {
 	int limit;
 	
-	if( PlayerTeam() == TEAM_BLUE )
-	{
+	if( PlayerTeam() == TEAM_BLUE ) {
 		limit = ThingCountName( "Utility_PortalBlue", 0 );
 	}
-	else if( PlayerTeam() == TEAM_RED )
-	{
+	else if( PlayerTeam() == TEAM_RED ) {
 		limit = ThingCountName( "Utility_PortalRed", 0 );
 	}
 	
 	return limit;
 }
 
-function str OutOfRangeWarning( void )
-{
-	if( CheckInventory( "UtilityOutOfRange" ) )
-	{
+function str OutOfRangeWarning( void ) {
+	if( CheckInventory( "UtilityOutOfRange" ) ) {
 		return "\n\n\cKYou are too far from\n\cKbase to build this!";
 	}
 	
 	return "";
 }
 
-function str TurretsAtLimitWarning( void )
-{
-	if( !CheckInventory( "GotMoreTurrets" ) && TurretLimit() >= 30 )
-	{
+function str TurretsAtLimitWarning( void ) {
+	if( !CheckInventory( "GotMoreTurrets" ) && TurretLimit() >= 30 ) {
 		return "\n\n\cKAt limit - research\n\cFMore Turrets\cK to build more!";
 	}
 	
 	return "";
 }
 
-function str LimitColour( int type, int style )
-{
+function str LimitColour( int type, int style ) {
 	str green, red;
 	
-	switch( style )
-	{
+	switch( style ) {
 	case 0:
 		green = "\cD";
 		red = "\cG";
@@ -976,8 +908,7 @@ function str LimitColour( int type, int style )
 		break;
 	}
 	
-	switch( type )
-	{
+	switch( type ) {
 	case 0:
 	
 		// turret

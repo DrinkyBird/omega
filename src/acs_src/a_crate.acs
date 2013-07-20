@@ -11,10 +11,8 @@
 // [Dusk] There's some anomaly going around with the RNG which causes the powerup crate
 // to favor one effect over another. Get around this by re-rolling the crate number
 // every second.
-script 312 OPEN
-{
-	while( 1 )
-	{
+script 312 OPEN {
+	while( 1 ) {
 		CrateNumber += random( 0, MAX_CRATE );
 		CrateNumber %= MAX_CRATE;
 		CrateNumber++;
@@ -24,15 +22,13 @@ script 312 OPEN
 	restart;
 }
 
-script 309( int Crate, int Override )
-{
+script 309( int Crate, int Override ) {
 	// Crate determines which crate is given, 0 means random
 	// Override means whether all limits should be overridden. Open Deck needs this.
 	int i;
 	int amount;
 	
-	if( !Crate )
-	{
+	if( !Crate ) {
 		// Crate = random(1, MAX_CRATE);
 		Crate = CrateNumber;
 		Override = false;
@@ -44,12 +40,10 @@ script 309( int Crate, int Override )
 		CrateNumber++;
 	}
 	
-	switch( crate )
-	{
+	switch( crate ) {
 	case 1:
 	case 17:
-		if( GetArmorGrade() >= 5 && !Override )
-		{
+		if( GetArmorGrade() >= 5 && !Override ) {
 			crate = 0;
 			restart;
 		}
@@ -65,8 +59,7 @@ script 309( int Crate, int Override )
 		AmbientSound( "powerup/base", 127 );
 		Log( s:pname( -1 ), s:" gets Base Miracle." );
 
-		if( PlayerTeam() == TEAM_RED )
-		{
+		if( PlayerTeam() == TEAM_RED ) {
 			IntelMessageBold( "\cGNod\cJ got \cDBase Miracle!" );
 			if( GotBarracks[0] ) SetActorHealth( 201, GetActorSpawnHealth( 201 ) );
 			if( GotRefinery[0] ) SetActorHealth( 203, GetActorSpawnHealth( 203 ) );
@@ -74,8 +67,7 @@ script 309( int Crate, int Override )
 			if( GotFactory[0] ) SetActorHealth( 207, GetActorSpawnHealth( 207 ) );
 			if( GotObelisk[0] ) SetActorHealth( 214, GetActorSpawnHealth( 214 ) );
 		}
-		else if( PlayerTeam() == TEAM_BLUE )
-		{
+		else if( PlayerTeam() == TEAM_BLUE ) {
 			IntelMessageBold( "\cFGDI\cJ got \cDBase Miracle!" );
 			if( GotBarracks[1] ) SetActorHealth( 101, GetActorSpawnHealth( 101 ) );
 			if( GotRefinery[1] ) SetActorHealth( 103, GetActorSpawnHealth( 103 ) );
@@ -90,8 +82,7 @@ script 309( int Crate, int Override )
 	
 	case 3:
 	case 21:
-		if( ( CheckInventory( "ChemicalArmor" ) || CheckInventory( "PowerChemicalProof" ) ) && !Override )
-		{
+		if( ( CheckInventory( "ChemicalArmor" ) || CheckInventory( "PowerChemicalProof" ) ) && !Override ) {
 			crate = 1; // armor upgrade
 			restart;
 		}
@@ -107,8 +98,7 @@ script 309( int Crate, int Override )
 	
 	case 4:
 	case 22:
-		if( CheckInventory( "PowerFirepowerUpgrade" ) && !Override )
-		{
+		if( CheckInventory( "PowerFirepowerUpgrade" ) && !Override ) {
 			crate = 0;
 			restart;
 		}
@@ -122,8 +112,7 @@ script 309( int Crate, int Override )
 	
 	case 5:
 	case 16:
-		if( GetCredits( -1 ) >= GetCVAR( "aow_creditlimit" ) )
-		{
+		if( GetCredits( -1 ) >= GetCVAR( "aow_creditlimit" ) ) {
 			crate = 0;
 			restart;
 		}
@@ -139,8 +128,7 @@ script 309( int Crate, int Override )
 	
 	case 6:
 	case 23:
-		if( Rank[PlayerNumber()] >= RANK_COMMANDO && !Override )
-		{
+		if( Rank[PlayerNumber()] >= RANK_COMMANDO && !Override ) {
 			crate = 0;
 			restart;
 		}
@@ -149,8 +137,7 @@ script 309( int Crate, int Override )
 		IntelMessage( "\cJYou got \cD250 \cQXP\cJ!" );
 		LocalAmbientSound( "powerup/exp", 255 );
 		
-		for( i = 0; i < 5; i++ )
-		{
+		for( i = 0; i < 5; i++ ) {
 			Delay( 5 );
 			LocalAmbientSound( "c4/use", 255 );
 			AddExperience( 50 );
@@ -159,8 +146,7 @@ script 309( int Crate, int Override )
 	
 	case 7:
 	case 18:
-		if( ( CheckInventory( "FireArmor" ) || CheckInventory( "PowerFireProof" ) ) && !Override )
-		{
+		if( ( CheckInventory( "FireArmor" ) || CheckInventory( "PowerFireProof" ) ) && !Override ) {
 			crate = 1; // armor upgrade
 			restart;
 		}
@@ -174,14 +160,12 @@ script 309( int Crate, int Override )
 	
 	case 8:
 	case 24:
-		if( !Override && ( CheckInventory( "StealthLaserRifle" ) || CheckInventory( "Knife" )))
-		{
+		if( !Override && ( CheckInventory( "StealthLaserRifle" ) || CheckInventory( "Knife" ))) {
 			crate = 0;
 			restart;
 		}
 		
-		if( !Override && ( CheckInventory( "PowerInvisibility" )))
-		{
+		if( !Override && ( CheckInventory( "PowerInvisibility" ))) {
 			crate = 0;
 			restart;
 		}
@@ -208,8 +192,7 @@ script 309( int Crate, int Override )
 		
 	case 9:
 	case 25:
-		if( CheckInventory( "PowerInvulnerable" ) && !Override )
-		{
+		if( CheckInventory( "PowerInvulnerable" ) && !Override ) {
 			crate = 0;
 			restart;
 		}
@@ -232,8 +215,7 @@ script 309( int Crate, int Override )
 	case 26:
 	case 36:
 	
-		if( CheckInventory( "IsKamikaze" ) && !Override )
-		{
+		if( CheckInventory( "IsKamikaze" ) && !Override ) {
 			crate = 0;
 			restart;
 		}
@@ -252,8 +234,7 @@ script 309( int Crate, int Override )
 		
 	case 11:
 	case 27:
-		if( !Override && ( CrateTime || CheckInventory( "PlasmaCannon" ) ) )
-		{
+		if( !Override && ( CrateTime || CheckInventory( "PlasmaCannon" ) ) ) {
 			ACS_ExecuteAlways( 309, 0 );
 			terminate;
 		}
@@ -275,8 +256,7 @@ script 309( int Crate, int Override )
 	
 	case 12:
 	case 19:
-		if( !CheckInventory( "HasClass" ) && !Override )
-		{
+		if( !CheckInventory( "HasClass" ) && !Override ) {
 			crate = 0;
 			restart;
 		}
@@ -299,24 +279,20 @@ script 309( int Crate, int Override )
 	case 20:
 		SetFont( "SMALLFONT" );
 		
-		if( !Override )
-		{
-			if( CheckInventory( "PowerSpeedUpgrade" ) )
-			{
+		if( !Override ) {
+			if( CheckInventory( "PowerSpeedUpgrade" ) ) {
 				crate = 0;
 				restart;
 			}
 			
 			// this crate ruins stealth due to speed trails
-			if( CheckInventory( "StealthLaserRifle" ) || CheckInventory( "Knife" ) )
-			{
+			if( CheckInventory( "StealthLaserRifle" ) || CheckInventory( "Knife" ) ) {
 				crate = 0;
 				restart;
 			}
 			
 			// also blurspheres
-			if( CheckInventory( "PowerInvisibility" ) )
-			{
+			if( CheckInventory( "PowerInvisibility" ) ) {
 				crate = 0;
 				restart;
 			}
@@ -333,8 +309,7 @@ script 309( int Crate, int Override )
 		// [Dusk] Take half the credits instead
 		amount = ( GetCredits( -1 ) / 2 );
 		
-		if( !amount )
-		{
+		if( !amount ) {
 			// Nothing to steal
 			crate = 0;
 			restart;
@@ -354,8 +329,7 @@ script 309( int Crate, int Override )
 		int enemy = 1 - PlayerTeam();
 		int enemyplayers = ( GetTeamProperty( enemy, TPROP_NumPlayers ) );
 		
-		for( i = 0; i < MAXPLAYERS; ++i )
-		{
+		for( i = 0; i < MAXPLAYERS; ++i ) {
 			if( !PlayerInGame( i ) || GetPlayerTeam( i ) != enemy )
 				continue;
 				
@@ -366,8 +340,7 @@ script 309( int Crate, int Override )
 		break;
 	
 	case 15:
-		if( CheckInventory( "TimeGun" ) && !Override )
-		{
+		if( CheckInventory( "TimeGun" ) && !Override ) {
 			crate = 0;
 			restart;
 		}
@@ -391,8 +364,7 @@ script 309( int Crate, int Override )
 	case 34:
 	case 56:
 		// [Dusk] High ranking dudes get less of these
-		if( Rank[PlayerNumber()] >= RANK_LIEUTENANT && !random( 0, 2 ))
-		{
+		if( Rank[PlayerNumber()] >= RANK_LIEUTENANT && !random( 0, 2 )) {
 			Crate = 0;
 			restart;
 		}
@@ -406,10 +378,8 @@ script 309( int Crate, int Override )
 			
 		ActivatorSound( "powerup/bomb", 127 );
 		
-		for( i = 0; i < 4; i++ )
-		{
-			if( GetHealth() <= 0 )
-			{
+		for( i = 0; i < 4; i++ ) {
+			if( GetHealth() <= 0 ) {
 				FadeTo( 0, 0, 0, 0, 1.0 );
 				terminate;
 			}
@@ -438,8 +408,7 @@ script 309( int Crate, int Override )
 		terminate;
 	
 	case 35:
-		if( CrateTime == True )
-		{
+		if( CrateTime == True ) {
 			ACS_ExecuteAlways( 309, 0 );
 			terminate;
 		}
@@ -447,8 +416,7 @@ script 309( int Crate, int Override )
 		AmbientSound( "weapons/rocklx", 255 );
 		AmbientSound( "powerup/crsh", 255 );
 		
-		if( PlayerTeam() == TEAM_RED )
-		{
+		if( PlayerTeam() == TEAM_RED ) {
 			IntelMessageBold( "Poor \cGNod\cJ got \cRBase Crasher" );
 			Thing_Damage( 201, 4000, 0 );
 			Thing_Damage( 203, 4000, 0 );
@@ -456,8 +424,7 @@ script 309( int Crate, int Override )
 			Thing_Damage( 207, 4000, 0 );
 			Thing_Damage( 214, 2500, 0 );
 		}
-		else if( PlayerTeam() == TEAM_BLUE )
-		{
+		else if( PlayerTeam() == TEAM_BLUE ) {
 			IntelMessageBold( "Poor \cFNod\cJ got \cRBase Crasher" );
 			Thing_Damage( 101, 4000, 0 );
 			Thing_Damage( 103, 4000, 0 );
@@ -472,8 +439,7 @@ script 309( int Crate, int Override )
 	
 	case 37:
 	case 38:
-		if( CheckInventory( "UtilityGun" ) && !Override )
-		{
+		if( CheckInventory( "UtilityGun" ) && !Override ) {
 			crate = 0;
 			restart;
 		}
@@ -488,8 +454,7 @@ script 309( int Crate, int Override )
 	case 39:
 	case 40:
 	
-		if( ( CheckInventory( "LaserArmor" ) || CheckInventory( "PowerLaserResistance" ) ) && !Override )
-		{
+		if( ( CheckInventory( "LaserArmor" ) || CheckInventory( "PowerLaserResistance" ) ) && !Override ) {
 			crate = 1; // armor upgrade
 			restart;
 		}
@@ -504,8 +469,7 @@ script 309( int Crate, int Override )
 	case 41:
 	case 42:
 	
-		if( ( CheckInventory( "ExplosionArmor" ) || CheckInventory( "PowerExplosiveResistance" ) ) && !Override )
-		{
+		if( ( CheckInventory( "ExplosionArmor" ) || CheckInventory( "PowerExplosiveResistance" ) ) && !Override ) {
 			crate = 1; // armor upgrade
 			restart;
 		}
@@ -519,8 +483,7 @@ script 309( int Crate, int Override )
 	case 43:
 	case 44:
 	
-		if( ( CheckInventory( "BulletArmor" ) || CheckInventory( "PowerBulletResistance" ) ) && !Override )
-		{
+		if( ( CheckInventory( "BulletArmor" ) || CheckInventory( "PowerBulletResistance" ) ) && !Override ) {
 			crate = 1; // armor upgrade
 			restart;
 		}
@@ -537,8 +500,7 @@ script 309( int Crate, int Override )
 		if( !Override && ( CrateTime ||
 			CheckInventory( "IsMech" ) ||
 			!GetCVAR( "aow_mechs" ) ||
-			CheckInventory( "JuggernautPowerup" )))
-		{
+			CheckInventory( "JuggernautPowerup" ))) {
 			crate = 0;
 			restart;
 		}
@@ -559,8 +521,7 @@ script 309( int Crate, int Override )
 		break;
 	
 	case 46:
-		if( CrateTime || CheckInventory( "IsMech" ) || CheckInventory( "PowerBerserk" ) )
-		{
+		if( CrateTime || CheckInventory( "IsMech" ) || CheckInventory( "PowerBerserk" ) ) {
 			crate = 0;
 			restart;
 		}
@@ -582,8 +543,7 @@ script 309( int Crate, int Override )
 	
 	case 47:
 	case 48:
-		if( CheckInventory( "HealingRadiusItem" ) && !Override )
-		{
+		if( CheckInventory( "HealingRadiusItem" ) && !Override ) {
 			crate = 0;
 			restart;
 		}
@@ -598,8 +558,7 @@ script 309( int Crate, int Override )
 	case 50:
 	case 51:
 	case 52:
-		if( !Override && CheckInventory( "EagerBeaver" ) )
-		{
+		if( !Override && CheckInventory( "EagerBeaver" ) ) {
 			crate = 0;
 			restart;
 		}
@@ -620,14 +579,12 @@ script 309( int Crate, int Override )
 	
 	case 53:
 	case 54:
-		if( !Override && CheckInventory( "MarineBeaconItem" ) )
-		{
+		if( !Override && CheckInventory( "MarineBeaconItem" ) ) {
 			crate = 0;
 			restart;
 		}
 		
-		if( AIMarineCount >= MAX_MARINES )
-		{
+		if( AIMarineCount >= MAX_MARINES ) {
 			crate = 0;
 			restart;
 		}
@@ -639,8 +596,7 @@ script 309( int Crate, int Override )
 		break;
 	
 	case 55:
-		if(( Timer() < 10 * 60 * 35 || CheckInventory( "CrateChooser" )) && !Override )
-		{
+		if(( Timer() < 10 * 60 * 35 || CheckInventory( "CrateChooser" )) && !Override ) {
 			Crate = 0;
 			restart;
 		}
@@ -665,14 +621,12 @@ script 309( int Crate, int Override )
 	case 59:
 	case 60:
 		// high rank dudes get less of these
-		if( Rank[PlayerNumber()] >= RANK_LIEUTENANT && !random( 0, 2 ) )
-		{
+		if( Rank[PlayerNumber()] >= RANK_LIEUTENANT && !random( 0, 2 ) ) {
 			Crate = 0;
 			restart;
 		}
 		
-		if( CheckInventory( "IsMech" ) )
-		{
+		if( CheckInventory( "IsMech" ) ) {
 			crate = 0;
 			restart;
 		}
@@ -715,8 +669,7 @@ script 309( int Crate, int Override )
 		CheckAndRemove( "GatlingGun" );
 		CheckAndRemove( "JumpjetGatlingGun" );
 		
-		if( CheckInventory( "EagerBeaver" ) )
-		{
+		if( CheckInventory( "EagerBeaver" ) ) {
 			TakeInventory( "EagerBeaver", 1 );
 			GiveInventory( "Unarmed", 1 );
 		}
@@ -738,21 +691,18 @@ script 309( int Crate, int Override )
 	
 	case 61:
 	case 62:
-		if( CheckInventory( "PowerFatigue" ) )
-		{
+		if( CheckInventory( "PowerFatigue" ) ) {
 			crate = 0;
 			restart;
 		}
 		
 		// [Dusk] This crate ruins stealth due to speed trails
-		if( CheckInventory( "StealthLaserRifle" ) || CheckInventory( "Knife" ) )
-		{
+		if( CheckInventory( "StealthLaserRifle" ) || CheckInventory( "Knife" ) ) {
 			Crate = 0;
 			restart;
 		}
 		
-		if( CheckInventory( "PowerInvisibility" ) )
-		{
+		if( CheckInventory( "PowerInvisibility" ) ) {
 			Crate = 0;
 			restart;
 		}
@@ -765,8 +715,7 @@ script 309( int Crate, int Override )
 	
 	case 63:
 	case 64:
-		if( CheckInventory( "RemoteC4" ) && !Override )
-		{
+		if( CheckInventory( "RemoteC4" ) && !Override ) {
 			ACS_ExecuteAlways( 309, 0 );
 			terminate;
 		}
@@ -781,18 +730,15 @@ script 309( int Crate, int Override )
 	
 	case 65:
 	case 66:
-		if( !Override )
-		{
+		if( !Override ) {
 			// stealth just breaks this
-			if( CheckInventory( "StealthLaserRifle" ) || CheckInventory( "Knife" ) )
-			{
+			if( CheckInventory( "StealthLaserRifle" ) || CheckInventory( "Knife" ) ) {
 				crate = 0;
 				restart;
 			}
 			
 			// no duplicates
-			if( CheckInventory( "PowerInvisibility" ) )
-			{
+			if( CheckInventory( "PowerInvisibility" ) ) {
 				crate = 0;
 				restart;
 			}
@@ -809,25 +755,21 @@ script 309( int Crate, int Override )
 		str x;
 		
 		// Try determine a random weapon the player doesn't have.
-		for( i = 0; i <= 7; i++ )
-		{
+		for( i = 0; i <= 7; i++ ) {
 			x = NormalWeaponNames[random( 0, MAX_NORMAL_WEAPONS - 1 )];
 			
-			if( !CheckInventory( x ) )
-			{
+			if( !CheckInventory( x ) ) {
 				RandomWeapon = x;
 				break;
 			}
 		}
 		
-		if( RandomWeapon != -1 )
-		{
+		if( RandomWeapon != -1 ) {
 			LocalAmbientSound( "misc/w_pkup", 127 );
 			IntelMessage( strparam( s:"\cFRandom Weapon!\nYou get a \cF", s:RandomWeapon ) );
 			GiveInventory( RandomWeapon, 1 );
 		}
-		else
-		{
+		else {
 			// could not find a weapon the player doesn't have. reroll
 			Crate = 0;
 			restart;
@@ -837,13 +779,11 @@ script 309( int Crate, int Override )
 }
 
 // THERMAL CLOAKING
-script 953( void )
-{
+script 953( void ) {
 	int k = 0;
 	SetPlayerProperty( 0, 1, PROP_NOTARGET );
 	
-	while( CheckInventory( "ThermalCloakingTime" ) > 0 )
-	{
+	while( CheckInventory( "ThermalCloakingTime" ) > 0 ) {
 		k = CheckInventory( "ThermalCloakingTime" );
 		SetFont( "SMALLFONT" );
 		HudMessage( s:"Thermal Cloaking: ", d:k, s:" seconds remaining";
@@ -858,19 +798,16 @@ script 953( void )
 }
 
 // [Dusk] This client-side script positions the bomb crate aura onto the victim player.
-script 966( void ) CLIENTSIDE
-{
+script 966( void ) CLIENTSIDE {
 	// [Dusk] Don't display this actor for the player who's currently
 	// getting the bomb crate - said player gets a fade instead.
-	if( ACS_ExecuteWithResult( 651, 0 ) == ConsolePlayer )
-	{
+	if( ACS_ExecuteWithResult( 651, 0 ) == ConsolePlayer ) {
 		SetActorState( 0, "Clear" );
 		terminate;
 	}
 	
 	// If the player dies, the aura goes out.
-	if( ACS_ExecuteWithResult( 964, 3 ) <= 0 )
-	{
+	if( ACS_ExecuteWithResult( 964, 3 ) <= 0 ) {
 		SetActorState( 0, "Clear" );
 		terminate;
 	}
@@ -882,13 +819,11 @@ script 966( void ) CLIENTSIDE
 }
 
 // [Dusk] target information
-script 964( int type, int value )
-{
+script 964( int type, int value ) {
 	SetActivatorToTarget( 0 );
 	SetResultValue( 0 );
 	
-	switch( type )
-	{
+	switch( type ) {
 	case 0:
 		SetResultValue( GetActorX( 0 ) );
 		break;

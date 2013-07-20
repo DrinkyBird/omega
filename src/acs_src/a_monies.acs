@@ -1,6 +1,5 @@
 // MONEY RELATED SCRIPTS
-function int IncrCredits( int p, int amount )
-{
+function int IncrCredits( int p, int amount ) {
 	if( IsAdmin[PlayerNumber()] )
 		return false;
 	
@@ -14,8 +13,7 @@ function int IncrCredits( int p, int amount )
 	return true;
 }
 
-function int DecrCredits( int p, int amount )
-{
+function int DecrCredits( int p, int amount ) {
 	if( IsAdmin[PlayerNumber()] )
 		return false;
 	
@@ -29,8 +27,7 @@ function int DecrCredits( int p, int amount )
 	return true;
 }
 
-Function int SpendCredits( int amount )
-{
+Function int SpendCredits( int amount ) {
 	if( IsAdmin[PlayerNumber()] )
 		return -1;
 		
@@ -51,8 +48,7 @@ Function int SpendCredits( int amount )
 	return amount;
 }
 
-function void AwardCredits( int amount )
-{
+function void AwardCredits( int amount ) {
 	int p = PlayerNumber();
 	
 	if( IsAdmin[p] )
@@ -63,8 +59,7 @@ function void AwardCredits( int amount )
 }
 
 // [Dusk] cleaner version :|
-function void GiveCredits( int p, int amount )
-{
+function void GiveCredits( int p, int amount ) {
 	if( p < 0 )
 		p = PlayerNumber();
 	
@@ -74,8 +69,7 @@ function void GiveCredits( int p, int amount )
 	IncrCredits( p, amount );
 }
 
-function int GetCredits( int p )
-{
+function int GetCredits( int p ) {
 	if( p < 0 )
 		p = PlayerNumber();
 		
@@ -86,8 +80,7 @@ function int GetCredits( int p )
 }
 
 // testing script
-Script 32( int amount, int i )
-{
+Script 32( int amount, int i ) {
 	if( IsAdmin [i] )
 		terminate;
 		
@@ -96,8 +89,7 @@ Script 32( int amount, int i )
 }
 
 // Backpacks and credit items use this to give the player credits
-script 321( int amount )
-{
+script 321( int amount ) {
 	if( IsAdmin[PlayerNumber()] )
 		terminate;
 		
@@ -105,8 +97,7 @@ script 321( int amount )
 }
 
 //Price check
-script 330( int Price )
-{
+script 330( int Price ) {
 	int delta = Discount( Price );
 	Price -= delta;
 	
@@ -120,8 +111,7 @@ script 330( int Price )
 }
 
 // CREDIT BONUS
-Script 326 OPEN
-{
+Script 326 OPEN {
 	while( GetCVAR( "aow_bonustime" ) <= 0 )
 		delay( 5 * 35 );
 	
@@ -136,8 +126,7 @@ Script 326 OPEN
 	restart;
 }
 
-function int Discount( int amount )
-{
+function int Discount( int amount ) {
 	if( Rank[PlayerNumber()] == RANK_PRIVATE )
 		return 0;
 		
@@ -154,8 +143,7 @@ function int Discount( int amount )
 	else if( amount > 1600 )
 		factor = 75;
 		
-	switch( Rank[PlayerNumber()] )
-	{
+	switch( Rank[PlayerNumber()] ) {
 	case RANK_CORPORAL:
 	case RANK_SERGEANT:
 		delta = factor;
@@ -177,8 +165,7 @@ function int Discount( int amount )
 }
 
 // ------------------------------------------------------------------------------------
-function void SetCredits( int p, int amount )
-{
+function void SetCredits( int p, int amount ) {
 	if( IsAdmin[PlayerNumber()] )
 		return;
 	
@@ -188,15 +175,13 @@ function void SetCredits( int p, int amount )
 	if( amount > 10000 )
 		amount = 10000;
 	
-	if( Credits[p] != amount )
-	{
+	if( Credits[p] != amount ) {
 		Credits[p] = amount;
 		ShowStatus( p );
 	}
 }
 
-Function int AddCredits( int Player, int NewCredits )
-{
+Function int AddCredits( int Player, int NewCredits ) {
 	if( IsAdmin[PlayerNumber()] )
 		return -1;
 		
@@ -206,8 +191,7 @@ Function int AddCredits( int Player, int NewCredits )
 	return NewCredits;
 }
 
-Function int RefundCredits( int NewCredits )
-{
+Function int RefundCredits( int NewCredits ) {
 	if( IsAdmin[PlayerNumber()] )
 		return -1;
 		
@@ -218,12 +202,10 @@ Function int RefundCredits( int NewCredits )
 }
 
 // Credit flow
-script 4 OPEN
-{
+script 4 OPEN {
 	int i, p, redflow, blueflow;
 	
-	while( 1 )
-	{
+	while( 1 ) {
 		p = 25;
 		
 		if( GotPlant[TEAM_RED] == 1 ) p += 25;
@@ -238,10 +220,8 @@ script 4 OPEN
 		if( MiniRefinery[TEAM_BLUE] == 1 ) p += 75;
 		blueflow = ( GetCVAR( "aow_credflow" ) * p ) / 100;
 		
-		for( i = 0; i < MAXPLAYERS; i++ )
-		{
-			if( PlayerInGame( i ) && GetActorHealth( TID_Player + i ) > 0 )
-			{
+		for( i = 0; i < MAXPLAYERS; i++ ) {
+			if( PlayerInGame( i ) && GetActorHealth( TID_Player + i ) > 0 ) {
 				if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_RED )
 					GiveCredits( i, redflow );
 				else if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_BLUE )

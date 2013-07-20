@@ -4,8 +4,7 @@ int BotClassNumbers[13] = {20, 22, 54, 24, 27, 33, 34, 53, 61, 35, 36, 44, 60};
 int BotClassBarDependencies[13]   = {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 int BotClassPlantDependencies[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1};
 
-script 888 ENTER
-{
+script 888 ENTER {
 	if( !PlayerIsBot( PlayerNumber() ))
 		terminate;
 	
@@ -37,7 +36,6 @@ script 888 ENTER
 	ACS_ExecuteAlways( BotClassNumbers[i], 0, team );
 }
 
-script 889 RESPAWN
-{
+script 889 RESPAWN {
 	ACS_ExecuteAlways( 888, 0 );
 }

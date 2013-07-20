@@ -1,8 +1,6 @@
 // [SP] This allows a spectator to spawn outside of the team selection room
-script 940( int which ) NET CLIENTSIDE
-{
-	if( PlayerInGame( PlayerNumber() ))
-	{
+script 940( int which ) NET CLIENTSIDE {
+	if( PlayerInGame( PlayerNumber() )) {
 		DisplayCross();
 		SETFONT( "BigFont" );
 	HudMessage( s: "You are not a spectator!";
@@ -10,8 +8,7 @@ script 940( int which ) NET CLIENTSIDE
 		terminate;
 	}
 	
-	switch( Which )
-	{
+	switch( Which ) {
 	case 0:
 		Teleport( random( 1, 2 ));
 		break;
@@ -22,15 +19,13 @@ script 940( int which ) NET CLIENTSIDE
 }
 
 // [Dusk] This allows players to switch to the losing team
-script 942( void ) NET
-{
+script 942( void ) NET {
 	// You sorta need a team first
 	if( !PlayerInGame( PlayerNumber() ))
 		terminate;
 	
 	// Not during warm-up
-	if( Timer() <= 5 * 60 * 35 )
-	{
+	if( Timer() <= 5 * 60 * 35 ) {
 		Error( "Too early to use this!" );
 		terminate;
 	}
@@ -41,14 +36,12 @@ script 942( void ) NET
 	int oldplayers = GetTeamProperty( team, TPROP_NumPlayers );
 	int newplayers = GetTeamProperty( newteam, TPROP_NumPlayers );
 	
-	if( newplayers + 1 >= oldplayers )
-	{
+	if( newplayers + 1 >= oldplayers ) {
 		Error( strparam( s:"There are already enough players on ", s:TeamNames[newteam], s:"!" ));
 		terminate;
 	}
 	
-	if( BaseLeft[newteam] > BaseLeft[team] )
-	{
+	if( BaseLeft[newteam] > BaseLeft[team] ) {
 		Error( strparam( s:TeamNames[newteam], s:" has more buildings than ", s:TeamNames[team], s:"!" ));
 		terminate;
 	}
@@ -72,8 +65,7 @@ script 942( void ) NET
 }
 
 // This allows players to sell weapons. Kinda like partial resign.
-script 950( void ) NET
-{
+script 950( void ) NET {
 	if( !PlayerInGame( PlayerNumber() ))
 		terminate;
 	
@@ -85,8 +77,7 @@ script 950( void ) NET
 	
 	// Make the price be 25% of the cost of the first found class which
 	// uses this weapon as the primary weapon. Make it at least be $25.
-	for( int i = 0; i < NUM_CLASSES; ++i )
-	{
+	for( int i = 0; i < NUM_CLASSES; ++i ) {
 		if( !CheckWeapon( GetClassItemName( i, 0 )))
 			continue;
 		
@@ -100,30 +91,24 @@ script 950( void ) NET
 	}
 	
 	// Also let these weapons be sold too
-	if( i >= NUM_CLASSES )
-	{
-		if( CheckWeapon( "Handgun" ))
-		{
+	if( i >= NUM_CLASSES ) {
+		if( CheckWeapon( "Handgun" )) {
 			price = 25;
 			weapon = "Handgun";
 		}
-		else if( CheckWeapon( "EagerBeaver" ))
-		{
+		else if( CheckWeapon( "EagerBeaver" )) {
 			price = 125;
 			weapon = "EagerBeaver";
 		}
-		else if( CheckWeapon( "PlasmaCannon" ))
-		{
+		else if( CheckWeapon( "PlasmaCannon" )) {
 			price = 375;
 			weapon = "PlasmaCannon";
 		}
-		else if( CheckWeapon( "LaserRifle" ))
-		{
+		else if( CheckWeapon( "LaserRifle" )) {
 			price = 75;
 			weapon = "LaserRifle";
 		}
-		else
-		{
+		else {
 			Error( "You can't sell that!" );
 			terminate;
 		}
@@ -137,8 +122,7 @@ script 950( void ) NET
 }
 
 // [Dusk] This allows players to see their speed factor.
-script 921( void ) NET CLIENTSIDE
-{
+script 921( void ) NET CLIENTSIDE {
 	int f = GetSpeed();
 	if( CheckInventory( "PowerSpeedUpgrade" )) f = FixedMul( f, 1.25 );
 	if( CheckInventory( "PowerFatigue" )) f = FixedMul( f, 0.55 );

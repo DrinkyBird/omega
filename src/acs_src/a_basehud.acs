@@ -1,6 +1,5 @@
 // BUILDING HUD CODE
-script 930( int what, int team )
-{
+script 930( int what, int team ) {
 	if( ActivatorTID() == 0 )
 		terminate;
 		
@@ -19,32 +18,26 @@ script 930( int what, int team )
 	DrawBuildingHud();
 }
 
-function void DrawBuildingHud( void )
-{
+function void DrawBuildingHud( void ) {
 	SetFont( "SMALLFONT" );
 	int y = -0.4;
 	int team, b, tid;
 	int i = 8850;
 	
-	for( team = 0; team < 2; ++team )
-	{
+	for( team = 0; team < 2; ++team ) {
 		str textcolo = GetTeamProperty( team, TPROP_TextColor );
 		str name = TeamNames[team];
 		
-		for( b = 0; b < 9; ++b )
-		{
+		for( b = 0; b < 9; ++b ) {
 			tid = GetBuildingTid( b, team );
 			
-			if( IsMinorBuilding( b ))
-			{
+			if( IsMinorBuilding( b )) {
 				HudMessageBold( s:ExistsBuildingGreen( tid ), s:"++",
 					s:ExistsBuilding( tid ), s:GetBuildingName( b, team ), s:"\cc: ",
 					s:ColorCodeHealth( BuildingHealth( tid )),
 					d:BuildingHealth( tid ), s:"\cc%\n";
 					HUDMSG_PLAIN, i++, CR_GRAY, 0.012, y, 0.0 );
-			}
-			else
-			{
+			} else {
 				HudMessageBold( s:ExistsBuilding( tid ),
 					s:GetBuildingName( b, team ), s:"\cc: ",
 					s:ColorCodeHealth( BuildingHealth( tid )),
@@ -55,16 +48,18 @@ function void DrawBuildingHud( void )
 			y += -SMALLSPACE;
 		}
 		
-		HudMessageBold( s:PortalLinkColor( TEAM_BLUE, 0 ), s:"++", s:PortalLinkColor( TEAM_BLUE, 1 ), s:"Portal\cc: ",
-			s:ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE1 ) ), d:BuildingHealth( TID_PORTAL_BLUE1 ), s:"\cc% / ",
-			s:ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE2 ) ), d:BuildingHealth( TID_PORTAL_BLUE2 ), s:"\cc%";
+		HudMessageBold( s:PortalLinkColor( TEAM_BLUE, 0 ), s:"++",
+			s:PortalLinkColor( TEAM_BLUE, 1 ), s:"Portal\cc: ",
+			s:ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE1 )),
+			d:BuildingHealth( TID_PORTAL_BLUE1 ), s:"\cc% / ",
+			s:ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE2 )),
+			d:BuildingHealth( TID_PORTAL_BLUE2 ), s:"\cc%";
 			HUDMSG_PLAIN, i++, CR_BLUE, 0.012, y, 0.0 );
 		
 		y += 2 * -SMALLSPACE;
 	}
 	
-	if( SuddenDeath || TicketPool )
-	{
+	if( SuddenDeath || TicketPool ) {
 		SetFont( "SMALLFONT" );
 		HudMessageBold(
 			s:"\cFLives\cC: ", s:FractionColor( Tickets[TEAM_BLUE], StartingTickets ), d:Tickets[TEAM_BLUE],
@@ -73,12 +68,11 @@ function void DrawBuildingHud( void )
 	}
 }
 
-function int BuildingHealth( int tid )
-{
+function int BuildingHealth( int tid ) {
 	if( ThingCount( T_NONE, tid ) == 0 )
 		return 0;
 	
-	int p = ( ( GetActorHealth( tid ) * 99 ) / GetActorSpawnHealth( tid ) ) + 1;
+	int p = (( GetActorHealth( tid ) * 99 ) / GetActorSpawnHealth( tid )) + 1;
 	
 	if( p < 0 )
 		p = 0;
@@ -86,14 +80,11 @@ function int BuildingHealth( int tid )
 	return p;
 }
 
-function str PortalLinkColor( int team, int teamcolor )
-{
+function str PortalLinkColor( int team, int teamcolor ) {
 	int t1 = TID_PORTAL_BLUE1 + 2 * team;
 	int t2 = TID_PORTAL_BLUE2 + 2 * team;
-	int exists = ThingCount( T_NONE, t1 ) && ThingCount( T_NONE, t2 );
 	
-	if( exists )
-	{
+	if( ThingCount( T_NONE, t1 ) && ThingCount( T_NONE, t2 ) ) {
 		if( !teamcolor )
 			return "\cD";
 		
@@ -106,8 +97,7 @@ function str PortalLinkColor( int team, int teamcolor )
 	return "\cM";
 }
 
-function str ColorCodeHealth( int Percentage )
-{
+function str ColorCodeHealth( int Percentage ) {
 	if( Percentage == 100 ) // 100%
 		return "\cq";
 	else if( Percentage > 75 ) // healthy
@@ -122,17 +112,13 @@ function str ColorCodeHealth( int Percentage )
 	return "\cm"; //destroyed
 }
 
-function str ExistsBuilding( int tid )
-{
-	if( tid <= 199 || ( tid >= 900 && tid % 2 == 1 ) )
-	{
+function str ExistsBuilding( int tid ) {
+	if( tid <= 199 || ( tid >= 900 && tid % 2 == 1 )) {
 		if( ThingCount( T_NONE, tid ) > 0 )
 			return "\cF";
 		else
 			return "\cM";
-	}
-	else
-	{
+	} else {
 		if( ThingCount( T_NONE, tid ) > 0 )
 			return "\cG";
 		else
@@ -142,9 +128,8 @@ function str ExistsBuilding( int tid )
 	return "\cU";
 }
 
-function str ExistsBuildingGreen( int tid )
-{
-	if( ThingCount( T_NONE, tid ) )
+function str ExistsBuildingGreen( int tid ) {
+	if( ThingCount( T_NONE, tid ))
 		return "\cD";
 	
 	return "\cM";

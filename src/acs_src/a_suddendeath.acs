@@ -8,14 +8,12 @@
  * of this and call it your own. Thanks!
  */
 
-script 995 OPEN
-{
+script 995 OPEN {
 	Delay( 60 * ( 35 * 5 ) );
 	CrateTime = False;
 }
 
-script 998 OPEN
-{
+script 998 OPEN {
 	delay( 5 );
 	
 	while( Timer() < GetCVAR( "aow_suddendeathtime" ) * 35 * 60 ) delay( 35 * 15 );
@@ -23,8 +21,7 @@ script 998 OPEN
 	ACS_Execute( 997, 0 );
 }
 
-script 997( void )
-{
+script 997( void ) {
 	if( EventScripts ) ACS_ExecuteAlways( 960, 0, ACTION_SUDDENDEATH, TEAM_NONE );
 	
 	GiveActorInventory( 100, "SuddenDeathVulnerability", 1 );
@@ -50,8 +47,7 @@ script 997( void )
 	GiveActorInventory( 214, "SuddenDeathVulnerability", 1 );
 	GiveActorInventory( 215, "SuddenDeathVulnerability", 1 );
 	
-	if( Timer() > 5 * 35 + 10 )
-	{
+	if( Timer() > 5 * 35 + 10 ) {
 		if( random( 0, 1 ) )
 			SetMusic( "razor-ub" );
 		else
@@ -67,16 +63,14 @@ script 997( void )
 	int degeneration = GetCVar( "aow_degeneration" );
 	int degeninterval = GetCVar( "aow_degenerationinterval" );
 	
-	if( degeneration )
-	{
+	if( degeneration ) {
 		SetFont( "BIGFONT" );
 		HudMessageBold( s: "WARNING: BUILDING DEGENERATION ACTIVE!!!";
 			HUDMSG_FADEOUT, 15002, CR_RED,
 			INTEL_XPOS, 0.45, 7.0, 1.0 );
 	}
 	
-	if( !TicketPool )
-	{
+	if( !TicketPool ) {
 		// init tickets
 		Tickets[TEAM_BLUE] = StartingTickets;
 		Tickets[TEAM_RED] = StartingTickets;
@@ -93,19 +87,16 @@ script 997( void )
 	
 	SetActivator( -1 );
 	
-	while( 1 )
-	{
+	while( 1 ) {
 		if( !( ticker % 5 ) )
 			degeninterval = GetCVar( "aow_degenerationinterval" );
 			
 		if( !( ticker % 60 ) )
 			IntelMessageBold( "Sudden death!" );
 			
-		if( degeneration && !( ticker % degeninterval ) )
-		{
+		if( degeneration && !( ticker % degeninterval ) ) {
 			// crash all buildings by 1% every interval seconds
-			for( i = 0; i <= 1; i++ )
-			{
+			for( i = 0; i <= 1; i++ ) {
 				Thing_Damage( 101 + ( i * 100 ), HP_BARRACKS / 100 );
 				Thing_Damage( 103 + ( i * 100 ), HP_REFINERY / 100 );
 				Thing_Damage( 105 + ( i * 100 ), HP_PLANT / 100 );

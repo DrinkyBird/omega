@@ -6,10 +6,8 @@
 // action == 0 => intel message
 // action == 1 => altfire rotation
 // action == 2 => reward check
-script SC_TIMEGUN( int action, int type )
-{
-	if( action == 1 )
-	{
+script SC_TIMEGUN( int action, int type ) {
+	if( action == 1 ) {
 		// Rotation
 		if( CheckInventory( "TimeGunRotation" ) == 3 )
 			TakeInventory( "TimeGunRotation", 3 );
@@ -20,15 +18,13 @@ script SC_TIMEGUN( int action, int type )
 		terminate;
 	}
 	
-	if( action == 2 )
-	{
+	if( action == 2 ) {
 		// [Dusk] {9/6/12} Check for a possible reward.
 		// Boosting teammates gives you 1 bonus,
 		// weakening enemies gets you 2 bonus.
 		int ttid = GetTargetInfo( TARGETINFO_TID );
 		
-		if( ttid == ActivatorTID() || ttid < TID_Player || ttid >= TID_Player + MAXPLAYERS )
-		{
+		if( ttid == ActivatorTID() || ttid < TID_Player || ttid >= TID_Player + MAXPLAYERS ) {
 			// No valid target
 			terminate;
 		}
@@ -40,12 +36,10 @@ script SC_TIMEGUN( int action, int type )
 			
 		int pn = PlayerNumber();
 		
-		if( MedicBonus[pn] < GetCVAR( "aow_medicbonusneed" ))
-		{
+		if( MedicBonus[pn] < GetCVAR( "aow_medicbonusneed" )) {
 			MedicBonus[pn] += 40 * bonus;
 		}
-		else
-		{
+		else {
 			MedicBonus[pn] = 0;
 			AddExperience( 50 );
 			LocalAmbientSound( "c4/use", 127 );
@@ -57,8 +51,7 @@ script SC_TIMEGUN( int action, int type )
 	
 	SetFont( "SMALLFONT" );
 	
-	switch( type )
-	{
+	switch( type ) {
 	case 0: // boost
 		IntelMessage( "\cIYou are turbo!" );
 		break;
@@ -76,10 +69,8 @@ script SC_TIMEGUN( int action, int type )
 
 // ------------
 // Time gun HUD
-script SC_CL_TimeGunHUD( void ) NET CLIENTSIDE
-{
-	while( CheckWeapon( "TimeGun" ) && GetHealth() >= 0 )
-	{
+script SC_CL_TimeGunHUD( void ) NET CLIENTSIDE {
+	while( CheckWeapon( "TimeGun" ) && GetHealth() >= 0 ) {
 		SetFont( "SMALLFONT" );
 		HudMessage( s:TimeHUDColor( 0, 0 ), s:"BOOST ", s:TimeHUDColor( 0, 1 ), s:" / ", s:TimeHUDColor( 0, 2 ), s:"SLOW\n",
 			s:TimeHUDColor( 1, 0 ), s:"FLOAT ", s:TimeHUDColor( 1, 1 ), s:" / ", s:TimeHUDColor( 1, 2 ), s:"WEAKEN\n",
@@ -91,17 +82,13 @@ script SC_CL_TimeGunHUD( void ) NET CLIENTSIDE
 	}
 }
 
-function str TimeHUDColor( int type, int side )
-{
-	if( CheckInventory( "TimeGunRotation" ) == type )
-	{
+function str TimeHUDColor( int type, int side ) {
+	if( CheckInventory( "TimeGunRotation" ) == type ) {
 		// selected
-		switch( type )
-		{
+		switch( type ) {
 		case 0:
 		case 1:
-			switch( side )
-			{
+			switch( side ) {
 			case 0:
 				return "\cD";
 			case 1:
@@ -115,15 +102,12 @@ function str TimeHUDColor( int type, int side )
 			return "\cF";
 		}
 	}
-	else
-	{
+	else {
 		// not selected
-		switch( type )
-		{
+		switch( type ) {
 		case 0:
 		case 1:
-			switch( side )
-			{
+			switch( side ) {
 				case 0: return "\cQ";
 				case 1: return "\cU";
 				case 2: return "\cR";

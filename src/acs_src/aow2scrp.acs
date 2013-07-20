@@ -217,8 +217,7 @@
 
 bool Bots[MAX_MARINES];
 
-int BaseTIDs[18] =
-{
+int BaseTIDs[18] = {
 	TID_BARRACKS_BLUE, TID_BARRACKS_RED,
 	TID_REFINERY_BLUE, TID_REFINERY_RED,
 	TID_RESCENTRE_BLUE, TID_RESCENTRE_RED,
@@ -230,8 +229,7 @@ int BaseTIDs[18] =
 	TID_AMMOREGEN_BLUE, TID_AMMOREGEN_RED
 };
 
-str BuildingNames[11] =
-{
+str BuildingNames[11] = {
 	"Barracks",
 	"Refinery",
 	"Research Centre",
@@ -400,8 +398,7 @@ int Classes[NUM_CLASSES][64];
 #define AGF_DONTADD 32
 
 // =============================================================================
-str NormalWeaponNames[MAX_NORMAL_WEAPONS] =
-{
+str NormalWeaponNames[MAX_NORMAL_WEAPONS] = {
 	"ArtilleryCannon",
 	"ChemicalSprayer",
 	"DoubleShotgun",

@@ -35,8 +35,7 @@
  * ranges [0, CK_NUMITEMS - 1])
  */
 
-function void LoadClassDefinitions( void )
-{
+function void LoadClassDefinitions( void ) {
 	int c;
 	
 	c = CLASS_GUNMAN;

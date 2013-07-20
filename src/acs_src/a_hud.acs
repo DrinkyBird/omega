@@ -5,10 +5,8 @@
 // You may use portions of this script in your project as long as you give credit where credit is
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
-script 5 RESPAWN
-{
-	while( PlayerInGame( PlayerNumber() ) && GetHealth() > 0 )
-	{
+script 5 RESPAWN {
+	while( PlayerInGame( PlayerNumber() ) && GetHealth() > 0 ) {
 		delay( 35 );
 		
 		if( !CheckWeapon( "StealthLaserRifle" ) && !CheckWeapon( "Knife" ))
@@ -16,8 +14,7 @@ script 5 RESPAWN
 	}
 }
 
-script SC_UpdateCreditDisplay( int p )
-{
+script SC_UpdateCreditDisplay( int p ) {
 	SetActivator( TID_Player + p );
 	
 	int color = cond( PlayerTeam() == TEAM_BLUE, CR_LIGHTBLUE, CR_BRICK );
@@ -33,17 +30,14 @@ script SC_UpdateCreditDisplay( int p )
 		HUDMSG_PLAIN, 5000 + PlayerNumber(), CR_LIGHTBLUE, -0.92, -0.78, 1.5 );
 }
 
-function void ShowStatus( int p )
-{
+function void ShowStatus( int p ) {
 	ACS_ExecuteWithResult( SC_UpdateCreditDisplay, p );
 }
 
-script 111( int what )
-{
+script 111( int what ) {
 	int amount;
 	
-	switch( what )
-	{
+	switch( what ) {
 	case 0:
 		// donation message
 		SetFont( "SMALLFONT" );
