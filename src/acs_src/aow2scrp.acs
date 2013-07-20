@@ -193,12 +193,19 @@
 #define SC_PORTAL_FUNCTION        937
 #define SC_MARINE_INIT            938
 #define SC_MARINE_COMPENSATION    939
+#define SC_InventoryItemUse       951
+#define SC_HealingRadius          952
 #define SC_TimeGun                958
 #define SC_CL_TimeGunHUD          959
 #define SC_MARINE_STATS           967
 #define SC_MARINE_DEATH           968
 
-// how many points does researching stuff give you?
+#define INVITEM_Beacon              0
+#define INVITEM_RefillC4            1
+#define INVITEM_MarineBeacon        2
+#define INVITEM_SelfHeal            3
+
+// How many points does researching stuff give you?
 // Also used for miniref and utility-built ammo/health regens
 #define POINTS_RESEARCH 12
 

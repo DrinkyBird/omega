@@ -14,7 +14,7 @@ actor C4Box : AmmoPack {
 		C4BX A -1
 		stop
 	Pickup:
-		TNT1 A 0 ACS_ExecuteAlways (951, 0, 2) // refill c4
+		TNT1 A 0 ACS_ExecuteAlways (SC_InventoryItemUse, 0, INVITEM_RefillC4)
 		stop
 	}
 }

@@ -5,16 +5,18 @@
 // You may use portions of this script in your project as long as you give credit where credit is
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
-script 951( int action, int team )
-{
-	switch( action )
-	{
-	case 0:
-		// deploy superweapon beacon
-		if( ActivatorTID() < 3800 || ActivatorTID() > 3831 ) terminate;
+script SC_InventoryItemUse( int action, int team ) {
+	int x, y, z;
+	str marine;
+	
+	switch( action ) {
+	case INVITEM_Beacon:
+		/* Plant superweapon beacon */
+		if( ActivatorTID() < 3800 || ActivatorTID() > 3831 )
+			terminate;
 		
-		if( !CheckInventory( "BeaconUseToken" ) )
-		{
+		/* To prevent accidental planting, nukes must be double-used. */
+		if( !CheckInventory( "BeaconUseToken" ) ) {
 			GiveInventory( "BeaconUseToken", 1 );
 			ActivatorSound( "beacon/safetylock", 80 );
 			SetFont( "BIGFONT" );
@@ -27,58 +29,51 @@ script 951( int action, int team )
 			terminate;
 		}
 		
+		/* Begin planting sequence */
 		TakeInventory( "BeaconUseToken", 1 );
 		SetPlayerProperty( 0, 1, PROP_TOTALLYFROZEN );
 		
-		for( int i = 0; i < 175; i += 5 )
-		{
+		/* Wait 5 seconds. We have to iterate the delay second by second so that
+		 * if the player dies, this gets cancelled properly. */
+		for( int i = 0; i < 5; ++i ) {
+			delay( 35 );
+			
 			if( GetHealth() <= 0 )
 				terminate;
-			
-			delay( 5 );
 		}
 		
-		if( ActivatorTID() < 3800 || ActivatorTID() > 3831 )
-			terminate;
-		
-		if( team == TEAM_BLUE )
+		/* Spawn the nuke beacon. */
+		if( PlayerTeam() == TEAM_BLUE )
 			SpawnProjectile( ActivatorTID(), "IonBeaconThrown", 0, 0, -5, 1, 0 );
 		else
 			SpawnProjectile( ActivatorTID(), "NukeBeaconThrown", 0, 0, -5, 1, 0 );
-			
+		
+		/* Thaw the player now and write this event to the server log. */
 		Log( s: pname( -1 ), s: " plants ", s: cond( PlayerTeam() == TEAM_RED, "Nuclear Strike Beacon", "Ion Cannon Beacon" ));
 		SetPlayerProperty( 0, 0, PROP_TOTALLYFROZEN );
 		break;
 	
-	case 1:
-		// remote c4
-		GiveInventory( "RemoteC4Thrower", 1 );
-		delay( 1 );
-		SetWeapon( "RemoteC4Thrower" );
-		break;
-	
-	case 2:
-		// refill c4
+	case INVITEM_RefillC4:
+		/* Refill remote C4 */
 		if( CheckInventory( "RemoteC4Count" ) > 0 )
 			SetInventory( "RemoteC4", CheckInventory( "RemoteC4Count" ) );
 		
+		/* Mines */
 		if( CheckInventory( "ProxyMineCount" ) > 0 )
 			SetInventory( "ProxyMine", CheckInventory( "ProxyMineCount" ) );
 		
+		/* Timed C4 */
 		if( CheckInventory( "TimedC4Count" ) > 0 )
 			SetInventory( "TimedC4", CheckInventory( "TimedC4Count" ) );
 		
-		TakeInventory( "RemoteC4Detonator", CheckInventory( "RemoteC4Detonator" ) );
 		break;
 	
-	case 3:
-		// marine beacon summons a marine
-		int x, y, x0, y0, z, yays;
-		str marine = "BlueBackup";
-		
-		if( team == TEAM_RED )
-			marine = "RedBackup";
-		
+	case INVITEM_MarineBeacon:
+		/* The marine beacon summons a marine - try spawn it 32 units above the
+		 * beacon. If success, signal the beacon that it should go away. Otherwise
+		 * it will try again after a second. This setup ensures that the player
+		 * actually gets the marine he requested. */
+		marine = cond( team == TEAM_BLUE, "BlueBackup", "RedBackup" );
 		x = GetActorX( 0 );
 		y = GetActorY( 0 );
 		z = GetActorZ( 0 ) + 32.0;
@@ -89,12 +84,11 @@ script 951( int action, int team )
 			SetActorState( 0, "Done" );
 			terminate;
 		}
-		
-		// if success, beacon is put to Done state, if failure, it will call this again after 35 ticks
 		break;
-	case 4:
 	
-		// use selfheal
+	case INVITEM_SelfHeal:
+		/* Self-heal item was used - give the syringe and switch to it. This
+		 * cannot be done in DECORATE because of the necessary one-tic delay. */
 		if( CheckInventory( "SelfHeal" ))
 			terminate;
 		
@@ -105,45 +99,49 @@ script 951( int action, int team )
 	}
 }
 
-// HEALING RADIUS
+/* =============================================================================
+ * HEALING RADIUS CODE
+ * 
+ * This script is called by the healing radius regularly with action=0, in which
+ * the radius looks around for nearby players. If any are found, the radius starts
+ * another instance of this script, with action=1. In this instance, the radius heals
+ * the player it found until the player eather is fully healed or is too far away
+ * from the radius.
+ * =========================================================================== */
 #define HEALRAD_RANGE 128
 #define HEALRAD_AMOUNT 10
 #define HEALRAD_DELAY 5
+
+#define HEALRAD_SEEK 0
+#define HEALRAD_HEAL 1
 int IsBeingHealed[MAXPLAYERS];
-script 952( int action, int i )
-{
+script SC_HealingRadius( int action, int i ) {
 	int shp, n;
 	
 	switch( action )
 	{
-	case 0:
+	case HEALRAD_SEEK:
 		for( i = 0; i < MAXPLAYERS; i++ )
 		{
-			if( GetActorHealth( 3800 + i ) < GetActorSpawnHealth( 3800 + i ) && !CheckActorInventory( 3800 + i, "IsMech" ) )
-				if( CheckActorDistance( 0, 3800 + i, HEALRAD_RANGE ) )
-					ACS_ExecuteAlways( 952, 0, 1, i );
+			if( GetActorHealth( 3800 + i ) < GetActorSpawnHealth( 3800 + i ) && !CheckActorInventory( 3800 + i, "IsMech" ))
+				if( CheckActorDistance( 0, 3800 + i, HEALRAD_RANGE ) && !IsBeingHealed[i] )
+					ACS_ExecuteAlways( SC_HealingRadius, 0, HEALRAD_HEAL, i );
 		}
 		break;
 		
-	case 1:
-		if( IsBeingHealed[i] )
-			terminate;
-		
+	case HEALRAD_HEAL:
 		IsBeingHealed[i] = true;
 		shp = GetActorSpawnHealth( 3800 + i );
-		n = GetActorHealth( 3800 + i );
 		
-		while( n < shp && n > 0 && CheckActorDistance( 0, 3800 + i, HEALRAD_RANGE ) )
-		{
-			n += HEALRAD_AMOUNT;
+		do {
+			n = GetActorHealth( 3800 + i ) + HEALRAD_AMOUNT;
 			
 			if( n > shp )
 				n = shp;
 			
 			SetActorHealth( 3800 + i, n );
 			delay( HEALRAD_DELAY );
-			n = GetActorHealth( 3800 + i );
-		}
+		} while( n < shp && n > 0 && CheckActorDistance( 0, 3800 + i, HEALRAD_RANGE ));
 		
 		IsBeingHealed[i] = false;
 		break;
