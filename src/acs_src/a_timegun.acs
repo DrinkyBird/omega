@@ -27,7 +27,7 @@ script SC_TIMEGUN( int action, int type )
 		// weakening enemies gets you 2 bonus.
 		int ttid = GetTargetInfo( TARGETINFO_TID );
 		
-		if( ttid == ActivatorTID() || ttid < 3800 || ttid >= 3800 + MAXPLAYERS )
+		if( ttid == ActivatorTID() || ttid < TID_Player || ttid >= TID_Player + MAXPLAYERS )
 		{
 			// No valid target
 			terminate;

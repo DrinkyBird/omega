@@ -251,7 +251,7 @@ function int CheckPlasmaCooldown( void )
 function void GiveToAll( str what, int amount )
 {
 	for( int i = 0; i < MAXPLAYERS; i++ )
-		GiveActorInventory( 3800 + i, what, amount );
+		GiveActorInventory( TID_Player + i, what, amount );
 }
 
 script 356( void )
@@ -309,7 +309,7 @@ function void FreezeBold( void )
 		if( PlayerInGame( i ) && !IsAdmin[i] )
 		{
 			SetPlayerProperty( i, PROP_TOTALLYFROZEN, true );
-			SetActorProperty( 3800 + i, APROP_Invulnerable, true );
+			SetActorProperty( TID_Player + i, APROP_Invulnerable, true );
 		}
 	}
 }
@@ -324,7 +324,7 @@ function void RecountTimeCops( void )
 	{
 		if( !PlayerInGame( i ) ) continue;
 		
-		if( CheckActorInventory( 3800 + i, "TimeGun" ) )
+		if( CheckActorInventory( TID_Player + i, "TimeGun" ) )
 		{
 			if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_RED )
 				NumTimeCops[0]++;
@@ -344,7 +344,7 @@ function void RecountPlasma( void )
 	{
 		if( !PlayerInGame( i ) ) continue;
 		
-		if( CheckActorInventory( 3800 + i, "PlasmaCannon" ) )
+		if( CheckActorInventory( TID_Player + i, "PlasmaCannon" ) )
 		{
 			if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_RED )
 				NumPlasmaCannons[0]++;
@@ -523,7 +523,7 @@ function int GetPlayerTeam( int p )
 // NOTE: this function must cater for client-side acs!
 function str DisplayName( int pn )
 {
-	int tid = 3800 + pn;
+	int tid = TID_Player + pn;
 	
 	if( pn < 0 || pn > 31 ) tid = ActivatorTID();
 	
@@ -582,7 +582,7 @@ function int JuggernautCount( void )
 	for( int i = 0; i < MAXPLAYERS; i++ )
 	{
 		if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == PlayerTeam() &&
-				CheckActorInventory( 3800 + i, "PowerJuggernaut" ) )
+				CheckActorInventory( TID_Player + i, "PowerJuggernaut" ) )
 			n++;
 	}
 	
@@ -785,7 +785,7 @@ script 891( int p, int newteam )
 {
 	Log( s:pname( p ), s:" is now on ", s:TeamNames[newteam], s:"." );
 	
-	SetActivator( 3800 + p );
+	SetActivator( TID_Player + p );
 	Player_SetTeam( newteam );
 	SetInventory( "IsBlue", newteam == TEAM_BLUE );
 	SetInventory( "IsRed",  newteam == TEAM_RED );

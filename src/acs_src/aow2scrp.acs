@@ -167,6 +167,7 @@
 #define TID_PORTAL_FX           1508 // - 1511
 #define TID_MARINE              1520 // - 1544
 #define TID_TESLACOIL_ORB       1600
+#define TID_Player              TID_Player // - 3863
 
 #define TARGETINFO_X			0  // X-coordinate
 #define TARGETINFO_Y			1  // Y-coordinate

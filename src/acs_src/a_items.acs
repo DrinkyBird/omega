@@ -12,7 +12,7 @@ script SC_InventoryItemUse( int action, int team ) {
 	switch( action ) {
 	case INVITEM_Beacon:
 		/* Plant superweapon beacon */
-		if( ActivatorTID() < 3800 || ActivatorTID() > 3831 )
+		if( ActivatorTID() < TID_Player || ActivatorTID() >= ( TID_Player + MAXPLAYERS ))
 			terminate;
 		
 		/* To prevent accidental planting, nukes must be double-used. */
@@ -123,25 +123,25 @@ script SC_HealingRadius( int action, int i ) {
 	case HEALRAD_SEEK:
 		for( i = 0; i < MAXPLAYERS; i++ )
 		{
-			if( GetActorHealth( 3800 + i ) < GetActorSpawnHealth( 3800 + i ) && !CheckActorInventory( 3800 + i, "IsMech" ))
-				if( CheckActorDistance( 0, 3800 + i, HEALRAD_RANGE ) && !IsBeingHealed[i] )
+			if( GetActorHealth( TID_Player + i ) < GetActorSpawnHealth( TID_Player + i ) && !CheckActorInventory( TID_Player + i, "IsMech" ))
+				if( CheckActorDistance( 0, TID_Player + i, HEALRAD_RANGE ) && !IsBeingHealed[i] )
 					ACS_ExecuteAlways( SC_HealingRadius, 0, HEALRAD_HEAL, i );
 		}
 		break;
 		
 	case HEALRAD_HEAL:
 		IsBeingHealed[i] = true;
-		shp = GetActorSpawnHealth( 3800 + i );
+		shp = GetActorSpawnHealth( TID_Player + i );
 		
 		do {
-			n = GetActorHealth( 3800 + i ) + HEALRAD_AMOUNT;
+			n = GetActorHealth( TID_Player + i ) + HEALRAD_AMOUNT;
 			
 			if( n > shp )
 				n = shp;
 			
-			SetActorHealth( 3800 + i, n );
+			SetActorHealth( TID_Player + i, n );
 			delay( HEALRAD_DELAY );
-		} while( n < shp && n > 0 && CheckActorDistance( 0, 3800 + i, HEALRAD_RANGE ));
+		} while( n < shp && n > 0 && CheckActorDistance( 0, TID_Player + i, HEALRAD_RANGE ));
 		
 		IsBeingHealed[i] = false;
 		break;

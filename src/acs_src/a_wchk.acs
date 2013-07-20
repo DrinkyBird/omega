@@ -13,19 +13,19 @@ script 556 OPEN
 		{
 			if( PlayerInGame( Counter ) )
 			{
-				if( CheckActorInventory( 3800 + Counter, "PlasmaCannon" ) )
+				if( CheckActorInventory( TID_Player + Counter, "PlasmaCannon" ) )
 				{
-					if( CheckActorInventory( 3800 + Counter, "IsRed" ) )
+					if( CheckActorInventory( TID_Player + Counter, "IsRed" ) )
 						NumPlasmaCannons[0]++;
-					else if( CheckActorInventory( 3800 + Counter, "IsBlue" ) )
+					else if( CheckActorInventory( TID_Player + Counter, "IsBlue" ) )
 						NumPlasmaCannons[1]++;
 				}
 				
-				if( CheckActorInventory( 3800 + Counter, "TimeGun" ) )
+				if( CheckActorInventory( TID_Player + Counter, "TimeGun" ) )
 				{
-					if( CheckActorInventory( 3800 + Counter, "IsRed" ) )
+					if( CheckActorInventory( TID_Player + Counter, "IsRed" ) )
 						NumTimeCops[0]++;
-					else if( CheckActorInventory( 3800 + Counter, "IsBlue" ) )
+					else if( CheckActorInventory( TID_Player + Counter, "IsBlue" ) )
 						NumTimeCops[1]++;
 				}
 			}

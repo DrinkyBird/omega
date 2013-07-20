@@ -360,7 +360,7 @@ script 309( int Crate, int Override )
 				continue;
 				
 			IncrCredits( i, amount / enemyplayers );
-			SetActivator( 3800 + i );
+			SetActivator( TID_Player + i );
 			IntelMessage( strparam( s:"Espionage crew has recovered you and your team \cQ$\cD", d:amount / enemyplayers ) );
 		}
 		break;

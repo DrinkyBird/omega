@@ -61,7 +61,7 @@ script 994 DEATH
 	
 	// Log( s:pname( n0 ), s:" was killed by ", s:pname( -1 ));
 	
-	if(( ActivatorTID() < 3800 || ActivatorTID() > 3831 ) && ActivatorTID() != 9999 )
+	if( ActivatorTID() != 9999 )
 		terminate;
 	
 	int n1 = PlayerNumber();
@@ -108,7 +108,7 @@ script 923( void )
 // [SP] Fragging a monster
 script 947( int Amount )
 {
-	if( ActivatorTID() >= 3800 && ActivatorTID() <= 3831 )
+	if( ActivatorTID() >= TID_Player && ActivatorTID() < ( TID_Player + MAXPLAYERS ))
 	{
 		LocalAmbientSound( "game/boink", 255 );
 		AwardCredits( 15 * Amount );

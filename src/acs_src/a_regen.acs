@@ -8,17 +8,17 @@ script 343 OPEN
 		if( !PlayerInGame( n ) )
 			continue;
 			
-		if( CheckActorInventory( 3800 + n, "PlayerRank" ) < 3 ) continue;
+		if( CheckActorInventory( TID_Player + n, "PlayerRank" ) < 3 ) continue;
 		
-		if( CheckActorInventory( 3800 + n, "IsMech" ) )
+		if( CheckActorInventory( TID_Player + n, "IsMech" ) )
 			r = 20;
 		else
 			r = 5;
 			
-		if( GetActorHealth( 3800 + n ) + r >= GetActorSpawnHealth( 3800 + n ) )
-			SetActorHealth( 3800 + n, GetActorSpawnHealth( 3800 + n ) );
+		if( GetActorHealth( TID_Player + n ) + r >= GetActorSpawnHealth( TID_Player + n ) )
+			SetActorHealth( TID_Player + n, GetActorSpawnHealth( TID_Player + n ) );
 		else
-			SetActorHealth( 3800 + n, GetActorHealth( 3800 + n ) + r );
+			SetActorHealth( TID_Player + n, GetActorHealth( TID_Player + n ) + r );
 	}
 	
 	delay( 35 * 5 );
@@ -57,12 +57,12 @@ script 354 OPEN
 			{
 				if( GlobalMedic[1 - GetPlayerInfo( i, PLAYERINFO_TEAM )] )
 				{
-					hp = GetActorHealth( 3800 + i );
-					shp = GetActorSpawnHealth( 3800 + i );
+					hp = GetActorHealth( TID_Player + i );
+					shp = GetActorSpawnHealth( TID_Player + i );
 					
 					if( hp == shp ) continue;
 					
-					if( CheckActorInventory( 3800 + i, "IsMech" ) ) hp += 2;
+					if( CheckActorInventory( TID_Player + i, "IsMech" ) ) hp += 2;
 					else hp++;
 					
 					if( hp > shp )
@@ -70,7 +70,7 @@ script 354 OPEN
 						hp = shp;
 					}
 					
-					SetActorHealth( 3800 + i, hp );
+					SetActorHealth( TID_Player + i, hp );
 				}
 			}
 		}
@@ -80,7 +80,7 @@ script 354 OPEN
 			for( i = 0; i < 32; i++ )
 			{
 				if( GlobalAmmo[1 - GetPlayerInfo( i, PLAYERINFO_TEAM )] )
-					GiveActorInventory( 3800 + i, "AmmoRegenerationPack", 1 );
+					GiveActorInventory( TID_Player + i, "AmmoRegenerationPack", 1 );
 			}
 		}
 		

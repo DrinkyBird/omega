@@ -349,7 +349,7 @@ function void AwardBuildingDestruction( int team, int small )
 	{
 		if( PlayerInGame( k ) && GetPlayerInfo( k, PLAYERINFO_TEAM ) == Team )
 		{
-			SetActivator( 3800 + k );
+			SetActivator( TID_Player + k );
 			ACS_ExecuteAlways( 318, 0 );
 			GiveCredits( -1, 500 );
 		}

@@ -65,7 +65,7 @@ script 331( void )
 // [SP] Player goes spectator.
 script 941( int Player ) DISCONNECT
 {
-	Thing_ChangeTID( 3800 + Player, 0 );
+	Thing_ChangeTID( TID_Player + Player, 0 );
 }
 
 // [Dusk]
@@ -157,22 +157,21 @@ script 978( int p )
 }
 
 // [Dusk] Missile launcher targeter
-script 963( void ) CLIENTSIDE
-{
-	if( ActivatorTID() != 3800 + consoleplayer )
+script 963( void ) CLIENTSIDE {
+	if( ActivatorTID() != TID_Player + consoleplayer )
 		terminate;
 		
-	int mytid = 3800 + consoleplayer;
-	int t;
+	int mytid = TID_Player + consoleplayer;
+	int t, p;
 	int team = PlayerTeam();
 	
-	while( CheckWeapon( "MissileLauncher" ) && GetHealth() > 0 )
-	{
+	while( CheckWeapon( "MissileLauncher" ) && GetHealth() > 0 ) {
 		SetActivatorToTarget( 0 );
 		t = ActivatorTID();
+		p = PlayerNumber();
 		
-		if( t != mytid && t >= 3800 && t <= 3831 && CheckActorInventory( t, "StealthMode" ) != 2 &&
-		GetPlayerInfo( t - 3800, PLAYERINFO_TEAM ) != team )
+		if( t != mytid && p != -1 && CheckActorInventory( t, "StealthMode" ) != 2 &&
+			GetPlayerInfo( t - TID_Player, PLAYERINFO_TEAM ) != team )
 		{
 		
 			SetFont( "TARGHAIR" );

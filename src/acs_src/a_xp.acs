@@ -239,7 +239,7 @@ script 92( void )
 		GiveInventory( "InGame", 1 );
 		ACS_ExecuteAlways( 5, 0 );
 		ACS_ExecuteAlways( 10, 0 );
-		Thing_ChangeTID( 0, PlayerNumber() + 3800 );
+		Thing_ChangeTID( 0, PlayerNumber() + TID_Player );
 	}
 }
 

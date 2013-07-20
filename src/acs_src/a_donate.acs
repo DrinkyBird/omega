@@ -22,7 +22,7 @@ function int DonateCredits( int Player, int NewCredits )
 		HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0 );
 	
 	Donor[CheckInventory( "DonationName" )] = PlayerNumber(); // used in the message to the donatee
-	GiveActorInventory( 3800 + CheckInventory( "DonationName" ), "DonationMessage", 1 );
+	GiveActorInventory( TID_Player + CheckInventory( "DonationName" ), "DonationMessage", 1 );
 	
 	return NewCredits;
 }
@@ -44,7 +44,7 @@ function void ShowCurrentDonationMenu( void )
 		s:"\n\cFChange Name \cK-> \cI", k: "DonationName",
 		s:"\n\cFDonate \cQ$\cD100 \cK-> \cI", k: "DonationGive",
 		s:"\n\n", n: DonationName + 1, s:"\n\cKCredits:\cQ$\cD", d:Credits[DonationName],
-		s:"\n\cKHealth: ", d:GetActorHealth( 3800 + DonationName ), s:" / ", d:GetActorSpawnHealth( 3800 + DonationName ),
+		s:"\n\cKHealth: ", d:GetActorHealth( TID_Player + DonationName ), s:" / ", d:GetActorSpawnHealth( TID_Player + DonationName ),
 		s:"\n\cK", s:DisplayName( DonationName );
 		HUDMSG_PLAIN, 6000 + PlayerNumber(), color, -0.65, 0.65, 1.15 );
 }

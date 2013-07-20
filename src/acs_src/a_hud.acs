@@ -18,7 +18,7 @@ script 5 RESPAWN
 
 script SC_UpdateCreditDisplay( int p )
 {
-	SetActivator( 3800 + p );
+	SetActivator( TID_Player + p );
 	
 	int color = cond( PlayerTeam() == TEAM_BLUE, CR_LIGHTBLUE, CR_BRICK );
 	

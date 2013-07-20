@@ -2,8 +2,7 @@
 
 #define REPAIRTYPE_REPAIR 0
 #define REPAIRTYPE_MEDIC 1
-script 650( int amount, int repairtype, int turret )
-{
+script 650( int amount, int repairtype, int turret ) {
 	if( GetHealth() <= 0 ) terminate;
 	
 	int hp, newhp;
@@ -17,50 +16,46 @@ script 650( int amount, int repairtype, int turret )
 	SetActivatorToTarget( 0 );
 	tid = ActivatorTID();
 	
-	if( tid == origid ) terminate;
-	
-	if( !CheckActorDistance( origid, tid, 800 ) ) terminate;
+	if( tid == origid )
+		terminate; /* No target found. */
 	
 	int newpn;
 	int what = -1;
 	int tteam = -1;
 	
-	// are we shooting at a terminal?
-	if( tid == TID_PORTAL_BLUE1 || tid == TID_PORTAL_BLUE2 )
-	{
-		// blue portal
+	/* Are we shooting at a terminal? */
+	if( tid == TID_PORTAL_BLUE1 || tid == TID_PORTAL_BLUE2 ) {
+		/* Blue portal */
 		what = BUILDING_PORTAL;
 		tteam = TEAM_BLUE;
-	}
-	else if( tid == TID_PORTAL_RED1 || tid == TID_PORTAL_RED2 )
-	{
-		// red portal
+	} else if( tid == TID_PORTAL_RED1 || tid == TID_PORTAL_RED2 ) {
+		/* Red portal */
 		what = BUILDING_PORTAL;
 		tteam = TEAM_RED;
-	}
-	else for( int i = 0; i < 18; i++ )
-		{
-			if( tid == BaseTIDs[i] )
-			{
+	} else {
+		/* FIXME: This loop is fragile and needs to die. */
+		for( int i = 0; i < 18; i++ ) {
+			if( tid == BaseTIDs[i] ) {
 				what = i / 2;
 				tteam = i % 2;
 			}
 		}
-		
+	}
+	
 	if( what != -1 && tteam == team )
 	{
 		if( repairtype != REPAIRTYPE_REPAIR ) terminate;
-		
 		if( SuddenDeath && tid < 900 ) terminate;
 		
-		// k we're shooting at a terminal
-		
+		/* OK we're shooting at a terminal */
 		hp = GetHealth();
 		newhp = hp + amount;
 		
-		if( hp >= GetSpawnHealth() ) terminate;
+		if( hp >= GetSpawnHealth() )
+			terminate;
 		
-		if( newhp >= GetSpawnHealth() ) newhp = GetSpawnHealth();
+		if( newhp >= GetSpawnHealth() )
+			newhp = GetSpawnHealth();
 		
 		SetHealth( newhp );
 		
@@ -70,38 +65,34 @@ script 650( int amount, int repairtype, int turret )
 		// activator is now the repairman again
 		if( RepairBonus[pn] < 250 )
 			RepairBonus[pn]++;
-		else
-		{
+		else {
 			RepairBonus[pn] = 0;
 			AddExperience( 50 );
 			LocalAmbientSound( "c4/use", 127 );
 			GivePoints( 1 );
 		}
 		
-		if( !( RepairBonus[pn] % 10 ) ) GiveCredits( -1, GetCVAR( "aow_repairbonus" ));
+		if( !( RepairBonus[pn] % 10 )) GiveCredits( -1, GetCVAR( "aow_repairbonus" ));
 		
 		ACS_ExecuteAlways( 930, 0, what, tteam ); // update the hud
-	}
-	else if( tid >= 3800 && tid <= 3831 || CheckInventory( "IsAIMarine" ) )
-	{
+	} else if( tid >= TID_Player && tid < ( TID_Player + MAXPLAYERS ) || CheckInventory( "IsAIMarine" )) {
 		if( repairtype == REPAIRTYPE_REPAIR ) amount = 1;
 		
 		bonus = amount * 3;
-		newpn = tid - 3800;
+		newpn = tid - TID_Player;
 		
-		// NOT AT ENEMIES YOU FUCKTARD
-		if( !CheckInventory( "IsAIMarine" ) && GetPlayerInfo( newpn, PLAYERINFO_TEAM ) != team ) terminate;
+		/* Not at enemies */
+		if( !CheckInventory( "IsAIMarine" ) && GetPlayerInfo( newpn, PLAYERINFO_TEAM ) != team )
+			terminate;
 		
 		if( CheckInventory( "IsAIMarine" ) && CheckInventory( "IsRed" ) != team )
 			terminate;
 			
-		// special case for mechs
-		if( CheckInventory( "IsMech" ) )
-		{
+		if( CheckInventory( "IsMech" )) {
+			/* Medics cannot repair mechs. */
 			if( repairtype == REPAIRTYPE_MEDIC )
 				terminate;
-			else
-			{
+			else {
 				amount = 4;
 				bonus = 1;
 			}
@@ -110,23 +101,21 @@ script 650( int amount, int repairtype, int turret )
 		hp = GetHealth();
 		newhp = hp + amount;
 		
-		if( hp >= GetSpawnHealth() ) terminate;
+		if( hp >= GetSpawnHealth() )
+			terminate;
 		
-		if( newhp >= GetSpawnHealth() ) newhp = GetSpawnHealth();
+		if( newhp >= GetSpawnHealth() )
+			newhp = GetSpawnHealth();
 		
 		SetHealth( newhp );
 		
 		// MEDIC AWARDS
-		if( !CheckInventory( "PowerNoHealXP" ) )
-		{
-			SetActivator( 3800 + pn );
+		if( !CheckInventory( "PowerNoHealXP" )) {
+			SetActivator( TID_Player + pn );
 			
 			if( MedicBonus[pn] < GetCVAR( "aow_medicbonusneed" ))
-			{
 				MedicBonus[pn] += bonus;
-			}
-			else
-			{
+			else {
 				MedicBonus[pn] = 0;
 				AddExperience( 50 );
 				LocalAmbientSound( "c4/use", 127 );
@@ -139,24 +128,23 @@ script 650( int amount, int repairtype, int turret )
 	}
 }
 
-/* * * * * Repair turret ACS
+/* Repair turret ACS
+ * 
  * Result value of 1 means repair turret should display
  * the repairing animation, 0 means it should not.
  */
-script 651( void )
-{
+script 651( void ) {
 	SetResultValue( 0 );
 	int tid = ACS_ExecuteWithResult( 964, 5 );
 	
-	if( SuddenDeath && tid < 900 )
-	{
-		// It's sudden death. We can't repair here, so
-		// transform into a klaxon turret instead!
-		// SetActorState (0, "NoLongerMrNiceGuy");
-		
-		// SetActorState crashes here as this function is used
-		// as a parameter for A_JumpIf. Signify the turret instead
-		// that it should replace itself.
+	if( SuddenDeath && tid < 900 ) {
+		/* It's sudden death. We can't repair here, so transform into a klaxon
+		 * turret instead!
+		 * 
+		 * We need to signal the turret with an inventory item since this script
+		 * is called as a parameter to A_JumpIf. Setting an actor's state directly
+		 * here causes a crash.
+		 */
 		GiveInventory( "SDReplace", 1 );
 		terminate;
 	}
@@ -177,6 +165,7 @@ script 651( void )
 		tteam = TEAM_RED;
 	}
 	
+	/* FIXME: argh! */
 	for( int i = 0; i < 18; i++ )
 	{
 		if( tid == BaseTIDs[i] )
@@ -191,9 +180,9 @@ script 651( void )
 	int hp = GetActorHealth( tid );
 	int newhp = hp + 8;
 	
-	if( hp >= GetActorSpawnHealth( tid ) ) terminate;
+	if( hp >= GetActorSpawnHealth( tid )) terminate;
 	
-	if( newhp >= GetActorSpawnHealth( tid ) ) newhp = GetActorSpawnHealth( tid );
+	if( newhp >= GetActorSpawnHealth( tid )) newhp = GetActorSpawnHealth( tid );
 	
 	SetActorHealth( tid, newhp );
 	
@@ -219,9 +208,9 @@ script 654( void ) CLIENTSIDE
 	
 	if( PlayerNumber() == -1 ) terminate;
 	
-	if( tid == 3800 + ConsolePlayer ) terminate;
+	if( tid == TID_Player + ConsolePlayer ) terminate;
 	
-	if( GetPlayerInfo( tid - 3800, PLAYERINFO_TEAM ) != myteam ) terminate;
+	if( GetPlayerInfo( tid - TID_Player, PLAYERINFO_TEAM ) != myteam ) terminate;
 	
 	int shp = GetSpawnHealth();
 	int hp = GetHealth();

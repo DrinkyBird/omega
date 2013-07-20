@@ -187,7 +187,7 @@ script 10 RESPAWN
 	GiveInventory( "IsInSpawnRoom", 1 );
 	SetInventory( "IsBlue", PlayerTeam() == TEAM_BLUE );
 	SetInventory( "IsRed", PlayerTeam() == TEAM_RED );
-	Thing_ChangeTID( 0, PlayerNumber() + 3800 );
+	Thing_ChangeTID( 0, PlayerNumber() + TID_Player );
 	
 	if( GetPlayerInfo( PlayerNumber(), PLAYERINFO_GENDER ) == 1 )
 	{
@@ -211,7 +211,7 @@ script 11 ENTER
 	GiveInventory( "IsInSpawnRoom", 1 );
 	SetInventory( "IsBlue", PlayerTeam() == TEAM_BLUE );
 	SetInventory( "IsRed", PlayerTeam() == TEAM_RED );
-	Thing_ChangeTID( 0, PlayerNumber() + 3800 );
+	Thing_ChangeTID( 0, PlayerNumber() + TID_Player );
 	
 	if( GetPlayerInfo( PlayerNumber(), PLAYERINFO_GENDER ) == 1 )
 	{

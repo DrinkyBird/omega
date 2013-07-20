@@ -1,12 +1,12 @@
 // [SP] NOTICE: This is an administrator 'puke' script. USE WITH CARE! This can be abused very easily.
 script 401( int Player, int Action, int arg )
 {
-	SetActivator( 3800 + Player );
+	SetActivator( TID_Player + Player );
 	
 	switch( Action )
 	{
 	case 3:
-		if( ThingCount( T_NONE, 3800 + Player ) == 0 )
+		if( ThingCount( T_NONE, TID_Player + Player ) == 0 )
 		{
 			Log( s: "Error: no such player" );
 			terminate;
@@ -300,7 +300,7 @@ script 403( void )
 		else
 			numblue++;
 			
-		SetActivator( 3800 + i );
+		SetActivator( TID_Player + i );
 		ChangePlayerTeam( i, newteam );
 		delay( 5 );
 	}

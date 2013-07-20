@@ -240,7 +240,7 @@ script 4 OPEN
 		
 		for( i = 0; i < MAXPLAYERS; i++ )
 		{
-			if( PlayerInGame( i ) && GetActorHealth( 3800 + i ) > 0 )
+			if( PlayerInGame( i ) && GetActorHealth( TID_Player + i ) > 0 )
 			{
 				if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_RED )
 					GiveCredits( i, redflow );

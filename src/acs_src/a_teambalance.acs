@@ -58,7 +58,7 @@ function void CheckTeamBalance( void )
 		{
 			// If the player was already in-game for a bit, tell him why
 			// he's suddenly being switched out.
-			SetActivator( 3800 + switchee );
+			SetActivator( TID_Player + switchee );
 			BigMessage( "You have been switched to even out teams." );
 		}
 		
