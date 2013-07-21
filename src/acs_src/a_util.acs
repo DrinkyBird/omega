@@ -287,7 +287,7 @@ script 345( int Type, int Team ) {
 	
 	int Counter = 0;
 	
-	if( Type == 3 && Team == 0 ) //RED {
+	if( Type == 3 && Team == 0 ) { //RED
 		MiniRefinery[0] = 0;
 		SetFont( "SMALLFONT" );
 	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cGNod \cDMini-Refinery!" ) );
@@ -298,7 +298,7 @@ Log( s: pname( -1 ), s: " destroys Nod Mini-Ref." );
 		ACS_ExecuteAlways( 930, 0, BUILDING_MINIREF, TEAM_RED );
 	}
 	
-	if( Type == 3 && Team == 1 ) //BLUE {
+	if( Type == 3 && Team == 1 ) { //BLUE
 		MiniRefinery[1] = 0;
 		SetFont( "SMALLFONT" );
 	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cFGDI \cDMini-Refinery!" ) );
@@ -309,7 +309,7 @@ Log( s: pname( -1 ), s: " destroys GDI Mini-Ref." );
 		ACS_ExecuteAlways( 930, 0, BUILDING_MINIREF, TEAM_BLUE );
 	}
 	
-	if( Type == 5 && Team == 0 ) //RED {
+	if( Type == 5 && Team == 0 ) { //RED
 		GlobalMedic[0] = 0;
 		SetFont( "SMALLFONT" );
 	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cGNod \cAHealth Regenerator!" ) );
@@ -320,7 +320,7 @@ Log( s: pname( -1 ), s: " destroys Nod Health Regen Cache." );
 		ACS_ExecuteAlways( 930, 0, BUILDING_HEALTHREGEN, TEAM_RED );
 	}
 	
-	if( Type == 5 && Team == 1 ) //BLUE {
+	if( Type == 5 && Team == 1 ) { //BLUE
 		GlobalMedic[1] = 0;
 		SetFont( "SMALLFONT" );
 	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cFGDI \cAHealth Regenerator!" ) );
@@ -331,7 +331,7 @@ Log( s: pname( -1 ), s: " destroys GDI Health Regen Cache." );
 		ACS_ExecuteAlways( 930, 0, BUILDING_HEALTHREGEN, TEAM_RED );
 	}
 	
-	if( Type == 7 && Team == 0 ) //RED {
+	if( Type == 7 && Team == 0 ) { //RED
 		GlobalAmmo[0] = 0;
 		SetFont( "SMALLFONT" );
 	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cGNod \cKAmmo Regenerator!" ) );
@@ -343,7 +343,7 @@ Log( s: pname( -1 ), s: " destroys Nod Ammo Regen Cache." );
 		
 	}
 	
-	if( Type == 7 && Team == 1 ) //BLUE {
+	if( Type == 7 && Team == 1 ) { //BLUE
 		GlobalAmmo[1] = 0;
 		SetFont( "SMALLFONT" );
 	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cFGDI \cKAmmo Regenerator!" ) );
@@ -571,7 +571,7 @@ script 695( int Type ) {
 		terminate;
 	}
 	
-	if( Type == 0 ) //TURRET {
+	if( Type == 0 ) { //TURRET
 		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 50, 0, 0 ) ) {
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -584,7 +584,7 @@ script 695( int Type ) {
 		}
 	}
 	
-	if( Type == 1 ) //POWERUP CACHE {
+	if( Type == 1 ) { //POWERUP CACHE
 		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 250, 0, 0 ) ) {
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -597,7 +597,7 @@ script 695( int Type ) {
 		}
 	}
 	
-	if( Type == 2 ) //MINI REFINERY {
+	if( Type == 2 ) { //MINI REFINERY
 		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 2250, 0, 0 ) ) {
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -610,7 +610,7 @@ script 695( int Type ) {
 		}
 	}
 	
-	if( Type == 3 ) //ANTI-MECH TURRET {
+	if( Type == 3 ) { //ANTI-MECH TURRET
 		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 80, 0, 0 ) ) {
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -623,7 +623,7 @@ script 695( int Type ) {
 		}
 	}
 	
-	if( Type == 4 ) //MINES {
+	if( Type == 4 ) { //MINES
 		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 80, 0, 0 ) ) {
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -636,7 +636,7 @@ script 695( int Type ) {
 		}
 	}
 	
-	if( Type == 5 ) //REPAIR TURRET {
+	if( Type == 5 ) { //REPAIR TURRET
 		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 125, 0, 0 ) ) {
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -649,7 +649,7 @@ script 695( int Type ) {
 		}
 	}
 	
-	if( Type == 6 ) //ADVANCED/KLAXON TURRET {
+	if( Type == 6 ) { //ADVANCED/KLAXON TURRET
 		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 100, 0, 0 ) ) {
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -662,7 +662,7 @@ script 695( int Type ) {
 		}
 	}
 	
-	if( Type == 7 ) //REGENERATION CACHE {
+	if( Type == 7 ) { //REGENERATION CACHE
 		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 2250, 0, 0 ) ) {
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -675,7 +675,7 @@ script 695( int Type ) {
 		}
 	}
 	
-	if( Type == 8 ) //RAVEN MECH {
+	if( Type == 8 ) { //RAVEN MECH
 		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 1400, 0, 0 ) ) {
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -688,7 +688,7 @@ script 695( int Type ) {
 		}
 	}
 	
-	if( Type == 9 ) //RAVEN COMPANION {
+	if( Type == 9 ) { //RAVEN COMPANION
 		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 150, 0, 0 ) ) {
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -701,7 +701,7 @@ script 695( int Type ) {
 		}
 	}
 	
-	if( Type == 10 ) //MISSILE TURRET {
+	if( Type == 10 ) { //MISSILE TURRET
 		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 200, 0, 0 ) ) {
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");
@@ -714,7 +714,7 @@ script 695( int Type ) {
 		}
 	}
 	
-	if( Type == 11 ) //WOLVERINE MECH {
+	if( Type == 11 ) { //WOLVERINE MECH
 		if( GetCredits( PlayerNumber() ) < ACS_ExecuteWithResult( 330, 1600, 0, 0 ) ) {
 			//LocalAmbientSound("misc/funds",255);
 			//SETFONT("BigFont");

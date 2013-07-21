@@ -807,52 +807,13 @@ script 966( void ) CLIENTSIDE {
 	}
 	
 	// If the player dies, the aura goes out.
-	if( ACS_ExecuteWithResult( 964, 3 ) <= 0 ) {
+	if( GetTargetInfo( TARGETINFO_HEALTH ) <= 0 ) {
 		SetActorState( 0, "Clear" );
 		terminate;
 	}
 	
-	int x = ACS_ExecuteWithResult( 964, 0 );
-	int y = ACS_ExecuteWithResult( 964, 1 );
-	int z = ACS_ExecuteWithResult( 964, 2 );
+	int x = GetTargetInfo( TARGETINFO_X );
+	int y = GetTargetInfo( TARGETINFO_Y );
+	int z = GetTargetInfo( TARGETINFO_Z );
 	SetActorPosition( 0, x, y, z, 0 );
-}
-
-// [Dusk] target information
-script 964( int type, int value ) {
-	SetActivatorToTarget( 0 );
-	SetResultValue( 0 );
-	
-	switch( type ) {
-	case 0:
-		SetResultValue( GetActorX( 0 ) );
-		break;
-	case 1:
-		SetResultValue( GetActorY( 0 ) );
-		break;
-	case 2:
-		SetResultValue( GetActorZ( 0 ) );
-		break;
-	case 3:
-		SetResultValue( GetHealth() );
-		break;
-	case 4:
-		SetResultValue( GetActorAngle( 0 ) );
-		break;
-	case 5:
-		SetResultValue( ActivatorTID() );
-		break;
-	case 6:
-		SetPlayerProperty( 0, value, PROP_FROZEN );
-		break;
-	case 7:
-		SetPlayerProperty( 0, value, PROP_TOTALLYFROZEN );
-		break;
-	case 8:
-		SetResultValue( CheckInventory( value ) );
-		break;
-	case 9:
-		SetResultValue( PlayerNumber() );
-		break;
-	}
 }

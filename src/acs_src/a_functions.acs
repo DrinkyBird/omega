@@ -541,7 +541,9 @@ function void ReddenSector( int tag ) {
 	Sector_SetColor( tag, 255, 150, 150 );
 }
 
-// [Dusk] ACS does not have the ?: operator, work around this:
+/* [Dusk] ACS does not have the ?: operator, work around this:
+ * a ? b : c <=> cond( a, b, c )
+ */
 function int cond( int a, int b, int c ) {
 	if( a )
 		return b;
@@ -549,9 +551,10 @@ function int cond( int a, int b, int c ) {
 	return c;
 }
 
-// ============================================================================
-// [Dusk] Acquire target information. This is encapsulated in a script so
-// as not to interfere with the original script's activator.
+/* ============================================================================
+ * [Dusk] Acquire target information. This is encapsulated in a script so
+ * as not to interfere with the original script's activator.
+ */
 script SC_TargetInfo( int type, int value ) {
 	SetActivatorToTarget( 0 );
 	SetResultValue( 0 );
@@ -663,12 +666,14 @@ function str pname( int p ) {
 	}
 	
 	
-	return strparam( n:p + 1, s:" (#", d:p, s:", ", s:TeamNames[GetPlayerInfo( p, PLAYERINFO_TEAM )], s:")" );
+	return strparam( n:p + 1, s:" (#", d:p, s:", ",
+		s:TeamNames[GetPlayerInfo( p, PLAYERINFO_TEAM )], s:")" );
 }
 
-// ============================================================================
-// [Dusk] AproxDistance: Doom's P_AproxDistance, converted to ACS.
-// It's faster, but less accurate than distance().
+/* ============================================================================
+ * [Dusk] AproxDistance: Doom's P_AproxDistance, converted to ACS.
+ * It's faster, but less accurate than distance().
+ */
 function int AproxDistance( int t1, int t2 ) {
 	int dx = abs(GetActorX( t1 ) - GetActorX( t2 ));
 	int dy = abs(GetActorY( t1 ) - GetActorY( t2 ));
@@ -679,8 +684,9 @@ function int AproxDistance( int t1, int t2 ) {
 	return dx + ( dy / 2 );
 }
 
-// ============================================================================
-// [Dusk] Clean way to change a player's team. Don't use Player_SetTeam!
+/* ============================================================================
+ * [Dusk] Clean way to change a player's team. Don't use Player_SetTeam!
+ */
 function void ChangePlayerTeam( int p, int newteam ) {
 	if( !PlayerInGame( p ) || GetPlayerTeam( p ) == newteam || newteam < 0 || newteam > 1 )
 		return;
@@ -688,8 +694,8 @@ function void ChangePlayerTeam( int p, int newteam ) {
 	ACS_ExecuteWithResult( 891, p, newteam );
 }
 
-// [Dusk] Separate script so as not to mess with the activator.
-script 891( int p, int newteam ) {
+/* [Dusk] Separate script so as not to mess with the activator. */
+script SC_ChangePlayerTeam( int p, int newteam ) {
 	Log( s:pname( p ), s:" is now on ", s:TeamNames[newteam], s:"." );
 	
 	SetActivator( TID_Player + p );
@@ -697,14 +703,14 @@ script 891( int p, int newteam ) {
 	SetInventory( "IsBlue", newteam == TEAM_BLUE );
 	SetInventory( "IsRed",  newteam == TEAM_RED );
 	
-	// If they are in field right now, send them to their new
-	// team's base, otherwise, into the spawn room.
+	/* If they are in field right now, send them to their new team's base,
+	 * otherwise, into the spawn room. */
 	if( CheckInventory( "IsInSpawnRoom" ) )
 		Teleport( 70 + ( newteam == TEAM_RED ) );
 	else
 		Teleport( 1 + ( newteam == TEAM_RED ) );
 	
-	// If we were carrying a beacon, swap that now.
+	/* If we were carrying a beacon, swap that now. */
 	if( CheckInventory( "IonCannonBeacon" ) || CheckInventory( "NuclearStrikeBeacon" )) {
 		SetInventory( "IonCannonBeacon", newteam == TEAM_BLUE );
 		SetInventory( "NuclearStrikeBeacon", newteam == TEAM_RED );

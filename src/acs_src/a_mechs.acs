@@ -256,20 +256,18 @@ script 314( void ) {
 		}
 	}
 	
-	if( CheckInventory( "TitanWeapons" ) ) {
+	if( CheckInventory( "TitanWeapons" )) {
 		if( CheckInventory( "Wolverine-WhatWeapon" ) == 0 ) {
 			GiveInventory( "Wolverine-WhatWeapon", 1 );
 			SetFont( "DOOMFONT" );
 			HudMessage( s: "\cfDual Flamethrowers"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/flamer", 128 );
-		}
-		else if( CheckInventory( "Wolverine-WhatWeapon" ) == 1 ) {
+		} else if( CheckInventory( "Wolverine-WhatWeapon" ) == 1 ) {
 			GiveInventory( "Wolverine-WhatWeapon", 1 );
 			SetFont( "DOOMFONT" );
 			HudMessage( s: "\cfLRM-20"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/lrm", 128 );
-		}
-		else //if(CheckInventory("Wolverine-WhatWeapon") == 2) {
+		} else { //if(CheckInventory("Wolverine-WhatWeapon") == 2)
 			TakeInventory( "Wolverine-WhatWeapon", 3 );
 			SetFont( "DOOMFONT" );
 			HudMessage( s: "\cf100mm Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
@@ -277,20 +275,19 @@ script 314( void ) {
 		}
 	}
 	
-	if( CheckInventory( "MadCatWeapons" ) ) {
+	if( CheckInventory( "MadCatWeapons" )) {
 		if( CheckInventory( "Wolverine-WhatWeapon" ) == 0 ) {
 			GiveInventory( "Wolverine-WhatWeapon", 1 );
 			SetFont( "DOOMFONT" );
 			HudMessage( s: "\cfDual Shock Autorifles"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/minigun", 128 );
-		}
-		else if( CheckInventory( "Wolverine-WhatWeapon" ) == 1 ) {
+		} else if( CheckInventory( "Wolverine-WhatWeapon" ) == 1 )
+		{
 			GiveInventory( "Wolverine-WhatWeapon", 1 );
 			SetFont( "DOOMFONT" );
 			HudMessage( s: "\cfLRM-20"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/lrm", 128 );
-		}
-		else {
+		} else {
 			TakeInventory( "Wolverine-WhatWeapon", 3 );
 			SetFont( "DOOMFONT" );
 			HudMessage( s: "\cfDual Shock Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
