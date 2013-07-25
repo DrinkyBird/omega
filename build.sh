@@ -10,6 +10,11 @@ if [ -z "$(which acc)" ]; then
 	exit 1
 fi
 
+zipcompression=$1
+if [ -z "$1" ]; then
+	zipcompression=0
+fi
+
 if [ ! -x "./utils/acsconstants" ]; then
 	echo "ACS constants utility doesn't exist, compiling..."
 	gcc -o ./utils/acsconstants -W -Wall ./utils/acsconstants.c
@@ -61,12 +66,12 @@ pushd tmp >/dev/null
 		exit 1
 	fi
 	
-	zip -r -$1 ../$fname actors acs * >/dev/null
+	zip -r -$zipcompression ../$fname actors acs * >/dev/null
 popd >/dev/null
 
 pushd src >/dev/null
 	echo "Building $fname..."
-	zip -r -$1 ../$fname acs * >/dev/null
+	zip -r -$zipcompression ../$fname acs * >/dev/null
 popd >/dev/null
 
 rm -rf ./tmp/
