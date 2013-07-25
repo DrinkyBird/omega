@@ -338,7 +338,7 @@ function void AwardBuildingDestruction( int team, int small ) {
 	// [Dusk] Restore activator for point awarding
 	SetActivator( activator );
 	
-	if( BaseLeft [team] <= 0 ) {
+	if( BaseLeft[1 - team] <= 0 ) {
 		GameOver = true;
 		ConsoleCommand( "pointlimit 1" );
 	}
