@@ -76,15 +76,14 @@ script 997( void ) {
 		Tickets[TEAM_RED] = StartingTickets;
 		SetActorSpeed( TID_TICKETCOUNTER_BLUE, StartingTickets );
 		SetActorSpeed( TID_TICKETCOUNTER_RED, StartingTickets );
-		
-		// Update the building HUD now.
-		DrawBuildingHUD();
 	}
 	
 	SuddenDeath = true;
 	int ticker = 0;
 	int i;
 	
+	// Update the building HUD now.
+	DrawBuildingHUD();
 	SetActivator( -1 );
 	
 	while( 1 ) {
