@@ -322,9 +322,9 @@ function void TakeTickets( int team, int count ) {
 		
 	if( GetActorSpeed( TID_TICKETCOUNTER_BLUE ) != Tickets[TEAM_BLUE] )
 		SetActorSpeed( TID_TICKETCOUNTER_BLUE, Tickets[TEAM_BLUE] );
-		
-	// tell clients to update the hud
-	ACS_ExecuteAlways( 931, 0 );
+	
+	// Update the HUD now.
+	DrawBuildingHud();
 	
 	// handle ticket loss
 	int d;
