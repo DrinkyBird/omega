@@ -1,6 +1,6 @@
 @echo off
 setlocal enableExtensions enableDelayedExpansion
-set tmp=TEMPFILE
+set tmp=TEMPFILE__
 set Path=%PATH%;%cd%\utils;%cd%\utils\acc;C:\Program Files\Git\cmd;C:\Program Files (x86)\Git\cmd
 
 if exist tmp goto tmpexists
