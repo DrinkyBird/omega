@@ -11,12 +11,14 @@ episode AOW01 {
 	name = "A New War"
 }
 
+/*
 map AOW01 "Red Zone" {
 	next = "AOW02"
 	sky1 = "SKY1"
 	music = "D_AOW01"
 	levelnum = 1
 }
+*/
 
 map AOW02 "Barrens" {
 	next = "AOW03"
