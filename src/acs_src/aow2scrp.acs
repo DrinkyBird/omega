@@ -185,6 +185,7 @@
 #define SC_SelfHealHealth         816
 #define SC_CL_ObeliskTrail        822
 #define SC_UpdateCreditDisplay    827
+#define SC_HUDTicker              854
 #define SC_ChangePlayerTeam       891
 #define SC_TargetInfo             899
 #define SC_JetpackToggle          907

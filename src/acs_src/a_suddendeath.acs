@@ -77,8 +77,8 @@ script 997( void ) {
 		SetActorSpeed( TID_TICKETCOUNTER_BLUE, StartingTickets );
 		SetActorSpeed( TID_TICKETCOUNTER_RED, StartingTickets );
 		
-		// tell clients to update the hud
-		ACS_ExecuteAlways( 931, 0 );
+		// Update the building HUD now.
+		DrawBuildingHUD();
 	}
 	
 	SuddenDeath = true;

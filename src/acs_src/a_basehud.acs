@@ -20,9 +20,18 @@ script 930( int what, int team ) {
 
 function void DrawBuildingHud( void ) {
 	SetFont( "SMALLFONT" );
-	int y = -0.4;
+	int y = -0.36;
 	int team, b, tid;
 	int i = 8850;
+	
+	if( SuddenDeath || TicketPool ) {
+		HudMessageBold(
+			s:"\cFLives\cC: ", s:FractionColor( Tickets[TEAM_BLUE], StartingTickets ), d:Tickets[TEAM_BLUE],
+			s:"\n\cGLives\cC: ", s:FractionColor( Tickets[TEAM_RED], StartingTickets ), d:Tickets[TEAM_RED];
+			HUDMSG_PLAIN, i++, CR_BLUE, 0.012, y, 0.0 );
+		
+		y += 3 * -SMALLSPACE;
+	}
 	
 	for( team = 0; team < 2; ++team ) {
 		str textcolo = GetTeamProperty( team, TPROP_TextColor );
@@ -58,13 +67,16 @@ function void DrawBuildingHud( void ) {
 		
 		y += 2 * -SMALLSPACE;
 	}
-	
-	if( SuddenDeath || TicketPool ) {
-		SetFont( "SMALLFONT" );
-		HudMessageBold(
-			s:"\cFLives\cC: ", s:FractionColor( Tickets[TEAM_BLUE], StartingTickets ), d:Tickets[TEAM_BLUE],
-			s:"\n\cGLives\cC: ", s:FractionColor( Tickets[TEAM_RED], StartingTickets ), d:Tickets[TEAM_RED];
-			HUDMSG_PLAIN, 8852, CR_BLUE, 0.012, 0.4, 0.0 );
+}
+
+/* Update the HUD every 15 seconds since newly connecting clients don't get the
+ * HUD message from the server. Unfortunately this still means newly connecting
+ * clients don't see the HUD for up to 15 seconds, but eh...
+ */
+script SC_HUDTicker OPEN {
+	while( true ) {
+		delay( 15 * 35 );
+		DrawBuildingHud();
 	}
 }
 
