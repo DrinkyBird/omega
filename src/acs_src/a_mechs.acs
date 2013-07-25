@@ -86,7 +86,8 @@ script 80( int mech ) {
 	if( MitigateDoublePress() )
 		terminate;
 	
-	if( !CheckFactory( !PlayerTeam() )) terminate;
+	if( !CheckFactory( !PlayerTeam() ))
+		terminate;
 	
 	if( mech == MECH_GUARDIAN && JuggernautCount() >= GetCVAR( "aow_guardianlimit" ) && !!IsAdmin[PlayerNumber()] ) {
 		Error( "At limit!" );

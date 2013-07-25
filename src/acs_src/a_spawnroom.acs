@@ -228,7 +228,7 @@ script 96( int type ) {
 			terminate;
 		}
 		
-		if( !CheckFactory( type - 2 )) {
+		if( !CheckFactory( 1 - ( type - 2 ))) {
 			delay( 5 );
 			ACS_ExecuteAlways( 96, 0, type - 2 );
 			terminate;
@@ -263,7 +263,7 @@ script 96( int type ) {
 		if( type == 4 )
 			dest = 211;
 		
-		if( !CheckPlant( type - 4 )) {
+		if( !CheckPlant( 1 - ( type - 4 ))) {
 			delay( 5 );
 			ACS_ExecuteAlways( 96, 0, type - 4 );
 			terminate;
