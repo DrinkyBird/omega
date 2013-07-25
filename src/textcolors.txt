@@ -1,0 +1,83 @@
+Green {
+	#001E00  #A0FF00
+Console:
+	#000000  #2D8000    0 127
+	#A0FF00  #FEFFFE  128 256
+Flat:
+	#00CC00
+}
+
+Gold {
+	#732B00  #FFE000    0 191
+	#F8F800  #F8F868  192 256
+Console:
+	#732B00  #EBC600    0 127
+	#DFBF00  #DFFFFE  128 256
+Flat:
+	#FFCC00
+}
+
+Blue {
+	#000810  #0BA5BF
+Console:
+	#000000  #00007F    0 127
+	#4040FF  #DEDEFF  128 256
+Flat:
+	#9999FF
+}
+
+Orange {
+	#401000  #FF8000
+Console:
+	#200000  #904000    0 127
+	#FF7F00  #FFFEFE  128 256
+Flat:
+	#FFAA00
+}
+
+Yellow {
+	#732B00  #FFE000
+Console:
+	#000000  #7F7F00    0 127
+	#FFFF00  #FFFFFF  128 256
+Flat:
+	#EEEE33
+}
+
+LightBlue "Light Blue" {
+	#002130  #10E0FF
+Console:
+	#00003C  #5050FF    0 127
+	#8080FF  #FFFFFF  128 256
+Flat:
+	#33EEFF
+}
+
+DarkGreen "Dark Green" {
+	#001E00  #3B9000
+Console:
+	#000000  #005800    0 127
+	#008C00  #DCFFDC  128 256
+Flat:
+	#008C00
+}
+
+Purple {
+	#100020  #420083    0 95
+	#4E009C  #8000FF   96 256
+Console:
+	#000000  #9F009B    0 127
+	#FF00FF  #FFFFFF  128 256
+Flat:
+	#9966CC
+}
+
+Cyan {
+	#002A3A- #10E0FF     0 191
+	#10E0FF #FFFFFF   192 256
+Console:
+	#000000 #007F7F     0 127
+	#00FFFF #FEFFFF   128 256
+Flat:
+	#00DDDD
+}
