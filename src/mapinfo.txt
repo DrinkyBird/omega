@@ -7,7 +7,7 @@ defaultmap {
 	clipmidtextures
 }
 
-episode AOW01 {
+episode AOW02 {
 	name = "A New War"
 }
 
