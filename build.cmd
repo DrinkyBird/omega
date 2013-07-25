@@ -6,6 +6,15 @@ set Path=%PATH%;%cd%\utils;%cd%\utils\acc;C:\Program Files\Git\cmd;C:\Program Fi
 if exist tmp goto tmpexists
 :doneremovingtmp
 
+rem Run git status --short to see if it's modified
+git status --short >%tmp%
+set /p stat=<%tmp%
+
+rem Replace newlines in %stat%, if doesn't like them:
+set ^"stat2=!stat:^
+
+= !"
+
 git describe >%tmp%
 set /p descrb=<%tmp%
 if "%descrb%"=="" (	
@@ -19,15 +28,6 @@ set /p rnum=<%tmp%
 
 git rev-parse --abbrev-ref HEAD >%tmp%
 set /p branch=<%tmp%
-
-rem Run git status --short to see if it's modified
-git status --short >%tmp%
-set /p stat=<%tmp%
-
-rem Replace newlines in %stat%, if doesn't like them:
-set ^"stat2=!stat:^
-
-= !"
 
 rem Now do the checking
 if "%stat2%" NEQ "" set rnum=%rnum%m
