@@ -55,11 +55,6 @@ script 994 DEATH {
 	int t0 = PlayerTeam();
 	SetActivatorToTarget( 0 );
 	
-	// Log( s:pname( n0 ), s:" was killed by ", s:pname( -1 ));
-	
-	if( ActivatorTID() != 9999 )
-		terminate;
-	
 	int n1 = PlayerNumber();
 	int t1 = PlayerTeam();
 	
