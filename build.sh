@@ -61,12 +61,12 @@ pushd tmp >/dev/null
 		exit 1
 	fi
 	
-	zip -r1 ../$fname actors acs * >/dev/null
+	zip -r -$1 ../$fname actors acs * >/dev/null
 popd >/dev/null
 
 pushd src >/dev/null
 	echo "Building $fname..."
-	zip -r1 ../$fname acs * >/dev/null
+	zip -r -$1 ../$fname acs * >/dev/null
 popd >/dev/null
 
 rm -rf ./tmp/
