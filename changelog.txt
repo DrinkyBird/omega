@@ -30,3 +30,5 @@
 - Rebalanced Shock Rifle [Eric]
 - Hopefully fixed donation message being incorrect. [Dusk]
 - Crushed a shotgun reload sprite clipping issue like a grape!!!!!! (also made them look a bit better) [Bloax]
+- Fixed opaque guardian sprite [Bloax]
+- Added +FORCEXYBILLBOARD to puff actors [Cyberkill]
