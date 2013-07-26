@@ -16,7 +16,7 @@ function int DonateCredits( int Player, int NewCredits ) {
 	LocalAmbientSound( "powerup/stolsound", 255 );
 	
 	SetFont( "SMALLFONT" );
-	HudMessage( s:"You have donated \cf$", d:NewCredits, s:"\cd to ", n: CheckInventory( "DonationName" );
+	HudMessage( s:"You have donated \cf$", d:NewCredits, s:"\cd to ", n:CheckInventory( "DonationName" ) + 1;
 		HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0 );
 	
 	// Draw the donation message on the recipient
