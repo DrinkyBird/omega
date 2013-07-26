@@ -134,7 +134,7 @@ script 650( int amount, int repairtype, int turret ) {
  */
 script 651( void ) {
 	SetResultValue( 0 );
-	int tid = ACS_ExecuteWithResult( 964, 5 );
+	int tid = GetTargetInfo( TARGETINFO_TID );
 	
 	if( SuddenDeath && tid < 900 ) {
 		/* It's sudden death. We can't repair here, so transform into a klaxon

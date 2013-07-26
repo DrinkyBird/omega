@@ -44,8 +44,8 @@ script 994 DEATH {
 		}
 	}
 	
-	int killer_t = ACS_ExecuteWithResult( 964, 5 );
-	int killer_p = ACS_ExecuteWithResult( 964, 9 );
+	int killer_t = GetTargetInfo( TARGETINFO_TID );
+	int killer_p = GetTargetInfo( TARGETINFO_PlayerNum );
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * KILLER POV STARTS HERE

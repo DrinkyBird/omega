@@ -796,7 +796,7 @@ script 953( void ) {
 script 966( void ) CLIENTSIDE {
 	// [Dusk] Don't display this actor for the player who's currently
 	// getting the bomb crate - said player gets a fade instead.
-	if( ACS_ExecuteWithResult( 651, 0 ) == ConsolePlayer ) {
+	if( GetTargetInfo( TARGETINFO_PlayerNum ) == ConsolePlayer ) {
 		SetActorState( 0, "Clear" );
 		terminate;
 	}
