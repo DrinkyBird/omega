@@ -3,4 +3,8 @@
 ================================================================================
 
 - Re-added SMG to the Technician class. [Dusk]
+- Added a hack to make omega-r2539-maps.pk3's teleport-to-field terminal spawn
+	players in the correct base. [Dusk]
+
+-- r200
 - Nerfed the flamethrower. [Cyberkill]
