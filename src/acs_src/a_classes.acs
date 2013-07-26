@@ -159,8 +159,10 @@ function void PurchaseClass( int c ) {
 		GiveInventory( "HighUpgrade", 1 );
 	
 	// Medic regeneration
-	if( cflags & CF_HEALTHREGEN )
-		ACS_ExecuteAlways( 352, 0 );
+	if( cflags & CF_HEALTHREGEN ) {
+		GiveInventory( "IsMedic", 1 );
+		ACS_ExecuteAlways( SC_MedicHealthRegen, 0 );
+	}
 	
 	if( cflags & CF_SUPPORT )
 		GiveInventory( "Grade0Damage", 1 );

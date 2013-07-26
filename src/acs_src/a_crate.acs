@@ -547,7 +547,6 @@ script 309( int Crate, int Override ) {
 		
 		IntelMessage( "\cAHealing Radius!" );
 		GiveInventory( "HealingRadiusItem", 1 );
-		ACS_ExecuteAlways( 352, 0 );
 		Log( s:pname( -1 ), s:" gets Healing Radius crate." );
 		break;
 	
@@ -588,7 +587,6 @@ script 309( int Crate, int Override ) {
 		
 		IntelMessage( "\cFMarine Beacon!" );
 		GiveInventory( "MarineBeaconItem", 1 );
-		ACS_ExecuteAlways( 352, 0 );
 		Log( s:pname( -1 ), s:" gets Marine Beacon." );
 		break;
 	

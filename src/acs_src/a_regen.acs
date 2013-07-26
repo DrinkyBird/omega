@@ -24,7 +24,7 @@ script 343 OPEN {
 }
 
 // MEDIC REGENERATION
-script 352( void ) {
+script SC_MedicHealthRegen( void ) {
 	if( GetHealth() <= 0 || !CheckInventory( "IsMedic" ) || !PlayerInGame( PlayerNumber() ) )
 		terminate;
 		
