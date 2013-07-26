@@ -25,7 +25,7 @@ script 942( void ) NET {
 		terminate;
 	
 	// Not during warm-up
-	if( Timer() <= 5 * 60 * 35 ) {
+	if( Timer() <= 5 * 60 * 35 && !GetCVar( "aow_debug" )) {
 		Error( "Too early to use this!" );
 		terminate;
 	}
