@@ -32,7 +32,7 @@ HudMessage( s: "\cRLimit: \cG", d: MineLimit(), s: " \cR/\cG ", d: MaxProxy;
 	
 	if( Type == 3 ) {
 		SetFont( "BIGFONT" );
-HudMessage( s: "\cFLimit: \cJ", d: MiniRefinery[1 - PlayerTeam()], s: " \cK/\cJ 1";
+HudMessage( s: "\cFLimit: \cJ", d: MiniRefinery[PlayerTeam()], s: " \cK/\cJ 1";
 					HUDMSG_FADEOUT, 960 + PlayerNumber(), CR_White, 0.2, 0.4, 2.0, 1.0 );
 	}
 	
@@ -82,7 +82,7 @@ HudMessage( s: "\cFLimit: \cJ", d: RazorWireLimit(), s: " \cK/\cJ ", d: MaxRazor
 		delay( 101 );
 		
 		if( PlayerTeam() == TEAM_RED && ThingCountSector( T_NONE, 900, 18 ) >= 1 ) {
-			MiniRefinery[0] = 1;
+			MiniRefinery[TEAM_RED] = 1;
 		IntelMessageBold( strparam( n: 0, s: "\cJ of \cGNod\cJ\nhas built a \cDMini-Refinery!" ) );
 			AddExperience( 125 );
 			SetThingSpecial( 900, 226, 345, 0, 3, 0 );
@@ -99,7 +99,7 @@ HudMessage( s: "\cFLimit: \cJ", d: RazorWireLimit(), s: " \cK/\cJ ", d: MaxRazor
 		}
 		
 		if( PlayerTeam() == TEAM_BLUE && ThingCountSector( T_NONE, 901, 18 ) >= 1 ) {
-			MiniRefinery[1] = 1;
+			MiniRefinery[TEAM_BLUE] = 1;
 		IntelMessageBold( strparam( n: 0, s: "\cJ of \cFGDI\cJ\nhas built a \cDMini-Refinery!" ) );
 			AddExperience( 125 );
 			SetThingSpecial( 901, 226, 345, 0, 3, 1 );
@@ -288,7 +288,7 @@ script 345( int Type, int Team ) {
 	int Counter = 0;
 	
 	if( Type == 3 && Team == 0 ) { //RED
-		MiniRefinery[0] = 0;
+		MiniRefinery[TEAM_RED] = 0;
 		SetFont( "SMALLFONT" );
 	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cGNod \cDMini-Refinery!" ) );
 		ACS_ExecuteAlways( 324, 0, 2, 0, 0 ); // 100xp
@@ -299,7 +299,7 @@ Log( s: pname( -1 ), s: " destroys Nod Mini-Ref." );
 	}
 	
 	if( Type == 3 && Team == 1 ) { //BLUE
-		MiniRefinery[1] = 0;
+		MiniRefinery[TEAM_BLUE] = 0;
 		SetFont( "SMALLFONT" );
 	IntelMessageBold( strparam( n: 0, s: "\cJ has destroyed\cJ\nthe \cFGDI \cDMini-Refinery!" ) );
 		ACS_ExecuteAlways( 324, 0, 2, 0, 0 ); // 100xp
