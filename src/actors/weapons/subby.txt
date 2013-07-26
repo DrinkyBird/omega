@@ -66,7 +66,7 @@ actor SubMachineGun : AOWWeapon 21043 {
 		//SUBR A 0 A_FireCustomMissile("MuzzleFlashSpawner",0,0,5,5)
 		SUBR A 0 A_GunFlash
 		SUBR A 0 A_SpawnItemEx("ShellCasing",8,8,32,random(1,3),random(0,1),random(1,3),random(45,60),128)
-		SUBR A 1 bright offset (1, 32) A_FireBullets (random(15,33)*0.18,random(15,33)*0.18, -1, 10, "HandgunPuff", FBF_USEAMMO|FBF_NORANDOM, 3072)
+		SUBR A 1 bright offset (1, 32) A_FireBullets (random(15,33)*0.14,random(15,33)*0.13, -1, 10, "HandgunPuff", FBF_USEAMMO|FBF_NORANDOM, 3072)
 		SUBR A 1 bright offset (3, 35)
 		SUBR A 1 offset (5, 37)
 		SUBR A 1 offset (7, 39)
@@ -104,14 +104,14 @@ actor SubMachineGun : AOWWeapon 21043 {
 		//SUBB A 0 A_FireCustomMissile("MuzzleFlashSpawner",0,0,5,5)
 		SUBB A 0 A_GunFlash
 		SUBB A 0 A_SpawnItemEx("ShellCasing",8,8,32,random(1,3),random(0,1),random(1,3),random(45,60),128)
-		SUBB A 1 bright offset (1, 32) A_FireBullets (random(15,33)*0.18,random(15,33)*0.18, -1, 10, "HandgunPuff", FBF_USEAMMO|FBF_NORANDOM, 3072)
+		SUBB A 1 bright offset (1, 32) A_FireBullets (random(15,33)*0.14,random(15,33)*0.14, -1, 10, "HandgunPuff", FBF_USEAMMO|FBF_NORANDOM, 3072)
 		SUBB A 1 bright offset (3, 35)
 		SUBB A 1 offset (5, 37)
 		SUBB A 1 offset (7, 39)
 		SUBB A 2 offset (1, 32) A_ReFire
 		goto Ready
 	Flash:
-		//TNT1 A 0 bright A_FireCustomMissile("MuzzleFlashSpawner",0,0,5,5)
+		//TNT1 A 0 bright A_FireCustomMissile("MuzzleFlashSpawner",0,0,5,5) //mommy what am i doing v
 		//TNT1 A 0 Bright A_SpawnItemEx("MuzzleFlashSpawner",32,5,36,momx*sin(angle)*cos(angle)*1.414,momy*sin(angle)*cos(angle)*1.414,0,0,SXF_ABSOLUTEMOMENTUM)
 		TNT1 A 0 Bright A_SpawnItemEx("MuzzleFlashSpawner",27,5,35*(1+(-sin(pitch)*0.707)),momx*2.332*(sin(angle)*cos(angle)/2.332),momy*2.332*(sin(angle)*cos(angle)/2.332),momz*0.1415,0,SXF_ABSOLUTEMOMENTUM)
 		TNT1 A 2 Bright A_Light2
