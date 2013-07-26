@@ -203,7 +203,7 @@ actor FlameThrowerFire {
 	
 	States {
 	Spawn:
-		FMRF JIHGFEDCBA 1 bright A_Explode (Abs(Random(-1,1), 30*Random(2,5), 0)
+		FMRF JIHGFEDCBA 1 bright A_Explode (Abs(Random(-1,1)), 30*Random(2,5), 0)
 		goto DeathGo
 	
 	Death:
