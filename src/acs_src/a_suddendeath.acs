@@ -60,15 +60,6 @@ script 997( void ) {
 	GiveToAll( "BeaconItem", 1 );
 	
 	BigMessageBold( "\cgSUDDEN DEATH!\n\nNo more repairs can be done\nEvery death counts!" );
-	int degeneration = GetCVar( "aow_degeneration" );
-	int degeninterval = GetCVar( "aow_degenerationinterval" );
-	
-	if( degeneration ) {
-		SetFont( "BIGFONT" );
-		HudMessageBold( s: "WARNING: BUILDING DEGENERATION ACTIVE!!!";
-			HUDMSG_FADEOUT, 15002, CR_RED,
-			INTEL_XPOS, 0.45, 7.0, 1.0 );
-	}
 	
 	if( !TicketPool ) {
 		// init tickets
@@ -79,32 +70,14 @@ script 997( void ) {
 	}
 	
 	SuddenDeath = true;
-	int ticker = 0;
-	int i;
 	
 	// Update the building HUD now.
 	DrawBuildingHUD();
 	SetActivator( -1 );
 	
+	// Every minute flash some intel message
 	while( 1 ) {
-		if( !( ticker % 5 ) )
-			degeninterval = GetCVar( "aow_degenerationinterval" );
-			
-		if( !( ticker % 60 ) )
-			IntelMessageBold( "Sudden death!" );
-			
-		if( degeneration && !( ticker % degeninterval ) ) {
-			// crash all buildings by 1% every interval seconds
-			for( i = 0; i <= 1; i++ ) {
-				Thing_Damage( 101 + ( i * 100 ), HP_BARRACKS / 100 );
-				Thing_Damage( 103 + ( i * 100 ), HP_REFINERY / 100 );
-				Thing_Damage( 105 + ( i * 100 ), HP_PLANT / 100 );
-				Thing_Damage( 107 + ( i * 100 ), HP_FACTORY / 100 );
-				Thing_Damage( 114 + ( i * 100 ), HP_OBELISK / 100 );
-			}
-		}
-		
-		delay( 35 );
-		ticker++;
+		IntelMessageBold( "Sudden death!" );
+		delay( 35 * 60 );
 	}
 }

@@ -160,9 +160,6 @@ script 599 OPEN {
 	// [Dusk] changed default to 45, -1 means immediate
 	if( GetCVAR( "aow_suddendeathtime" ) == 0 ) ConsoleCommand( "set aow_suddendeathtime 45" );
 	
-	// [Dusk] Sudden death degeneration
-	if( GetCVAR( "aow_degeneration" ) <= 0 ) ConsoleCommand( "set aow_degeneration 0" );
-	if( GetCVAR( "aow_degenerationinterval" ) <= 0 ) ConsoleCommand( "set aow_degenerationinterval 10" );
 	if( GetCVAR( "aow_disablemechs" ) <= 0 ) ConsoleCommand( "set aow_disablemechs 0" );
 	if( GetCVAR( "aow_surrendermode" ) <= 0 ) ConsoleCommand( "set aow_surrendermode 0" );
 	

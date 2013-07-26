@@ -269,9 +269,6 @@ script 214( VOID ) {
 }
 
 script 97( int Structure, int Team ) CLIENTSIDE {
-	// stfu during degeneration
-	if( SuddenDeath && GetCVar( "aow_degeneration" )) terminate;
-	
 	if( Timer() > LastAttackMessage + 35 * 15 ) {
 		if( Structure == 1 && Team == 0 )
 			AmbientSound( "red/barracks", 255 );
