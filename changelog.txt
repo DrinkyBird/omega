@@ -29,3 +29,4 @@
 - Attempted fix of no visible friendly stealths. [Dusk]
 - Rebalanced Shock Rifle [Eric]
 - Hopefully fixed donation message being incorrect. [Dusk]
+- Crushed a shotgun reload sprite clipping issue like a grape!!!!!! (also made them look a bit better) [Bloax]
