@@ -32,13 +32,8 @@ for f in $FILES; do
 		continue;
 	fi
 	
-	if [ ! -e ../$A_DIR/$f ]; then
-		let i+=1
-		continue;
-	fi
-	
-	MD5A=$( md5sum ../$A_DIR/$f |awk '{printf $1}' )
-	MD5B=$( md5sum $f |awk '{printf $1}' )
+	MD5A=$( md5sum ../$A_DIR/$f 2>/dev/null |awk '{printf $1}' )
+	MD5B=$( md5sum $f 2>/dev/null |awk '{printf $1}' )
 	if [ "$MD5A" != "$MD5B" ]; then
 		echo -en "                                                         \r"
 		echo -e "$f"
