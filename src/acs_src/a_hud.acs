@@ -17,6 +17,9 @@ script 5 RESPAWN {
 script SC_UpdateCreditDisplay( int p ) {
 	SetActivator( TID_Player + p );
 	
+	if( PlayerNumber() != p )
+		terminate;
+	
 	int color = cond( PlayerTeam() == TEAM_BLUE, CR_LIGHTBLUE, CR_BRICK );
 	
 	SetFont( "SMALLFONT" );

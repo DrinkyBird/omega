@@ -209,7 +209,7 @@ script 11 ENTER {
 	}
 	
 	delay( 5 );
-	ACS_ExecuteAlways( 5, 0 ); // display credits/exp HUD
+	ShowStatus( PlayerNumber() ); // display credits/exp HUD
 	ACS_ExecuteAlways( 92, 0 );
 }
 

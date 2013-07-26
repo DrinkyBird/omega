@@ -9,3 +9,4 @@
 -- r200
 - Nerfed the flamethrower. [Cyberkill]
 - Made Technician have 2 C4 and 4 proxy mines again. [Dusk]
+- Hopefully fixed problems with the credits/exp HUD. [Dusk]
