@@ -27,3 +27,4 @@
 - Fixed repairgun puff variant sprites. [Bloax]
 - Spawn invulnerability now wears off when a weapon is fired (balance change from old beta). [Dusk]
 - Attempted fix of no visible friendly stealths. [Dusk]
+- Rebalanced Shock Rifle [Eric]
