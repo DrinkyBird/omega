@@ -3,3 +3,4 @@
 ================================================================================
 
 - Re-added SMG to the Technician class. [Dusk]
+- Nerfed the flamethrower. [Cyberkill]
