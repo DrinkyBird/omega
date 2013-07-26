@@ -12,15 +12,7 @@ script 943 OPEN CLIENTSIDE {
 	
 	delay( 5 );
 	
-	// [Dusk] Effects + hud
-	ConsoleCommand( "puke 366" );
-}
-
-script 946( void ) NET CLIENTSIDE {
-	Log( s:"I am ", s:pname( -1 ) );
-}
-
-script 366( void ) NET CLIENTSIDE {
+	// [Dusk] Effects stuff
 	if( PlayerIsBot( PlayerNumber() ) || consoleplayer == -1 )
 		terminate;
 	
@@ -56,6 +48,10 @@ script 366( void ) NET CLIENTSIDE {
 	}
 }
 
+script 946( void ) NET CLIENTSIDE {
+	Log( s:"I am ", s:pname( -1 ) );
+}
+
 script 355( int i, int what ) CLIENTSIDE {
 	int x;
 	
@@ -89,7 +85,6 @@ script 355( int i, int what ) CLIENTSIDE {
 		
 		for( x = 0; x < 6; x++ ) {
 			if( !CheckActorProperty( TID_Player + i, APROP_RenderStyle, STYLE_Translucent ) ) terminate;
-			
 			if( CheckActorInventory( TID_Player + i, "StealthMode" ) != 1 ) terminate;
 			
 			SetActorProperty( TID_Player + i, APROP_Alpha, 0.4 + ( random( 0, 10 ) << 16 ) / 10 ); // flicker a bit :P
