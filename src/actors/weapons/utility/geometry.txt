@@ -17,7 +17,6 @@ actor Step {
 	Scale 0.25
 	RenderStyle Translucent
 	Alpha 0.0
-	DamageFactor "RazorWire", 0.0
 	DamageFactor "Disarm", 0.0
 	
 	States {
@@ -62,7 +61,6 @@ actor SandbagWall {
 	Alpha 0.0
 	DamageFactor "Laser", 1.25
 	DamageFactor "Disarm", 0.0
-	DamageFactor "RazorWire", 0.0
 	
 	States {
 	Spawn:

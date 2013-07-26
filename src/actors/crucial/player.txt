@@ -81,13 +81,6 @@ actor Player : DoomPlayer {
 		PLAY G 4 A_Pain
 		goto Spawn
 	
-	Pain.RazorWire:
-		PLAY G 0 A_GiveInventory("RazorWireSpeed",1)
-		PLAY G 0 ACS_ExecuteAlways(320, 0, 4)
-		PLAY G 4 ACS_ExecuteAlways(310, 0, 2)
-		PLAY G 4 A_Pain
-		goto Spawn
-	
 	Pain.FireSpecial:
 		PLAY G 0 A_GiveInventory ("NoHealXP", 1)
 	Pain.Fire:

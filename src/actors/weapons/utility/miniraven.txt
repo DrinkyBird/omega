@@ -16,7 +16,6 @@ actor Utility_MiniRavenRed {
 	damagefactor "Fire", 1.0
 	damagefactor "Chemical", 2.0
 	damagefactor "Laser", 1.0
-	damagefactor "RazorWire", 0.0
 	damagefactor "ExplosionMech", 2.0
 	damagefactor "Time", 1.0
 	damagefactor "Disarm", 0.0

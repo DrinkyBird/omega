@@ -20,7 +20,6 @@ actor BaseTerminalOutside {
 	DamageFactor "Chemical", 0.0
 	DamageFactor "ChemicalSpecial", 0.0
 	DamageFactor "Laser", 0.0
-	DamageFactor "RazorWire", 0.0
 	DamageFactor "Time", 0.0
 	DamageFactor "Disarm", 0.0
 	DamageFactor "Mechstomp", 0.0

@@ -167,7 +167,7 @@
 #define TID_PORTAL_FX           1508 // - 1511
 #define TID_MARINE              1520 // - 1544
 #define TID_TESLACOIL_ORB       1600
-#define TID_Player              TID_Player // - 3863
+#define TID_Player              2000 // - 2063
 
 #define TARGETINFO_X			0  // X-coordinate
 #define TARGETINFO_Y			1  // Y-coordinate
@@ -190,6 +190,7 @@
 #define SC_MedicHealthRegen       835
 #define SC_HUDTicker              854
 #define SC_ChangePlayerTeam       891
+#define SC_RazorWire              892
 #define SC_TargetInfo             899
 #define SC_JetpackToggle          907
 #define SC_CL_SniperZoom          916

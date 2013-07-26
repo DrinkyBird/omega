@@ -59,7 +59,6 @@ actor ProxyMineRed {
 	DamageFactor "Fire",             0.0
 	DamageFactor "Chemical",         0.0
 	DamageFactor "Laser",            1.25
-	DamageFactor "RazorWire",        0.0
 	DamageFactor "Time",             0.0
 	DamageFactor "Superweapon",      0.0
 	DamageFactor "MassDriver",       0.0

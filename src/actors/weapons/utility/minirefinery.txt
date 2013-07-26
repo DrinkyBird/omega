@@ -32,7 +32,6 @@ actor Utility_MiniRefCacheRed {
 	DamageFactor "Time",             1.0
 	DamageFactor "MassDriver",       0.75
 	DamageFactor "AntiArmor",        1.0
-	DamageFactor "RazorWire",        1.0
 	DamageFactor "Superweapon",      1.0
 	DamageFactor "FireSpecial",      1.0
 	DamageFactor "ChemicalSpecial",  0.0

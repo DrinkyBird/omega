@@ -52,10 +52,6 @@ actor DamageTypeIndicator {
 		PPCX A 0 A_Print ("Damage type indicator hit with Laser")
 		goto Spawn
 	
-	Pain.RazorWire:
-		PPCX A 0 A_Print ("Damage type indicator hit with RazorWire")
-		goto Spawn
-	
 	Pain.AntiArmor:
 		PPCX A 0 A_Print ("Damage type indicator hit with AntiArmor")
 		goto Spawn

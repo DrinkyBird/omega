@@ -69,7 +69,6 @@ actor IonCannonPlaced {
 	DamageFactor "Time",             0.0
 	DamageFactor "MassDriver",       0.0
 	DamageFactor "AntiArmor",        0.0
-	DamageFactor "RazorWire",        0.0
 	DamageFactor "Superweapon",      0.0
 	DamageFactor "FireSpecial",      0.0
 	DamageFactor "ChemicalSpecial",  0.0

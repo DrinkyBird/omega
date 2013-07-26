@@ -21,7 +21,6 @@ actor Utility_PortalBlue {
 	painchance 255
 	mass 0x7FFFFFF
 	damagefactor "Disarm", 0.0
-	damagefactor "RazorWire", 0.0
 	damagefactor "Mechstomp", 0.0
 	damagefactor "Explosion", 1.5
 	damagefactor "MechExplosion", 2.5

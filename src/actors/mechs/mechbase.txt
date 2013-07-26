@@ -10,7 +10,6 @@ actor MechPlayer_Base : PlayerPawn {
 	DamageFactor "Time",             1.0
 	DamageFactor "MassDriver",       0.9
 	DamageFactor "AntiArmor",        2.0
-	DamageFactor "RazorWire",        1.0
 	DamageFactor "Superweapon",      1.0
 	DamageFactor "FireSpecial",      1.0
 	DamageFactor "ChemicalSpecial",  1.0

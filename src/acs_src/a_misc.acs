@@ -179,3 +179,22 @@ script SC_CL_SniperZoom( void ) CLIENTSIDE {
 	else
 		FadeTo( 0, 0, 0, 0, 0.3 );
 }
+
+// [Dusk] Razor wire functionality
+script SC_RazorWire( int myteam ) {
+	for( int i = 0; i < MAXPLAYERS; i++ ) {
+		if( !PlayerInGame( i ) ||
+			GetPlayerInfo( i, PLAYERINFO_TEAM ) == myteam ||
+			GetActorHealth( TID_Player + i ) <= 0 )
+		{
+			continue;
+		}
+		
+		int dist = AproxDistance ( 0, TID_Player + i );
+		if( dist > 64.0 )
+			continue;
+		
+		Thing_Damage( TID_Player + i, 5, 0 );
+		GiveActorInventory( TID_Player + i, "RazorWireSlow", 1 );
+	}
+}
