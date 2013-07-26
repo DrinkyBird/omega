@@ -186,10 +186,11 @@ actor TiberiumProof : PermanentPowerup {
 	Powerup.Type "TiberiumProof"
 }
 
+actor PowerSpawnInvulnerable : PowerInvulnerable {}
 actor SpawnInvulnerability : PowerupGiver {
 	+AUTOACTIVATE
 	Inventory.MaxAmount 0
-	Powerup.Type "Invulnerable"
+	Powerup.Type "SpawnInvulnerable"
 	Powerup.Color "FF FF FF", 0.1
 	Powerup.Duration -5
 }

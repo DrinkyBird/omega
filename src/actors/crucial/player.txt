@@ -47,7 +47,7 @@ actor Player : DoomPlayer {
 		goto See
 	
 	Missile:
-		PLAY E 14
+		PLAY E 14 A_TakeInventory( "PowerSpawnInvulnerable", 1 )
 		Goto Spawn
 	
 	Melee:
