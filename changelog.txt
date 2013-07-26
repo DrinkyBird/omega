@@ -10,3 +10,4 @@
 - Nerfed the flamethrower. [Cyberkill]
 - Made Technician have 2 C4 and 4 proxy mines again. [Dusk]
 - Hopefully fixed problems with the credits/exp HUD. [Dusk]
+- Pulled the Gauss rifle from the dropped SVN version (did you know this is very painful to update). [Bloax]
