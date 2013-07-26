@@ -148,6 +148,7 @@ actor KnifePuff : BulletPuff {
 	+NOBLOCKMAP
 	+NOGRAVITY
 	+PUFFONACTORS
+	+FORCEXYBILLBOARD
 	RenderStyle Translucent
 	Alpha 0.5
 	DamageType "Fist"
