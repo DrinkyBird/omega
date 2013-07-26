@@ -66,6 +66,7 @@ function void LoadClassDefinitions( void ) {
 	Classes[c][CK_FLAGS] = ( CF_SUPPORT | CF_ENHANCEDC4 );
 	AddClassItem( c, "RepairGun", 1 );
 	AddClassItem( c, "RepairGunUpgrade", 1 );
+	AddClassItem( c, "SubMachineGun", 1 );
 	
 	c = CLASS_FLAMER;
 	Classes[c][CK_NAME] = "Flamer";
