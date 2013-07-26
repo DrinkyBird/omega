@@ -43,6 +43,7 @@ script 309( int Crate, int Override ) {
 	switch( crate ) {
 	case 1:
 	case 17:
+	case 56:
 		if( GetArmorGrade() >= 5 && !Override ) {
 			crate = 0;
 			restart;
@@ -211,7 +212,6 @@ script 309( int Crate, int Override ) {
 	case 10:
 	case 26:
 	case 36:
-	
 		if( CheckInventory( "IsKamikaze" ) && !Override ) {
 			crate = 0;
 			restart;
@@ -357,9 +357,6 @@ script 309( int Crate, int Override ) {
 	case 30:
 	case 31:
 	case 32:
-	case 33:
-	case 34:
-	case 56:
 		// [Dusk] High ranking dudes get less of these
 		if( Rank[PlayerNumber()] >= RANK_LIEUTENANT && !random( 0, 2 )) {
 			Crate = 0;
@@ -436,6 +433,7 @@ script 309( int Crate, int Override ) {
 	
 	case 37:
 	case 38:
+	case 33:
 		if( CheckInventory( "UtilityGun" ) && !Override ) {
 			crate = 0;
 			restart;
@@ -448,9 +446,10 @@ script 309( int Crate, int Override ) {
 		delay( 2 * 35 );
 		IntelMessage( "Use \cFAlt-Fire\cJ for \cNitem selection menu!" );
 		break;
+	
 	case 39:
 	case 40:
-	
+	case 34:
 		if( ( CheckInventory( "LaserArmor" ) || CheckInventory( "PowerLaserResistance" ) ) && !Override ) {
 			crate = 1; // armor upgrade
 			restart;
@@ -463,9 +462,9 @@ script 309( int Crate, int Override ) {
 		GiveInventory( "LaserArmor", 1 );
 		Log( s:pname( -1 ), s:" gets Laser Resistance." );
 		break;
+	
 	case 41:
 	case 42:
-	
 		if( ( CheckInventory( "ExplosionArmor" ) || CheckInventory( "PowerExplosiveResistance" ) ) && !Override ) {
 			crate = 1; // armor upgrade
 			restart;
@@ -477,9 +476,9 @@ script 309( int Crate, int Override ) {
 		GiveInventory( "ExplosionArmor", 1 );
 		Log( s:pname( -1 ), s:" gets Explosive Resistance." );
 		break;
+	
 	case 43:
 	case 44:
-	
 		if( ( CheckInventory( "BulletArmor" ) || CheckInventory( "PowerBulletResistance" ) ) && !Override ) {
 			crate = 1; // armor upgrade
 			restart;
@@ -492,8 +491,8 @@ script 309( int Crate, int Override ) {
 		GiveInventory( "BulletArmor", 1 );
 		Log( s:pname( -1 ), s:" gets Bulletproof Vest." );
 		break;
-	case 45:
 	
+	case 45:
 		if( !Override && ( CrateTime ||
 			CheckInventory( "IsMech" ) ||
 			!GetCVAR( "aow_mechs" ) ||
