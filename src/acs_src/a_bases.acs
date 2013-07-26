@@ -6,7 +6,7 @@ script 101( VOID ) {
 	GotBarracks[TEAM_BLUE] = False;
 	BaseLeft[TEAM_BLUE]--;
 	SetLineTexture( 1, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
-	SetLineTexture( 3, SIDE_FRONT, TEXTURE_MIDDLE, "MCT3" );
+	SetLineTexture( 3, SIDE_FRONT, TEXTURE_MIDDLE, "AOWTVBAK" );
 	ReddenSector( 1 );
 	ReddenSector( 2 );
 	
@@ -52,7 +52,7 @@ script 103( void ) {
 	GotPlant[TEAM_BLUE] = False;
 	BaseLeft[TEAM_BLUE]--;
 	SetLineTexture( 7, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
-	SetLineTexture( 3, SIDE_FRONT, TEXTURE_MIDDLE, "MCT3" );
+	SetLineTexture( 3, SIDE_FRONT, TEXTURE_MIDDLE, "AOWTVBAK" );
 	ReddenSector( 7 );
 	ReddenSector( 2 );
 	
@@ -145,7 +145,7 @@ script 201( VOID ) {
 	BaseLeft[TEAM_RED]--;
 	
 	SetLineTexture( 2, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
-	SetLineTexture( 4, SIDE_FRONT, TEXTURE_MIDDLE, "MCT3" );
+	SetLineTexture( 4, SIDE_FRONT, TEXTURE_MIDDLE, "AOWTVBAK" );
 	
 	ReddenSector( 3 );
 	ReddenSector( 4 );
@@ -189,7 +189,7 @@ script 203( VOID ) {
 	GotPlant[TEAM_RED] = False;
 	BaseLeft[TEAM_RED]--;
 	SetLineTexture( 8, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
-	SetLineTexture( 4, SIDE_FRONT, TEXTURE_MIDDLE, "MCT3" );
+	SetLineTexture( 4, SIDE_FRONT, TEXTURE_MIDDLE, "AOWTVBAK" );
 	ReddenSector( 8 );
 	ReddenSector( 4 );
 	
