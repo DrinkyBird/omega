@@ -95,20 +95,19 @@ script 950( void ) NET {
 		if( CheckWeapon( "Handgun" )) {
 			price = 25;
 			weapon = "Handgun";
-		}
-		else if( CheckWeapon( "EagerBeaver" )) {
+		} else if( CheckWeapon( "EagerBeaver" )) {
 			price = 125;
 			weapon = "EagerBeaver";
-		}
-		else if( CheckWeapon( "PlasmaCannon" )) {
+		} else if( CheckWeapon( "PlasmaCannon" )) {
 			price = 375;
 			weapon = "PlasmaCannon";
-		}
-		else if( CheckWeapon( "LaserRifle" )) {
+		} else if( CheckWeapon( "LaserRifle" )) {
 			price = 75;
 			weapon = "LaserRifle";
-		}
-		else {
+		} else if( CheckWeapon( "SniperRifleWeak" )) {
+			price = 93;
+			weapon = "SniperRifleWeak";
+		} else {
 			Error( "You can't sell that!" );
 			terminate;
 		}
