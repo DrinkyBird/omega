@@ -60,7 +60,6 @@ script 941( int Player ) DISCONNECT {
 
 // [Dusk]
 script 948( int time, int display ) SetResultValue( TimeDelay( time, display ) );
-script 949( int display ) SetResultValue( TimeDelay( GetCVar( "aow_c4delay" ), display ) );
 
 function bool TimeDelay( int time, bool display ) {
 	if( Time * 35 * 60 > Timer() ) {
@@ -69,10 +68,10 @@ function bool TimeDelay( int time, bool display ) {
 		if( Display )
 			Error( strparam( s: "You must wait \cK", d: TimeRemaining, s: "\c- seconds!" ));
 		
-		return 0;
+		return false;
 	}
 	
-	return 1;
+	return true;
 }
 
 // [Dusk] beacon timer reset due to it being placed underwater
