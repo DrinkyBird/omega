@@ -63,10 +63,13 @@ function void LoadClassDefinitions( void ) {
 	Classes[c][CK_SPEED] = 0.8;
 	Classes[c][CK_ARMORNUM] = 1;
 	Classes[c][CK_GERNADES] = 2;
+	Classes[c][CK_C4] = 2;
 	Classes[c][CK_FLAGS] = ( CF_SUPPORT | CF_ENHANCEDC4 );
 	AddClassItem( c, "RepairGun", 1 );
 	AddClassItem( c, "RepairGunUpgrade", 1 );
 	AddClassItem( c, "SubMachineGun", 1 );
+	AddClassItem( c, "ProxyMine", 4 );
+	AddClassItem( c, "ProxyMineCount", 4 );
 	
 	c = CLASS_FLAMER;
 	Classes[c][CK_NAME] = "Flamer";
