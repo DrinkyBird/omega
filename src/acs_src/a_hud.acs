@@ -36,15 +36,3 @@ script SC_UpdateCreditDisplay( int p ) {
 function void ShowStatus( int p ) {
 	ACS_ExecuteWithResult( SC_UpdateCreditDisplay, p );
 }
-
-script 111( int what ) {
-	int amount;
-	
-	switch( what ) {
-	case 0:
-		// donation message
-		SetFont( "SMALLFONT" );
-		IntelMessage( strparam( s:"You have been donated \cQ$\cD100\cJ\nby ", n:Donor[PlayerNumber()] + 1 ));
-		break;
-	}
-}
