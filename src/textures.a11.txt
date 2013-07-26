@@ -52,7 +52,7 @@ Texture a11blok5, 128, 128 {
 	Patch a11blok5, 0, 0 {}
 }
 
-Texture a11blok10, 128, 128 {
+Texture a11bloka, 128, 128 {
 	XScale 4.0
 	YScale 4.0
 	Patch a11blok5, 0, 0 {}

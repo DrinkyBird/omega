@@ -46,6 +46,11 @@ script 94( int Team ) {
 		terminate;
 	}
 	
+	// HACK for old maps
+	int lv = GetLevelInfo( LEVELINFO_LEVELNUM );
+	if( lv != 0 && lv != 2 )
+		team = 1 - team;
+	
 	TakeInventory( "IsInSpawnRoom", 1 );
 	ACS_ExecuteAlways( 961, 0, Team );
 }
