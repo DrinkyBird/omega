@@ -64,8 +64,6 @@ script 994 DEATH {
 	// [Dusk] Don't award suicides
 	if( n0 != n1 && n1 != -1 ) {
 		GivePoints( 2 * points );
-		ACS_ExecuteAlways( 931, 0 );
-		
 		LocalAmbientSound( "game/boink", 127 );
 		GiveCredits( -1, GetCVAR( "aow_creditfrag" ));
 		AddExperience( 50 );
@@ -78,8 +76,6 @@ script 994 DEATH {
 		IntelMessageBold( strparam( n: 0, s: "\c- gets first blood!" ) );
 		}
 	}
-	
-	ACS_ExecuteAlways( 992, 0 );
 }
 
 // Juggernaut stomp health
