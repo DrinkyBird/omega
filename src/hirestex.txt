@@ -118,6 +118,7 @@ remap NKE1S0 NKE2S0
 remap NKE1T0 NKE2T0
 remap NKE1U0 NKE2U0
 
+
 //Gauss rifle
 //Blue & Pickup
 remap gauba0 gauxa0
