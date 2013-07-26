@@ -23,3 +23,4 @@
 	- Fixed: Northern tunnel didn't have its tiberium field tagged properly. [Dusk]
 	- Corrected a bunch of cosmetic errors. [Dusk]
 - Corrected laser chaingun rail color. [Dusk]
+- Fixed repairgun puff variant sprites. [Bloax]
