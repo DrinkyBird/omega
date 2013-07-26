@@ -8,20 +8,20 @@
  * of this and call it your own. Thanks!
  */
 
-int Donor[MAXPLAYERS];
-
 function int DonateCredits( int Player, int NewCredits ) {
+	int donor = PlayerNumber();
 	DecrCredits( PlayerNumber(), NewCredits );
 	IncrCredits( CheckInventory( "DonationName" ), NewCredits );
 	
 	LocalAmbientSound( "powerup/stolsound", 255 );
 	
-	SETFONT( "SMALLFONT" );
+	SetFont( "SMALLFONT" );
 	HudMessage( s:"You have donated \cf$", d:NewCredits, s:"\cd to ", n: CheckInventory( "DonationName" );
 		HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0 );
 	
-	Donor[CheckInventory( "DonationName" )] = PlayerNumber(); // used in the message to the donatee
-	GiveActorInventory( TID_Player + CheckInventory( "DonationName" ), "DonationMessage", 1 );
+	// Draw the donation message on the recipient
+	SetActivator( TID_Player + CheckInventory( "DonationName" ));
+	IntelMessage( strparam( s:"You have been donated \cQ$\cD100\cJ\nby ", n:donor + 1 ));
 	
 	return NewCredits;
 }
@@ -80,8 +80,7 @@ script 334( int Which ) NET {
 		}
 		
 		ShowCurrentDonationMenu();
-	}
-	else if( Which == 2 && CheckInventory( "DonateMenu" ) == 1 ) {
+	} else if( Which == 2 && CheckInventory( "DonateMenu" ) == 1 ) {
 		if( GetPlayerInfo( 0 + CheckInventory( "DonationName" ), PLAYERINFO_TEAM ) != PlayerTeam() ) {
 			Error( "That player is not on your team!!" );
 			terminate;
@@ -96,11 +95,6 @@ script 334( int Which ) NET {
 		}
 		
 		DonateCredits( CheckInventory( "DonationName" ), 100 );
-	}
-	else if( Which == 3 ) {
-		SETFONT( "SMALLFONT" );
-		HudMessage( s:"You have been donated \cf$100";
-			HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0 );
 	}
 }
 
