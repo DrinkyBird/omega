@@ -15,3 +15,6 @@
 - Made razor-wire hurt enemy players and enemy players only. [Dusk]
 - The War Factory hanger now thrust mechs out harder, on some maps the newly bought mechs could get crushed. [Dusk]
 - Made the 5-minute C4 delay apply to the +1 C4 research rather than the C4 itself. [Dusk]
+- AOW02:
+	- Fixed: Northern tunnel didn't have its tiberium field tagged properly. [Dusk]
+	- Corrected a bunch of cosmetic errors. [Dusk]
