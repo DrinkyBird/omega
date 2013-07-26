@@ -124,46 +124,46 @@ actor DisarmPuff {
 	alpha 0.5
 	scale 0.25
 	damagetype "Disarm"
-	translation "112:127=160:167"
 	states {
 	Spawn:
-		CHMX AA 1 A_Explode (9, 64)
-		CHMX BC 2 bright
+		DPFF AA 1 bright A_Explode (9, 64)
+		DPFF BC 2 bright
 	Melee:
-		CHMX DEF 2 bright
+		DPFF DEF 2 bright
 		stop
 	}
 }
 actor RepairDisarmPuff : DisarmPuff {
-	translation ""
 	states {
 	Spawn:
-		PLCX AA 1 A_Explode (9, 64)
-		PLCX BC 2 bright
+		RPFF AA 1 A_Explode (9, 64)
+		RPFF BC 2 bright
 	Melee:
-		PLCX DEF 2 bright
+		RPFF DEF 2 bright
 		stop
 	}
 }
 
 actor EnhancedRepairDisarmPuff : DisarmPuff {
-	translation "112:127=250:254"
 	states {
 	Spawn:
-		CHMX AA 1 A_Explode (7, 64)
-		CHMX BC 2 bright
+		UPFF AA 1 A_Explode (7, 64)
+		UPFF BC 2 bright
 	Melee:
-		CHMX DEF 2 bright
+		UPFF DEF 2 bright
 		stop
 	}
 }
 
 actor MedicPuff : DisarmPuff {
-	translation "112:127=174:189"
 	states {
 	Spawn:
-		CHMX ABC 2 bright
+		HPFF ABC 2 bright
 		goto Melee
+	Melee:
+		HPFF DEF 2 bright
+		CHMX A 0
+		stop
 	}
 }
 actor DeconstructionPuff : DisarmPuff {damagetype "Deconstruction" translation "0:0=0:0"}
