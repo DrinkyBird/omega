@@ -37,7 +37,7 @@ function void DrawBuildingHud( void ) {
 		str textcolo = GetTeamProperty( team, TPROP_TextColor );
 		str name = TeamNames[team];
 		
-		for( b = 0; b < 9; ++b ) {
+		for( b = 0; b < NUM_BUILDINGS; ++b ) {
 			tid = GetBuildingTid( b, team );
 			
 			if( IsMinorBuilding( b )) {

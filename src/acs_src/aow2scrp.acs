@@ -181,6 +181,8 @@
 #define TARGETINFO_WeaponCheck	12 // for CheckTargetWeapon
 #define TARGETINFO_Name			13 // Name (akin to print (n:0))
 
+#define NUM_BUILDINGS            9
+
 // TODO: populate this list
 #define SC_SelfHealHealth         816
 #define SC_CL_ObeliskTrail        822

@@ -25,7 +25,7 @@ script 312 OPEN {
 script 309( int Crate, int Override ) {
 	// Crate determines which crate is given, 0 means random
 	// Override means whether all limits should be overridden. Open Deck needs this.
-	int i;
+	int i, tid;
 	int amount;
 	
 	if( !Crate ) {
@@ -58,25 +58,22 @@ script 309( int Crate, int Override ) {
 		SetFont( "SMALLFONT" );
 		AmbientSound( "powerup/base", 127 );
 		Log( s:pname( -1 ), s:" gets Base Miracle." );
-
-		if( PlayerTeam() == TEAM_RED ) {
-			IntelMessageBold( "\cGNod\cJ got \cDBase Miracle!" );
-			if( GotBarracks[0] ) SetActorHealth( 201, GetActorSpawnHealth( 201 ) );
-			if( GotRefinery[0] ) SetActorHealth( 203, GetActorSpawnHealth( 203 ) );
-			if( GotPlant[0] ) SetActorHealth( 205, GetActorSpawnHealth( 205 ) );
-			if( GotFactory[0] ) SetActorHealth( 207, GetActorSpawnHealth( 207 ) );
-			if( GotObelisk[0] ) SetActorHealth( 214, GetActorSpawnHealth( 214 ) );
-		}
-		else if( PlayerTeam() == TEAM_BLUE ) {
-			IntelMessageBold( "\cFGDI\cJ got \cDBase Miracle!" );
-			if( GotBarracks[1] ) SetActorHealth( 101, GetActorSpawnHealth( 101 ) );
-			if( GotRefinery[1] ) SetActorHealth( 103, GetActorSpawnHealth( 103 ) );
-			if( GotPlant[1] ) SetActorHealth( 105, GetActorSpawnHealth( 105 ) );
-			if( GotFactory[1] ) SetActorHealth( 107, GetActorSpawnHealth( 107 ) );
-			if( GotObelisk[1] ) SetActorHealth( 114, GetActorSpawnHealth( 114 ) );
+		
+		for( i = 0; i < NUM_BUILDINGS; ++i ) {
+			tid = GetBuildingTID( i, PlayerTeam() );
+			if( ThingCount( T_NONE, tid ) == 0 )
+				continue; // Skip dead buildings
+			
+			SetActorHealth( tid, GetActorSpawnHealth( tid ));
 		}
 		
-		ACS_ExecuteAlways( 930, 0, BUILDING_ALL, PlayerTeam() );
+		DrawBuildingHUD();
+
+		if( PlayerTeam() == TEAM_RED )
+			IntelMessageBold( "\cGNod\cJ got \cDBase Miracle!" );
+		else
+			IntelMessageBold( "\cFGDI\cJ got \cDBase Miracle!" );
+		
 		IntelMessage( "\cDBase miracle!" );
 		break;
 	
