@@ -47,6 +47,7 @@ actor Handgun : AOWWeapon replaces Pistol 21041 {
 
 actor HandgunPuff : HHBulletPuff {
 	DamageType "Bullet"
+	+FORCEXYBILLBOARD
 }
 
 actor NewClipAmmo : Ammo {
@@ -63,6 +64,7 @@ actor NewClipAmmo : Ammo {
 
 
 /////////////////What.
+// don't you mean wat
 
 actor ArmyCreator : AOWWeapon
 {
