@@ -116,6 +116,7 @@ actor FistPuff : BulletPuff {
 	+NOGRAVITY
 	-ALLOWPARTICLES
 	+PUFFONACTORS
+	+FORCEXYBILLBOARD
 	DamageType "Fist"
 	states {
 	Crash:
