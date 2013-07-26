@@ -74,7 +74,7 @@ actor MarineBeacon {
 		MBCN B 8
 		goto Idle
 	Idle:
-		MBCN A 8 BRIGHT ACS_ExecuteAlways (951, 0, 3, 1)
+		MBCN A 8 BRIGHT ACS_ExecuteAlways (951, 0, 2, 1)
 		MBCN B 8
 		loop
 	Done:
@@ -97,7 +97,7 @@ actor MarineBeaconBlue {
 		MBCN B 8
 		goto Idle
 	Idle:
-		MBCN A 8 BRIGHT ACS_ExecuteAlways (951, 0, 3, 0)
+		MBCN A 8 BRIGHT ACS_ExecuteAlways (951, 0, 2, 0)
 		MBCN B 8
 		loop
 	Done:
