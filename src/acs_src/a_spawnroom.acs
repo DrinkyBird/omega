@@ -37,6 +37,10 @@ script 93( int unused, int silent ) {
 	/* [Dusk] Also refill the self-heal syringe. */
 	GiveInventory( "SelfHealItem", 1 );
 	
+	/* [Dusk] Refill jetpack fuel. */
+	if( CheckInventory( "Jetpack" ))
+		SetInventory( "JetpackFuel", 100 );
+	
 	if( !silent ) {
 		BigMessage( "\cFRefilled!" );
 		ActivatorSound( "misc/ammo_pkup", 255 );

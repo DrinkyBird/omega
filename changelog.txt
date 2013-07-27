@@ -13,6 +13,7 @@
 	- Fixed: Red Obelisk MCT actor was in the wrong place altogether. [Dusk]
 - Added AOW11: Disk Defrag, with updated texturing. [Dusk]
 - Fixed Jumpjet HUD display. [Thetis, Dusk]
+- Fixed: Full refill did not refill jetpack fuel. [Dusk]
 
 ================================================================================
 -- Changes since r234
