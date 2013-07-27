@@ -1,10 +1,15 @@
 ================================================================================
---- Changes since r190
+-- Changes since r245
 ================================================================================
+- Fixed: AI marines could be harmed by teammates. [Thetis]
+- Entering spawn room now gives a full refill. [Dusk]
 
-- Re-added SMG to the Technician class. [Dusk]
-- Added a hack to make omega-r2539-maps.pk3's teleport-to-field terminal spawn
-	players in the correct base. [Dusk]
+================================================================================
+-- Changes since r234
+================================================================================
+- Crushed a shotgun reload sprite clipping issue like a grape!!!!!! (also made them look a bit better) [Bloax]
+- Fixed opaque guardian sprite [Bloax]
+- Added +FORCEXYBILLBOARD to puff actors [Cyberkill]
 
 ================================================================================
 -- Changes since r200
@@ -31,13 +36,9 @@
 - Hopefully fixed donation message being incorrect. [Dusk]
 
 ================================================================================
--- Changes since r234
+--- Changes since r190
 ================================================================================
-- Crushed a shotgun reload sprite clipping issue like a grape!!!!!! (also made them look a bit better) [Bloax]
-- Fixed opaque guardian sprite [Bloax]
-- Added +FORCEXYBILLBOARD to puff actors [Cyberkill]
 
-================================================================================
--- Changes since r245
-================================================================================
-- Entering spawn room now gives a full refill. [Dusk]
+- Re-added SMG to the Technician class. [Dusk]
+- Added a hack to make omega-r2539-maps.pk3's teleport-to-field terminal spawn
+	players in the correct base. [Dusk]
