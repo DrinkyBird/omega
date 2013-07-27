@@ -19,6 +19,9 @@ script 93( int unused, int silent ) {
 	GiveInventory( "Backpack", 1 );
 	GiveInventory( "Backpack", 1 ); // [Dusk] TODO: heh..
 	
+	/* [Dusk] Refill inventory items. We have some special counter items to keep
+	 * track of how much of each item this player is supposed to get.
+	 */
 	if( CheckInventory( "HealingRadiusCount" ) > 0 )
 		SetInventory( "HealingRadiusItem", CheckInventory( "HealingRadiusCount" ));
 	
@@ -31,10 +34,11 @@ script 93( int unused, int silent ) {
 	if( !CheckInventory( "IsMech" ))
 		SetHealth( GetSpawnHealth() );
 	
+	/* [Dusk] Also refill the self-heal syringe. */
+	GiveInventory( "SelfHealItem", 1 );
+	
 	if( !silent ) {
-		SetFont( "BIGFONT" );
-		HudMessage( s: "Refilled!";
-			HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_YELLOW, 0.5, 0.45, 2.0, 1.0 );
+		BigMessage( "\cFRefilled!" );
 		ActivatorSound( "misc/ammo_pkup", 255 );
 	}
 }

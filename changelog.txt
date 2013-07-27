@@ -3,6 +3,7 @@
 ================================================================================
 - Fixed: AI marines could be harmed by teammates. [Thetis]
 - Entering spawn room now gives a full refill. [Dusk]
+- Full refills now refill the self-heal syringe too. [Dusk]
 
 ================================================================================
 -- Changes since r234
