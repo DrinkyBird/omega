@@ -270,6 +270,8 @@ script 96( int type ) {
 		terminate;
 	}
 	
+	GiveInventory( "IsInSpawnRoom", 1 );
+	
 	/* If we cannot teleport the player to the destination, then spawn an
 	 * anti-utility explosion to clear the pad. This prevents utility guys from
 	 * blocking the pad with caches and stuff like that.
@@ -278,8 +280,8 @@ script 96( int type ) {
 		SpawnSpotForced( "AntiUtilityExplosion", dest, 0, 0 );
 		delay( 10 );
 		
-		if( Teleport( dest ))
-			GiveInventory( "IsInSpawnRoom", 1 );
+		if( !Teleport( dest ))
+			TakeInventory( "IsInSpawnRoom", 1 );
 	}
 }
 
