@@ -33,7 +33,6 @@
 ================================================================================
 -- Changes since r234
 ================================================================================
-- Nerfed the flamethrower. [Cyberkill]
 - Crushed a shotgun reload sprite clipping issue like a grape!!!!!! (also made them look a bit better) [Bloax]
 - Fixed opaque guardian sprite [Bloax]
 - Added +FORCEXYBILLBOARD to puff actors [Cyberkill]
