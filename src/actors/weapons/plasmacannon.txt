@@ -176,6 +176,20 @@ actor PlasmaCannonBallSmall : PlasmaCannonBall {
 actor PlasmaCannonBallBlue : PlasmaCannonBall {
 	translation "112:120=200:207", "121:127=241:247"
 	obituary "$OB_PLASMACANNON_BLUE"
+	states {
+	Spawn:
+		PLS3 AABB 1 bright A_SpawnItemEx ("PlasmaFlameTail", 0,0,0,0,0,0,0, SXF_TRANSFERTRANSLATION)
+		loop
+	Death:
+		PLE1 A 4
+		PLE1 A 4 bright A_Explode (300, 192)
+		PLE1 BBBB 2 bright A_SpawnItemEx("PlasmaFlameDecayBlue", random(-32,32), random(-32,32), random(-32,32),0,0,0,0, SXF_TRANSFERTRANSLATION)
+		PLE1 C 0 A_SpawnItemEx ("PlasmaFlameCluster", 0,0,0,0,0,0,0, SXF_TRANSFERTRANSLATION)
+		PLE1 C 4 bright
+		PLE1 C 4 bright A_Explode (30, 550, 0)
+		PLE1 DEF 8 bright
+		stop
+	}
 }
 
 actor PlasmaCannonBallSmallBlue : PlasmaCannonBallSmall {
@@ -201,6 +215,8 @@ actor PlasmaFlameDecay {
 		stop
 	}
 }
+
+actor PlasmaFlameDecayBlue : PlasmaFlameDecay {}
 
 actor PlasmaFlameDecayFX {
 	+CLIENTSIDEONLY +NOBLOCKMAP

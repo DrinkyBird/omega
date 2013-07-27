@@ -136,12 +136,12 @@ flickerlight LPUFF2B
     chance 0.8
 }
 
-Object LaserRiflePuff
+Object LaserPuff
 {
     frame VOLX { light LPUFF1 }
 }
 
-Object LaserRiflePuffBlue
+Object LaserPuffBlue
 {
     frame VOLX { light LPUFF1B }
 }
@@ -181,10 +181,20 @@ Flickerlight ExplosivePuff
 	Chance 0.45
 }
 
-
-
-
 object ExplosionSmall
+{
+	frame TNT1 { light ExplosivePuff }
+}
+
+Flickerlight ExplosiveSmallerPuff
+{
+	Color 1.0 0.7 0.0
+	Size 14
+	SecondarySize 18
+	Chance 0.45
+}
+
+object ExplosionSmaller
 {
 	frame TNT1 { light ExplosivePuff }
 }
@@ -228,7 +238,7 @@ flickerlight TiberiumShot
 	chance 0.30
 }
 
-Object TE21CalShot
+Object TiberiumDart
 {
 	frame E21X { light TiberiumShot }
 	frame TNT1 { light Chemical }
@@ -248,7 +258,7 @@ flickerlight Tibcrystalnorm
 	chance 0.04
 }
 
-Object TiberiumCrystalMapSpawned
+Object TiberiumCrystalGiver
 {
 	frame TIBW { light Tibcrystalnorm }
 	frame TIBE { light Tibcrystalnorm }
@@ -418,24 +428,14 @@ object FlameWallDecayBlue
 ///////Awesome Explosions
 /////////////////////////
 
-object BazookaRocket
+object HeavyMissile
 {
-    frame MISLA { light ROCKET }
+    frame MISR { light ROCKET }
 }
 
-object HomingBazookaRocket
+object HeavyHomingMissile
 {
-    frame MISLA { light ROCKET }
-}
-
-object BazookaRocketBlue
-{
-    frame MISLA { light ROCKET }
-}
-
-object HomingBazookaRocketBlue
-{
-    frame MISLA { light ROCKET }
+    frame MISR { light ROCKET }
 }
 
 ///////Plasma Related stuff
@@ -451,7 +451,7 @@ flickerlight PlasmaReds
 
 flickerlight Plasma
 {
-	color 0.1 0.1 1.0
+	color 0.6 0.1 1.0
 	size 45
 	secondarySize 55
 	chance 0.30
@@ -540,12 +540,12 @@ Object PlasmaFlameDecayBlue
 
 Object PlasmaCannonBall
 {
-    frame PLS1A { light PlasmaBall1R }
-    frame PLS1B { light PlasmaBall2R }
-    frame PLS1C { light PlasmaBall3R }
-    frame PLS1D { light PlasmaBall2R }
-    frame PLS1E { light PlasmaBall4R }
-    frame PLS1F { light PlasmaBall5R }
+    frame PLS3A { light PlasmaBall1R }
+    frame PLS3B { light PlasmaBall2R }
+    frame PLS3C { light PlasmaBall3R }
+    frame PLS3D { light PlasmaBall2R }
+    frame PLS3E { light PlasmaBall4R }
+    frame PLS3F { light PlasmaBall5R }
 	frame PLE1A { light PlasmaBall1R }
     frame PLE1B { light PlasmaBall2R }
     frame PLE1C { light PlasmaBall3R }
@@ -556,12 +556,12 @@ Object PlasmaCannonBall
 
 Object PlasmaCannonBallSmall
 {
-    frame PLS1A { light PlasmaBall1R }
-    frame PLS1B { light PlasmaBall2R }
-    frame PLS1C { light PlasmaBall3R }
-    frame PLS1D { light PlasmaBall2R }
-    frame PLS1E { light PlasmaBall4R }
-    frame PLS1F { light PlasmaBall5R }
+    frame PLS3A { light PlasmaBall1R }
+    frame PLS3B { light PlasmaBall2R }
+    frame PLS3C { light PlasmaBall3R }
+    frame PLS3D { light PlasmaBall2R }
+    frame PLS3E { light PlasmaBall4R }
+    frame PLS3F { light PlasmaBall5R }
 	frame PLE1A { light PlasmaBall1R }
     frame PLE1B { light PlasmaBall2R }
     frame PLE1C { light PlasmaBall3R }
@@ -572,12 +572,12 @@ Object PlasmaCannonBallSmall
 
 Object PlasmaCannonBallBlue
 {
-    frame PLS1A { light PlasmaBall1 }
-    frame PLS1B { light PlasmaBall2 }
-    frame PLS1C { light PlasmaBall3 }
-    frame PLS1D { light PlasmaBall2 }
-    frame PLS1E { light PlasmaBall4 }
-    frame PLS1F { light PlasmaBall5 }
+    frame PLS3A { light PlasmaBall1 }
+    frame PLS3B { light PlasmaBall2 }
+    frame PLS3C { light PlasmaBall3 }
+    frame PLS3D { light PlasmaBall2 }
+    frame PLS3E { light PlasmaBall4 }
+    frame PLS3F { light PlasmaBall5 }
 	frame PLE1A { light PlasmaBall1 }
     frame PLE1B { light PlasmaBall2 }
     frame PLE1C { light PlasmaBall3 }
@@ -588,12 +588,12 @@ Object PlasmaCannonBallBlue
 
 Object PlasmaCannonBallSmallBlue
 {
-    frame PLS1A { light PlasmaBall1 }
-    frame PLS1B { light PlasmaBall2 }
-    frame PLS1C { light PlasmaBall3 }
-    frame PLS1D { light PlasmaBall2 }
-    frame PLS1E { light PlasmaBall4 }
-    frame PLS1F { light PlasmaBall5 }
+    frame PLS3A { light PlasmaBall1 }
+    frame PLS3B { light PlasmaBall2 }
+    frame PLS3C { light PlasmaBall3 }
+    frame PLS3D { light PlasmaBall2 }
+    frame PLS3E { light PlasmaBall4 }
+    frame PLS3F { light PlasmaBall5 }
 	frame PLE1A { light PlasmaBall1 }
     frame PLE1B { light PlasmaBall2 }
     frame PLE1C { light PlasmaBall3 }
@@ -739,22 +739,22 @@ flickerlight RepYellow
 
 object RepairDisarmPuff
 {
-	frame PLCX { light RepBlue }
+	frame RPFF { light RepBlue }
 }
 
 object EnhancedRepairDisarmPuff
 {
-	frame CHMX { light RepPurple }
+	frame UPFF { light RepPurple }
 }
 
 object MedicPuff
 {
-	frame CHMX { light RepRed }
+	frame HPFF { light RepRed }
 }
 
 object DisarmPuff
 {
-	frame CHMX { light RepYellow }
+	frame DPFF { light RepYellow }
 }
 
 pointlight GOLDBALL
