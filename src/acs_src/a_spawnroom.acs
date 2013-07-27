@@ -208,6 +208,9 @@ script 96( int type ) {
 	case 1:
 		// PURCHASE TERMINAL
 		dest = 70 + PlayerTeam();
+		
+		/* [Dusk] Refill the player when he enters the spawn room. */
+		ACS_ExecuteAlways( 93, 0 );
 		break;
 	
 	case 2:
