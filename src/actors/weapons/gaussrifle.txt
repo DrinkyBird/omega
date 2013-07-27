@@ -170,7 +170,7 @@ actor GaussRifleAmmo : Ammo {
 actor GaussPuff : HHBulletPuff {
 	-ALLOWPARTICLES
 	+PUFFONACTORS
-	DamageType "Energy"
+	DamageType "Laser"
 	translation "192:207=168:191"
 	renderstyle Add
 	alpha 0.75
