@@ -175,10 +175,7 @@ script 95( int unused, int force ) {
 		GiveInventory( "DimRedHueRemover", 1 );
 	
 	DisplayTick();
-	SETFONT( "BigFont" );
-		HudMessage( s: "You have resigned from your class.";
-			HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_ORANGE, 0.5, 0.45, 2.0, 1.0 );
-	
+	BigMessage( "\cIYou have resigned from your class." );
 	ACS_ExecuteAlways( 91, 0 );
 	ACS_ExecuteAlways( 10, 0 );
 	RecountTimeCops();
@@ -193,94 +190,89 @@ script 96( int type ) {
 		terminate;
 	
 	int dest;
+	int team = 1 - ( type % 2 );
+	bool teleportToSpawn = false;
 	
-	if( PlayerTeam() == type % 2 ) {
-		DisplayCross();
-		SETFONT( "BigFont" );
-		HudMessage( s: "This is not your terminal!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+	if( PlayerTeam() != team ) {
+		Error( "This is not your terminal!" );
 		terminate;
 	}
 	
 	if( CheckInventory( "IsMech" )) {
-		DisplayCross();
-		SETFONT( "BigFont" );
-		HudMessage( s: "You can't use that in a mech!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+		Error( "You can't use that in a mech!" );
 		terminate;
 	}
 	
-	if( type <= 1 ) {
+	switch( type ) {
+	case 0:
+	case 1:
 		// PURCHASE TERMINAL
-		dest = 70 + !type;
-		GiveInventory( "IsInSpawnRoom", 1 );
-	}
-	else if( type <= 3 ) {
+		dest = 70 + PlayerTeam();
+		break;
+	
+	case 2:
+	case 3:
 		// MECH PURCHASE
 		dest = 110;
 		
-		if( type == 2 )
+		if( PlayerTeam() == TEAM_RED )
 			dest = 210;
-			
+		
 		if( !GetCVAR( "aow_mechs" )) {
-			DisplayCross();
-			SETFONT( "BigFont" );
-			HudMessage( s: "Mechs have been disabled for this map!";
-				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
-			
-			delay( 5 );
-			ACS_ExecuteAlways( 96, 0, type - 2 );
-			terminate;
+			Error( "Mechs have been disabled for this map!" );
+			teleportToSpawn = true;
+			break;
 		}
 		
-		if( !CheckFactory( 1 - ( type - 2 ))) {
-			delay( 5 );
-			ACS_ExecuteAlways( 96, 0, type - 2 );
-			terminate;
+		if( !CheckFactory( team )) {
+			teleportToSpawn = true;
+			break;
 		}
 		
 		if( CheckInventory( "PowerBerserk" )) {
-			DisplayCross();
-			SetFont( "BIGFONT" );
-			HudMessage( s:"You can't pilot a mech while berserk!\nYou'll just tear the thing into pieces.";
-				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
-			delay( 5 );
-			ACS_ExecuteAlways( 96, 0, type - 2 );
-			terminate;
+			Error( "You can't pilot a mech while berserk!\nYou'll just tear the thing into pieces." );
+			teleportToSpawn = true;
+			break;
 		}
 		
 		if( CheckInventory( "HighUpgrade" )) {
-			DisplayCross();
-			SetFont( "BIGFONT" );
-			HudMessage( s:"You have upgraded yourself in a\nway where you must resign!";
-				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.35, 2.0, 1.0 );
-			delay( 5 );
-			ACS_ExecuteAlways( 96, 0, type - 2 );
-			terminate;
+			Error( "You have upgraded yourself in a\nway where you must resign!" );
+			teleportToSpawn = true;
+			break;
 		}
-		
-		GiveInventory( "IsInSpawnRoom", 1 );
-	}
-	else if( type <= 5 ) {
+		break;
+	case 4:
+	case 5:
 		// RESEARCH CENTRE
 		dest = 111;
 		
-		if( type == 4 )
+		if( PlayerTeam() == TEAM_RED )
 			dest = 211;
 		
-		if( !CheckPlant( 1 - ( type - 4 ))) {
-			delay( 5 );
-			ACS_ExecuteAlways( 96, 0, type - 4 );
-			terminate;
+		if( !CheckPlant( team )) {
+			teleportToSpawn = true;
+			break;
 		}
-		
-		GiveInventory( "IsInSpawnRoom", 1 );
+		break;
 	}
 	
+	/* If we cannot enter the desired room, go to spawn room instead. */
+	if( teleportToSpawn ) {
+		delay( 5 );
+		ACS_ExecuteAlways( 96, 0, 1 - team );
+		terminate;
+	}
+	
+	/* If we cannot teleport the player to the destination, then spawn an
+	 * anti-utility explosion to clear the pad. This prevents utility guys from
+	 * blocking the pad with caches and stuff like that.
+	 */
 	if( !Teleport( dest )) {
 		SpawnSpotForced( "AntiUtilityExplosion", dest, 0, 0 );
 		delay( 10 );
-		Teleport( dest );
+		
+		if( Teleport( dest ))
+			GiveInventory( "IsInSpawnRoom", 1 );
 	}
 }
 
