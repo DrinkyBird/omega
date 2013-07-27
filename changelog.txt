@@ -2,8 +2,11 @@
 -- Changes since r245
 ================================================================================
 - Fixed: AI marines could be harmed by teammates. [Thetis]
+- Fixed: Chemical Grenades were silent when fired. [Thetis]
+- Reverted Chemical Sprayer to R2539. [Thetis]
 - Entering spawn room now gives a full refill. [Dusk]
 - Full refills now refill the self-heal syringe too. [Dusk]
+- Lowered sandbag height. [Cyberkill]
 - AOW02:
 	- Fixed: Spawn rooms were marked as secrets and would damage players due to
 		bogus sector specials. [Dusk]
