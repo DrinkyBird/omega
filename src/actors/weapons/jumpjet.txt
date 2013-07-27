@@ -24,7 +24,7 @@ actor JumpJetCount : Inventory {
 }
 
 actor JetpackFuel : Inventory {
-	Inventory.MaxAmount 40
+	Inventory.MaxAmount 100
 }
 
 actor JumpjetFire {
