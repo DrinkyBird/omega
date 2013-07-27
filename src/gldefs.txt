@@ -365,12 +365,12 @@ flickerlight Flame
 
 object FlameThrowerFire
 {
-	frame FLMX { light Flame }
+	frame FMRF { light Flame }
 }
 
 object FlameThrowerFireBlue
 {
-	frame FLMX { light Flame }
+	frame FMRF { light Flame }
 }
 
 flickerlight Burn
