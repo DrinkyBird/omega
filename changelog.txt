@@ -6,6 +6,7 @@
 - Reverted Chemical Sprayer to R2539. [Thetis]
 - Entering spawn room now gives a full refill. [Dusk]
 - Full refills now refill the self-heal syringe too. [Dusk]
+- Lowered sandbag height. [Cyberkill]
 
 ================================================================================
 -- Changes since r234
