@@ -6,7 +6,7 @@ Actor BluePlasmaGunner	//Red Tiberium Rifleman
 	PainSound "*pain"
 	MaxStepHeight 56
 //-----------------------------------------------------------------------
-	obituary "%o was incinerated by a \chBlue marine's\c- plasma gun."
+	obituary "%o was incinerated by a \cfSteel Talon Marine's\c- plasma gun."
 	Health 115
 	Radius 16
 	Height 56
@@ -31,7 +31,7 @@ Actor BluePlasmaGunner	//Red Tiberium Rifleman
 	-TELESTOMP
 	deathsound "generic/death"
 
-	Translation "112:127=[0,84,191]:[0,0,0]"
+	Translation "112:127=[191,159,64]:[0,0,0]"
 
 //AOW Base DamageFactoring-----------------------------------------------------------------------
 

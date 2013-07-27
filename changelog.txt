@@ -14,6 +14,7 @@
 - Added AOW11: Disk Defrag, with updated texturing. [Dusk]
 - Fixed Jumpjet HUD display. [Thetis, Dusk]
 - Fixed: Full refill did not refill jetpack fuel. [Dusk]
+- AI Marines are now colored and named properly based on team. [Thetis, Dusk]
 
 ================================================================================
 -- Changes since r234

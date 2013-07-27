@@ -6,7 +6,7 @@ Actor RedFlamerDude
 	PainSound "*pain"
 	MaxStepHeight 56
 //-----------------------------------------------------------------------
-	obituary "%o was fried by a \cgRed marine's\c- flamethrower."
+	obituary "%o was fried by a \cgBlack Hand Marine's\c- flamethrower."
 	Health 115
 	Radius 16
 	Height 56
@@ -31,7 +31,7 @@ Actor RedFlamerDude
 	-TELESTOMP
 	deathsound "generic/death"
 
-	Translation "112:127=[191,0,0]:[0,0,0]"
+	Translation "112:127=[127,127,127]:[0,0,0]"
 
 //AOW Base DamageFactoring-----------------------------------------------------------------------
 
