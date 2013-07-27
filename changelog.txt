@@ -4,6 +4,11 @@
 - Fixed: AI marines could be harmed by teammates. [Thetis]
 - Entering spawn room now gives a full refill. [Dusk]
 - Full refills now refill the self-heal syringe too. [Dusk]
+- AOW02:
+	- Fixed: Spawn rooms were marked as secrets and would damage players due to
+		bogus sector specials. [Dusk]
+	- Fixed: Red Obelisk MCT actor was in the wrong place altogether. [Dusk]
+- Added AOW11: Disk Defrag, with updated texturing. [Dusk]
 
 ================================================================================
 -- Changes since r234
