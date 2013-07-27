@@ -1,5 +1,6 @@
 // MARINE BEACON
 actor BlueRandomMarine : RandomSpawner {
+	DesignatedTeam 0
 	dropitem "BlueRocketSoldier"
 	dropitem "BlueSuperShotgunner"
 	dropitem "BlueTiberiumRifleman"
@@ -8,6 +9,7 @@ actor BlueRandomMarine : RandomSpawner {
 }
 
 actor RedRandomMarine : RandomSpawner {
+	DesignatedTeam 1
 	dropitem "RedRocketSoldier"
 	dropitem "RedSuperShotgunner"
 	dropitem "RedTiberiumRifleman"
