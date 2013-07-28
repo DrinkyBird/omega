@@ -33,6 +33,7 @@ alias showarmor "puke 981"
 alias showspeed "puke 921"
 alias ejectmech "use mechejectbutton"
 alias dumpmarinestats "puke -967"
+alias aow_changelog "puke -853"
 
 // RCON ADMIN COMMANDS
 alias gamemaster "puke 401 %1 3"

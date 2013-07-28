@@ -15,16 +15,24 @@ if [ -z "$1" ]; then
 	zipcompression=0
 fi
 
-if [ ! -x "./utils/acsconstants" ]; then
-	echo "ACS constants utility doesn't exist, compiling..."
-	gcc -o ./utils/acsconstants -W -Wall ./utils/acsconstants.c
-	
-	if [ "$?" != "0" ]; then
-		exit 1;
+for util in acsconstants acschangelog; do
+	if [ ! -x "./utils/$util" ]; then
+		if [ -e ./utils/$util.c ]; then
+			cc=gcc
+			source=$util.c
+		else
+			cc=g++
+			source=$util.cpp
+		fi
+		
+		echo "Compiling $source..."
+		$cc -o ./utils/$util -W -Wall ./utils/$source
+		
+		if [ "$?" != "0" ]; then
+			exit 1;
+		fi
 	fi
-	
-	echo "ACS constants utility ready."
-fi
+done
 
 revnum=$(git describe |sed "s/-/ /g" |awk '{printf $2}')
 if [ "$(git status --short)" != "" ]; then
@@ -47,9 +55,12 @@ fi
 
 mkdir tmp
 pushd tmp >/dev/null
-	mkdir acs actors
+	mkdir -p acs acs_src actors
+	
+	../utils/acschangelog ../changelog.txt ./acs_src/a_changelog.acs
+	
 	pushd acs >/dev/null
-		acc_args="-I ../../utils/acc ../../src/acs_src/aow2scrp.acs aow2scrp.o"
+		acc_args="-I ../../utils/acc -I ../acs_src/ ../../src/acs_src/aow2scrp.acs aow2scrp.o"
 		echo "Compiling ACS..."
 		acc $acc_args # >/dev/null 2>&1
 		

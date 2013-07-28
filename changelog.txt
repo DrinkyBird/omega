@@ -15,6 +15,7 @@
 - Fixed Jumpjet HUD display. [Thetis, Dusk]
 - Fixed: Full refill did not refill jetpack fuel. [Dusk]
 - AI Marines are now colored and named properly based on team. [Thetis, Dusk]
+- Added CCMD aow_changelog which shows the changelog of the given version/patch. [Dusk]
 
 ================================================================================
 -- Changes since r234

@@ -188,6 +188,7 @@
 #define SC_CL_ObeliskTrail        822
 #define SC_UpdateCreditDisplay    827
 #define SC_MedicHealthRegen       835
+#define SC_CL_Changelog           853
 #define SC_HUDTicker              854
 #define SC_ChangePlayerTeam       891
 #define SC_RazorWire              892
@@ -440,6 +441,7 @@ str NormalWeaponNames[MAX_NORMAL_WEAPONS] = {
 #include "a_bases.acs"
 #include "a_botmarines.acs"
 #include "a_bots.acs"
+#include "a_changelog.acs" // auto-generated
 #include "a_client.acs"
 #include "a_classes.acs"
 #include "a_core.acs"

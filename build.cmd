@@ -41,14 +41,18 @@ md tmp
 pushd tmp
 	md acs
 	md actors
+	md acs_src
+	
+	..\utils\acschangelog.exe ..\changelog.txt acs_src\a_changelog.acs
+	
 	pushd acs
 		echo Compiling ACS
-		acc -I ..\..\utils\acc ..\..\src\acs_src\aow2scrp.acs aow2scrp.o >nul 2>nul
+		acc -I ..\..\utils\acc -I ..\acs_src\ ..\..\src\acs_src\aow2scrp.acs aow2scrp.o >nul 2>nul
 		if not exist aow2scrp.o goto acsfail
 	popd
 	
 	..\utils\acsconstants.exe ..\src\acs_src\aow2scrp.acs actors\acsconstants.txt
-	zip -r1 ..\%fname% acs actors >nul
+	zip -r1 ..\%fname% acs actors acs_src >nul
 popd
 rmdir tmp /s /q >nul
 
@@ -71,7 +75,7 @@ goto doneremovingtmp
 
 :acsfail
 rem Execute ACC a second time to expose the error
-acc -I ..\..\utils\acc ..\..\src\acs_src\aow2scrp.acs aow2scrp.o
+acc -I ..\..\utils\acc -I ..\acs_src\ ..\..\src\acs_src\aow2scrp.acs aow2scrp.o
 
 echo ACS failed to compile, aborting
 goto abort
