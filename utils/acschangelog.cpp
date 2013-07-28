@@ -36,7 +36,7 @@ int main( int argc, char* argv[] ) {
 		"\tLog( s:\"Recent changes:\\n\"", argv[0], asctime( timeinfo ));
 	
 	char buf[1024];
-	enum{ InitialSkip, Reading } status = InitialSkip;
+	enum { InitialSkip, Reading } status = InitialSkip;
 	
 	while( fgets( &buf[0], sizeof buf, fp )) {
 		string line = buf;
