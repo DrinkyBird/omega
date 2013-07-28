@@ -31,7 +31,7 @@ Actor RedTiberiumRifleman	//Red Tiberium Rifleman
 	-TELESTOMP
 	deathsound "generic/death"
 
-	Translation "112:127=[191,0,0]:[0,0,0]"
+	Translation "112:127=[127,127,127]:[0,0,0]"
 
 //AOW Base DamageFactoring-----------------------------------------------------------------------
 

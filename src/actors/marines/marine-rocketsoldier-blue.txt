@@ -31,7 +31,7 @@ Actor BlueRocketSoldier		//Blue Rocket Soldier
 	-TELESTOMP
 	deathsound "generic/death"
 	//DesignatedTeam 0
-	Translation "112:127=[0,84,191]:[0,0,0]"
+	Translation "112:127=[191,159,64]:[0,0,0]"
 
 //AOW Base DamageFactoring-----------------------------------------------------------------------
 
