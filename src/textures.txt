@@ -851,10 +851,10 @@ graphic "fi_bfg", 61, 36 {
 // ============================================================================
 // inventory icons
 
-graphic "tmc4icon", 56, 80 {
-	xscale 5
-	yscale 5
-	offset -28, -12
+graphic "tmc4icon", 61, 99 {
+	xscale 6.2
+	yscale 6.2
+	offset -32, -20
 	patch "tc4ta0", 0, 0
 }
 
