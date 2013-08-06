@@ -291,17 +291,17 @@ script 37( int Team ) {
 	int cost = 1500;
 	
 	if( MitigateDoublePress()) terminate;
-	if( !CheckBarracks( Team )) terminate;
-	if( !CheckPlant( Team )) terminate;
+	if( !CheckBarracks( PlayerTeam() )) terminate;
+	if( !CheckPlant( PlayerTeam() )) terminate;
 	if( !CheckPlasmaCooldown()) terminate;
 	
-	if( CheckInventory( "PlasmaCannon" ) ) {
+	if( CheckInventory( "PlasmaCannon" )) {
 		Error( "You already have a \cnPlasma Cannon\cr!" );
 		terminate;
 	}
 	
 	int maxcannons = GetCVAR( "aow_maxcannonsperteam" );
-	if( maxcannons != -1 && NumPlasmaCannons[Team] >= maxcannons ) {
+	if( maxcannons != -1 && NumPlasmaCannons[PlayerTeam()] >= maxcannons ) {
 		Error( "Your team already has too many of those!" );
 		terminate;
 	}
@@ -319,7 +319,7 @@ script 37( int Team ) {
 	TakeInventory( "PurchaseToken", 1 );
 	SpendCredits( cost );
 	LastPurchasedCannon[PlayerNumber() + 1] = Timer();
-	NumPlasmaCannons[Team]++;
+	NumPlasmaCannons[PlayerTeam()]++;
 	
 	DisplayTick();
 	BigMessage( "You got \cnPlasma Cannon!" );
