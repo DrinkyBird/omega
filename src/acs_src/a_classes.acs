@@ -256,38 +256,38 @@ script 918( int n ) {
 }
 
 // -----------------------------------------------------------------------------
-script 20( int Team ) PurchaseClass( CLASS_GUNMAN );
-script 21( int Team ) PurchaseClass( CLASS_ENGINEER );
-script 22( int Team ) PurchaseClass( CLASS_MINIGUNNER );
-script 23( int Team ) PurchaseClass( CLASS_TECHNICIAN );
-script 24( int Team ) PurchaseClass( CLASS_FLAMER );
-script 25( int Team ) PurchaseClass( CLASS_RIFLEMAN );
-script 26( int Team ) PurchaseClass( CLASS_MACHINEGUNNER );
-script 27( int Team ) PurchaseClass( CLASS_GRENADIER );
-script 28( int Team ) PurchaseClass( CLASS_ROCKETEER );
-script 29( int Team ) PurchaseClass( CLASS_STEALTH );
-script 33( int Team ) PurchaseClass( CLASS_GAUSSGUNNER );
-script 34( int Team ) PurchaseClass( CLASS_CHEMWARRIOR );
-script 35( int Team ) PurchaseClass( CLASS_SHOCKTROOPER );
-script 36( int Team ) PurchaseClass( CLASS_COMMANDO );
-script 38( int Team ) PurchaseClass( CLASS_SHOTGUNNER );
-script 62( int Team ) PurchaseClass( CLASS_SUICIDEBOMBER );
-script 40( int Team ) PurchaseClass( CLASS_SNIPER );
-script 41( int Team ) PurchaseClass( CLASS_UTILITYGUY );
-script 42( int Team ) PurchaseClass( CLASS_DEMOEXPERT );
-script 43( int Team ) PurchaseClass( CLASS_MEDIC );
-script 44( int Team ) PurchaseClass( CLASS_LASERCHAINGUNNER );
-script 52( int Team ) PurchaseClass( CLASS_JUMPJET );
-script 53( int Team ) PurchaseClass( CLASS_TIBRIFLE );
-script 54( int Team ) PurchaseClass( CLASS_DOUBLESHOTGUNNER );
-script 60( int Team ) PurchaseClass( CLASS_PLASMAGUNNER );
-script 61( int Team ) PurchaseClass( CLASS_ARTILLERY );
-script 39( int Team ) PurchaseClass( CLASS_TIMECOP );
-script 63( int Team ) PurchaseClass( CLASS_ADVHARVESTER );
-script 64( int Team ) PurchaseClass( CLASS_HARVESTER );
+script 20( void ) PurchaseClass( CLASS_GUNMAN );
+script 21( void ) PurchaseClass( CLASS_ENGINEER );
+script 22( void ) PurchaseClass( CLASS_MINIGUNNER );
+script 23( void ) PurchaseClass( CLASS_TECHNICIAN );
+script 24( void ) PurchaseClass( CLASS_FLAMER );
+script 25( void ) PurchaseClass( CLASS_RIFLEMAN );
+script 26( void ) PurchaseClass( CLASS_MACHINEGUNNER );
+script 27( void ) PurchaseClass( CLASS_GRENADIER );
+script 28( void ) PurchaseClass( CLASS_ROCKETEER );
+script 29( void ) PurchaseClass( CLASS_STEALTH );
+script 33( void ) PurchaseClass( CLASS_GAUSSGUNNER );
+script 34( void ) PurchaseClass( CLASS_CHEMWARRIOR );
+script 35( void ) PurchaseClass( CLASS_SHOCKTROOPER );
+script 36( void ) PurchaseClass( CLASS_COMMANDO );
+script 38( void ) PurchaseClass( CLASS_SHOTGUNNER );
+script 62( void ) PurchaseClass( CLASS_SUICIDEBOMBER );
+script 40( void ) PurchaseClass( CLASS_SNIPER );
+script 41( void ) PurchaseClass( CLASS_UTILITYGUY );
+script 42( void ) PurchaseClass( CLASS_DEMOEXPERT );
+script 43( void ) PurchaseClass( CLASS_MEDIC );
+script 44( void ) PurchaseClass( CLASS_LASERCHAINGUNNER );
+script 52( void ) PurchaseClass( CLASS_JUMPJET );
+script 53( void ) PurchaseClass( CLASS_TIBRIFLE );
+script 54( void ) PurchaseClass( CLASS_DOUBLESHOTGUNNER );
+script 60( void ) PurchaseClass( CLASS_PLASMAGUNNER );
+script 61( void ) PurchaseClass( CLASS_ARTILLERY );
+script 39( void ) PurchaseClass( CLASS_TIMECOP );
+script 63( void ) PurchaseClass( CLASS_ADVHARVESTER );
+script 64( void ) PurchaseClass( CLASS_HARVESTER );
 
 //---------------------------PLASMA CANNON
-script 37( int Team ) {
+script 37( void ) {
 	int cost = 1500;
 	
 	if( MitigateDoublePress()) terminate;
@@ -332,7 +332,7 @@ script 37( int Team ) {
 }
 
 //---------------------------T-E 21cal RIFLE
-script 49( int Team ) {
+script 49( void ) {
 	int cost = 300;
 	if( MitigateDoublePress() ) terminate;
 	if( CheckInventory( "TiberiumAutorifleWeak" ) || CheckInventory( "TiberiumAutorifle" ) ) {
@@ -359,7 +359,7 @@ script 49( int Team ) {
 }
 
 //---------------------------CHAINSAW (was flashbangs)
-script 50( int Team ) {
+script 50( void ) {
 	int cost = 250;
 	
 	if( MitigateDoublePress() ) terminate;
@@ -387,7 +387,7 @@ script 50( int Team ) {
 }
 
 // ARTILLERY CANNON
-script 51( int Team ) {
+script 51( void ) {
 	int cost = 550;
 	
 	if( MitigateDoublePress() ) terminate;
