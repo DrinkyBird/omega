@@ -32,7 +32,7 @@ set /p branch=<%tmp%
 rem Now do the checking
 if "%stat2%" NEQ "" set rnum=%rnum%m
 
-set fname=omega-%branch%-r%rnum%.pk3
+set fname=aow2_omega-%branch%-r%rnum%.pk3
 
 rem We don't need the temp file anymore
 del %tmp%

@@ -41,7 +41,7 @@ fi
 
 branch=$(git rev-parse --abbrev-ref HEAD)
 
-fname="omega-$branch-r$revnum.pk3"
+fname="aow2_omega-$branch-r$revnum.pk3"
 
 if [ -e tmp ]; then
 	echo "tmp exists, delete it?"
