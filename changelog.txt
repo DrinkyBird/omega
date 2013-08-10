@@ -2,6 +2,7 @@
 -- Changes since r275
 ================================================================================
 - Fixed: Plasma cannon terminal had incorrect team checks. [Dusk]
+- Fixed: The suicide bomber's bomb pack could be sold. [Dusk]
 
 ================================================================================
 -- Changes since r245

@@ -75,23 +75,26 @@ script 950( void ) NET {
 	int price = 0;
 	str weapon = "";
 	
-	// Make the price be 25% of the cost of the first found class which
-	// uses this weapon as the primary weapon. Make it at least be $25.
+	// Most weapons are primary weapons of some class, so try find that
+	// first. Make the price be 25% of the cost of the first found class
+	// which uses this weapon as the primary weapon.
 	for( int i = 0; i < NUM_CLASSES; ++i ) {
 		if( !CheckWeapon( GetClassItemName( i, 0 )))
 			continue;
 		
 		weapon = GetClassItemName( i, 0 );
 		price = Classes[i][CK_COST] / 4;
-	
+		
+		// Make it worth at least something
 		if( price < 25 )
 			price = 25;
 		
 		break;
 	}
 	
-	// Also let these weapons be sold too
-	if( i >= NUM_CLASSES ) {
+	// Also let these weapons be sold too. Also, don't let the bomb pack be sold
+	// either even though it's a primary weapon. 
+	if( i >= NUM_CLASSES || i == CLASS_SuicideBomber ) {
 		if( CheckWeapon( "Handgun" )) {
 			price = 25;
 			weapon = "Handgun";
