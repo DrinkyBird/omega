@@ -66,6 +66,9 @@ script 942( void ) NET {
 
 // This allows players to sell weapons. Kinda like partial resign.
 script 950( void ) NET {
+	// Disabled for now over server crashes...
+	terminate;
+	
 	if( !PlayerInGame( PlayerNumber() ))
 		terminate;
 	

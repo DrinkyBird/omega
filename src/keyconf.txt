@@ -19,9 +19,9 @@ addmenukey "Donation: Change Name" donationname
 addmenukey "Donation: Donate $100" donationgive
 addmenukey "Surrender" surrender
 addmenukey "Switch to Weaker Team" teamswitch
-addmenukey "Sell Weapon" sellweapon
+// addmenukey "Sell Weapon" sellweapon
 addmenukey "Eject Mech (shortcut)" ejectmech
-alias sellweapon "puke 950"
+// alias sellweapon "puke 950"
 alias donationmenu "puke 335"
 alias donationname "puke 334 1"
 alias donationgive "puke 334 2"
