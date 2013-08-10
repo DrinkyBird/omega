@@ -12,7 +12,7 @@ actor BaseTerminal {
 	Height 120
 	Mass 0x7FFFFFFF
 	DamageType "Explosion"
-	Obituary "%o went down with a \cGRed\c- building."
+	Obituary "%o went down with a \cGNod\c- building."
 	Radius 16
 	DeathSound "grenade/explode"
 	PainChance 255
@@ -89,7 +89,7 @@ actor BaseTerminal {
 
 actor BaseTerminalBlue : BaseTerminal {
 	DesignatedTeam 0
-	Obituary "%o was killed with a \cHBlue\c- building."
+	Obituary "%o was killed with a \cFGDI\c- building."
 }
 
 actor TerminalExplosion {
