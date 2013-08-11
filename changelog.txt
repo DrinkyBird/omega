@@ -2,6 +2,7 @@
 -- Changes since r283
 ================================================================================
 - Corrected wrong team names in MCT explosion obituaries. [Dusk]
+- Corrected various bad team checks. [Dusk]
 
 ================================================================================
 -- Changes since r275

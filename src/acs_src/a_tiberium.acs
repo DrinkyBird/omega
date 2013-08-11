@@ -10,12 +10,12 @@ script 357( void ) {
 
 // Tiberium refining terminal
 script 110( int Team ) {
-	if( Team == PlayerTeam() || PlayerTeam() < 0 || PlayerTeam() > 1 ) {
+	if( Team != !PlayerTeam() || PlayerTeam() < 0 || PlayerTeam() > 1 ) {
 		Error( "This is not your terminal!" );
 		terminate;
 	}
 	
-	if( !CheckRefinery( Team ) )
+	if( !CheckRefinery( PlayerTeam() ))
 		terminate;
 	
 	if( !CheckInventory( "IsHarvester" ) || !CheckInventory( "TiberiumCrystal" ) ) {
