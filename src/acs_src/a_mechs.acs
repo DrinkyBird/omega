@@ -86,7 +86,7 @@ script 80( int mech ) {
 	if( MitigateDoublePress() )
 		terminate;
 	
-	if( !CheckFactory( !PlayerTeam() ))
+	if( !CheckFactory( PlayerTeam() ))
 		terminate;
 	
 	if( mech == MECH_GUARDIAN && JuggernautCount() >= GetCVAR( "aow_guardianlimit" ) && !!IsAdmin[PlayerNumber()] ) {
@@ -95,7 +95,7 @@ script 80( int mech ) {
 	}
 	
 	if( mech >= MECH_MADCAT )
-		if( !CheckAdvMechResearch( !PlayerTeam() ) )
+		if( !CheckAdvMechResearch( PlayerTeam() ) )
 			terminate;
 	
 	if( !CheckFreeHanger( PlayerTeam() ))

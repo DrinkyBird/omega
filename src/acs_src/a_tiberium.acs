@@ -25,7 +25,7 @@ script 110( int Team ) {
 	
 	TakeInventory( "TiberiumCrystal", 1 );
 	
-	if( EnhancedRefining[Team] )
+	if( EnhancedRefining[PlayerTeam()] )
 		GiveCredits( -1, 50 );
 	else
 		GiveCredits( -1, 25 );

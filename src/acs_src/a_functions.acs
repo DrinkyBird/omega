@@ -130,7 +130,8 @@ function void DisplayCross( void ) {
 
 // [Dusk] Barracks check
 function int CheckBarracks( int Team ) {
-	if( IsAdmin[PlayerNumber()] ) return 1;
+	if( IsAdmin[PlayerNumber()] )
+		return 1;
 	
 	if( !GotBarracks[Team] ) {
 		Error( "Your \cFbarracks\c- has been destroyed!" );
@@ -142,7 +143,8 @@ function int CheckBarracks( int Team ) {
 
 // [Dusk] Research Centre check
 function int CheckPlant( int Team ) {
-	if( IsAdmin[PlayerNumber()] ) return 1;
+	if( IsAdmin[PlayerNumber()] )
+		return 1;
 	
 	if( !GotPlant[Team] ) {
 		Error( "Your \cFresearch centre\c- has been destroyed!" );
@@ -154,7 +156,8 @@ function int CheckPlant( int Team ) {
 
 // [Dusk] Refinery check
 function int CheckRefinery( int Team ) {
-	if( IsAdmin[PlayerNumber()] ) return 1;
+	if( IsAdmin[PlayerNumber()] )
+		return 1;
 	
 	if( !GotRefinery[Team] ) {
 		Error( "Your \cFrefinery\c- has been destroyed!" );
@@ -166,7 +169,8 @@ function int CheckRefinery( int Team ) {
 
 // [Dusk] War Factory check
 function int CheckFactory( int Team ) {
-	if( IsAdmin[PlayerNumber()] ) return 1;
+	if( IsAdmin[PlayerNumber()] )
+		return 1;
 	
 	if( !GotFactory[Team] ) {
 		Error( "Your \cFwar factory\c- has been destroyed!" );
