@@ -3,6 +3,7 @@
 ================================================================================
 - Corrected wrong team names in MCT explosion obituaries. [Dusk]
 - Corrected various bad team checks. [Dusk]
+- Reduced damage over time values from 3 (fire) and 7 (chem) back to 1. [Dusk]
 
 ================================================================================
 -- Changes since r275
