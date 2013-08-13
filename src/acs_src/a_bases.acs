@@ -1,343 +1,343 @@
 //---------------------------BLUE BARRACKS DEATH
-script 101( VOID ) {
-	Thing_Destroy( 100, 0 );
-	Thing_Destroy( 101, 0 );
-	ACS_ExecuteAlways( 99, 0, TEAM_BLUE );
+script 101 (VOID) {
+	Thing_Destroy (100, 0);
+	Thing_Destroy (101, 0);
+	ACS_ExecuteAlways (99, 0, TEAM_BLUE);
 	GotBarracks[TEAM_BLUE] = False;
 	BaseLeft[TEAM_BLUE]--;
-	SetLineTexture( 1, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
-	SetLineTexture( 3, SIDE_FRONT, TEXTURE_MIDDLE, "AOWTVBAK" );
-	ReddenSector( 1 );
-	ReddenSector( 2 );
+	SetLineTexture (1, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2");
+	SetLineTexture (3, SIDE_FRONT, TEXTURE_MIDDLE, "AOWTVBAK");
+	ReddenSector (1);
+	ReddenSector (2);
 	
-	SetFont( "BIGFONT" );
-	HudMessageBold( s:"The \cFGDI Barracks\cd has been destroyed!!";
-		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
-	Log( s:pname( -1 ), s:" destroys GDI Barracks." );
-	AwardBuildingDestruction( TEAM_RED, false );
-	ACS_ExecuteAlways( 930, 0, BUILDING_BARRACKS, TEAM_BLUE );
+	SetFont ("BIGFONT");
+	HudMessageBold (s:"The \cFGDI Barracks\cd has been destroyed!!";
+		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log (s:pname (-1), s:" destroys GDI Barracks.");
+	AwardBuildingDestruction (TEAM_RED, false);
+	ACS_ExecuteAlways (930, 0, BUILDING_BARRACKS, TEAM_BLUE);
 	
-	if( EventScripts )
-		ACS_ExecuteAlways( 960, 0, ACTION_DESTROY_BARRACKS, TEAM_BLUE );
+	if (EventScripts)
+		ACS_ExecuteAlways (960, 0, ACTION_DESTROY_BARRACKS, TEAM_BLUE);
 }
 
 //---------------------------BLUE REFINERY DEATH
-script 102( VOID ) {
-	Thing_Destroy( 102, 0 );
-	Thing_Destroy( 103, 0 );
-	ACS_ExecuteAlways( 99, 0, TEAM_BLUE );
+script 102 (VOID) {
+	Thing_Destroy (102, 0);
+	Thing_Destroy (103, 0);
+	ACS_ExecuteAlways (99, 0, TEAM_BLUE);
 	GotRefinery[TEAM_BLUE] = False;
 	BaseLeft[TEAM_BLUE]--;
-	SetLineTexture( 5, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
-	ReddenSector( 5 );
+	SetLineTexture (5, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2");
+	ReddenSector (5);
 	
-	SetFont( "BIGFONT" );
+	SetFont ("BIGFONT");
 	
-	HudMessageBold( s:"The \cFGDI Refinery\cd has been destroyed!!";
-		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
-	Log( s:pname( -1 ), s:" destroys GDI Refinery." );
-	AwardBuildingDestruction( TEAM_RED, false );
-	ACS_ExecuteAlways( 930, 0, BUILDING_REFINERY, TEAM_BLUE );
+	HudMessageBold (s:"The \cFGDI Refinery\cd has been destroyed!!";
+		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log (s:pname (-1), s:" destroys GDI Refinery.");
+	AwardBuildingDestruction (TEAM_RED, false);
+	ACS_ExecuteAlways (930, 0, BUILDING_REFINERY, TEAM_BLUE);
 	
-	if( EventScripts )
-		ACS_ExecuteAlways( 960, 0, ACTION_DESTROY_REFINERY, TEAM_BLUE );
+	if (EventScripts)
+		ACS_ExecuteAlways (960, 0, ACTION_DESTROY_REFINERY, TEAM_BLUE);
 }
 
 //---------------------------BLUE POWERPLANT DEATH
-script 103( void ) {
-	Thing_Destroy( 104, 0 );
-	Thing_Remove( 104 );
-	Thing_Destroy( 105, 0 );
-	ACS_ExecuteAlways( 99, 0, TEAM_BLUE );
+script 103 (void) {
+	Thing_Destroy (104, 0);
+	Thing_Remove (104);
+	Thing_Destroy (105, 0);
+	ACS_ExecuteAlways (99, 0, TEAM_BLUE);
 	GotPlant[TEAM_BLUE] = False;
 	BaseLeft[TEAM_BLUE]--;
-	SetLineTexture( 7, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
-	SetLineTexture( 3, SIDE_FRONT, TEXTURE_MIDDLE, "AOWTVBAK" );
-	ReddenSector( 7 );
-	ReddenSector( 2 );
+	SetLineTexture (7, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2");
+	SetLineTexture (3, SIDE_FRONT, TEXTURE_MIDDLE, "AOWTVBAK");
+	ReddenSector (7);
+	ReddenSector (2);
 	
-	SetFont( "BIGFONT" );
+	SetFont ("BIGFONT");
 	
-	HudMessageBold( s:"The \cFGDI Research Centre\cd has been destroyed!!";
-		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
-	Log( s:pname( -1 ), s:" destroys GDI Research Centre." );
-	AwardBuildingDestruction( TEAM_RED, false );
-	ACS_ExecuteAlways( 930, 0, BUILDING_RESCENTRE, TEAM_BLUE );
+	HudMessageBold (s:"The \cFGDI Research Centre\cd has been destroyed!!";
+		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log (s:pname (-1), s:" destroys GDI Research Centre.");
+	AwardBuildingDestruction (TEAM_RED, false);
+	ACS_ExecuteAlways (930, 0, BUILDING_RESCENTRE, TEAM_BLUE);
 	
-	if( EventScripts )
-		ACS_ExecuteAlways( 960, 0, ACTION_DESTROY_PLANT, TEAM_BLUE );
+	if (EventScripts)
+		ACS_ExecuteAlways (960, 0, ACTION_DESTROY_PLANT, TEAM_BLUE);
 }
 
 //---------------------------BLUE WAR FACTORY DEATH
-script 104( VOID ) {
-	Thing_Destroy( 106, 0 );
-	Thing_Destroy( 107, 0 );
-	ACS_ExecuteAlways( 99, 0, TEAM_BLUE );
+script 104 (VOID) {
+	Thing_Destroy (106, 0);
+	Thing_Destroy (107, 0);
+	ACS_ExecuteAlways (99, 0, TEAM_BLUE);
 	GotFactory[TEAM_BLUE] = False;
 	BaseLeft[TEAM_BLUE]--;
-	SetLineTexture( 9, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
-	ReddenSector( 9 );
-	ReddenSector( 10 );
+	SetLineTexture (9, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2");
+	ReddenSector (9);
+	ReddenSector (10);
 	
-	SetFont( "BIGFONT" );
+	SetFont ("BIGFONT");
 	
-	HudMessageBold( s:"The \cFGDI War Factory\cd has been destroyed!!";
-		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
-	Log( s:pname( -1 ), s:" destroys GDI War Factory." );
-	AwardBuildingDestruction( TEAM_RED, false );
-	ACS_ExecuteAlways( 930, 0, BUILDING_FACTORY, TEAM_BLUE );
+	HudMessageBold (s:"The \cFGDI War Factory\cd has been destroyed!!";
+		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log (s:pname (-1), s:" destroys GDI War Factory.");
+	AwardBuildingDestruction (TEAM_RED, false);
+	ACS_ExecuteAlways (930, 0, BUILDING_FACTORY, TEAM_BLUE);
 	
-	if( EventScripts )
-		ACS_ExecuteAlways( 960, 0, ACTION_DESTROY_FACTORY, TEAM_BLUE );
+	if (EventScripts)
+		ACS_ExecuteAlways (960, 0, ACTION_DESTROY_FACTORY, TEAM_BLUE);
 }
 
 //---------------------------BLUE REPAIR FACILITY DEATH
-script 105( VOID ) {
+script 105 (VOID) {
 	//Thing_Remove(109);
 	GotRepair[TEAM_BLUE] = False;
-	ReddenSector( 13 );
-	ReddenSector( 14 );
-	SetActorProperty( 109, APROP_Health, 0 );
+	ReddenSector (13);
+	ReddenSector (14);
+	SetActorProperty (109, APROP_Health, 0);
 	
 	// SetFont("BIGFONT");
 	// HudMessageBold(s:"The \cFBlue Repair Facility\cd has been destroyed!!";
 	// 	HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
-	if( EventScripts )
-		ACS_ExecuteAlways( 960, 0, ACTION_DESTROY_REPAIR, TEAM_BLUE );
+	if (EventScripts)
+		ACS_ExecuteAlways (960, 0, ACTION_DESTROY_REPAIR, TEAM_BLUE);
 	
-	IntelMessageBold( strparam( n: 0, s:"\cJ has destroyed\cJ\nthe \cNGDI \cFRepair Facility!" ) );
-	Log( s:pname( -1 ), s:" destroys GDI Repair Facility." );
-	ACS_ExecuteAlways( 930, 0, BUILDING_REPAIR, TEAM_BLUE );
-	AwardBuildingDestruction( TEAM_RED, true );
+	IntelMessageBold (strparam (n: 0, s:"\cJ has destroyed\cJ\nthe \cNGDI \cFRepair Facility!"));
+	Log (s:pname (-1), s:" destroys GDI Repair Facility.");
+	ACS_ExecuteAlways (930, 0, BUILDING_REPAIR, TEAM_BLUE);
+	AwardBuildingDestruction (TEAM_RED, true);
 }
 
 //---------------------------TESLA COIL DEATH
-script 114( VOID ) {
-	Thing_Destroy( 114, 0 );
-	Thing_Destroy( 115, 0 );
-	ACS_ExecuteAlways( 99, 0, TEAM_BLUE );
+script 114 (VOID) {
+	Thing_Destroy (114, 0);
+	Thing_Destroy (115, 0);
+	ACS_ExecuteAlways (99, 0, TEAM_BLUE);
 	GotObelisk[TEAM_BLUE] = False;
 	BaseLeft[TEAM_BLUE]--;
-	ReddenSector( 19 );
-	SetLineTexture( 11, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
+	ReddenSector (19);
+	SetLineTexture (11, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2");
 	
-	SetFont( "BIGFONT" );
+	SetFont ("BIGFONT");
 	
-	HudMessageBold( s:"The \cFTesla Coil\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
-	Log( s:pname( -1 ), s:" destroys GDI Tesla Coil." );
-	AwardBuildingDestruction( TEAM_RED, false );
-	ACS_ExecuteAlways( 930, 0, BUILDING_OBELISK, TEAM_BLUE );
+	HudMessageBold (s:"The \cFTesla Coil\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log (s:pname (-1), s:" destroys GDI Tesla Coil.");
+	AwardBuildingDestruction (TEAM_RED, false);
+	ACS_ExecuteAlways (930, 0, BUILDING_OBELISK, TEAM_BLUE);
 	
 	// [Dusk] Remove the coil orb
 	Thing_Remove (TID_TESLACOIL_ORB);
 	
-	if( EventScripts )
-		ACS_ExecuteAlways( 960, 0, ACTION_DESTROY_OBELISK, TEAM_BLUE );
+	if (EventScripts)
+		ACS_ExecuteAlways (960, 0, ACTION_DESTROY_OBELISK, TEAM_BLUE);
 }
 
 //---------------------------RED BARRACKS DEATH
-script 201( VOID ) {
-	Thing_Destroy( 200, 0 );
-	Thing_Destroy( 201, 0 );
-	ACS_ExecuteAlways( 99, 0, TEAM_RED );
+script 201 (VOID) {
+	Thing_Destroy (200, 0);
+	Thing_Destroy (201, 0);
+	ACS_ExecuteAlways (99, 0, TEAM_RED);
 	
 	GotBarracks[TEAM_RED] = False;
 	BaseLeft[TEAM_RED]--;
 	
-	SetLineTexture( 2, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
-	SetLineTexture( 4, SIDE_FRONT, TEXTURE_MIDDLE, "AOWTVBAK" );
+	SetLineTexture (2, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2");
+	SetLineTexture (4, SIDE_FRONT, TEXTURE_MIDDLE, "AOWTVBAK");
 	
-	ReddenSector( 3 );
-	ReddenSector( 4 );
+	ReddenSector (3);
+	ReddenSector (4);
 	
-	SetFont( "BIGFONT" );
-	HudMessageBold( s:"The \cgNod Barracks\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
-	Log( s:pname( -1 ), s:" destroys Nod Barracks." );
-	AwardBuildingDestruction( TEAM_BLUE, false );
-	ACS_ExecuteAlways( 930, 0, BUILDING_BARRACKS, TEAM_RED );
+	SetFont ("BIGFONT");
+	HudMessageBold (s:"The \cgNod Barracks\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log (s:pname (-1), s:" destroys Nod Barracks.");
+	AwardBuildingDestruction (TEAM_BLUE, false);
+	ACS_ExecuteAlways (930, 0, BUILDING_BARRACKS, TEAM_RED);
 	
-	if( EventScripts )
-		ACS_ExecuteAlways( 960, 0, ACTION_DESTROY_BARRACKS, TEAM_RED );
+	if (EventScripts)
+		ACS_ExecuteAlways (960, 0, ACTION_DESTROY_BARRACKS, TEAM_RED);
 }
 
 //---------------------------RED REFINERY DEATH
-script 202( VOID ) {
-	Thing_Destroy( 202, 0 );
-	Thing_Destroy( 203, 0 );
-	ACS_ExecuteAlways( 99, 0, TEAM_RED );
+script 202 (VOID) {
+	Thing_Destroy (202, 0);
+	Thing_Destroy (203, 0);
+	ACS_ExecuteAlways (99, 0, TEAM_RED);
 	GotRefinery[TEAM_RED] = False;
 	BaseLeft[TEAM_RED]--;
-	SetLineTexture( 6, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
-	ReddenSector( 6 );
+	SetLineTexture (6, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2");
+	ReddenSector (6);
 	
-	SetFont( "BIGFONT" );
+	SetFont ("BIGFONT");
 	
-	HudMessageBold( s:"The \cgNod Refinery\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
-	Log( s:pname( -1 ), s:" destroys Nod Refinery." );
-	AwardBuildingDestruction( TEAM_BLUE, false );
-	ACS_ExecuteAlways( 930, 0, BUILDING_REFINERY, TEAM_RED );
+	HudMessageBold (s:"The \cgNod Refinery\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log (s:pname (-1), s:" destroys Nod Refinery.");
+	AwardBuildingDestruction (TEAM_BLUE, false);
+	ACS_ExecuteAlways (930, 0, BUILDING_REFINERY, TEAM_RED);
 	
-	if( EventScripts )
-		ACS_ExecuteAlways( 960, 0, ACTION_DESTROY_REFINERY, TEAM_RED );
+	if (EventScripts)
+		ACS_ExecuteAlways (960, 0, ACTION_DESTROY_REFINERY, TEAM_RED);
 }
 
 //---------------------------RED POWERPLANT DEATH
-script 203( VOID ) {
-	Thing_Destroy( 204, 0 );
-	Thing_Destroy( 205, 0 );
-	ACS_ExecuteAlways( 99, 0, TEAM_RED );
+script 203 (VOID) {
+	Thing_Destroy (204, 0);
+	Thing_Destroy (205, 0);
+	ACS_ExecuteAlways (99, 0, TEAM_RED);
 	GotPlant[TEAM_RED] = False;
 	BaseLeft[TEAM_RED]--;
-	SetLineTexture( 8, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
-	SetLineTexture( 4, SIDE_FRONT, TEXTURE_MIDDLE, "AOWTVBAK" );
-	ReddenSector( 8 );
-	ReddenSector( 4 );
+	SetLineTexture (8, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2");
+	SetLineTexture (4, SIDE_FRONT, TEXTURE_MIDDLE, "AOWTVBAK");
+	ReddenSector (8);
+	ReddenSector (4);
 	
-	SetFont( "BIGFONT" );
-	HudMessageBold( s:"The \cgNod Research Centre\cd has been destroyed!!";
-		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
-	Log( s:pname( -1 ), s:" destroys Nod Research Centre." );
-	AwardBuildingDestruction( TEAM_BLUE, false );
-	ACS_ExecuteAlways( 930, 0, BUILDING_RESCENTRE, TEAM_RED );
+	SetFont ("BIGFONT");
+	HudMessageBold (s:"The \cgNod Research Centre\cd has been destroyed!!";
+		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log (s:pname (-1), s:" destroys Nod Research Centre.");
+	AwardBuildingDestruction (TEAM_BLUE, false);
+	ACS_ExecuteAlways (930, 0, BUILDING_RESCENTRE, TEAM_RED);
 	
-	if( EventScripts )
-		ACS_ExecuteAlways( 960, 0, ACTION_DESTROY_PLANT, TEAM_RED );
+	if (EventScripts)
+		ACS_ExecuteAlways (960, 0, ACTION_DESTROY_PLANT, TEAM_RED);
 }
 
 //---------------------------RED WAR FACTORY DEATH
-script 204( VOID ) {
-	Thing_Destroy( 206, 0 );
-	Thing_Destroy( 207, 0 );
-	ACS_ExecuteAlways( 99, 0, TEAM_RED );
+script 204 (VOID) {
+	Thing_Destroy (206, 0);
+	Thing_Destroy (207, 0);
+	ACS_ExecuteAlways (99, 0, TEAM_RED);
 	GotFactory[TEAM_RED] = False;
 	BaseLeft[TEAM_RED]--;
-	SetLineTexture( 10, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
-	ReddenSector( 11 );
-	ReddenSector( 12 );
-	ACS_ExecuteAlways( 930, 0, BUILDING_FACTORY, TEAM_RED );
+	SetLineTexture (10, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2");
+	ReddenSector (11);
+	ReddenSector (12);
+	ACS_ExecuteAlways (930, 0, BUILDING_FACTORY, TEAM_RED);
 	
-	if( EventScripts )
-		ACS_ExecuteAlways( 960, 0, ACTION_DESTROY_FACTORY, TEAM_RED );
+	if (EventScripts)
+		ACS_ExecuteAlways (960, 0, ACTION_DESTROY_FACTORY, TEAM_RED);
 	
-	SetFont( "BIGFONT" );
+	SetFont ("BIGFONT");
 	
-	HudMessageBold( s:"The \cgNod War Factory\cd has been destroyed!!";
-		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
-	Log( s:pname( -1 ), s:" destroys Nod War Factory." );
-	AwardBuildingDestruction( TEAM_BLUE, false );
+	HudMessageBold (s:"The \cgNod War Factory\cd has been destroyed!!";
+		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log (s:pname (-1), s:" destroys Nod War Factory.");
+	AwardBuildingDestruction (TEAM_BLUE, false);
 }
 
 //---------------------------RED REPAIR FACILITY DEATH
-script 205( VOID ) {
+script 205 (VOID) {
 	GotRepair[TEAM_RED] = False;
-	ReddenSector( 15 );
-	ReddenSector( 16 );
-	SetActorProperty( 209, APROP_Health, 0 );
+	ReddenSector (15);
+	ReddenSector (16);
+	SetActorProperty (209, APROP_Health, 0);
 	
 	/*SetFont("BIGFONT");
 	HudMessageBold(s:"The \cgRed Repair Facility\cd has been destroyed!!";
 		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);*/
-	if( EventScripts )
-		ACS_ExecuteAlways( 960, 0, ACTION_DESTROY_REPAIR, TEAM_RED );
+	if (EventScripts)
+		ACS_ExecuteAlways (960, 0, ACTION_DESTROY_REPAIR, TEAM_RED);
 	
-	ACS_ExecuteAlways( 930, 0, BUILDING_REPAIR, TEAM_RED );
-	IntelMessageBold( strparam( n: 0, s:"\cJ has destroyed\cJ\nthe \cGNod \cFRepair Facility!" ) );
-	Log( s:pname( -1 ), s:" destroys Nod Repair Facility." );
-	AwardBuildingDestruction( TEAM_BLUE, true );
+	ACS_ExecuteAlways (930, 0, BUILDING_REPAIR, TEAM_RED);
+	IntelMessageBold (strparam (n: 0, s:"\cJ has destroyed\cJ\nthe \cGNod \cFRepair Facility!"));
+	Log (s:pname (-1), s:" destroys Nod Repair Facility.");
+	AwardBuildingDestruction (TEAM_BLUE, true);
 }
 
 //---------------------------RED OBELISK DEATH
-script 214( VOID ) {
-	Thing_Destroy( 214, 0 );
-	Thing_Destroy( 215, 0 );
-	ACS_ExecuteAlways( 99, 0, TEAM_RED );
+script 214 (VOID) {
+	Thing_Destroy (214, 0);
+	Thing_Destroy (215, 0);
+	ACS_ExecuteAlways (99, 0, TEAM_RED);
 	GotObelisk[TEAM_RED] = False;
 	BaseLeft[TEAM_RED]--;
-	ReddenSector( 20 );
-	SetLineTexture( 12, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
+	ReddenSector (20);
+	SetLineTexture (12, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2");
 	
-	SetFont( "BIGFONT" );
+	SetFont ("BIGFONT");
 	
-	HudMessageBold( s:"The \cGObelisk of Light\cd has been destroyed!!";
-		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
-	Log( s:pname( -1 ), s:" destroys Obelisk of Light." );
-	AwardBuildingDestruction( TEAM_BLUE, false );
-	ACS_ExecuteAlways( 930, 0, BUILDING_OBELISK, TEAM_RED );
+	HudMessageBold (s:"The \cGObelisk of Light\cd has been destroyed!!";
+		HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0);
+	Log (s:pname (-1), s:" destroys Obelisk of Light.");
+	AwardBuildingDestruction (TEAM_BLUE, false);
+	ACS_ExecuteAlways (930, 0, BUILDING_OBELISK, TEAM_RED);
 	
-	if( EventScripts )
-		ACS_ExecuteAlways( 960, 0, ACTION_DESTROY_OBELISK, TEAM_RED );
+	if (EventScripts)
+		ACS_ExecuteAlways (960, 0, ACTION_DESTROY_OBELISK, TEAM_RED);
 }
 
-script 97( int Structure, int Team ) CLIENTSIDE {
-	if( Timer() > LastAttackMessage + 35 * 15 ) {
-		if( Structure == 1 && Team == 0 )
-			AmbientSound( "red/barracks", 255 );
+script 97 (int Structure, int Team) CLIENTSIDE {
+	if (Timer() > LastAttackMessage + 35 * 15) {
+		if (Structure == 1 && Team == 0)
+			AmbientSound ("red/barracks", 255);
 			
-		if( Structure == 2 && Team == 0 )
-			AmbientSound( "red/refinery", 255 );
+		if (Structure == 2 && Team == 0)
+			AmbientSound ("red/refinery", 255);
 			
-		if( Structure == 3 && Team == 0 )
-			AmbientSound( "red/powerplant", 255 );
+		if (Structure == 3 && Team == 0)
+			AmbientSound ("red/powerplant", 255);
 			
-		if( Structure == 4 && Team == 0 )
-			AmbientSound( "red/factory", 255 );
+		if (Structure == 4 && Team == 0)
+			AmbientSound ("red/factory", 255);
 			
-		if( Structure == 6 && Team == 0 )
-			AmbientSound( "red/obelisk", 255 );
+		if (Structure == 6 && Team == 0)
+			AmbientSound ("red/obelisk", 255);
 			
-		if( Structure == 1 && Team == 1 )
-			AmbientSound( "blue/barracks", 255 );
+		if (Structure == 1 && Team == 1)
+			AmbientSound ("blue/barracks", 255);
 			
-		if( Structure == 2 && Team == 1 )
-			AmbientSound( "blue/refinery", 255 );
+		if (Structure == 2 && Team == 1)
+			AmbientSound ("blue/refinery", 255);
 			
-		if( Structure == 3 && Team == 1 )
-			AmbientSound( "blue/powerplant", 255 );
+		if (Structure == 3 && Team == 1)
+			AmbientSound ("blue/powerplant", 255);
 			
-		if( Structure == 4 && Team == 1 )
-			AmbientSound( "blue/factory", 255 );
+		if (Structure == 4 && Team == 1)
+			AmbientSound ("blue/factory", 255);
 			
-		if( Structure == 6 && Team == 1 )
-			AmbientSound( "blue/obelisk", 255 );
+		if (Structure == 6 && Team == 1)
+			AmbientSound ("blue/obelisk", 255);
 			
 		LastAttackMessage = Timer();
 	}
 }
 
-script 99( int team ) NET CLIENTSIDE {
-	if( team == TEAM_RED ) {
-		AmbientSound( "red/destroyed", 255 );
-		AmbientSound( "red/destroyed", 255 );
+script 99 (int team) NET CLIENTSIDE {
+	if (team == TEAM_RED) {
+		AmbientSound ("red/destroyed", 255);
+		AmbientSound ("red/destroyed", 255);
 	}
 	else {
-		AmbientSound( "blue/destroyed", 255 );
-		AmbientSound( "blue/destroyed", 255 );
+		AmbientSound ("blue/destroyed", 255);
+		AmbientSound ("blue/destroyed", 255);
 	}
 }
 
 // btos call this to cause external damage
-script 652( int tid, int damage ) {
-	SetActivatorToTarget( 0 );
-	Thing_Damage( tid, damage, 0 );
+script 652 (int tid, int damage) {
+	SetActivatorToTarget (0);
+	Thing_Damage (tid, damage, 0);
 }
 
-function void AwardBuildingDestruction( int team, int small ) {
+function void AwardBuildingDestruction (int team, int small) {
 	int activator = ActivatorTID();
 	
-	for( int k = 0; k < MAXPLAYERS; k++ ) {
-		if( PlayerInGame( k ) && GetPlayerInfo( k, PLAYERINFO_TEAM ) == Team ) {
-			SetActivator( TID_Player + k );
-			ACS_ExecuteAlways( 318, 0 );
-			GiveCredits( -1, 500 );
+	for (int k = 0; k < MAXPLAYERS; k++) {
+		if (PlayerInGame (k) && GetPlayerInfo (k, PLAYERINFO_TEAM) == Team) {
+			SetActivator (TID_Player + k);
+			ACS_ExecuteAlways (318, 0);
+			GiveCredits (-1, 500);
 		}
 	}
 	
 	// [Dusk] Restore activator for point awarding
-	SetActivator( activator );
+	SetActivator (activator);
 	
-	if( BaseLeft[1 - team] <= 0 ) {
+	if (BaseLeft[1 - team] <= 0) {
 		GameOver = true;
-		ConsoleCommand( "pointlimit 1" );
+		ConsoleCommand ("pointlimit 1");
 	}
 	
 	int d = 0;
@@ -345,28 +345,28 @@ function void AwardBuildingDestruction( int team, int small ) {
 	
 	// Count difference, but don't let it be negative.
 	// Give static 40 on minor structure deaths
-	if( !small ) {
+	if (!small) {
 		int ratio;
 		
-		if( BaseLeft[team] )
-			ratio = ( BaseLeft[1 - team] << 16 ) / BaseLeft[team];
+		if (BaseLeft[team])
+			ratio =  (BaseLeft[1 - team] << 16) / BaseLeft[team];
 		else
 			ratio = 1.0;
 			
-		if( team == TEAM_RED )
+		if (team == TEAM_RED)
 			d = BlueScore() - RedScore();
 		else
 			d = RedScore() - BlueScore();
 			
-		if( d < 0 )
+		if (d < 0)
 			points = 0;
 		else
-			points = ( ratio * ( d + GetCVAR( "aow_buildingpoints" ))) >> 16;
+			points =  (ratio *  (d + GetCVAR ("aow_buildingpoints"))) >> 16;
 	}
 	else
 		points = 40;
 	
-	Team_GivePoints( team, points, false );
+	Team_GivePoints (team, points, false);
 	
 	// [Dusk] Update the building HUD now. The building was destroyed so we
 	// need to update unconditionally.
@@ -374,58 +374,58 @@ function void AwardBuildingDestruction( int team, int small ) {
 }
 
 // [Dusk] Get a building's TID
-function int GetBuildingTID( int b, int team ) {
-	switch( b ) {
+function int GetBuildingTID (int b, int team) {
+	switch (b) {
 	case BUILDING_BARRACKS:
-		return cond( team == TEAM_RED, 201, 101 );
+		return cond (team == TEAM_RED, 201, 101);
 	
 	case BUILDING_REFINERY:
-		return cond( team == TEAM_RED, 203, 103 );
+		return cond (team == TEAM_RED, 203, 103);
 	
 	case BUILDING_RESCENTRE:
-		return cond( team == TEAM_RED, 205, 105 );
+		return cond (team == TEAM_RED, 205, 105);
 	
 	case BUILDING_FACTORY:
-		return cond( team == TEAM_RED, 207, 107 );
+		return cond (team == TEAM_RED, 207, 107);
 	
 	case BUILDING_OBELISK:
-		return cond( team == TEAM_RED, 214, 114 );
+		return cond (team == TEAM_RED, 214, 114);
 	
 	case BUILDING_REPAIR:
-		return cond( team == TEAM_RED, 209, 109 );
+		return cond (team == TEAM_RED, 209, 109);
 	
 	case BUILDING_MINIREF:
-		return cond( team == TEAM_RED, 900, 901 );
+		return cond (team == TEAM_RED, 900, 901);
 	
 	case BUILDING_HEALTHREGEN:
-		return cond( team == TEAM_RED, 902, 903 );
+		return cond (team == TEAM_RED, 902, 903);
 	
 	case BUILDING_AMMOREGEN:
-		return cond( team == TEAM_RED, 904, 905 );
+		return cond (team == TEAM_RED, 904, 905);
 	
 	case BUILDING_PORTAL:
-		return cond( team == TEAM_RED, TID_PORTAL_RED1, TID_PORTAL_BLUE1 );
+		return cond (team == TEAM_RED, TID_PORTAL_RED1, TID_PORTAL_BLUE1);
 	
 	case BUILDING_PORTAL_2:
-		return cond( team == TEAM_RED, TID_PORTAL_RED2, TID_PORTAL_BLUE2 );
+		return cond (team == TEAM_RED, TID_PORTAL_RED2, TID_PORTAL_BLUE2);
 	}
 	
-	Log( s:"GetBuildingTID: Unknown b number ", d:b );
+	Log (s:"GetBuildingTID: Unknown b number ", d:b);
 	return 0;
 }
 
 // [Dusk] Get a building's name
-function str GetBuildingName( int b, int team ) {
+function str GetBuildingName (int b, int team) {
 	// Blue's `obelisk` shalt be called something else
-	if( b == BUILDING_OBELISK && team == TEAM_BLUE )
+	if (b == BUILDING_OBELISK && team == TEAM_BLUE)
 		return "Tesla Coil";
 	
 	return BuildingNames[b];
 }
 
 // [Dusk]
-function bool IsMinorBuilding( int b ) {
-	switch( b ) {
+function bool IsMinorBuilding (int b) {
+	switch (b) {
 	case BUILDING_REPAIR:
 	case BUILDING_MINIREF:
 	case BUILDING_HEALTHREGEN:

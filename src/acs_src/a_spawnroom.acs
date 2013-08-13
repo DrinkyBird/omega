@@ -1,224 +1,224 @@
 // REFILL
-script 93( int unused, int silent ) {
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 );
-	GiveInventory( "Backpack", 1 ); // [Dusk] TODO: heh..
+script 93 (int unused, int silent) {
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1);
+	GiveInventory ("Backpack", 1); // [Dusk] TODO: heh..
 	
 	/* [Dusk] Refill inventory items. We have some special counter items to keep
 	 * track of how much of each item this player is supposed to get.
 	 */
-	if( CheckInventory( "HealingRadiusCount" ) > 0 )
-		SetInventory( "HealingRadiusItem", CheckInventory( "HealingRadiusCount" ));
+	if (CheckInventory ("HealingRadiusCount") > 0)
+		SetInventory ("HealingRadiusItem", CheckInventory ("HealingRadiusCount"));
 	
-	if( CheckInventory( "ProxyMineCount" ) > 0 )
-		SetInventory( "ProxyMine", CheckInventory( "ProxyMineCount" ));
+	if (CheckInventory ("ProxyMineCount") > 0)
+		SetInventory ("ProxyMine", CheckInventory ("ProxyMineCount"));
 	
-	if( CheckInventory( "TimedC4Count" ) > 0 )
-		SetInventory( "TimedC4", CheckInventory( "TimedC4Count" ));
+	if (CheckInventory ("TimedC4Count") > 0)
+		SetInventory ("TimedC4", CheckInventory ("TimedC4Count"));
 	
-	if( !CheckInventory( "IsMech" ))
-		SetHealth( GetSpawnHealth() );
+	if (!CheckInventory ("IsMech"))
+		SetHealth (GetSpawnHealth());
 	
 	/* [Dusk] Also refill the self-heal syringe. */
-	GiveInventory( "SelfHealItem", 1 );
+	GiveInventory ("SelfHealItem", 1);
 	
 	/* [Dusk] Refill jetpack fuel. */
-	if( CheckInventory( "Jetpack" ))
-		SetInventory( "JetpackFuel", 100 );
+	if (CheckInventory ("Jetpack"))
+		SetInventory ("JetpackFuel", 100);
 	
-	if( !silent ) {
-		BigMessage( "\cFRefilled!" );
-		ActivatorSound( "misc/ammo_pkup", 255 );
+	if (!silent) {
+		BigMessage ("\cFRefilled!");
+		ActivatorSound ("misc/ammo_pkup", 255);
 	}
 }
 
 // TELEPORT BACK TO FIELD
-script 94( int Team ) {
-	if( !CheckInventory( "HasClass" )) {
-		Error( "You can't leave without choosing a class!" );
+script 94 (int Team) {
+	if (!CheckInventory ("HasClass")) {
+		Error ("You can't leave without choosing a class!");
 		terminate;
 	}
 	
 	// HACK for old maps
-	int lv = GetLevelInfo( LEVELINFO_LEVELNUM );
-	if( lv != 0 && lv != 2 )
+	int lv = GetLevelInfo (LEVELINFO_LEVELNUM);
+	if (lv != 0 && lv != 2)
 		team = 1 - team;
 	
-	TakeInventory( "IsInSpawnRoom", 1 );
-	ACS_ExecuteAlways( 961, 0, Team );
+	TakeInventory ("IsInSpawnRoom", 1);
+	ACS_ExecuteAlways (961, 0, Team);
 }
 
 // RESIGN
-script 95( int unused, int force ) {
-	if( MitigateDoublePress() && !force ) terminate;
+script 95 (int unused, int force) {
+	if (MitigateDoublePress() && !force) terminate;
 	
-	if( !CheckInventory( "HasClass" ) && !force ) {
+	if (!CheckInventory ("HasClass") && !force) {
 		DisplayCross();
-		SETFONT( "BigFont" );
-		HudMessage( s: "You don't have a class to resign from!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+		SETFONT ("BigFont");
+		HudMessage (s: "You don't have a class to resign from!";
+			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
 		terminate;
 	}
 	
-	ACS_ExecuteAlways( 310, 0, 3 );
-	delay( 5 );
-	SetWeapon( "Unarmed" );
-	TakeInventory( "HasClass", 1 );
-	Delay( 10 );
+	ACS_ExecuteAlways (310, 0, 3);
+	delay (5);
+	SetWeapon ("Unarmed");
+	TakeInventory ("HasClass", 1);
+	Delay (10);
 	
-	SetActorProperty( 0, APROP_DeathSound, "generic/death" );
-	SetActorProperty( 0, APROP_RenderStyle, STYLE_Normal );
-	SetActorProperty( 0, APROP_Alpha, 1.0 );
+	SetActorProperty (0, APROP_DeathSound, "generic/death");
+	SetActorProperty (0, APROP_RenderStyle, STYLE_Normal);
+	SetActorProperty (0, APROP_Alpha, 1.0);
 	
-	RefundCredits( CheckInventory( "Refunds" ));
-	SetInventory( "Refunds", 0 );
+	RefundCredits (CheckInventory ("Refunds"));
+	SetInventory ("Refunds", 0);
 	
-	if( CheckInventory( "JumpjetSwitch" )) GiveInventory( "JumpjetDeactivate", 1 );
-	if( CheckInventory( "PlasmaCannon" )) bool HasPlasma = True;
-	if( CheckInventory( "ArtilleryCannon" )) bool HasArtillery = True;
-	if( CheckInventory( "TiberiumAutorifleWeak" )) bool HasTiberiumAutorifle = True;
-	if( CheckInventory( "IonCannonBeacon" ) || CheckInventory( "NuclearStrikeBeacon" )) bool HasSuperWeapon = True;
-	if( CheckInventory( "EagerBeaver" )) bool HasChainsaw = True;
-	if( CheckInventory( "BombPack" )) bool HasKamikaze = True;
+	if (CheckInventory ("JumpjetSwitch")) GiveInventory ("JumpjetDeactivate", 1);
+	if (CheckInventory ("PlasmaCannon")) bool HasPlasma = True;
+	if (CheckInventory ("ArtilleryCannon")) bool HasArtillery = True;
+	if (CheckInventory ("TiberiumAutorifleWeak")) bool HasTiberiumAutorifle = True;
+	if (CheckInventory ("IonCannonBeacon") || CheckInventory ("NuclearStrikeBeacon")) bool HasSuperWeapon = True;
+	if (CheckInventory ("EagerBeaver")) bool HasChainsaw = True;
+	if (CheckInventory ("BombPack")) bool HasKamikaze = True;
 	
 	// ClearInventory doesn't reset the fade, hack around it
-	if( CheckInventory( "PowerTimeGunFloat" ) || CheckInventory( "PowerTimeGunBoost" ) || CheckInventory( "IsTeleporting" ))
+	if (CheckInventory ("PowerTimeGunFloat") || CheckInventory ("PowerTimeGunBoost") || CheckInventory ("IsTeleporting"))
 		bool HasTimeGunPositiveEffect = 1;
 		
-	if( CheckInventory( "PowerTimeGunWeaken" ) || CheckInventory( "PowerTimeGunSlow" ))
+	if (CheckInventory ("PowerTimeGunWeaken") || CheckInventory ("PowerTimeGunSlow"))
 		bool HasTimeGunNegativeEffect = 1;
 		
-	if( CheckInventory( "PowerInvulnerable" ))
+	if (CheckInventory ("PowerInvulnerable"))
 		bool HasIronCurtain = True;
 		
-	if( CheckInventory( "PowerBerserk" ))
+	if (CheckInventory ("PowerBerserk"))
 		bool HasBerserk = True;
 		
-	TakeInventory( "PowerTimeGunBoost", 1 );
-	SetActorProperty( 0, APROP_Alpha, 1.0 );
-	SetPlayerProperty( 0, 0, PROP_FLY );
-	SetPlayerProperty( 0, 0, PROP_FROZEN );
+	TakeInventory ("PowerTimeGunBoost", 1);
+	SetActorProperty (0, APROP_Alpha, 1.0);
+	SetPlayerProperty (0, 0, PROP_FLY);
+	SetPlayerProperty (0, 0, PROP_FROZEN);
 	
 	// [Dusk] Stop all sounds to cut any looping sounds that might still end up
 	// looping once ClearInventory is called.
-	GiveInventory( "StopAllSounds", 1 );
+	GiveInventory ("StopAllSounds", 1);
 	
 	ClearInventory();
-	GiveInventory( "Ingame", 1 );
+	GiveInventory ("Ingame", 1);
 	
 	// [Dusk] Prevents the hud from flashing blue for the two ticks delayed
 	// below. It still flashes a bit, though :/
-	if( PlayerTeam() == TEAM_RED )
-		GiveInventory( "IsRed", 1 );
+	if (PlayerTeam() == TEAM_RED)
+		GiveInventory ("IsRed", 1);
 	
 	// [SP] Insanity resign fix - after insanity is removed, clear inventory again
-	delay( 2 );
+	delay (2);
 	ClearInventory();
 	
-	GiveInventory( "Ingame", 1 );
-	GiveInventory( "Unarmed", 1 );
-	GiveInventory( "IsInSpawnRoom", 1 );
-	SetAmmoCapacity( "TimedC4Ammo", 1 );
-	SetAmmoCapacity( "FragGrenadeAmmo", 1 );
-	SetSpeed( 1.0 );
-	SetHealth( GetSpawnHealth() );
-	SetActorProperty( 0, APROP_RenderStyle, STYLE_Normal );
-	SetActorProperty( 0, APROP_Alpha, 1.0 );
+	GiveInventory ("Ingame", 1);
+	GiveInventory ("Unarmed", 1);
+	GiveInventory ("IsInSpawnRoom", 1);
+	SetAmmoCapacity ("TimedC4Ammo", 1);
+	SetAmmoCapacity ("FragGrenadeAmmo", 1);
+	SetSpeed (1.0);
+	SetHealth (GetSpawnHealth());
+	SetActorProperty (0, APROP_RenderStyle, STYLE_Normal);
+	SetActorProperty (0, APROP_Alpha, 1.0);
 	
-	if( HasPlasma ) {
-		GiveInventory( "PlasmaCannon", 1 );
-		GiveInventory( "PlasmaCannonAmmo", 10 );
+	if (HasPlasma) {
+		GiveInventory ("PlasmaCannon", 1);
+		GiveInventory ("PlasmaCannonAmmo", 10);
 	}
 	
-	if( HasArtillery ) {
-		GiveInventory( "ArtilleryCannon", 1 );
-		GiveInventory( "ArtilleryShellAmmo", 30 );
+	if (HasArtillery) {
+		GiveInventory ("ArtilleryCannon", 1);
+		GiveInventory ("ArtilleryShellAmmo", 30);
 	}
 	
-	if( HasTiberiumAutorifle ) {
-		GiveInventory( "TiberiumAutorifleWeak", 1 );
-		GiveInventory( "TE21CalAmmo", 120 );
+	if (HasTiberiumAutorifle) {
+		GiveInventory ("TiberiumAutorifleWeak", 1);
+		GiveInventory ("TE21CalAmmo", 120);
 	}
 	
-	if( HasIronCurtain )
-		GiveInventory( "GreenHueRemover", 1 );
+	if (HasIronCurtain)
+		GiveInventory ("GreenHueRemover", 1);
 	
-	if( HasBerserk )
-		GiveInventory( "RedHueRemover", 1 );
+	if (HasBerserk)
+		GiveInventory ("RedHueRemover", 1);
 	
-	if( HasSuperWeapon ) {
-		if( PlayerTeam() == TEAM_BLUE )
-			GiveInventory( "IonCannonBeacon", 1 );
+	if (HasSuperWeapon) {
+		if (PlayerTeam() == TEAM_BLUE)
+			GiveInventory ("IonCannonBeacon", 1);
 		else
-			GiveInventory( "NuclearStrikeBeacon", 1 );
+			GiveInventory ("NuclearStrikeBeacon", 1);
 	}
 	
-	if( HasChainsaw )
-		GiveInventory( "EagerBeaver", 1 );
+	if (HasChainsaw)
+		GiveInventory ("EagerBeaver", 1);
 	
 	// Remove suicide bomber traits
-	if( HasKamikaze )
-		GiveInventory( "NoMoreTerrorism", 1 );
+	if (HasKamikaze)
+		GiveInventory ("NoMoreTerrorism", 1);
 	
 	// [Dusk] The hues have to be removed manually like this due to a bug
-	if( HasTimeGunPositiveEffect )
-		GiveInventory( "DimGoldHueRemover", 1 );
+	if (HasTimeGunPositiveEffect)
+		GiveInventory ("DimGoldHueRemover", 1);
 	
-	if( HasTimeGunNegativeEffect )
-		GiveInventory( "DimRedHueRemover", 1 );
+	if (HasTimeGunNegativeEffect)
+		GiveInventory ("DimRedHueRemover", 1);
 	
 	DisplayTick();
-	BigMessage( "\cIYou have resigned from your class." );
-	ACS_ExecuteAlways( 91, 0 );
-	ACS_ExecuteAlways( 10, 0 );
+	BigMessage ("\cIYou have resigned from your class.");
+	ACS_ExecuteAlways (91, 0);
+	ACS_ExecuteAlways (10, 0);
 	RecountTimeCops();
-	Log( s: pname( -1 ), s: " resigns." );
+	Log (s: pname (-1), s: " resigns.");
 	
-	delay( 3 * 35 );
+	delay (3 * 35);
 }
 
 // PURCHASE TERMINAL / RESEARCH TERMINAL / MECH PURCHASE TERMINAL
-script 96( int type ) {
-	if( MitigateDoublePress() )
+script 96 (int type) {
+	if (MitigateDoublePress())
 		terminate;
 	
 	int dest;
-	int team = 1 - ( type % 2 );
+	int team = 1 -  (type % 2);
 	bool teleportToSpawn = false;
 	
-	if( PlayerTeam() != team ) {
-		Error( "This is not your terminal!" );
+	if (PlayerTeam() != team) {
+		Error ("This is not your terminal!");
 		terminate;
 	}
 	
-	if( CheckInventory( "IsMech" )) {
-		Error( "You can't use that in a mech!" );
+	if (CheckInventory ("IsMech")) {
+		Error ("You can't use that in a mech!");
 		terminate;
 	}
 	
-	switch( type ) {
+	switch (type) {
 	case 0:
 	case 1:
 		// PURCHASE TERMINAL
 		dest = 70 + PlayerTeam();
 		
 		/* [Dusk] Refill the player when he enters the spawn room. */
-		ACS_ExecuteAlways( 93, 0 );
+		ACS_ExecuteAlways (93, 0);
 		break;
 	
 	case 2:
@@ -226,28 +226,28 @@ script 96( int type ) {
 		// MECH PURCHASE
 		dest = 110;
 		
-		if( PlayerTeam() == TEAM_RED )
+		if (PlayerTeam() == TEAM_RED)
 			dest = 210;
 		
-		if( !GetCVAR( "aow_mechs" )) {
-			Error( "Mechs have been disabled for this map!" );
+		if (!GetCVAR ("aow_mechs")) {
+			Error ("Mechs have been disabled for this map!");
 			teleportToSpawn = true;
 			break;
 		}
 		
-		if( !CheckFactory( team )) {
+		if (!CheckFactory (team)) {
 			teleportToSpawn = true;
 			break;
 		}
 		
-		if( CheckInventory( "PowerBerserk" )) {
-			Error( "You can't pilot a mech while berserk!\nYou'll just tear the thing into pieces." );
+		if (CheckInventory ("PowerBerserk")) {
+			Error ("You can't pilot a mech while berserk!\nYou'll just tear the thing into pieces.");
 			teleportToSpawn = true;
 			break;
 		}
 		
-		if( CheckInventory( "HighUpgrade" )) {
-			Error( "You have upgraded yourself in a\nway where you must resign!" );
+		if (CheckInventory ("HighUpgrade")) {
+			Error ("You have upgraded yourself in a\nway where you must resign!");
 			teleportToSpawn = true;
 			break;
 		}
@@ -257,10 +257,10 @@ script 96( int type ) {
 		// RESEARCH CENTRE
 		dest = 111;
 		
-		if( PlayerTeam() == TEAM_RED )
+		if (PlayerTeam() == TEAM_RED)
 			dest = 211;
 		
-		if( !CheckPlant( team )) {
+		if (!CheckPlant (team)) {
 			teleportToSpawn = true;
 			break;
 		}
@@ -268,27 +268,27 @@ script 96( int type ) {
 	}
 	
 	/* If we cannot enter the desired room, go to spawn room instead. */
-	if( teleportToSpawn ) {
-		delay( 5 );
-		ACS_ExecuteAlways( 96, 0, 1 - team );
+	if (teleportToSpawn) {
+		delay (5);
+		ACS_ExecuteAlways (96, 0, 1 - team);
 		terminate;
 	}
 	
-	GiveInventory( "IsInSpawnRoom", 1 );
+	GiveInventory ("IsInSpawnRoom", 1);
 	
 	/* If we cannot teleport the player to the destination, then spawn an
 	 * anti-utility explosion to clear the pad. This prevents utility guys from
 	 * blocking the pad with caches and stuff like that.
 	 */
-	if( !Teleport( dest )) {
-		SpawnSpotForced( "AntiUtilityExplosion", dest, 0, 0 );
-		delay( 10 );
+	if (!Teleport (dest)) {
+		SpawnSpotForced ("AntiUtilityExplosion", dest, 0, 0);
+		delay (10);
 		
-		if( !Teleport( dest ))
-			TakeInventory( "IsInSpawnRoom", 1 );
+		if (!Teleport (dest))
+			TakeInventory ("IsInSpawnRoom", 1);
 	}
 }
 
-script 90( void ) {
-	TakeInventory( "PurchaseToken", 1 );
+script 90 (void) {
+	TakeInventory ("PurchaseToken", 1);
 }

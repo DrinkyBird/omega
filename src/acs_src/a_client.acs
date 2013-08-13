@@ -4,75 +4,75 @@ int ChemSmokers[MAXPLAYERS];
 script 943 OPEN CLIENTSIDE {
 	consoleplayer = ConsolePlayerNumber();
 	
-	delay( 5 );
+	delay (5);
 	
 	// [Dusk] Get outside the spawn room
-	if( !PlayerInGame( PlayerNumber() ) )
-		ConsoleCommand( "puke 940" );
+	if (!PlayerInGame (PlayerNumber()))
+		ConsoleCommand ("puke 940");
 	
-	delay( 5 );
+	delay (5);
 	
 	// [Dusk] Effects stuff
-	if( PlayerIsBot( PlayerNumber() ) || consoleplayer == -1 )
+	if (PlayerIsBot (PlayerNumber()) || consoleplayer == -1)
 		terminate;
 	
 	// if (GetCVAR ("aow_nofriendinfo") <= 0) ConsoleCommand ("set aow_nofriendinfo 0");
 	
 	int teammate, i;
 	
-	while( 1 ) {
-		delay( 32 );
-		SpawnSpotForced( "TiberiumChemSmoke", 402, 0, 0 );
+	while (1) {
+		delay (32);
+		SpawnSpotForced ("TiberiumChemSmoke", 402, 0, 0);
 		
 		// display smoke on tib-carrying players
-		for( i = 0; i < MAXPLAYERS; i++ ) {
-			if( CheckActorInventory( TID_Player + i, "TiberiumCrystal" ) && !ChemSmokers[i] )
-				ACS_ExecuteAlways( 355, 0, i, 0 );
+		for (i = 0; i < MAXPLAYERS; i++) {
+			if (CheckActorInventory (TID_Player + i, "TiberiumCrystal") && !ChemSmokers[i])
+				ACS_ExecuteAlways (355, 0, i, 0);
 		}
 		
 		// see friendly stealths
-		for( i = 0; i < MAXPLAYERS; i++ ) {
-			teammate = GetPlayerInfo( i, PLAYERINFO_TEAM ) == GetPlayerInfo( ConsolePlayer, PLAYERINFO_TEAM );
+		for (i = 0; i < MAXPLAYERS; i++) {
+			teammate = GetPlayerInfo (i, PLAYERINFO_TEAM) == GetPlayerInfo (ConsolePlayer, PLAYERINFO_TEAM);
 			
-			if( !PlayerInGame( ConsolePlayer ) ) teammate = 1; // spects
+			if (!PlayerInGame (ConsolePlayer)) teammate = 1; // spects
 			
-			if( CheckActorProperty( TID_Player + i, APROP_RenderStyle, STYLE_None ) && teammate && i != ConsolePlayer )
-				ACS_ExecuteAlways( 355, 0, i, 1 );
+			if (CheckActorProperty (TID_Player + i, APROP_RenderStyle, STYLE_None) && teammate && i != ConsolePlayer)
+				ACS_ExecuteAlways (355, 0, i, 1);
 		}
 		
 		// jumpjet fire
-		for( i = 0; i < MAXPLAYERS; i++ ) {
-			if( CheckActorInventory( TID_Player + i, "JumpjetSwitch" ) && !ChemSmokers[i] )
-				ACS_ExecuteAlways( 355, 0, i, 2 );
+		for (i = 0; i < MAXPLAYERS; i++) {
+			if (CheckActorInventory (TID_Player + i, "JumpjetSwitch") && !ChemSmokers[i])
+				ACS_ExecuteAlways (355, 0, i, 2);
 		}
 	}
 }
 
-script 946( void ) NET CLIENTSIDE {
-	Log( s:"I am ", s:pname( -1 ) );
+script 946 (void) NET CLIENTSIDE {
+	Log (s:"I am ", s:pname (-1));
 }
 
-script 355( int i, int what ) CLIENTSIDE {
+script 355 (int i, int what) CLIENTSIDE {
 	int x;
 	
-	switch( what ) {
+	switch (what) {
 	case 0:
 		// chem smoke for tiberium players
 		
 		// Only run one instance of this
-		if( ChemSmokers[i] )
+		if (ChemSmokers[i])
 			terminate;
 		
 		ChemSmokers[i] = 1;
 		
-		for( x = 0; x < 5; x++ ) {
-			if( !CheckActorInventory( TID_Player + i, "TiberiumCrystal" ) ) {
+		for (x = 0; x < 5; x++) {
+			if (!CheckActorInventory (TID_Player + i, "TiberiumCrystal")) {
 				ChemSmokers[i] = 0;
 				terminate;
 			}
 			
-			SpawnSpotForced( "TiberiumChemSmokePlayer", TID_Player + i, 0, GetActorAngle( TID_Player + i ) >> 8 );
-			delay( 6 );
+			SpawnSpotForced ("TiberiumChemSmokePlayer", TID_Player + i, 0, GetActorAngle (TID_Player + i) >> 8);
+			delay (6);
 		}
 		
 		ChemSmokers[i] = 0;
@@ -80,19 +80,19 @@ script 355( int i, int what ) CLIENTSIDE {
 		
 	case 1:
 		// visible friendly stealths
-		SetActorProperty( TID_Player + i, APROP_RenderStyle, STYLE_Translucent );
-		SetActorProperty( TID_Player + i, APROP_Alpha, 0.4 );
+		SetActorProperty (TID_Player + i, APROP_RenderStyle, STYLE_Translucent);
+		SetActorProperty (TID_Player + i, APROP_Alpha, 0.4);
 		
-		for( x = 0; x < 6; x++ ) {
-			if( !CheckActorProperty( TID_Player + i, APROP_RenderStyle, STYLE_Translucent ) ) terminate;
-			if( CheckActorInventory( TID_Player + i, "StealthMode" ) != 1 ) terminate;
+		for (x = 0; x < 6; x++) {
+			if (!CheckActorProperty (TID_Player + i, APROP_RenderStyle, STYLE_Translucent)) terminate;
+			if (CheckActorInventory (TID_Player + i, "StealthMode") != 1) terminate;
 			
-			SetActorProperty( TID_Player + i, APROP_Alpha, 0.4 + ( random( 0, 10 ) << 16 ) / 10 ); // flicker a bit :P
-			delay( 5 );
+			SetActorProperty (TID_Player + i, APROP_Alpha, 0.4 +  (random (0, 10) << 16) / 10); // flicker a bit :P
+			delay (5);
 		}
 		
-		SetActorProperty( TID_Player + i, APROP_RenderStyle, STYLE_None );
-		SetActorProperty( TID_Player + i, APROP_Alpha, 0.0 );
+		SetActorProperty (TID_Player + i, APROP_RenderStyle, STYLE_None);
+		SetActorProperty (TID_Player + i, APROP_Alpha, 0.0);
 		break;
 		
 	case 2:
@@ -100,19 +100,19 @@ script 355( int i, int what ) CLIENTSIDE {
 		// jumpjet fire
 		// ChemSmokers[] is used here as well - no conflicts can happen since no
 		// player can be harvester and have jumpjet at the same time.
-		if( ChemSmokers[i] )
+		if (ChemSmokers[i])
 			terminate;
 		
 		ChemSmokers[i] = 1;
 		
-		for( x = 0; x < 10; x++ ) {
-			if( !CheckActorInventory( TID_Player + i, "JumpjetSwitch" ) ) {
+		for (x = 0; x < 10; x++) {
+			if (!CheckActorInventory (TID_Player + i, "JumpjetSwitch")) {
 				ChemSmokers[i] = 0;
 				terminate;
 			}
 			
-			SpawnSpotForced( "JumpjetFire", TID_Player + i, 0, GetActorAngle( TID_Player + i ) >> 8 );
-			delay( 3 );
+			SpawnSpotForced ("JumpjetFire", TID_Player + i, 0, GetActorAngle (TID_Player + i) >> 8);
+			delay (3);
 		}
 		
 		ChemSmokers[i] = 0;
@@ -122,110 +122,110 @@ script 355( int i, int what ) CLIENTSIDE {
 
 // [Dusk] TODO: Check if this can be removed
 script 400 OPEN CLIENTSIDE {
-	while( 1 ) {
-		if( !GetCVAR( "hud_scale" ) )
-			ConsoleCommand( "set hud_scale true" );
+	while (1) {
+		if (!GetCVAR ("hud_scale"))
+			ConsoleCommand ("set hud_scale true");
 			
-		delay( 1 );
+		delay (1);
 	}
 }
 
 // =============================================================================
 // [Dusk] Spawns a trail of type actors from src to dest, with interval units
 // in between (with a cap of 128 trail actors at most).
-function bool SpawnTrail( int src, int dest, str type, int interval, int rand,
-	int xoff0, int yoff0, int zoff0, int xoff1, int yoff1, int zoff1 ) {
+function bool SpawnTrail (int src, int dest, str type, int interval, int rand,
+	int xoff0, int yoff0, int zoff0, int xoff1, int yoff1, int zoff1) {
 	// The server may not do this
-	if( consoleplayer == -1 )
+	if (consoleplayer == -1)
 		return false;
 	
 	int x, y, z;
 	
 	// 0 means self
-	if( !src ) src = ActivatorTID ();
-	if( !dest ) dest = ActivatorTID ();
+	if (!src) src = ActivatorTID ();
+	if (!dest) dest = ActivatorTID ();
 	
-	if( src == dest ) {
-		Log( s:"SpawnTrail: Can't trail to ourselves!" );
+	if (src == dest) {
+		Log (s:"SpawnTrail: Can't trail to ourselves!");
 		return false;
 	}
 	
 	// From where to where?
-	int x0 = GetActorX( src );
-	int y0 = GetActorY( src );
-	int z0 = GetActorZ( src );
-	int a0 = GetActorAngle( src );
-	int x1 = GetActorX( dest );
-	int y1 = GetActorY( dest );
-	int z1 = GetActorZ( dest );
-	int a1 = GetActorAngle( dest );
+	int x0 = GetActorX (src);
+	int y0 = GetActorY (src);
+	int z0 = GetActorZ (src);
+	int a0 = GetActorAngle (src);
+	int x1 = GetActorX (dest);
+	int y1 = GetActorY (dest);
+	int z1 = GetActorZ (dest);
+	int a1 = GetActorAngle (dest);
 	
 	// Apply offsets
-	x0 += FixedMul( cos( a0 + 0.25 ), xoff0 ) + FixedMul( cos( a0 ), yoff0 );
-	y0 += FixedMul( sin( a0 + 0.25 ), xoff0 ) + FixedMul( sin( a0 ), yoff0 );
+	x0 += FixedMul (cos (a0 + 0.25), xoff0) + FixedMul (cos (a0), yoff0);
+	y0 += FixedMul (sin (a0 + 0.25), xoff0) + FixedMul (sin (a0), yoff0);
 	z0 += zoff0;
-	x1 += FixedMul( cos( a1 + 0.25 ), xoff1 ) + FixedMul( cos( a1 ), yoff1 );
-	y1 += FixedMul( sin( a1 + 0.25 ), xoff1 ) + FixedMul( sin( a1 ), yoff1 );
+	x1 += FixedMul (cos (a1 + 0.25), xoff1) + FixedMul (cos (a1), yoff1);
+	y1 += FixedMul (sin (a1 + 0.25), xoff1) + FixedMul (sin (a1), yoff1);
 	z1 += zoff1;
 	
-	int d = AproxDistance( src, dest );
+	int d = AproxDistance (src, dest);
 	
 	// How many trail actors to spawn?
-	int n = ( d >> 16 ) / interval;
+	int n =  (d >> 16) / interval;
 	int cap = 128;
 	
-	if( n > cap )
+	if (n > cap)
 		n = cap;
 	
 	// Nothing to spawn!
-	if( n <= 0 )
+	if (n <= 0)
 		return false;
 	
 	// Distance between current point and first flare
-	int dx0 = ( x1 - x0 ) / n;
-	int dy0 = ( y1 - y0 ) / n;
-	int dz0 = ( z1 - z0 ) / n;
+	int dx0 =  (x1 - x0) / n;
+	int dy0 =  (y1 - y0) / n;
+	int dz0 =  (z1 - z0) / n;
 	
 	// Randomize initial distance so particles won't take the same spots
 	// on continuous beams. That just looks awkward.
-	int r = random( -5, 5 ) * 0.1;
-	x0 += FixedMul( r, dx0 );
-	y0 += FixedMul( r, dy0 );
-	z0 += FixedMul( r, dz0 );
+	int r = random (-5, 5) * 0.1;
+	x0 += FixedMul (r, dx0);
+	y0 += FixedMul (r, dy0);
+	z0 += FixedMul (r, dz0);
 	
 	// Randomize the distance a bit
-	if( rand > 7 )
-		n += random( -1, 1 );
+	if (rand > 7)
+		n += random (-1, 1);
 	
 	// Information gathered, actually spawn the flares now
-	for( int i = 0; i < n; ++i ) {
+	for (int i = 0; i < n; ++i) {
 		x = x0 + i * dx0;
 		y = y0 + i * dy0;
 		z = z0 + i * dz0;
 		
-		if( rand > 0 ) {
-			x += random( -rand, rand ) * 0.5;
-			y += random( -rand, rand ) * 0.5;
-			z += random( -rand, rand ) * 0.5;
+		if (rand > 0) {
+			x += random (-rand, rand) * 0.5;
+			y += random (-rand, rand) * 0.5;
+			z += random (-rand, rand) * 0.5;
 		}
 		
-		Spawn( type, x, y, z );
+		Spawn (type, x, y, z);
 		// Log (d:i, s:": ", f:x,s:", ", f:y,s:", ",f:z);
 	}
 	
 	return true;
 }
 
-script SC_CL_ObeliskTrail( int type ) CLIENTSIDE {
-	switch( type ) {
+script SC_CL_ObeliskTrail (int type) CLIENTSIDE {
+	switch (type) {
 	case 0:
 		// Obelisk beam
-		SpawnTrail( 0, 215, "ObeliskTrail", 32, 0, 0, 0, 0, 0, 0, 0 );
+		SpawnTrail (0, 215, "ObeliskTrail", 32, 0, 0, 0, 0, 0, 0, 0);
 		break;
 	
 	case 1:
 		// `Blue Obelisk` beam
-		SpawnTrail( 0, 115, "ObeliskTrailBlue", 32, 0, 0, 0, 0, 0, 0, 0 );
+		SpawnTrail (0, 115, "ObeliskTrailBlue", 32, 0, 0, 0, 0, 0, 0, 0);
 		break;
 	}
 }

@@ -6,8 +6,8 @@
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
 /* Get an armor modifier's name. */
-function str ArmorModifierName( int mod ) {
-	switch( mod ) {
+function str ArmorModifierName (int mod) {
+	switch (mod) {
 	case ARMOD_FIRE:
 		return "\cGFire";
 	
@@ -28,24 +28,24 @@ function str ArmorModifierName( int mod ) {
 }
 
 /* Get the activator's armor grade number. */
-function int GetArmorGrade( void ) {
-	if( CheckInventory( "PowerGrade5Armor" )) return 5;
-	if( CheckInventory( "PowerGrade4Armor" )) return 4;
-	if( CheckInventory( "PowerGrade3Armor" )) return 3;
-	if( CheckInventory( "PowerGrade2Armor" )) return 2;
-	if( CheckInventory( "PowerGrade1Armor" )) return 1;
-	if( CheckInventory( "PowerGrade-1Armor" )) return -1;
+function int GetArmorGrade (void) {
+	if (CheckInventory ("PowerGrade5Armor")) return 5;
+	if (CheckInventory ("PowerGrade4Armor")) return 4;
+	if (CheckInventory ("PowerGrade3Armor")) return 3;
+	if (CheckInventory ("PowerGrade2Armor")) return 2;
+	if (CheckInventory ("PowerGrade1Armor")) return 1;
+	if (CheckInventory ("PowerGrade-1Armor")) return -1;
 	
 	return 0;
 }
 
 /* Get the activator's armor modifier. */
-function int GetArmorModifier( void ) {
-	if( CheckInventory( "PowerFireProof" )) return ARMOD_FIRE;
-	if( CheckInventory( "PowerChemicalProof" )) return ARMOD_CHEM;
-	if( CheckInventory( "PowerExplosiveResistance" )) return ARMOD_EXPLO;
-	if( CheckInventory( "PowerLaserResistance" )) return ARMOD_LASER;
-	if( CheckInventory( "PowerBulletResistance" )) return ARMOD_BULLET;
+function int GetArmorModifier (void) {
+	if (CheckInventory ("PowerFireProof")) return ARMOD_FIRE;
+	if (CheckInventory ("PowerChemicalProof")) return ARMOD_CHEM;
+	if (CheckInventory ("PowerExplosiveResistance")) return ARMOD_EXPLO;
+	if (CheckInventory ("PowerLaserResistance")) return ARMOD_LASER;
+	if (CheckInventory ("PowerBulletResistance")) return ARMOD_BULLET;
 	
 	return 0;
 }
@@ -56,89 +56,89 @@ function int GetArmorModifier( void ) {
  * AGF_DONTADD: do not alter the grade if the change would increase it
  * AGF_DONTSUBTRACT: don't alter if the change would decrease the grade.
  */
-function void SetArmorGrade( int n, int mod )
+function void SetArmorGrade (int n, int mod)
 {
 	int grade = GetArmorGrade();
 	
-	if( n != NOCHANGE )
+	if (n != NOCHANGE)
 	{
-		if( mod & AGF_ADDITIVE )
+		if (mod & AGF_ADDITIVE)
 			n += grade;
 		else {
 			/* Check for armour upgrade */
-			if( CheckInventory( "HasArmorUpgrade" ))
+			if (CheckInventory ("HasArmorUpgrade"))
 				n++;
 		}
 		
-		if( n > 5 )
+		if (n > 5)
 			n = 5;
 		
-		if( n < 0 ) {
+		if (n < 0) {
 			/* Do not go to -1 with AGF_ADDITIVE */
-			if( mod & AGF_ADDITIVE )
+			if (mod & AGF_ADDITIVE)
 				n = 0;
 			else
 				n = -1;
 		}
 		
 		/* Handle AGF_DONTADD and AGF_DONTSUBTRACT here. */
-		if(( mod & AGF_DONTSUBTRACT && n <= grade ) || ( mod & AGF_DONTADD && n >= grade ))
+		if( (mod & AGF_DONTSUBTRACT && n <= grade) ||  (mod & AGF_DONTADD && n >= grade))
 			return;
 		
-		if( grade != n ) {
+		if (grade != n) {
 			/* Set the new armor grade. */
-			CheckAndRemove( "PowerGrade5Armor" );
-			CheckAndRemove( "PowerGrade4Armor" );
-			CheckAndRemove( "PowerGrade3Armor" );
-			CheckAndRemove( "PowerGrade2Armor" );
-			CheckAndRemove( "PowerGrade1Armor" );
-			CheckAndRemove( "PowerGrade-1Armor" );
+			CheckAndRemove ("PowerGrade5Armor");
+			CheckAndRemove ("PowerGrade4Armor");
+			CheckAndRemove ("PowerGrade3Armor");
+			CheckAndRemove ("PowerGrade2Armor");
+			CheckAndRemove ("PowerGrade1Armor");
+			CheckAndRemove ("PowerGrade-1Armor");
 			
-			GiveInventory( strparam( s:"Grade", d:n, s:"Armor" ), 1);
+			GiveInventory (strparam (s:"Grade", d:n, s:"Armor"), 1);
 			
 			/* Announce grade 5 armor */
-			if( n == 5 )
-				IntelMessageBold( strparam( n:0, s:"\c- has \cKGrade 5 Armor!" ));
+			if (n == 5)
+				IntelMessageBold (strparam (n:0, s:"\c- has \cKGrade 5 Armor!"));
 		}
 	}
 	
 	/* Now for the modifier - remove the flags off 'mod' now. */
-	mod &= ~( AGF_ADDITIVE | AGF_DONTADD | AGF_DONTSUBTRACT );
+	mod &= ~ (AGF_ADDITIVE | AGF_DONTADD | AGF_DONTSUBTRACT);
 	
-	if( mod != ARMOD_NOCHANGE ) {
-		CheckAndRemove( "PowerFireProof" );
-		CheckAndRemove( "PowerChemicalProof" );
-		CheckAndRemove( "PowerBulletResistance" );
-		CheckAndRemove( "PowerExplosiveResistance" );
-		CheckAndRemove( "PowerLaserResistance" );
+	if (mod != ARMOD_NOCHANGE) {
+		CheckAndRemove ("PowerFireProof");
+		CheckAndRemove ("PowerChemicalProof");
+		CheckAndRemove ("PowerBulletResistance");
+		CheckAndRemove ("PowerExplosiveResistance");
+		CheckAndRemove ("PowerLaserResistance");
 		
-		switch( mod ) {
+		switch (mod) {
 		case ARMOD_FIRE:
-			GiveInventory( "FireProof", 1 );
+			GiveInventory ("FireProof", 1);
 			break;
 		
 		case ARMOD_CHEM:
-			GiveInventory( "ChemicalProof", 1 );
+			GiveInventory ("ChemicalProof", 1);
 			break;
 		
 		case ARMOD_EXPLO:
-			GiveInventory( "ExplosiveResistance", 1 );
+			GiveInventory ("ExplosiveResistance", 1);
 			break;
 		
 		case ARMOD_LASER:
-			GiveInventory( "LaserResistance", 1 );
+			GiveInventory ("LaserResistance", 1);
 			break;
 		
 		case ARMOD_BULLET:
-			GiveInventory( "BulletResistance", 1 );
+			GiveInventory ("BulletResistance", 1);
 			break;
 		}
 	}
 }
 
 /* For testing and DECORATE purposes (e.g. AI marines) */
-script 985( int grade, int mod ) {
-	SetArmorGrade( grade, mod );
+script 985 (int grade, int mod) {
+	SetArmorGrade (grade, mod);
 }
 
 /* [DEBUG] ARMOR DISPLAY */
@@ -175,10 +175,10 @@ int ArmorValuesLaser[13] = {0.9, 0.8, 0.7, 0.6, 0.5, 1.2,
 	1.0, 1.0, 2.0, 0.5, 2.0, 1.0, 0.9
 };
 
-script 981( void ) NET CLIENTSIDE {
+script 981 (void) NET CLIENTSIDE {
 	int fist, bullet, explo, antiarmor, fire, chem, laser;
 	
-	if( CheckInventory( "IsMech" )) {
+	if (CheckInventory ("IsMech")) {
 		fist = 0.35;
 		bullet = 0.8;
 		explo = 1.35;
@@ -193,7 +193,7 @@ script 981( void ) NET CLIENTSIDE {
 		antiarmor = 1.0;
 		fire = 1.0;
 		
-		if( CheckInventory( "PowerBerserk" ))
+		if (CheckInventory ("PowerBerserk"))
 			chem = 2.25;
 		else
 			chem = 1.0;
@@ -201,40 +201,40 @@ script 981( void ) NET CLIENTSIDE {
 		laser = 1.0;
 	}
 	
-	for( int i = 0; i < 13; i++ ) {
-		if( CheckInventory( ArmorNames[i] )) {
-			fist = FixedMul( fist, ArmorValuesFist[i] );
-			bullet = FixedMul( bullet, ArmorValuesBullet[i] );
-			explo = FixedMul( explo, ArmorValuesExplo[i] );
-			antiarmor = FixedMul( antiarmor, ArmorValuesAntiArmor[i] );
-			fire = FixedMul( fire, ArmorValuesFire[i] );
-			chem = FixedMul( chem, ArmorValuesChem[i] );
-			laser = FixedMul( laser, ArmorValuesLaser[i] );
+	for (int i = 0; i < 13; i++) {
+		if (CheckInventory (ArmorNames[i])) {
+			fist = FixedMul (fist, ArmorValuesFist[i]);
+			bullet = FixedMul (bullet, ArmorValuesBullet[i]);
+			explo = FixedMul (explo, ArmorValuesExplo[i]);
+			antiarmor = FixedMul (antiarmor, ArmorValuesAntiArmor[i]);
+			fire = FixedMul (fire, ArmorValuesFire[i]);
+			chem = FixedMul (chem, ArmorValuesChem[i]);
+			laser = FixedMul (laser, ArmorValuesLaser[i]);
 		}
 	}
 	
-	Log( s:"CURRENT DAMAGE FACTORS: \cj", f:fist,
+	Log (s:"CURRENT DAMAGE FACTORS: \cj", f:fist,
 		s:" \cu", f:bullet,
 		s:" \cg", f:fire,
 		s:" \cd", f:chem,
 		s:" \cn", f:laser,
 		s:" \cf", f:explo,
-		s:" \ci", f:antiarmor );
+		s:" \ci", f:antiarmor);
 }
 
-script 920( int modtype ) {
-	TakeInventory( "ArmorChangeProgress", 175 );
-	GiveInventory( "IsChangingArmor", 1 );
+script 920 (int modtype) {
+	TakeInventory ("ArmorChangeProgress", 175);
+	GiveInventory ("IsChangingArmor", 1);
 	
-	for( int n = 20; n > 0; n-- ) {
-		if( GetHealth() <= 0 )
+	for (int n = 20; n > 0; n--) {
+		if (GetHealth() <= 0)
 			terminate;
 		
-		GiveInventory( "ArmorChangeProgress", 9 );
-		delay( 9 );
+		GiveInventory ("ArmorChangeProgress", 9);
+		delay (9);
 	}
 	
-	TakeInventory( "IsChangingArmor", 1 );
-	ActivatorSound( "misc/armor_pkup", 127 );
-	SetArmorGrade( NOCHANGE, modtype );
+	TakeInventory ("IsChangingArmor", 1);
+	ActivatorSound ("misc/armor_pkup", 127);
+	SetArmorGrade (NOCHANGE, modtype);
 }

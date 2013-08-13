@@ -1,55 +1,55 @@
 // determine should we pick up Tiberium or leave it there
-script 357( void ) {
-	SetResultValue( 0 );
+script 357 (void) {
+	SetResultValue (0);
 	
-	if( CheckInventory( "IsHarvester" ) && !CheckInventory( "TiberiumCrystal" ) ) {
-		SetResultValue( 1 );
-		IntelMessage( "\cJTake it back to \cQRefinery!" );
+	if (CheckInventory ("IsHarvester") && !CheckInventory ("TiberiumCrystal")) {
+		SetResultValue (1);
+		IntelMessage ("\cJTake it back to \cQRefinery!");
 	}
 }
 
 // Tiberium refining terminal
-script 110( int Team ) {
-	if( Team != !PlayerTeam() || PlayerTeam() < 0 || PlayerTeam() > 1 ) {
-		Error( "This is not your terminal!" );
+script 110 (int Team) {
+	if (Team != !PlayerTeam() || PlayerTeam() < 0 || PlayerTeam() > 1) {
+		Error ("This is not your terminal!");
 		terminate;
 	}
 	
-	if( !CheckRefinery( PlayerTeam() ))
+	if (!CheckRefinery (PlayerTeam()))
 		terminate;
 	
-	if( !CheckInventory( "IsHarvester" ) || !CheckInventory( "TiberiumCrystal" ) ) {
-		Error( "You need to be a \cfHarvester \crand have \cdTiberium!" );
+	if (!CheckInventory ("IsHarvester") || !CheckInventory ("TiberiumCrystal")) {
+		Error ("You need to be a \cfHarvester \crand have \cdTiberium!");
 		terminate;
 	}
 	
-	TakeInventory( "TiberiumCrystal", 1 );
+	TakeInventory ("TiberiumCrystal", 1);
 	
-	if( EnhancedRefining[PlayerTeam()] )
-		GiveCredits( -1, 50 );
+	if (EnhancedRefining[PlayerTeam()])
+		GiveCredits (-1, 50);
 	else
-		GiveCredits( -1, 25 );
+		GiveCredits (-1, 25);
 	
-	AddExperience( 75 );
+	AddExperience (75);
 	
 	// [Dusk] Determine the amount here instead of copying the message 4 times...
 	int bonus;
-	if( CheckInventory( "ClassID" ) == CLASS_ADVHARVESTER )
-		bonus = GetCVar( cond( EnhancedRefining[Team], "aow_enharvestbonusadv", "aow_enharvestbonus" ));
+	if (CheckInventory ("ClassID") == CLASS_ADVHARVESTER)
+		bonus = GetCVar (cond (EnhancedRefining[Team], "aow_enharvestbonusadv", "aow_enharvestbonus"));
 	else
-		bonus = GetCVar( cond( EnhancedRefining[Team], "aow_harvestbonusadv", "aow_harvestbonus" ));
+		bonus = GetCVar (cond (EnhancedRefining[Team], "aow_harvestbonusadv", "aow_harvestbonus"));
 	
-	BigMessage( strparam( s:"You refined a \cDtiberium crystal!\c- Extra \cQ$\cD", d:bonus, s:"\c- for you" ));
+	BigMessage (strparam (s:"You refined a \cDtiberium crystal!\c- Extra \cQ$\cD", d:bonus, s:"\c- for you"));
 	
-	GiveCredits( -5, bonus );
-	GivePoints( 1 );
+	GiveCredits (-5, bonus);
+	GivePoints (1);
 	int amount = 75;
 	
-	switch( GetCVAR( "aow_economy_mode" )) {
+	switch (GetCVAR ("aow_economy_mode")) {
 	case 1:
 		amount = 75;
 		
-		if( EnhancedRefining[Team] )
+		if (EnhancedRefining[Team])
 			amount = 225;
 			
 		break;
@@ -57,21 +57,21 @@ script 110( int Team ) {
 	case 0:
 		amount = 1500;
 		
-		if( EnhancedRefining[Team] )
+		if (EnhancedRefining[Team])
 			amount = 2000;
 			
-		amount /= GetTeamProperty( PlayerTeam(), TPROP_NumPlayers );
+		amount /= GetTeamProperty (PlayerTeam(), TPROP_NumPlayers);
 		break;
 	}
 	
-	for( int i = 0; i < MAXPLAYERS; i++ ) {
-		if( PlayerInGame( i ) && GetPlayerInfo( i, PLAYERINFO_TEAM ) == PlayerTeam() ) {
-			GiveCredits( i, amount );
-			SetActivator( TID_Player + i );
-			IntelMessage( strparam( s:"Your teammate has \cDrefined Tiberium\n",
-				s:"and has awarded your team with \cQ$\cD", d:amount ) );
+	for (int i = 0; i < MAXPLAYERS; i++) {
+		if (PlayerInGame (i) && GetPlayerInfo (i, PLAYERINFO_TEAM) == PlayerTeam()) {
+			GiveCredits (i, amount);
+			SetActivator (TID_Player + i);
+			IntelMessage (strparam (s:"Your teammate has \cDrefined Tiberium\n",
+				s:"and has awarded your team with \cQ$\cD", d:amount));
 			
-			LocalAmbientSound( "powerup/credsound", 255 );
+			LocalAmbientSound ("powerup/credsound", 255);
 		}
 	}
 }

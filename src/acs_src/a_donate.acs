@@ -8,124 +8,124 @@
  * of this and call it your own. Thanks!
  */
 
-function int DonateCredits( int Player, int NewCredits ) {
+function int DonateCredits (int Player, int NewCredits) {
 	int donor = PlayerNumber();
-	DecrCredits( PlayerNumber(), NewCredits );
-	IncrCredits( CheckInventory( "DonationName" ), NewCredits );
+	DecrCredits (PlayerNumber(), NewCredits);
+	IncrCredits (CheckInventory ("DonationName"), NewCredits);
 	
-	LocalAmbientSound( "powerup/stolsound", 255 );
+	LocalAmbientSound ("powerup/stolsound", 255);
 	
-	SetFont( "SMALLFONT" );
-	HudMessage( s:"You have donated \cf$", d:NewCredits, s:"\cd to ", n:CheckInventory( "DonationName" ) + 1;
-		HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0 );
+	SetFont ("SMALLFONT");
+	HudMessage (s:"You have donated \cf$", d:NewCredits, s:"\cd to ", n:CheckInventory ("DonationName") + 1;
+		HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0);
 	
 	// Draw the donation message on the recipient
-	SetActivator( TID_Player + CheckInventory( "DonationName" ));
-	IntelMessage( strparam( s:"You have been donated \cQ$\cD100\cJ\nby ", n:donor + 1 ));
+	SetActivator (TID_Player + CheckInventory ("DonationName"));
+	IntelMessage (strparam (s:"You have been donated \cQ$\cD100\cJ\nby ", n:donor + 1));
 	
 	return NewCredits;
 }
 
-function void ShowCurrentDonationMenu( void ) {
-	int DonationName = CheckInventory( "DonationName" );
+function void ShowCurrentDonationMenu (void) {
+	int DonationName = CheckInventory ("DonationName");
 	
-	if( DonationName >= MAXPLAYERS )
-		TakeInventory( "DonationName", MAXPLAYERS - 1 );
+	if (DonationName >= MAXPLAYERS)
+		TakeInventory ("DonationName", MAXPLAYERS - 1);
 		
 	int color = CR_BLUE;
 	
-	if( PlayerTeam() == TEAM_RED )
+	if (PlayerTeam() == TEAM_RED)
 		color = CR_RED;
 		
-	SetFont( "SMALLFONT" );
-	HudMessage( s:"\cJ== Make a donation!",
+	SetFont ("SMALLFONT");
+	HudMessage (s:"\cJ== Make a donation!",
 		s:"\n\cFChange Name \cK-> \cI", k: "DonationName",
 		s:"\n\cFDonate \cQ$\cD100 \cK-> \cI", k: "DonationGive",
 		s:"\n\n", n: DonationName + 1, s:"\n\cKCredits:\cQ$\cD", d:Credits[DonationName],
-		s:"\n\cKHealth: ", d:GetActorHealth( TID_Player + DonationName ), s:" / ", d:GetActorSpawnHealth( TID_Player + DonationName ),
-		s:"\n\cK", s:DisplayName( DonationName );
-		HUDMSG_PLAIN, 6000 + PlayerNumber(), color, -0.65, 0.65, 1.15 );
+		s:"\n\cKHealth: ", d:GetActorHealth (TID_Player + DonationName), s:" / ", d:GetActorSpawnHealth (TID_Player + DonationName),
+		s:"\n\cK", s:DisplayName (DonationName);
+		HUDMSG_PLAIN, 6000 + PlayerNumber(), color, -0.65, 0.65, 1.15);
 }
 
 
 //Donations
-script 333( void ) NET {
-	if( CheckInventory( "DonateMenu" ) == 0 || !PlayerInGame( PlayerNumber () ))
+script 333 (void) NET {
+	if (CheckInventory ("DonateMenu") == 0 || !PlayerInGame (PlayerNumber ()))
 		terminate;
 		
 	ShowCurrentDonationMenu();
 	
-	delay( 35 );
+	delay (35);
 	restart;
 	
 }
 
-script 334( int Which ) NET {
+script 334 (int Which) NET {
 	int CheckValid = 1;
 	
-	if( CheckInventory( "InGame" ) == 0 )
+	if (CheckInventory ("InGame") == 0)
 		terminate;
 		
-	if( Which == 1 && CheckInventory( "DonateMenu" ) == 1 ) {
-		GiveInventory( "DonationName", 1 );
+	if (Which == 1 && CheckInventory ("DonateMenu") == 1) {
+		GiveInventory ("DonationName", 1);
 		
-		while( CheckValid ) {
-			if( GetPlayerInfo( 0 + CheckInventory( "DonationName" ), PLAYERINFO_TEAM ) != PlayerTeam() )
-				GiveInventory( "DonationName", 1 );
+		while (CheckValid) {
+			if (GetPlayerInfo (0 + CheckInventory ("DonationName"), PLAYERINFO_TEAM) != PlayerTeam())
+				GiveInventory ("DonationName", 1);
 			else
 				CheckValid = 0;
 			
-			if( CheckInventory( "DonationName" ) > MAXPLAYERS )
-				TakeInventory( "DonationName", 100 );
+			if (CheckInventory ("DonationName") > MAXPLAYERS)
+				TakeInventory ("DonationName", 100);
 		}
 		
 		ShowCurrentDonationMenu();
-	} else if( Which == 2 && CheckInventory( "DonateMenu" ) == 1 ) {
-		if( GetPlayerInfo( 0 + CheckInventory( "DonationName" ), PLAYERINFO_TEAM ) != PlayerTeam() ) {
-			Error( "That player is not on your team!!" );
+	} else if (Which == 2 && CheckInventory ("DonateMenu") == 1) {
+		if (GetPlayerInfo (0 + CheckInventory ("DonationName"), PLAYERINFO_TEAM) != PlayerTeam()) {
+			Error ("That player is not on your team!!");
 			terminate;
 		}
 		
-		if( CheckInventory( "DonationName" ) == PlayerNumber() )
+		if (CheckInventory ("DonationName") == PlayerNumber())
 			terminate;
 		
-		if( Credits[PlayerNumber()] < 100 ) {
-			Error( "You can't afford this!" );
+		if (Credits[PlayerNumber()] < 100) {
+			Error ("You can't afford this!");
 			terminate;
 		}
 		
-		DonateCredits( CheckInventory( "DonationName" ), 100 );
+		DonateCredits (CheckInventory ("DonationName"), 100);
 	}
 }
 
-script 335( void ) NET {
+script 335 (void) NET {
 	int CheckValid = 1;
 	
-	if( CheckInventory( "InGame" ) == 0 )
+	if (CheckInventory ("InGame") == 0)
 		terminate;
 		
-	if( CheckInventory( "DonateMenu" ) == 1 ) {
-		TakeInventory( "DonateMenu", 1 );
+	if (CheckInventory ("DonateMenu") == 1) {
+		TakeInventory ("DonateMenu", 1);
 		
 		// [Dusk] Clear the donation menu
-		HudMessage( s:"";
-			HUDMSG_PLAIN, 6000 + PlayerNumber(), CR_Green, 0.0, 0.2, 0.4 );
+		HudMessage (s:"";
+			HUDMSG_PLAIN, 6000 + PlayerNumber(), CR_Green, 0.0, 0.2, 0.4);
 		terminate;
 	}
 	else {
-		GiveInventory( "DonateMenu", 1 );
+		GiveInventory ("DonateMenu", 1);
 		
-		while( CheckValid ) {
-			if( GetPlayerInfo( 0 + CheckInventory( "DonationName" ), PLAYERINFO_TEAM ) != PlayerTeam() )
-				GiveInventory( "DonationName", 1 );
+		while (CheckValid) {
+			if (GetPlayerInfo (0 + CheckInventory ("DonationName"), PLAYERINFO_TEAM) != PlayerTeam())
+				GiveInventory ("DonationName", 1);
 			else
 				CheckValid = 0;
 				
-			if( CheckInventory( "DonationName" ) >= MAXPLAYERS )
-				TakeInventory( "DonationName", MAXPLAYERS - 1 );
+			if (CheckInventory ("DonationName") >= MAXPLAYERS)
+				TakeInventory ("DonationName", MAXPLAYERS - 1);
 		}
 		
 		ShowCurrentDonationMenu();
-		ACS_ExecuteAlways( 333, 0 );
+		ACS_ExecuteAlways (333, 0);
 	}
 }

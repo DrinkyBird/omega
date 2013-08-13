@@ -9,75 +9,75 @@
  */
 
 script 995 OPEN {
-	Delay( 60 * ( 35 * 5 ) );
+	Delay (60 *  (35 * 5));
 	CrateTime = False;
 }
 
 script 998 OPEN {
-	delay( 5 );
+	delay (5);
 	
-	while( Timer() < GetCVAR( "aow_suddendeathtime" ) * 35 * 60 ) delay( 35 * 15 );
+	while (Timer() < GetCVAR ("aow_suddendeathtime") * 35 * 60) delay (35 * 15);
 	
-	ACS_Execute( 997, 0 );
+	ACS_Execute (997, 0);
 }
 
-script 997( void ) {
-	if( EventScripts ) ACS_ExecuteAlways( 960, 0, ACTION_SUDDENDEATH, TEAM_NONE );
+script 997 (void) {
+	if (EventScripts) ACS_ExecuteAlways (960, 0, ACTION_SUDDENDEATH, TEAM_NONE);
 	
-	GiveActorInventory( 100, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 101, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 102, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 103, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 104, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 105, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 106, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 107, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 108, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 114, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 115, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 200, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 201, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 202, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 203, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 204, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 205, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 206, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 207, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 208, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 214, "SuddenDeathVulnerability", 1 );
-	GiveActorInventory( 215, "SuddenDeathVulnerability", 1 );
+	GiveActorInventory (100, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (101, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (102, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (103, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (104, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (105, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (106, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (107, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (108, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (114, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (115, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (200, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (201, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (202, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (203, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (204, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (205, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (206, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (207, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (208, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (214, "SuddenDeathVulnerability", 1);
+	GiveActorInventory (215, "SuddenDeathVulnerability", 1);
 	
-	if( Timer() > 5 * 35 + 10 ) {
-		if( random( 0, 1 ) )
-			SetMusic( "razor-ub" );
+	if (Timer() > 5 * 35 + 10) {
+		if (random (0, 1))
+			SetMusic ("razor-ub");
 		else
-			SetMusic( "razorub2" );
+			SetMusic ("razorub2");
 	}
 	
-	Log( s:"=== Sudden Death begins ===" );
+	Log (s:"=== Sudden Death begins ===");
 	
 	// Nukes for everybody!
-	GiveToAll( "BeaconItem", 1 );
+	GiveToAll ("BeaconItem", 1);
 	
-	BigMessageBold( "\cgSUDDEN DEATH!\n\nNo more repairs can be done\nEvery death counts!" );
+	BigMessageBold ("\cgSUDDEN DEATH!\n\nNo more repairs can be done\nEvery death counts!");
 	
-	if( !TicketPool ) {
+	if (!TicketPool) {
 		// init tickets
 		Tickets[TEAM_BLUE] = StartingTickets;
 		Tickets[TEAM_RED] = StartingTickets;
-		SetActorSpeed( TID_TICKETCOUNTER_BLUE, StartingTickets );
-		SetActorSpeed( TID_TICKETCOUNTER_RED, StartingTickets );
+		SetActorSpeed (TID_TICKETCOUNTER_BLUE, StartingTickets);
+		SetActorSpeed (TID_TICKETCOUNTER_RED, StartingTickets);
 	}
 	
 	SuddenDeath = true;
 	
 	// Update the building HUD now.
 	DrawBuildingHUD();
-	SetActivator( -1 );
+	SetActivator (-1);
 	
 	// Every minute flash some intel message
-	while( 1 ) {
-		IntelMessageBold( "Sudden death!" );
-		delay( 35 * 60 );
+	while (1) {
+		IntelMessageBold ("Sudden death!");
+		delay (35 * 60);
 	}
 }

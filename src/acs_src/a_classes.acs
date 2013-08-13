@@ -8,11 +8,11 @@
 
 // -----------------------------------------------------------------------------
 // [Dusk] Adds an item to a class definition and bumps up CK_NUMITEMS
-function void AddClassItem( int class, str item, int amount ) {
+function void AddClassItem (int class, str item, int amount) {
 	// Get the amount of current items, from this we can figure
 	// where in the array do we insert the new item
 	int n = Classes[class][CK_NUMITEMS];
-	int p = CK_NUMITEMS + 1 + ( n * 2 );
+	int p = CK_NUMITEMS + 1 +  (n * 2);
 	
 	// Add in the stuff
 	Classes[class][p] = item;
@@ -21,23 +21,23 @@ function void AddClassItem( int class, str item, int amount ) {
 }
 
 // -----------------------------------------------------------------------------
-function str GetClassItemName( int class, int inum ) {
-	int p = CK_NUMITEMS + 1 + ( inum * 2 );
+function str GetClassItemName (int class, int inum) {
+	int p = CK_NUMITEMS + 1 +  (inum * 2);
 	return Classes[class][p];
 }
 
 // -----------------------------------------------------------------------------
-function int GetClassItemAmount( int class, int inum ) {
-	int p = CK_NUMITEMS + 1 + ( inum * 2 );
+function int GetClassItemAmount (int class, int inum) {
+	int p = CK_NUMITEMS + 1 +  (inum * 2);
 	return Classes[class][p + 1];
 }
 
 // -----------------------------------------------------------------------------
-function void InitClasses( void ) {
+function void InitClasses (void) {
 	int c;
 	
 	// Init C4 and grenades to 1 globally
-	for( c = 0; c < NUM_CLASSES; c++ ) {
+	for (c = 0; c < NUM_CLASSES; c++) {
 		Classes[c][CK_C4] = 1;
 		Classes[c][CK_GERNADES] = 1;
 		Classes[c][CK_SPEED] = 1.0;
@@ -47,12 +47,12 @@ function void InitClasses( void ) {
 }
 
 // -----------------------------------------------------------------------------
-function void PurchaseClass( int c ) {
+function void PurchaseClass (int c) {
 	int team = PlayerTeam();
 	int cost = Classes[c][CK_COST];
 	
 	// [SP] This is to fix the "double cost" bug
-	if( Timer() - LastMenu[PlayerNumber()] < 5 )
+	if (Timer() - LastMenu[PlayerNumber()] < 5)
 		return;
 	
 	LastMenu[PlayerNumber()] = Timer();
@@ -60,579 +60,579 @@ function void PurchaseClass( int c ) {
 	// Check dependencies
 	int dep = Classes[c][CK_DEP];
 	
-	if( !IsAdmin[PlayerNumber()] ) {
-		if( ( dep == DEP_BARRACKS || dep == DEP_CENTRE ) && !GotBarracks[Team] ) {
-			Error( "Your \cFbarracks\c- has been destroyed!" );
+	if (!IsAdmin[PlayerNumber()]) {
+		if ( (dep == DEP_BARRACKS || dep == DEP_CENTRE) && !GotBarracks[Team]) {
+			Error ("Your \cFbarracks\c- has been destroyed!");
 			return;
 		}
 		
-		if( dep == DEP_CENTRE && !GotPlant[Team] ) {
-			Error( "Your \cFresearch centre\c- has been destroyed!" );
+		if (dep == DEP_CENTRE && !GotPlant[Team]) {
+			Error ("Your \cFresearch centre\c- has been destroyed!");
 			return;
 		}
 		
-		if( dep == DEP_REFINERY && !GotRefinery[Team] ) {
-			Error( "Your \cFrefinery\c- has been destroyed!" );
+		if (dep == DEP_REFINERY && !GotRefinery[Team]) {
+			Error ("Your \cFrefinery\c- has been destroyed!");
 			return;
 		}
 	}
 	
 	// Check time cops
-	int maxtimecops = GetCVAR( "aow_maxtimecopsperteam" );
-	if( c == CLASS_TIMECOP && maxtimecops > 0 && NumTimeCops[team] >= maxtimecops ) {
-		if( maxtimecops == 1 )
-			Error( "You already have a time cop in-field!" );
+	int maxtimecops = GetCVAR ("aow_maxtimecopsperteam");
+	if (c == CLASS_TIMECOP && maxtimecops > 0 && NumTimeCops[team] >= maxtimecops) {
+		if (maxtimecops == 1)
+			Error ("You already have a time cop in-field!");
 		else
-			Error( strparam( s:"You already have ", d:NumTimeCops[team], s: " time cops in-field!" ));
+			Error (strparam (s:"You already have ", d:NumTimeCops[team], s: " time cops in-field!"));
 		
 		return;
 	}
 	
-	if( CheckInventory( "HasClass" ) ) {
-		Error( "You need to resign first!" );
+	if (CheckInventory ("HasClass")) {
+		Error ("You need to resign first!");
 		return;
 	}
 	
 	// Show class information on the first press.
-	if( ( GetLevelInfo( LEVELINFO_LEVELNUM ) != 20 && GetLevelInfo( LEVELINFO_LEVELNUM ) != 21 ) ) {
-		if( !CheckInventory( "PurchaseToken" ) ) {
+	if ( (GetLevelInfo (LEVELINFO_LEVELNUM) != 20 && GetLevelInfo (LEVELINFO_LEVELNUM) != 21)) {
+		if (!CheckInventory ("PurchaseToken")) {
 			// [Dusk] Instead of a static graphic class card, draw dynamic info text
 			// This will always be accurate, while the class cards were hopelessly outdated.
-			ACS_ExecuteWithResult( 330, cost );
-			DrawClassInfoText( c );
-			ACS_ExecuteAlways( 956, 0 );
+			ACS_ExecuteWithResult (330, cost);
+			DrawClassInfoText (c);
+			ACS_ExecuteAlways (956, 0);
 			return;
 		}
 		else {
 			// [Dusk] Clear the info text out once the class is purchased
-			ClearHudMessage( HID_CLASSTEXT );
-			ClearHudMessage( HID_CLASSTEXT + 1 );
+			ClearHudMessage (HID_CLASSTEXT);
+			ClearHudMessage (HID_CLASSTEXT + 1);
 		}
 	}
 	
 	// Check monies
-	if( !CheckCredits( cost ) )
+	if (!CheckCredits (cost))
 		return;
 		
 	int cflags = Classes[c][CK_FLAGS];
 	
-	TakeInventory( "PurchaseToken", 1 );
+	TakeInventory ("PurchaseToken", 1);
 	DisplayTick();
-	SpendCredits( cost );
-	BigMessage( strparam( s: "You are a \cf", s: Classes[c][CK_NAME], s: "!" ));
+	SpendCredits (cost);
+	BigMessage (strparam (s: "You are a \cf", s: Classes[c][CK_NAME], s: "!"));
 	
 	// The essentials
-	SetActorProperty( 0, APROP_SPEED, Classes[c][CK_SPEED] );
-	SetArmorGrade( Classes[c][CK_ARMORNUM], Classes[c][CK_ARMORMOD] );
-	GiveInventory( "HasClass", 1 );
-	GiveInventory( "NewClipAmmo", 160 );
-	GiveInventory( "Handgun", 1 );
-	GiveInventory( "SpawnInvulnerability", 1 );
-	GiveInventory( "ClassID", c );
-	GiveInventory( "Refunds", cost / 2 );
+	SetActorProperty (0, APROP_SPEED, Classes[c][CK_SPEED]);
+	SetArmorGrade (Classes[c][CK_ARMORNUM], Classes[c][CK_ARMORMOD]);
+	GiveInventory ("HasClass", 1);
+	GiveInventory ("NewClipAmmo", 160);
+	GiveInventory ("Handgun", 1);
+	GiveInventory ("SpawnInvulnerability", 1);
+	GiveInventory ("ClassID", c);
+	GiveInventory ("Refunds", cost / 2);
 	
-	if( Classes[c][CK_C4] > 0 ) {
-		GiveInventory( "TimedC4", Classes[c][CK_C4] );
-		GiveInventory( "TimedC4Count", Classes[c][CK_C4] );
+	if (Classes[c][CK_C4] > 0) {
+		GiveInventory ("TimedC4", Classes[c][CK_C4]);
+		GiveInventory ("TimedC4Count", Classes[c][CK_C4]);
 		
-		if( cflags & CF_ENHANCEDC4 )
-			GiveInventory( "EnhancedTimedC4", 1 );
+		if (cflags & CF_ENHANCEDC4)
+			GiveInventory ("EnhancedTimedC4", 1);
 	}
 	
 	// Give the self heal item here so timed C4 takes precedence in the inventory
-	GiveInventory( "SelfHealItem", 1 );
-	SetFragGrenades( Classes[c][CK_GERNADES] );
+	GiveInventory ("SelfHealItem", 1);
+	SetFragGrenades (Classes[c][CK_GERNADES]);
 	
 	// Give the class-specific items now
-	for( int i = 0; i < Classes[c][CK_NUMITEMS]; ++i ) {
-		str itemname = GetClassItemName( c, i );
-		int itemamount = GetClassItemAmount( c, i );
-		GiveInventory( itemname, itemamount );
+	for (int i = 0; i < Classes[c][CK_NUMITEMS]; ++i) {
+		str itemname = GetClassItemName (c, i);
+		int itemamount = GetClassItemAmount (c, i);
+		GiveInventory (itemname, itemamount);
 		
 		// First item defined is the primary weapon, set it:
-		if( i == 0 )
-			SetWeapon( itemname );
+		if (i == 0)
+			SetWeapon (itemname);
 	}
 	
 	// Handle flags:
-	if( cflags & CF_CANTPILOT )
-		GiveInventory( "HighUpgrade", 1 );
+	if (cflags & CF_CANTPILOT)
+		GiveInventory ("HighUpgrade", 1);
 	
 	// Medic regeneration
-	if( cflags & CF_HEALTHREGEN ) {
-		GiveInventory( "IsMedic", 1 );
-		ACS_ExecuteAlways( SC_MedicHealthRegen, 0 );
+	if (cflags & CF_HEALTHREGEN) {
+		GiveInventory ("IsMedic", 1);
+		ACS_ExecuteAlways (SC_MedicHealthRegen, 0);
 	}
 	
-	if( cflags & CF_SUPPORT )
-		GiveInventory( "Grade0Damage", 1 );
+	if (cflags & CF_SUPPORT)
+		GiveInventory ("Grade0Damage", 1);
 	
 	// Class-specific behavior:
-	switch( c ) {
+	switch (c) {
 	case CLASS_STEALTH:
 		// Stealth trooper sounds
-		SetActorProperty( 0, APROP_DeathSound, "stealth/death" );
-		ACS_ExecuteAlways( 918, 0, 0 );
+		SetActorProperty (0, APROP_DeathSound, "stealth/death");
+		ACS_ExecuteAlways (918, 0, 0);
 		break;
 	
 	case CLASS_CHEMWARRIOR:
 	case CLASS_HARVESTER:
 	case CLASS_ADVHARVESTER:
-		ACS_ExecuteAlways( 918, 0, 1 );
+		ACS_ExecuteAlways (918, 0, 1);
 		break;
 	
 	case CLASS_SHOCKTROOPER:
-		ACS_ExecuteAlways( 918, 0, 2 );
+		ACS_ExecuteAlways (918, 0, 2);
 		break;
 	
 	case CLASS_SUICIDEBOMBER:
-		HudMessage( s:"Use the switch to detonate violently";
-			HUDMSG_FADEOUT, 1840, CR_GREEN, 0.5, 0.5, 2.0, 1.0 );
+		HudMessage (s:"Use the switch to detonate violently";
+			HUDMSG_FADEOUT, 1840, CR_GREEN, 0.5, 0.5, 2.0, 1.0);
 	case CLASS_COMMANDO:
 	case CLASS_TIMECOP:
-		ACS_ExecuteAlways( 918, 0, 3 );
+		ACS_ExecuteAlways (918, 0, 3);
 		break;
 		
 	case CLASS_SNIPER:
-		GiveInventory( "IsSniper", 1 );
+		GiveInventory ("IsSniper", 1);
 		break;
 		
 	case CLASS_UTILITYGUY:
-	HudMessage( s:"Use \cFAlt-Fire\cD for \cNitem selection menu!";
-			HUDMSG_FADEOUT, 1840, CR_GREEN, 0.5, 0.5, 2.0, 1.0 );
+	HudMessage (s:"Use \cFAlt-Fire\cD for \cNitem selection menu!";
+			HUDMSG_FADEOUT, 1840, CR_GREEN, 0.5, 0.5, 2.0, 1.0);
 		break;
 		
 	case CLASS_JUMPJET:
-		HudMessage( s:"Use Inventory to activate JumpJet";
-			HUDMSG_FADEOUT, 1840, CR_GREEN, 0.5, 0.5, 2.0, 1.0 );
+		HudMessage (s:"Use Inventory to activate JumpJet";
+			HUDMSG_FADEOUT, 1840, CR_GREEN, 0.5, 0.5, 2.0, 1.0);
 		break;
 		
 	case CLASS_ARTILLERY:
-		GiveInventory( "IsArtillerySoldier", 1 );
+		GiveInventory ("IsArtillerySoldier", 1);
 		break;
 	}
 	
-	if( cflags & CF_HARVESTER ) {
-		HudMessage( s:"Pick up \cctiberium crystals \cdand";
-			HUDMSG_FADEOUT, 1840, CR_GREEN, 0.5, 0.6, 2.0, 1.0 );
+	if (cflags & CF_HARVESTER) {
+		HudMessage (s:"Pick up \cctiberium crystals \cdand";
+			HUDMSG_FADEOUT, 1840, CR_GREEN, 0.5, 0.6, 2.0, 1.0);
 					
-		HudMessage( s:"return them to your \ccrefinery \cdfor cash!";
-			HUDMSG_FADEOUT, 1880, CR_GREEN, 0.5, 0.65, 2.0, 1.0 );
+		HudMessage (s:"return them to your \ccrefinery \cdfor cash!";
+			HUDMSG_FADEOUT, 1880, CR_GREEN, 0.5, 0.65, 2.0, 1.0);
 		
 		// Harvester-specific immunity against tib crystal damage
-		GiveInventory( "TiberiumProof", 1 );
-		GiveInventory( "IsHarvester", 1 );
+		GiveInventory ("TiberiumProof", 1);
+		GiveInventory ("IsHarvester", 1);
 	}
 	
-	ACS_ExecuteAlways( 91, 0 );
-	ACS_ExecuteAlways( 961, 0, Team );
+	ACS_ExecuteAlways (91, 0);
+	ACS_ExecuteAlways (961, 0, Team);
 	PlayerSpeeds[PlayerNumber()] = Classes[c][CK_SPEED];
-	Log( s:pname( -1 ), s:" becomes ", s:Classes[c][CK_NAME] );
+	Log (s:pname (-1), s:" becomes ", s:Classes[c][CK_NAME]);
 }
 
 // -----------------------------------------------------------------------------
 // [Dusk] Delayed class sounds - in a script since functions cannot have latency.
 // These sounds are only played locally now.
-script 918( int n ) {
-	delay( 6 * TICRATE );
+script 918 (int n) {
+	delay (6 * TICRATE);
 	
-	switch( n ) {
+	switch (n) {
 	case 0:
-		LocalAmbientSound( "misc/stealth", 127 );
+		LocalAmbientSound ("misc/stealth", 127);
 		break;
 		
 	case 1:
-		LocalAmbientSound( "misc/chem", 127 );
+		LocalAmbientSound ("misc/chem", 127);
 		break;
 		
 	case 2:
-		LocalAmbientSound( "misc/volt", 127 );
+		LocalAmbientSound ("misc/volt", 127);
 		break;
 		
 	case 3:
-		LocalAmbientSound( "misc/commando", 127 );
+		LocalAmbientSound ("misc/commando", 127);
 		break;
 	}
 }
 
 // -----------------------------------------------------------------------------
-script 20( void ) PurchaseClass( CLASS_GUNMAN );
-script 21( void ) PurchaseClass( CLASS_ENGINEER );
-script 22( void ) PurchaseClass( CLASS_MINIGUNNER );
-script 23( void ) PurchaseClass( CLASS_TECHNICIAN );
-script 24( void ) PurchaseClass( CLASS_FLAMER );
-script 25( void ) PurchaseClass( CLASS_RIFLEMAN );
-script 26( void ) PurchaseClass( CLASS_MACHINEGUNNER );
-script 27( void ) PurchaseClass( CLASS_GRENADIER );
-script 28( void ) PurchaseClass( CLASS_ROCKETEER );
-script 29( void ) PurchaseClass( CLASS_STEALTH );
-script 33( void ) PurchaseClass( CLASS_GAUSSGUNNER );
-script 34( void ) PurchaseClass( CLASS_CHEMWARRIOR );
-script 35( void ) PurchaseClass( CLASS_SHOCKTROOPER );
-script 36( void ) PurchaseClass( CLASS_COMMANDO );
-script 38( void ) PurchaseClass( CLASS_SHOTGUNNER );
-script 62( void ) PurchaseClass( CLASS_SUICIDEBOMBER );
-script 40( void ) PurchaseClass( CLASS_SNIPER );
-script 41( void ) PurchaseClass( CLASS_UTILITYGUY );
-script 42( void ) PurchaseClass( CLASS_DEMOEXPERT );
-script 43( void ) PurchaseClass( CLASS_MEDIC );
-script 44( void ) PurchaseClass( CLASS_LASERCHAINGUNNER );
-script 52( void ) PurchaseClass( CLASS_JUMPJET );
-script 53( void ) PurchaseClass( CLASS_TIBRIFLE );
-script 54( void ) PurchaseClass( CLASS_DOUBLESHOTGUNNER );
-script 60( void ) PurchaseClass( CLASS_PLASMAGUNNER );
-script 61( void ) PurchaseClass( CLASS_ARTILLERY );
-script 39( void ) PurchaseClass( CLASS_TIMECOP );
-script 63( void ) PurchaseClass( CLASS_ADVHARVESTER );
-script 64( void ) PurchaseClass( CLASS_HARVESTER );
+script 20 (void) PurchaseClass (CLASS_GUNMAN);
+script 21 (void) PurchaseClass (CLASS_ENGINEER);
+script 22 (void) PurchaseClass (CLASS_MINIGUNNER);
+script 23 (void) PurchaseClass (CLASS_TECHNICIAN);
+script 24 (void) PurchaseClass (CLASS_FLAMER);
+script 25 (void) PurchaseClass (CLASS_RIFLEMAN);
+script 26 (void) PurchaseClass (CLASS_MACHINEGUNNER);
+script 27 (void) PurchaseClass (CLASS_GRENADIER);
+script 28 (void) PurchaseClass (CLASS_ROCKETEER);
+script 29 (void) PurchaseClass (CLASS_STEALTH);
+script 33 (void) PurchaseClass (CLASS_GAUSSGUNNER);
+script 34 (void) PurchaseClass (CLASS_CHEMWARRIOR);
+script 35 (void) PurchaseClass (CLASS_SHOCKTROOPER);
+script 36 (void) PurchaseClass (CLASS_COMMANDO);
+script 38 (void) PurchaseClass (CLASS_SHOTGUNNER);
+script 62 (void) PurchaseClass (CLASS_SUICIDEBOMBER);
+script 40 (void) PurchaseClass (CLASS_SNIPER);
+script 41 (void) PurchaseClass (CLASS_UTILITYGUY);
+script 42 (void) PurchaseClass (CLASS_DEMOEXPERT);
+script 43 (void) PurchaseClass (CLASS_MEDIC);
+script 44 (void) PurchaseClass (CLASS_LASERCHAINGUNNER);
+script 52 (void) PurchaseClass (CLASS_JUMPJET);
+script 53 (void) PurchaseClass (CLASS_TIBRIFLE);
+script 54 (void) PurchaseClass (CLASS_DOUBLESHOTGUNNER);
+script 60 (void) PurchaseClass (CLASS_PLASMAGUNNER);
+script 61 (void) PurchaseClass (CLASS_ARTILLERY);
+script 39 (void) PurchaseClass (CLASS_TIMECOP);
+script 63 (void) PurchaseClass (CLASS_ADVHARVESTER);
+script 64 (void) PurchaseClass (CLASS_HARVESTER);
 
 //---------------------------PLASMA CANNON
-script 37( void ) {
+script 37 (void) {
 	int cost = 1500;
 	
-	if( MitigateDoublePress()) terminate;
-	if( !CheckBarracks( PlayerTeam() )) terminate;
-	if( !CheckPlant( PlayerTeam() )) terminate;
-	if( !CheckPlasmaCooldown()) terminate;
+	if (MitigateDoublePress()) terminate;
+	if (!CheckBarracks (PlayerTeam())) terminate;
+	if (!CheckPlant (PlayerTeam())) terminate;
+	if (!CheckPlasmaCooldown()) terminate;
 	
-	if( CheckInventory( "PlasmaCannon" )) {
-		Error( "You already have a \cnPlasma Cannon\cr!" );
+	if (CheckInventory ("PlasmaCannon")) {
+		Error ("You already have a \cnPlasma Cannon\cr!");
 		terminate;
 	}
 	
-	int maxcannons = GetCVAR( "aow_maxcannonsperteam" );
-	if( maxcannons != -1 && NumPlasmaCannons[PlayerTeam()] >= maxcannons ) {
-		Error( "Your team already has too many of those!" );
+	int maxcannons = GetCVAR ("aow_maxcannonsperteam");
+	if (maxcannons != -1 && NumPlasmaCannons[PlayerTeam()] >= maxcannons) {
+		Error ("Your team already has too many of those!");
 		terminate;
 	}
 	
-	int delaytime = GetCVAR( "aow_plasmapurchasedelay" ) * 35 * 60;
-	if( Timer() < delaytime ) {
-		Error( strparam( s:"You must wait \cF", d:( delaytime - Timer() ) / 60,
-			s:" seconds\nbefore you can get one of these!" ));
+	int delaytime = GetCVAR ("aow_plasmapurchasedelay") * 35 * 60;
+	if (Timer() < delaytime) {
+		Error (strparam (s:"You must wait \cF", d: (delaytime - Timer()) / 60,
+			s:" seconds\nbefore you can get one of these!"));
 		terminate;
 	}
 	
-	if( !IsSecondPress( "WEAP01", cost )) terminate;
-	if( !CheckCredits( cost )) terminate;
+	if (!IsSecondPress ("WEAP01", cost)) terminate;
+	if (!CheckCredits (cost)) terminate;
 	
-	TakeInventory( "PurchaseToken", 1 );
-	SpendCredits( cost );
+	TakeInventory ("PurchaseToken", 1);
+	SpendCredits (cost);
 	LastPurchasedCannon[PlayerNumber() + 1] = Timer();
 	NumPlasmaCannons[PlayerTeam()]++;
 	
 	DisplayTick();
-	BigMessage( "You got \cnPlasma Cannon!" );
+	BigMessage ("You got \cnPlasma Cannon!");
 	
-	GiveInventory( "PlasmaCannon", 1 );
-	GiveInventory( "PlasmaCannonAmmo", 10 );
-	SetWeapon( "PlasmaCannon" );
-	Log( s:pname( -1 ), s:" purchases Plasma Cannon." );
+	GiveInventory ("PlasmaCannon", 1);
+	GiveInventory ("PlasmaCannonAmmo", 10);
+	SetWeapon ("PlasmaCannon");
+	Log (s:pname (-1), s:" purchases Plasma Cannon.");
 	RecountPlasma();
 }
 
 //---------------------------T-E 21cal RIFLE
-script 49( void ) {
+script 49 (void) {
 	int cost = 300;
-	if( MitigateDoublePress() ) terminate;
-	if( CheckInventory( "TiberiumAutorifleWeak" ) || CheckInventory( "TiberiumAutorifle" ) ) {
-		Error( "You already have a \cdTiberium Autorifle!" );
+	if (MitigateDoublePress()) terminate;
+	if (CheckInventory ("TiberiumAutorifleWeak") || CheckInventory ("TiberiumAutorifle")) {
+		Error ("You already have a \cdTiberium Autorifle!");
 		terminate;
 	}
 	
-	if( !IsSecondPress( "WEAP02", cost ) ) terminate;
-	if( !CheckCredits( cost ) ) terminate;
+	if (!IsSecondPress ("WEAP02", cost)) terminate;
+	if (!CheckCredits (cost)) terminate;
 	
-	TakeInventory( "PurchaseToken", 1 );
-	SpendCredits( 300 );
+	TakeInventory ("PurchaseToken", 1);
+	SpendCredits (300);
 	DisplayTick();
 	
-	SETFONT( "BigFont" );
-	HudMessage( s:"You got the \cqTiberium Autorifle!";
-		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
+	SETFONT ("BigFont");
+	HudMessage (s:"You got the \cqTiberium Autorifle!";
+		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
 				
 	// GiveInventory("Refunds", 100);
-	GiveInventory( "TiberiumAutorifleWeak", 1 );
-	GiveInventory( "TE21CalAmmo", 200 );
-	SetWeapon( "TiberiumAutorifleWeak" );
-	Log( s: pname( -1 ), s:" purchases Tiberium Autorifle." );
+	GiveInventory ("TiberiumAutorifleWeak", 1);
+	GiveInventory ("TE21CalAmmo", 200);
+	SetWeapon ("TiberiumAutorifleWeak");
+	Log (s: pname (-1), s:" purchases Tiberium Autorifle.");
 }
 
 //---------------------------CHAINSAW (was flashbangs)
-script 50( void ) {
+script 50 (void) {
 	int cost = 250;
 	
-	if( MitigateDoublePress() ) terminate;
-	if( CheckInventory( "EagerBeaver" ) ) {
-		Error( "You already have the \cfChainsaw!" );
+	if (MitigateDoublePress()) terminate;
+	if (CheckInventory ("EagerBeaver")) {
+		Error ("You already have the \cfChainsaw!");
 		terminate;
 	}
 	
-	if( !IsSecondPress( "WEAP03", cost ) ) terminate;
-	if( !CheckCredits( cost ) ) terminate;
+	if (!IsSecondPress ("WEAP03", cost)) terminate;
+	if (!CheckCredits (cost)) terminate;
 	
-	TakeInventory( "PurchaseToken", 1 );
-	SpendCredits( cost );
+	TakeInventory ("PurchaseToken", 1);
+	SpendCredits (cost);
 	DisplayTick();
 	
-	SetFont( "BIGFONT" );
-	HudMessage( s:"You got the \cfChainsaw!";
-		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
-	HudMessage( s:"Use Alt-Fire to launch the chainsaw!";
-		HUDMSG_FADEOUT, 1840 + PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0 );
+	SetFont ("BIGFONT");
+	HudMessage (s:"You got the \cfChainsaw!";
+		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	HudMessage (s:"Use Alt-Fire to launch the chainsaw!";
+		HUDMSG_FADEOUT, 1840 + PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0);
 	
-	GiveInventory( "EagerBeaver", 1 );
-	SetWeapon( "EagerBeaver" );
-	Log( s: pname( -1 ), s: " purchases Chainsaw." );
+	GiveInventory ("EagerBeaver", 1);
+	SetWeapon ("EagerBeaver");
+	Log (s: pname (-1), s: " purchases Chainsaw.");
 }
 
 // ARTILLERY CANNON
-script 51( void ) {
+script 51 (void) {
 	int cost = 550;
 	
-	if( MitigateDoublePress() ) terminate;
-	if( CheckInventory( "ArtilleryCannon" ) ) {
-		Error( "You already have an \cKArtillery Cannon!" );
+	if (MitigateDoublePress()) terminate;
+	if (CheckInventory ("ArtilleryCannon")) {
+		Error ("You already have an \cKArtillery Cannon!");
 		terminate;
 	}
 	
-	if( !IsSecondPress( "WEAP04", cost ) ) terminate;
-	if( !CheckCredits( cost ) ) terminate;
+	if (!IsSecondPress ("WEAP04", cost)) terminate;
+	if (!CheckCredits (cost)) terminate;
 	
-	TakeInventory( "PurchaseToken", 1 );
-	SpendCredits( cost );
+	TakeInventory ("PurchaseToken", 1);
+	SpendCredits (cost);
 	
 	DisplayTick();
-	SETFONT( "BigFont" );
-	HudMessage( s:"You got the \ckArtillery Cannon!";
-		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
-	HudMessage( s:"Use Alt-Fire for \cFAnti-Mech shells!";
-		HUDMSG_FADEOUT, 1840 + PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0 );
+	SETFONT ("BigFont");
+	HudMessage (s:"You got the \ckArtillery Cannon!";
+		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	HudMessage (s:"Use Alt-Fire for \cFAnti-Mech shells!";
+		HUDMSG_FADEOUT, 1840 + PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0);
 	
 	// GiveInventory("Refunds", 200);
-	GiveInventory( "ArtilleryCannon", 1 );
-	GiveInventory( "ArtilleryShellAmmo", 40 );
-	SetWeapon( "ArtilleryCannon" );
-	Log( s: pname( -1 ), s:" purchases artillery cannon." );
+	GiveInventory ("ArtilleryCannon", 1);
+	GiveInventory ("ArtilleryShellAmmo", 40);
+	SetWeapon ("ArtilleryCannon");
+	Log (s: pname (-1), s:" purchases artillery cannon.");
 }
 
 //-------------------- BLUE TEAM SUPERWEAPON
 //---------------------------ION CANNON BEACON
-script 55( int Team ) {
-	if( PlayerTeam() == TEAM_RED )
+script 55 (int Team) {
+	if (PlayerTeam() == TEAM_RED)
 		terminate;
 	
 	int cost = 1750;
 	
-	if( MitigateDoublePress() ) terminate;
+	if (MitigateDoublePress()) terminate;
 	
-	if( CheckInventory( "IonCannonBeacon" ) ) {
+	if (CheckInventory ("IonCannonBeacon")) {
 		DisplayCross();
-		SETFONT( "BigFont" );
-		HudMessage( s: "You already have the \cnIon Cannon Beacon\cr!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+		SETFONT ("BigFont");
+		HudMessage (s: "You already have the \cnIon Cannon Beacon\cr!";
+			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
 		terminate;
 	}
 	
-	BlueBeaconTime = ( GetCVAR( "aow_beaconpurchasedelay" ) * 60 ) - ( Timer() - LastPurchasedBeacon[1] ) / 35;
+	BlueBeaconTime =  (GetCVAR ("aow_beaconpurchasedelay") * 60) -  (Timer() - LastPurchasedBeacon[1]) / 35;
 	
-	if( BlueBeaconTime <= 0 )
+	if (BlueBeaconTime <= 0)
 		BlueBeaconCooldown = false;
 	else
 		BlueBeaconCooldown = true;
 		
-	if( BlueBeaconCooldown ) {
-		int mins = BlueBeaconTime / 60 - Timer() / ( 35 * 60 );
-		int secs = 59 - ( Timer() / 35 ) % 60;
+	if (BlueBeaconCooldown) {
+		int mins = BlueBeaconTime / 60 - Timer() /  (35 * 60);
+		int secs = 59 -  (Timer() / 35) % 60;
 		
-		Error( strparam( s:"You must wait \cF", d:BlueBeaconTime, s:" seconds\nbefore you can get one of these!" ));
+		Error (strparam (s:"You must wait \cF", d:BlueBeaconTime, s:" seconds\nbefore you can get one of these!"));
 		terminate;
 	}
 	
-	if( !IsSecondPress( "WEAP05", cost ) ) terminate;
-	if( !CheckCredits( cost ) ) terminate;
+	if (!IsSecondPress ("WEAP05", cost)) terminate;
+	if (!CheckCredits (cost)) terminate;
 	
 	LastPurchasedBeacon[1] = Timer();
-	TakeInventory( "PurchaseToken", 1 );
-	SpendCredits( 1750 );
+	TakeInventory ("PurchaseToken", 1);
+	SpendCredits (1750);
 	
 	DisplayTick();
-	SETFONT( "BigFont" );
-	HudMessage( s: "You got the \cnIon Cannon Beacon!";
-		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 2.0, 1.0 );
-	SetFont( "SMALLFONT" );
-	HudMessage( s: "Place this in front of an \cAenemy MCT\cJ and guard";
-		HUDMSG_FADEOUT, 1840 + PlayerNumber(), CR_WHITE, 0.5, 0.6, 5.0, 1.0 );
-	HudMessage( s: "it for \cU60 seconds\cJ for \cKcertain destruction!";
-		HUDMSG_FADEOUT, 1880 + PlayerNumber(), CR_WHITE, 0.5, 0.625, 5.0, 1.0 );
+	SETFONT ("BigFont");
+	HudMessage (s: "You got the \cnIon Cannon Beacon!";
+		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 2.0, 1.0);
+	SetFont ("SMALLFONT");
+	HudMessage (s: "Place this in front of an \cAenemy MCT\cJ and guard";
+		HUDMSG_FADEOUT, 1840 + PlayerNumber(), CR_WHITE, 0.5, 0.6, 5.0, 1.0);
+	HudMessage (s: "it for \cU60 seconds\cJ for \cKcertain destruction!";
+		HUDMSG_FADEOUT, 1880 + PlayerNumber(), CR_WHITE, 0.5, 0.625, 5.0, 1.0);
 	
-	GiveInventory( "IonCannonBeacon", 1 );
-	SetWeapon( "IonCannonBeacon" );
+	GiveInventory ("IonCannonBeacon", 1);
+	SetWeapon ("IonCannonBeacon");
 	
 	BlueBeaconCooldown = True;
-Log( s: pname( -1 ), s: " purchases Ion Cannon Beacon." );
+Log (s: pname (-1), s: " purchases Ion Cannon Beacon.");
 }
 
 //-------------------- RED TEAM SUPERWEAPON
 //---------------------------NUCLEAR STRIKE BEACON
-script 56( int Team ) {
-	if( PlayerTeam() == TEAM_BLUE )
+script 56 (int Team) {
+	if (PlayerTeam() == TEAM_BLUE)
 		terminate;
 	
 	int cost = 1750;
 	
-	if( MitigateDoublePress() ) terminate;
+	if (MitigateDoublePress()) terminate;
 	
 	RedBeaconCooldown = true;
-	RedBeaconTime = ( GetCVAR( "aow_beaconpurchasedelay" ) * 60 ) - ( Timer() - LastPurchasedBeacon[2] ) / 35;
+	RedBeaconTime =  (GetCVAR ("aow_beaconpurchasedelay") * 60) -  (Timer() - LastPurchasedBeacon[2]) / 35;
 	
-	if( RedBeaconTime <= 0 )
+	if (RedBeaconTime <= 0)
 		RedBeaconCooldown = false;
 	
-	if( CheckInventory( "NuclearStrikeBeacon" ) ) {
-		Error( "You already have the \ckNuclear Strike Beacon\cr!" );
+	if (CheckInventory ("NuclearStrikeBeacon")) {
+		Error ("You already have the \ckNuclear Strike Beacon\cr!");
 		terminate;
 	}
 	
-	if( RedBeaconCooldown ) {
-		Error( strparam( s:"You must wait \cF", d: RedBeaconTime, s: " seconds\nbefore you can get one of these!" ));
+	if (RedBeaconCooldown) {
+		Error (strparam (s:"You must wait \cF", d: RedBeaconTime, s: " seconds\nbefore you can get one of these!"));
 		terminate;
 	}
 	
-	if( !IsSecondPress( "WEAP06", cost ) ) terminate;
+	if (!IsSecondPress ("WEAP06", cost)) terminate;
 	
-	if( !CheckCredits( cost ) ) terminate;
+	if (!CheckCredits (cost)) terminate;
 	
 	LastPurchasedBeacon[2] = Timer();
-	TakeInventory( "PurchaseToken", 1 );
-	SpendCredits( 1750 );
+	TakeInventory ("PurchaseToken", 1);
+	SpendCredits (1750);
 	DisplayTick();
 	
-	SetFont( "BIGFONT" );
-	HudMessage( s: "You got the \cANuclear Strike Beacon!"; HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 2.0, 1.0 );
-	SetFont( "SMALLFONT" );
-	HudMessage( s: "Place this in front of an \cAenemy MCT\cJ and guard";
-		HUDMSG_FADEOUT, 1840 + PlayerNumber(), CR_WHITE, 0.5, 0.6, 5.0, 1.0 );
-	HudMessage( s: "it for \cU60 seconds\cJ for \cKcertain destruction!";
-		HUDMSG_FADEOUT, 1880 + PlayerNumber(), CR_WHITE, 0.5, 0.625, 5.0, 1.0 );
+	SetFont ("BIGFONT");
+	HudMessage (s: "You got the \cANuclear Strike Beacon!"; HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 2.0, 1.0);
+	SetFont ("SMALLFONT");
+	HudMessage (s: "Place this in front of an \cAenemy MCT\cJ and guard";
+		HUDMSG_FADEOUT, 1840 + PlayerNumber(), CR_WHITE, 0.5, 0.6, 5.0, 1.0);
+	HudMessage (s: "it for \cU60 seconds\cJ for \cKcertain destruction!";
+		HUDMSG_FADEOUT, 1880 + PlayerNumber(), CR_WHITE, 0.5, 0.625, 5.0, 1.0);
 	
-	GiveInventory( "NuclearStrikeBeacon", 1 );
-	SetWeapon( "NuclearStrikeBeacon" );
+	GiveInventory ("NuclearStrikeBeacon", 1);
+	SetWeapon ("NuclearStrikeBeacon");
 	
 	RedBeaconCooldown = True;
-	Log( s:pname( -1 ), s:" purchases Nuclear Strike Beacon." );
+	Log (s:pname (-1), s:" purchases Nuclear Strike Beacon.");
 }
 
 //---------------------------ARMOUR/DAMAGE UPGRADE
-script 57( int Team ) {
+script 57 (int Team) {
 	int cost = 250;
 	
-	if( MitigateDoublePress() ) terminate;
+	if (MitigateDoublePress()) terminate;
 	
-	if( CheckInventory( "IsCommando" ) ) {
-		Error( "no u :I" );
+	if (CheckInventory ("IsCommando")) {
+		Error ("no u :I");
 		terminate;
 	}
 	
-	if( CheckInventory( "HasArmorUpgrade" ) ) {
-		Error( "You already have this \ccupgrade!" );
+	if (CheckInventory ("HasArmorUpgrade")) {
+		Error ("You already have this \ccupgrade!");
 		terminate;
 	}
 	
-	if( !IsSecondPress( "UPGR01", cost ) ) terminate;
+	if (!IsSecondPress ("UPGR01", cost)) terminate;
 	
-	if( !CheckCredits( cost ) ) terminate;
+	if (!CheckCredits (cost)) terminate;
 	
-	TakeInventory( "PurchaseToken", 1 );
-	SpendCredits( cost );
+	TakeInventory ("PurchaseToken", 1);
+	SpendCredits (cost);
 	
 	DisplayTick();
 	
-	SETFONT( "BigFont" );
-	HudMessage( s: "You got the \ckarmor upgrade!";
-		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
-	HudMessage( s: "You can no longer pilot mechs.";
-		HUDMSG_FADEOUT, 1840 + PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0 );
+	SETFONT ("BigFont");
+	HudMessage (s: "You got the \ckarmor upgrade!";
+		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+	HudMessage (s: "You can no longer pilot mechs.";
+		HUDMSG_FADEOUT, 1840 + PlayerNumber(), CR_GREEN, 0.5, 0.5, 2.0, 1.0);
 	
-	GiveInventory( "Refunds", 200 );
-	GiveInventory( "HasArmorUpgrade", 1 );
-	GiveInventory( "HighUpgrade", 1 );
-	SetArmorGrade( 1, AGF_ADDITIVE );
-	Log( s: pname( -1 ), s: " purchases armour/damage upgrade." );
+	GiveInventory ("Refunds", 200);
+	GiveInventory ("HasArmorUpgrade", 1);
+	GiveInventory ("HighUpgrade", 1);
+	SetArmorGrade (1, AGF_ADDITIVE);
+	Log (s: pname (-1), s: " purchases armour/damage upgrade.");
 }
 
 // [Dusk] Attempt to teleport to field. Try multiple times so that if someone (or something)
 // is blocking one destination, we can still reach another.
 // TODO: ... or does Zandronum already do this?
-script 961( int team ) {
+script 961 (int team) {
 	int tries, i;
 	bool failed = true;
 	
-	for( i = 0; i <= 9; i++ ) {
-		if( Teleport( 1 + team ) ) {
+	for (i = 0; i <= 9; i++) {
+		if (Teleport (1 + team)) {
 			failed = false;
 			break;
 		}
 	}
 	
-	if( failed ) {
-		IntelMessage( strparam( s:"In-field teleportation \cAfailed\cJ - use the\n",
-			s:"\cDTeleport back to Field\cJ -terminal" ));
+	if (failed) {
+		IntelMessage (strparam (s:"In-field teleportation \cAfailed\cJ - use the\n",
+			s:"\cDTeleport back to Field\cJ -terminal"));
 		terminate;
 	}
 	else
-		TakeInventory( "IsInSpawnRoom", 1 );
+		TakeInventory ("IsInSpawnRoom", 1);
 }
 
 // [Dusk] Helper function for DrawClassInfoText
-function str GetSpeedMeter( int c ) {
+function str GetSpeedMeter (int c) {
 	int speed = Classes[c][CK_SPEED];
-	str msg = strparam( s: "\cU[", s: FractionColor( speed - 0.5, 0.5 ) );
+	str msg = strparam (s: "\cU[", s: FractionColor (speed - 0.5, 0.5));
 	bool darkened = false;
 	
-	for( int i = 0; i < 10; ++i ) {
-		int step = 0.5 + ( i * 0.05 );
+	for (int i = 0; i < 10; ++i) {
+		int step = 0.5 +  (i * 0.05);
 		
-		if( step > Classes[c][CK_SPEED] && !darkened ) {
-			msg = strparam( s: msg, s: "\cM" );
+		if (step > Classes[c][CK_SPEED] && !darkened) {
+			msg = strparam (s: msg, s: "\cM");
 			darkened = true;
 		}
 		
-		msg = strparam( s: msg, s: "I" );
+		msg = strparam (s: msg, s: "I");
 	}
 	
-	msg = strparam( s: msg, s: "\cU]" );
+	msg = strparam (s: msg, s: "\cU]");
 	return msg;
 }
 
-function void DrawClassInfoText( int c ) {
+function void DrawClassInfoText (int c) {
 	// Clear the entry messages if they're still there.
-	ClearHudMessage( HID_ENTER );
-	ClearHudMessage( HID_ENTER + 1 );
-	ClearHudMessage( HID_BIGMESSAGE );
+	ClearHudMessage (HID_ENTER);
+	ClearHudMessage (HID_ENTER + 1);
+	ClearHudMessage (HID_BIGMESSAGE);
 	
 	int cflags = Classes[c][CK_FLAGS];
 	int cspeed = Classes[c][CK_SPEED];
 	
-	SetFont( "BIGFONT" );
-	HUDMessage( s: Classes[c][CK_NAME];
-		HUDMSG_FADEOUT, HID_CLASSTEXT, CR_WHITE, -0.3, -0.3, 5.0, 1.0 );
+	SetFont ("BIGFONT");
+	HUDMessage (s: Classes[c][CK_NAME];
+		HUDMSG_FADEOUT, HID_CLASSTEXT, CR_WHITE, -0.3, -0.3, 5.0, 1.0);
 	
-	SetFont( "SMALLFONT" );
+	SetFont ("SMALLFONT");
 	str body = strparam(
 		s:"Cost: \cQ$\cD", d:Classes[c][CK_COST],
-		s:"\nSpeed:", s:GetSpeedMeter( c ), s:" ", s:FractionColor( cspeed - 0.5, 0.5 ), d:( cspeed * 100 ) >> 16, s:"\cJ%",
-		s:"\nArmor: Grade ", d:Classes[c][CK_ARMORNUM], s:" ", s:ArmorModifierName( Classes[c][CK_ARMORMOD] ),
-		s:"\nC4: ", d:Classes[c][CK_C4], s:cond( cflags & CF_ENHANCEDC4, "+", "" ),
+		s:"\nSpeed:", s:GetSpeedMeter (c), s:" ", s:FractionColor (cspeed - 0.5, 0.5), d: (cspeed * 100) >> 16, s:"\cJ%",
+		s:"\nArmor: Grade ", d:Classes[c][CK_ARMORNUM], s:" ", s:ArmorModifierName (Classes[c][CK_ARMORMOD]),
+		s:"\nC4: ", d:Classes[c][CK_C4], s:cond (cflags & CF_ENHANCEDC4, "+", ""),
 		s:"\nGrenades:", d:Classes[c][CK_GERNADES], s:"\n"
 	);
 	
-	for( int i = 0; i < Classes[c][CK_NUMITEMS]; ++i ) {
-		str item = GetClassItemName( c, i );
-		int amount = GetClassItemAmount( c, i );
+	for (int i = 0; i < Classes[c][CK_NUMITEMS]; ++i) {
+		str item = GetClassItemName (c, i);
+		int amount = GetClassItemAmount (c, i);
 		
-		body = strparam( s:body, s:"\n- ", d:amount, s:"x ", s:item );
+		body = strparam (s:body, s:"\n- ", d:amount, s:"x ", s:item);
 	}
 	
-	HUDMessage( s:body; HUDMSG_FADEOUT, HID_CLASSTEXT + 1, CR_WHITE, -0.3, -0.35, 5.0, 1.0 );
+	HUDMessage (s:body; HUDMSG_FADEOUT, HID_CLASSTEXT + 1, CR_WHITE, -0.3, -0.35, 5.0, 1.0);
 }
