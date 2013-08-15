@@ -268,7 +268,7 @@ function int SurrenderCount (int team) {
 function void FreezeBold (void) {
 	for (int i = 0; i < MAXPLAYERS; i++) {
 		if (PlayerInGame (i) && !IsAdmin[i]) {
-			SetPlayerProperty (i, PROP_TOTALLYFROZEN, true);
+			SetPlayerProperty (i, true, PROP_TOTALLYFROZEN);
 			SetActorProperty (TID_Player + i, APROP_Invulnerable, true);
 		}
 	}

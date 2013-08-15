@@ -62,14 +62,13 @@ script 342 (void) NET {
 }
 
 script 751 (void) {
-	int count;
+	SetActivator (-1);
 	
-	count = SurrenderCount (TEAM_BLUE);
-	
-	if ( (count > BlueCount() / 2 &&  (BlueCount() <= 6 && RedCount() != 0)) ||
-			 (count >= BlueCount() - 3 &&  (BlueCount() > 6 && RedCount() != 0)))
+	int count = SurrenderCount (TEAM_BLUE);
+	if ((count > BlueCount() / 2 && BlueCount() <= 6 && RedCount() != 0) ||
+		(count >= BlueCount() - 3 && BlueCount() > 6 && RedCount() != 0))
 	{
-		BigMessage ("\cFSteel Talons surrender");
+		BigMessageBold ("\cFSteel Talons surrender");
 		FreezeBold();
 		delay (35 * 2);
 		Thing_Destroy (101);
@@ -88,10 +87,10 @@ script 751 (void) {
 	
 	count = SurrenderCount (TEAM_RED);
 	
-	if ( (count > RedCount() / 2 && RedCount() <= 6 && BlueCount() != 0) ||
-		 (count >= RedCount() - 3 && RedCount() > 6 && BlueCount() != 0))
+	if ((count > RedCount() / 2 && RedCount() <= 6 && BlueCount() != 0) ||
+		(count >= RedCount() - 3 && RedCount() > 6 && BlueCount() != 0))
 	{
-		BigMessage ("\cGBlack Hand surrenders");
+		BigMessageBold ("\cGBlack Hand surrenders");
 		FreezeBold();
 		delay (35 * 2);
 		Thing_Destroy (201);
