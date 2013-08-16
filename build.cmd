@@ -51,7 +51,7 @@ pushd tmp
 		if not exist aow2scrp.o goto acsfail
 	popd
 	
-	..\utils\acsconstants.exe ..\src\acs_src\aow2scrp.acs actors\acsconstants.txt
+	..\utils\acsconstants.exe ..\src\acs_src\aow2scrp.acs actors\acsconstants.dec
 	zip -r1 ..\%fname% acs actors acs_src >nul
 popd
 rmdir tmp /s /q >nul

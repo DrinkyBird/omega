@@ -70,7 +70,7 @@ pushd tmp >/dev/null
 		fi
 	popd >/dev/null
 	
-	../utils/acsconstants ../src/acs_src/aow2scrp.acs actors/acsconstants.txt
+	../utils/acsconstants ../src/acs_src/aow2scrp.acs actors/acsconstants.dec
 	exitcode=$?
 	if [ "$exitcode" != "0" ]; then
 		echo "Failed to generate DECORATE constants (exit code: $exitcode)"
