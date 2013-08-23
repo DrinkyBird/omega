@@ -213,7 +213,7 @@ actor OrcaFlame {
 	states {
 	Spawn:
 		TNT1 A 0
-		FLMX ABCDEFGH 1 bright A_Fadeout(0.125)
+		BRBA KLMNOPQRSTUVX 1 bright A_Fadeout(0.075)
 		stop
 	}
 }
