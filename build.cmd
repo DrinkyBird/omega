@@ -23,16 +23,21 @@ if "%descrb%"=="" (
 	goto :eof
 )
 
-gitrevnum %descrb% >%tmp%
-set /p rnum=<%tmp%
+set dsc=initial-293-g1932f81
+for /f "tokens=1,2,3 delims=-" %%a in ("%dsc%") do set tag=%%a&set revnum=%%b&set cset=%%c
+set cset=%cset:~-7%
 
 git rev-parse --abbrev-ref HEAD >%tmp%
 set /p branch=<%tmp%
 
 rem Now do the checking
-if "%stat2%" NEQ "" set rnum=%rnum%m
+if "%stat2%" NEQ "" set revnum=%revnum%m
 
-set fname=aow2_omega-%branch%-r%rnum%.pk3
+if "%branch%" EQ "master" (
+	set fname=aow2-omega-r%revnum%-%cset%.pk3
+) else (
+	set fname=aow2-omega-%branch%-r%revnum%-%cset%.pk3
+)
 
 rem We don't need the temp file anymore
 del %tmp%
@@ -42,15 +47,15 @@ pushd tmp
 	md acs
 	md actors
 	md acs_src
-	
+
 	..\utils\acschangelog.exe ..\changelog.txt acs_src\a_changelog.acs
-	
+
 	pushd acs
 		echo Compiling ACS
 		acc -I ..\..\utils\acc -I ..\acs_src\ ..\..\src\acs_src\aow2scrp.acs aow2scrp.o >nul 2>nul
 		if not exist aow2scrp.o goto acsfail
 	popd
-	
+
 	..\utils\acsconstants.exe ..\src\acs_src\aow2scrp.acs actors\acsconstants.dec
 	zip -r1 ..\%fname% acs actors acs_src >nul
 popd

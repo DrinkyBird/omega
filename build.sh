@@ -6,7 +6,7 @@ if [ -z "$(which git)" ]; then
 fi
 
 if [ -z "$(which acc)" ]; then
-	echo "no acc installed" >/dev/stderr
+	echo "no acc in PATH" >/dev/stderr
 	exit 1
 fi
 
@@ -16,32 +16,40 @@ if [ -z "$1" ]; then
 fi
 
 for util in acsconstants acschangelog; do
-	if [ ! -x "./utils/$util" ]; then
-		if [ -e ./utils/$util.c ]; then
+	if [ ! -x "./utils/${util}" ]; then
+		if [ -e ./utils/${util}.c ]; then
 			cc=gcc
-			source=$util.c
+			source=${util}.c
 		else
 			cc=g++
-			source=$util.cpp
+			source=${util}.cpp
 		fi
-		
-		echo "Compiling $source..."
-		$cc -o ./utils/$util -W -Wall ./utils/$source
-		
+
+		echo "Compiling ${source}..."
+		${cc} -o ./utils/${util} -W -Wall ./utils/${source}
+
 		if [ "$?" != "0" ]; then
 			exit 1;
 		fi
 	fi
 done
 
-revnum=$(git describe |sed "s/-/ /g" |awk '{printf $2}')
+branch=$( git rev-parse --abbrev-ref HEAD )
+data=$( git describe |sed "s/-/ /g" )
+revs=$( echo ${data} |awk '{printf $2}' )
+changeset=$( echo ${data} |awk '{printf $3}' |tail -c "+2" )
+
 if [ "$(git status --short)" != "" ]; then
-	revnum="${revnum}m"
+	revnum="${revs}m-${changeset}"
+else
+	revnum="${revs}-${changeset}"
 fi
 
-branch=$(git rev-parse --abbrev-ref HEAD)
-
-fname="aow2_omega-$branch-r$revnum.pk3"
+if [ "${branch}" = "master" ]; then
+	fname="aow2-omega-r${revnum}.pk3"
+else
+	fname="aow2-omega-${branch}-r${revnum}.pk3"
+fi
 
 if [ -e tmp ]; then
 	echo "tmp exists, delete it?"
@@ -62,27 +70,27 @@ pushd tmp >/dev/null
 	pushd acs >/dev/null
 		acc_args="-I ../../utils/acc -I ../acs_src/ ../../src/acs_src/aow2scrp.acs aow2scrp.o"
 		echo "Compiling ACS..."
-		acc $acc_args # >/dev/null 2>&1
+		acc ${acc_args} # >/dev/null 2>&1
 		
 		if [ ! -e aow2scrp.o ]; then
-			# acc $acc_args
+			# acc ${acc_args}
 			exit 1
 		fi
 	popd >/dev/null
 	
 	../utils/acsconstants ../src/acs_src/aow2scrp.acs actors/acsconstants.dec
 	exitcode=$?
-	if [ "$exitcode" != "0" ]; then
-		echo "Failed to generate DECORATE constants (exit code: $exitcode)"
+	if [ "${exitcode}" != "0" ]; then
+		echo "Failed to generate DECORATE constants (exit code: ${exitcode})"
 		exit 1
 	fi
 	
-	zip -r -$zipcompression ../$fname actors acs * >/dev/null
+	zip -r -${zipcompression} ../${fname} actors acs * >/dev/null
 popd >/dev/null
 
 pushd src >/dev/null
-	echo "Building $fname..."
-	zip -r -$zipcompression ../$fname acs * >/dev/null
+	echo "Building ${fname}..."
+	zip -r -${zipcompression} ../${fname} acs * >/dev/null
 popd >/dev/null
 
 rm -rf ./tmp/
