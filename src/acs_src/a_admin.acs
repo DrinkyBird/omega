@@ -52,7 +52,7 @@ script 401 (int Player, int Action, int arg) {
 		case 3:
 			Log (s:"Usage: gamemaster <IDX> (use 'playerinfo' to get IDX numbers)");
 		case 1:
-			Log (s:"Usage: forceblue / forcegdi / forcered / forcenod <IDX> (use ",
+			Log (s:"Usage: forceblue / forcered <IDX> (use ",
 				s:"'playerinfo' to get IDX numbers)");
 		default:
 			Log (s:"Please don't puke this script directly! Use the provided ccmd's ",
@@ -90,11 +90,11 @@ script 402 (int Arg1, int Arg2, int Arg3) NET {
 			/* [Dusk] Help message. */
 			HudMessage (s:"Usage: a_teleport <tid>\n",
 				s:"TIDs of interest:\n",
-				s:"1: GDI base\t\t2: Nod base\n",
-				s:"70: GDI spawn room\t71: Nod spawn room\n",
-				s:"108: GDI wf hanger\t208: Nod wf hanger\n",
-				s:"110: GDI mech room\t210: Nod mech room\n",
-				s:"111: GDI res room\t211: Nod res room\n";
+				s:"1: Blue base\t\t2: Red base\n",
+				s:"70: Blue spawn room\t71: Red spawn room\n",
+				s:"108: Blue wf hanger\t208: Red wf hanger\n",
+				s:"110: Blue mech room\t210: Red mech room\n",
+				s:"111: Blue res room\t211: Red res room\n";
 				HUDMSG_PLAIN | HUDMSG_LOG, 9000, 0, 0, 0, 0);
 			
 			HudMessage (s:""; HUDMSG_PLAIN, 9000, 0, 0, 0, 0.1);

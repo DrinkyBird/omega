@@ -26,7 +26,7 @@ function void DrawBuildingHud (void) {
 	
 	if (SuddenDeath || TicketPool) {
 		HudMessageBold(
-			s:"\cFLives\cC: ", s:FractionColor (Tickets[TEAM_BLUE], StartingTickets), d:Tickets[TEAM_BLUE],
+			s:"\cHLives\cC: ", s:FractionColor (Tickets[TEAM_BLUE], StartingTickets), d:Tickets[TEAM_BLUE],
 			s:"\n\cGLives\cC: ", s:FractionColor (Tickets[TEAM_RED], StartingTickets), d:Tickets[TEAM_RED];
 			HUDMSG_PLAIN, i++, CR_BLUE, 0.012, y, 0.0);
 	}
@@ -127,7 +127,7 @@ function str ColorCodeHealth (int Percentage) {
 function str ExistsBuilding (int tid) {
 	if (tid <= 199 ||  (tid >= 900 && tid % 2 == 1)) {
 		if (ThingCount (T_NONE, tid) > 0)
-			return "\cF";
+			return "\cH";
 		else
 			return "\cM";
 	} else {

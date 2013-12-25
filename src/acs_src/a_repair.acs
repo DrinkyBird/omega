@@ -190,7 +190,7 @@ script 654 (void) CLIENTSIDE {
 	if (PlayerNumber() != ConsolePlayer) terminate;
 	
 	int myteam = PlayerTeam();
-	str nc = "\cF";
+	str nc = "\cH";
 	
 	if (myteam)
 		nc = "\cG";

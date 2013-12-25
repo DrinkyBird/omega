@@ -78,15 +78,15 @@ function bool TimeDelay (int time, bool display) {
 script 957 (int Team) {
 	if (Team == 0) {
 		LastPurchasedBeacon[2] = 0;
-		IntelMessageBold ("Some \cGNod mong\cJ planted a beacon \cNunderwater");
+		IntelMessageBold ("Some \cGRed mong\cJ planted a beacon \cNunderwater");
 		delay (3 * 35);
-		IntelMessageBold ("\cGNod\cJ free to \cDrepurchase\n\cANuclear Strike Beacon");
+		IntelMessageBold ("\cGRed\cJ free to \cDrepurchase\n\cANuclear Strike Beacon");
 	}
 	else {
 		LastPurchasedBeacon[1] = 0;
-		IntelMessageBold ("Some \cFGDI mong\cJ planted a beacon \cNunderwater");
+		IntelMessageBold ("Some \cHBlue mong\cJ planted a beacon \cNunderwater");
 		delay (3 * 35);
-		IntelMessageBold ("\cFGDI\cJ free to \cDrepurchase\n\cNIon Cannon Beacon");
+		IntelMessageBold ("\cHBlue\cJ free to \cDrepurchase\n\cNIon Cannon Beacon");
 	}
 }
 

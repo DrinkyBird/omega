@@ -52,10 +52,10 @@ script 342 (void) NET {
 	
 	if (PlayerTeam() == TEAM_RED)
 		IntelMessageBold (strparam (s:"\cD", d:SurrenderCount (TEAM_RED), s:"\cQ/\cD", d:RedCount(), s:" ",
-			s:"\cJof \cGNod\cJ\n have voted to surrender"));
+			s:"\cJof \cGRed\cJ\n have voted to surrender"));
 	else
 		IntelMessageBold (strparam (s:"\cD", d:SurrenderCount (TEAM_BLUE), s:"\cQ/\cD", d:BlueCount(), s:" ",
-		s:"\cJof \cFGDI\cJ\n have voted to surrender"));
+		s:"\cJof \cHBlue\cJ\n have voted to surrender"));
 	
 	delay (35 * 2);
 	ACS_Execute (751, 0);
@@ -68,7 +68,7 @@ script 751 (void) {
 	if ((count > BlueCount() / 2 && BlueCount() <= 6 && RedCount() != 0) ||
 		(count >= BlueCount() - 3 && BlueCount() > 6 && RedCount() != 0))
 	{
-		BigMessageBold ("\cFSteel Talons surrender");
+		BigMessageBold ("\cHBlue Team surrenders");
 		FreezeBold();
 		delay (35 * 2);
 		Thing_Destroy (101);
@@ -82,7 +82,7 @@ script 751 (void) {
 		Thing_Destroy (109);
 		delay (5);
 		Thing_Destroy (114);
-		Log (s:"GDI surrenders.");
+		Log (s:"Blue Team surrenders.");
 	}
 	
 	count = SurrenderCount (TEAM_RED);
@@ -90,7 +90,7 @@ script 751 (void) {
 	if ((count > RedCount() / 2 && RedCount() <= 6 && BlueCount() != 0) ||
 		(count >= RedCount() - 3 && RedCount() > 6 && BlueCount() != 0))
 	{
-		BigMessageBold ("\cGBlack Hand surrenders");
+		BigMessageBold ("\cRed Team surrenders");
 		FreezeBold();
 		delay (35 * 2);
 		Thing_Destroy (201);
@@ -104,6 +104,6 @@ script 751 (void) {
 		Thing_Destroy (209);
 		delay (5);
 		Thing_Destroy (214);
-		Log (s:"Nod surrenders.");
+		Log (s:"Red surrenders.");
 	}
 }

@@ -1,13 +1,13 @@
 ClearTeams
 
-Team "Steel Talons" {
-	PlayerColor "BF 9F 40"
-	TextColor "Gold"
+Team "Blue" {
+	PlayerColor "05 72 87"
+	TextColor "Blue"
 	PlayerStartThingNumber 5080
 }
 
-Team "Black Hand" {
-	PlayerColor "7F 7F 7F"
+Team "Red" {
+	PlayerColor "7F 00 00"
 	TextColor "Red"
 	PlayerStartThingNumber 5081
 }

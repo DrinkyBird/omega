@@ -71,9 +71,9 @@ script 309 (int Crate, int Override) {
 		DrawBuildingHUD();
 
 		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("\cGNod\cJ got \cDBase Miracle!");
+			IntelMessageBold ("\cGRed\cJ got \cDBase Miracle!");
 		else
-			IntelMessageBold ("\cFGDI\cJ got \cDBase Miracle!");
+			IntelMessageBold ("\cHBlue\cJ got \cDBase Miracle!");
 		
 		IntelMessage ("\cDBase miracle!");
 		break;
@@ -172,9 +172,9 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound ("powerup/invisound", 255);
 		
 		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("\cGNod\c- got \cUStealth Crate!");
+			IntelMessageBold ("\cGRed\c- got \cUStealth Crate!");
 		else
-			IntelMessageBold ("\cFGDI\c- got \cUStealth Crate!");
+			IntelMessageBold ("\cHBlue\c- got \cUStealth Crate!");
 			
 		SetArmorGrade (-1, AGF_ADDITIVE | ARMOD_NOCHANGE);
 		GiveInventory ("StealthLaserRifle", 1);
@@ -202,9 +202,9 @@ script 309 (int Crate, int Override) {
 		Log (s:pname (-1), s:" gets Iron Curtain.");
 		
 		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("\cGNod\cJ got \cCIron Curtain!!");
+			IntelMessageBold ("\cGRed\cJ got \cCIron Curtain!!");
 		else if (PlayerTeam() == TEAM_BLUE)
-			IntelMessageBold ("\cFGDI\cJ got \cCIron Curtain!!");
+			IntelMessageBold ("\cHBlue\cJ got \cCIron Curtain!!");
 		
 		IntelMessage ("\cCIron curtain!!");
 		break;
@@ -220,9 +220,9 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound ("powerup/kama", 255);
 		
 		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("Some crazy ass \cGNod\cJ got\nthe \cKKamikaze Crate!!");
+			IntelMessageBold ("Some crazy ass \cGRed\cJ got\nthe \cKKamikaze Crate!!");
 		else
-			IntelMessageBold ("Some crazy ass \cFGDI\cJ got\nthe \cKKamikaze Crate!!");
+			IntelMessageBold ("Some crazy ass \cHBlue\cJ got\nthe \cKKamikaze Crate!!");
 			
 		IntelMessage ("\cKKamikaze!");
 		GiveInventory ("IsKamikaze", 1);
@@ -239,9 +239,9 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound ("powerup/plas", 255);
 		
 		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("\cGNod\cJ got \cNPlasma Cannon Crate!");
+			IntelMessageBold ("\cGRed\cJ got \cNPlasma Cannon Crate!");
 		else if (PlayerTeam() == TEAM_BLUE)
-			IntelMessageBold ("\cFGDI\cJ got \cNPlasma Cannon Crate!");
+			IntelMessageBold ("\cHBlue\cJ got \cNPlasma Cannon Crate!");
 		
 		IntelMessage ("\cNPlasma Cannon!");
 		
@@ -411,7 +411,7 @@ script 309 (int Crate, int Override) {
 		AmbientSound ("powerup/crsh", 255);
 		
 		if (PlayerTeam() == TEAM_RED) {
-			IntelMessageBold ("Poor \cGNod\cJ got \cRBase Crasher");
+			IntelMessageBold ("Poor \cGRed\cJ got \cRBase Crasher");
 			Thing_Damage (201, 4000, 0);
 			Thing_Damage (203, 4000, 0);
 			Thing_Damage (205, 4000, 0);
@@ -419,7 +419,7 @@ script 309 (int Crate, int Override) {
 			Thing_Damage (214, 2500, 0);
 		}
 		else if (PlayerTeam() == TEAM_BLUE) {
-			IntelMessageBold ("Poor \cFNod\cJ got \cRBase Crasher");
+			IntelMessageBold ("Poor \cFRed\cJ got \cRBase Crasher");
 			Thing_Damage (101, 4000, 0);
 			Thing_Damage (103, 4000, 0);
 			Thing_Damage (105, 4000, 0);
@@ -509,9 +509,9 @@ script 309 (int Crate, int Override) {
 		LocalAmbientSound ("switch/lrm", 127);
 		
 		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("\cGNod\cJ got \cKJuggernaut Crate!");
+			IntelMessageBold ("\cGRed\cJ got \cKJuggernaut Crate!");
 		else if (PlayerTeam() == TEAM_BLUE)
-			IntelMessageBold ("\cFGDI\cJ got \cKJuggernaut Crate!");
+			IntelMessageBold ("\cHBlue\cJ got \cKJuggernaut Crate!");
 		
 		IntelMessage (strparam (s:"\cJJuggernaut suit!\nPress \cF", k: "invuse", s:"\cJ to enter"));
 		break;
@@ -529,9 +529,9 @@ script 309 (int Crate, int Override) {
 		GiveInventory ("BerserkHue", 1);
 		
 		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("\cFGDI\cJ got \cGBerserk!");
+			IntelMessageBold ("\cHBlue\cJ got \cGBerserk!");
 		else if (PlayerTeam() == TEAM_BLUE)
-			IntelMessageBold ("\cGNod\cJ got \cGBerserk!");
+			IntelMessageBold ("\cGRed\cJ got \cGBerserk!");
 		
 		IntelMessage ("\cGBerserk!");
 		Log (s:pname (-1), s:" gets Berserk Crate.");

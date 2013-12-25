@@ -336,9 +336,9 @@ function void TakeTickets (int team, int count) {
 		if (d < 0) d = 0;
 		
 		SetFont ("BIGFONT");
-		HudMessageBold (s: "\cFSteel Talons\cJ lose out of ticket loss";
+		HudMessageBold (s: "\cHBlue Team\cJ lose out of ticket loss";
 			HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0);
-		Log (s: "GDI loses out of ticket loss");
+		Log (s: "Blue loses out of ticket loss");
 	
 		GameOver = true;
 		ConsoleCommand ("pointlimit 1");
@@ -350,9 +350,9 @@ function void TakeTickets (int team, int count) {
 		if (d < 0) d = 0;
 		
 		SetFont ("BIGFONT");
-		HudMessageBold (s: "\cgBlack Hand\cJ loses out of ticket loss";
+		HudMessageBold (s: "\cGRed Team\cJ loses out of ticket loss";
 			HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0);
-		Log (s: "Nod loses out of ticket loss");
+		Log (s: "Red loses out of ticket loss");
 		
 		GameOver = true;
 		ConsoleCommand ("pointlimit 1");

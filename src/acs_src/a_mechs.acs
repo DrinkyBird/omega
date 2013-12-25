@@ -376,7 +376,7 @@ script 315 (void) NET CLIENTSIDE {
 		restart;
 	}
 	else if (CheckWeapon ("JuggernautWeapons")) {
-		// [Dusk] Juggernaut weapons. The nuke is an ion bomb for GDI
+		// [Dusk] Juggernaut weapons. The nuke is an ion bomb for blue
 		str nukename = "NUKE";
 		
 		if (PlayerTeam() == TEAM_BLUE)

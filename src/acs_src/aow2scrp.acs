@@ -250,7 +250,10 @@ str BuildingNames[11] = {
 	"Teleporter #2"
 };
 
-str TeamNames[2] = {"GDI", "Nod"};
+str TeamNames[2] = {
+	"Blue",
+	"Red"
+};
 
 int EventScripts;
 int Credits[MAXPLAYERS];
