@@ -9,91 +9,93 @@
  */
 
 // death script: victim POV
-script 994 DEATH {
-	Thing_ChangeTID (0, 9999);
-	TakeInventory ("ThermalCloakingTime", 90);
-	TakeInventory ("InUtilMenu", 1);
-	SetPlayerProperty (0, 0, PROP_FROZEN);
-	SetPlayerProperty (0, 0, PROP_TOTALLYFROZEN);
-	
+script 994 DEATH
+{	Thing_ChangeTID( 0, 9999 );
+	TakeInventory( "ThermalCloakingTime", 90 );
+	TakeInventory( "InUtilMenu", 1 );
+	SetPlayerProperty( 0, 0, PROP_FROZEN );
+	SetPlayerProperty( 0, 0, PROP_TOTALLYFROZEN );
+
 	// [Dusk] Drop Tiberium if a harvester dies
-	if (CheckInventory ("TiberiumCrystal") && !CheckInventory ("IsInSpawnRoom"))
-		SpawnSpotForced ("TiberiumCrystalDropped", 0, 0, 0);
-	
+	if( CheckInventory( "TiberiumCrystal" ) && !CheckInventory( "IsInSpawnRoom" ))
+		SpawnSpotForced( "TiberiumCrystalDropped", 0, 0, 0 );
+
 	// [Dusk] If the victim was holding the bomb pack, make a defuse sound
-	if (CheckWeapon ("BombPack") && !CheckInventory ("IsTerrorist"))
-		ActivatorSound ("c4/disarm", 127);
-	
+	if( CheckWeapon( "BombPack" ) && !CheckInventory( "IsTerrorist" ))
+		ActivatorSound( "c4/disarm", 127 );
+
 	// [Dusk] Activate plasma cannon cooldown now if the player had a plasma cannon
-	if (CheckInventory ("PlasmaCannon"))
-		PlasmaCooldown[PlayerNumber()] = Timer() +  (GetCVAR ("aow_plasmacooldown") * 35 * 60);
-	
+	if( CheckInventory( "PlasmaCannon" ))
+		PlasmaCooldown[PlayerNumber()] = Timer() + ( GetCVAR( "aow_plasmacooldown" ) * 35 * 60 );
+
 	// [Dusk] Infantry is worth one point, mechs are 3 or 4 points.
 	int points = 1;
-	
-	if (CheckInventory ("IsMech")) {
-		if (CheckInventory ("OrcaWeapons") ||
-		CheckInventory ("RavenWeapons")) {
-			points = 3;
+
+	if( CheckInventory( "IsMech" ))
+	{	if( CheckInventory( "OrcaWeapons" ) ||
+		CheckInventory( "RavenWeapons" ))
+		{	points = 3;
 		}
-		else if (CheckInventory ("WolverineWeapons") ||
-			CheckInventory ("MadCatWeapons") ||
-			CheckInventory ("TitanWeapons") ||
-			CheckInventory ("JuggernautWeapons")) {
-			points = 4;
+		else if( CheckInventory( "WolverineWeapons" ) ||
+				 CheckInventory( "MadCatWeapons" ) ||
+				 CheckInventory( "TitanWeapons" ) ||
+				 CheckInventory( "JuggernautWeapons" ))
+		{	points = 4;
 		}
 	}
-	
-	int killer_t = GetTargetInfo (TARGETINFO_TID);
-	int killer_p = GetTargetInfo (TARGETINFO_PlayerNum);
-	
+
+	int killer_t = GetTargetInfo( TARGETINFO_TID );
+	int killer_p = GetTargetInfo( TARGETINFO_PlayerNum );
+
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * KILLER POV STARTS HERE
 	 */
-	
+
 	int n0 = PlayerNumber();
 	int t0 = PlayerTeam();
-	SetActivatorToTarget (0);
-	
+	SetActivatorToTarget( 0 );
+
 	int n1 = PlayerNumber();
 	int t1 = PlayerTeam();
-	
+
 	// Remove tickets from the victim team
-	TakeTickets (t0, points);
-	
+	TakeTickets( t0, points );
+
 	// [Dusk] Don't award suicides
-	if (n0 != n1 && n1 != -1) {
-		GivePoints (2 * points);
-		LocalAmbientSound ("game/boink", 127);
-		GiveCredits (-1, GetCVAR ("aow_creditfrag"));
-		AddExperience (50);
-		
-		delay (5);
-		
-		if (!FirstBlood) {
-			// we got first blood!
+	if( n0 != n1 && n1 != -1 )
+	{	GivePoints( 2 * points );
+		LocalAmbientSound( "game/boink", 127 );
+		GiveCredits( -1, GetCVAR( "aow_creditfrag" ));
+		AddExperience( 50 );
+
+		delay( 5 );
+
+		if( !FirstBlood )
+		{	// we got first blood!
 			FirstBlood = true;
-		IntelMessageBold (strparam (n: 0, s: "\c- gets first blood!"));
+IntelMessageBold( strparam( n: 0, s: "\c- gets first blood!" ));
 		}
 	}
 }
 
 // Juggernaut stomp health
-script 923 (void) {
-	SetActivatorToTarget (0);
-	
-	if (!CheckWeapon ("JuggernautWeapons")) terminate;
-	
-	SetHealth (GetHealth() + 100);
-	
-	if (GetHealth() > GetSpawnHealth()) SetHealth (GetSpawnHealth());
+script 923( void )
+{	SetActivatorToTarget( 0 );
+
+	if( !CheckWeapon( "JuggernautWeapons" ))
+		terminate;
+
+	SetHealth( GetHealth() + 100 );
+
+	if( GetHealth() > GetSpawnHealth() )
+		SetHealth( GetSpawnHealth() );
 }
 
 // [SP] Fragging a monster
-script 947 (int Amount) {
-	if (ActivatorTID() >= TID_Player && ActivatorTID() <  (TID_Player + MAXPLAYERS)) {
-		LocalAmbientSound ("game/boink", 255);
-		AwardCredits (15 * Amount);
-		AddExperience (10 * Amount);
+script 947( int Amount )
+{	if( ActivatorTID() >= TID_Player && ActivatorTID() < ( TID_Player + MAXPLAYERS ))
+	{	LocalAmbientSound( "game/boink", 255 );
+		AwardCredits( 15 * Amount );
+		AddExperience( 10 * Amount );
 	}
 }

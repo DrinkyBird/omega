@@ -11,136 +11,201 @@
 // [Dusk] TODO: this thing is a pretty damn big hack. Needs to be able
 // to detect whether you can get a certain crate instead of forcing the desired
 // crate effect - that's just dumb.
-script 955 (int action) {
-	if (!CheckWeapon ("CrateChooser")) terminate;
-	
+script 955( int action )
+{	if( !CheckWeapon( "CrateChooser" )) terminate;
+
 	// INIT
-	if (action == 0) {
-		if (CheckInventory ("CrateChooserReady")) terminate;
-		
-		if (!GetCVAR ("aow_mechs"))
-			GiveInventory ("NoMechs", 1);
-		
-		GiveInventory ("CrateChooserReady", 1);
+	if( action == 0 )
+	{	if( CheckInventory( "CrateChooserReady" )) terminate;
+
+		if( !GetCVAR( "aow_mechs" ))
+			GiveInventory( "NoMechs", 1 );
+
+		GiveInventory( "CrateChooserReady", 1 );
 		terminate;
 	}
-	
+
 	// ROTATE
-	if (action == 1) {
-		if (CheckInventory ("CrateChooserRotation") == 21)
-			TakeInventory ("CrateChooserRotation", 21);
+	if( action == 1 )
+	{	if( CheckInventory( "CrateChooserRotation" ) == 21 )
+			TakeInventory( "CrateChooserRotation", 21 );
 		else
-			GiveInventory ("CrateChooserRotation", 1);
-			
+			GiveInventory( "CrateChooserRotation", 1 );
+
 		terminate;
 	}
-	
+
 	// USE
-	if (action == 2) {
-		switch (CheckInventory ("CrateChooserRotation")) {
-		case 0: ACS_ExecuteAlways (309, 0, 1, 1); break;
-		case 1: ACS_ExecuteAlways (309, 0, 3, 1); break;
-		case 2: ACS_ExecuteAlways (309, 0, 4, 1); break;
-		case 3: ACS_ExecuteAlways (309, 0, 5, 1); break;
-		case 4: ACS_ExecuteAlways (309, 0, 6, 1); break;
-		case 5: ACS_ExecuteAlways (309, 0, 7, 1); break;
-		case 6: ACS_ExecuteAlways (309, 0, 8, 1); break;
-		case 7: ACS_ExecuteAlways (309, 0, 10, 1); break;
-		case 8: ACS_ExecuteAlways (309, 0, 11, 1); break;
-		case 9: ACS_ExecuteAlways (309, 0, 12, 1); break;
-		case 10: ACS_ExecuteAlways (309, 0, 13, 1); break;
-		case 11: ACS_ExecuteAlways (309, 0, 15, 1); break;
-		case 12: ACS_ExecuteAlways (309, 0, 38, 1); break;
-		case 13:
-		
-			if (!GetCVAR ("aow_mechs")) {
-				DisplayCross();
-				SETFONT ("BigFont");
-			HudMessage (s: "Mechs have been disabled for this map!";
-							HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
-				GiveInventory ("CrateChooserFailure", 1);
-				terminate;
-			}
-			
-			ACS_ExecuteAlways (309, 0, 45, 1);
-			break;
-		
-		case 14: ACS_ExecuteAlways (309, 0, 47, 1); break;
-		case 15: ACS_ExecuteAlways (309, 0, 53, 1); break;
-		case 16: ACS_ExecuteAlways (309, 0, 49, 1); break;
-		case 17: ACS_ExecuteAlways (309, 0, 52, 1); break;
-		case 18: ACS_ExecuteAlways (309, 0, 57, 1); break;
-		case 19: ACS_ExecuteAlways (309, 0, 63, 1); break;
-		case 20: ACS_ExecuteAlways (309, 0, 65, 1); break;
-		case 21: ACS_ExecuteAlways (309, 0, 67, 1); break;
-		default: ACS_ExecuteAlways (309, 0); break;
+	if( action == 2 )
+	{	switch( CheckInventory( "CrateChooserRotation" ))
+		{	case 0:
+				ACS_ExecuteAlways( 309, 0, 1, 1 );
+				break;
+
+			case 1:
+				ACS_ExecuteAlways( 309, 0, 3, 1 );
+				break;
+
+			case 2:
+				ACS_ExecuteAlways( 309, 0, 4, 1 );
+				break;
+
+			case 3:
+				ACS_ExecuteAlways( 309, 0, 5, 1 );
+				break;
+
+			case 4:
+				ACS_ExecuteAlways( 309, 0, 6, 1 );
+				break;
+
+			case 5:
+				ACS_ExecuteAlways( 309, 0, 7, 1 );
+				break;
+
+			case 6:
+				ACS_ExecuteAlways( 309, 0, 8, 1 );
+				break;
+
+			case 7:
+				ACS_ExecuteAlways( 309, 0, 10, 1 );
+				break;
+
+			case 8:
+				ACS_ExecuteAlways( 309, 0, 11, 1 );
+				break;
+
+			case 9:
+				ACS_ExecuteAlways( 309, 0, 12, 1 );
+				break;
+
+			case 10:
+				ACS_ExecuteAlways( 309, 0, 13, 1 );
+				break;
+
+			case 11:
+				ACS_ExecuteAlways( 309, 0, 15, 1 );
+				break;
+
+			case 12:
+				ACS_ExecuteAlways( 309, 0, 38, 1 );
+				break;
+
+			case 13:
+
+				if( !GetCVAR( "aow_mechs" ))
+				{	DisplayCross();
+					SETFONT( "BigFont" );
+HudMessage( s: "Mechs have been disabled for this map!";
+								HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+					GiveInventory( "CrateChooserFailure", 1 );
+					terminate;
+				}
+
+				ACS_ExecuteAlways( 309, 0, 45, 1 );
+				break;
+
+			case 14:
+				ACS_ExecuteAlways( 309, 0, 47, 1 );
+				break;
+
+			case 15:
+				ACS_ExecuteAlways( 309, 0, 53, 1 );
+				break;
+
+			case 16:
+				ACS_ExecuteAlways( 309, 0, 49, 1 );
+				break;
+
+			case 17:
+				ACS_ExecuteAlways( 309, 0, 52, 1 );
+				break;
+
+			case 18:
+				ACS_ExecuteAlways( 309, 0, 57, 1 );
+				break;
+
+			case 19:
+				ACS_ExecuteAlways( 309, 0, 63, 1 );
+				break;
+
+			case 20:
+				ACS_ExecuteAlways( 309, 0, 65, 1 );
+				break;
+
+			case 21:
+				ACS_ExecuteAlways( 309, 0, 67, 1 );
+				break;
+
+			default:
+				ACS_ExecuteAlways( 309, 0 );
+				break;
 		}
-		
-		ActivatorSound ("powerup/basic", 127);
+
+		ActivatorSound( "powerup/basic", 127 );
 	}
 }
 
 // HUD
-script 954 (void) NET CLIENTSIDE {
-	str CrateNote = "";
+script 954( void ) NET CLIENTSIDE
+{	str CrateNote = "";
 	int id;
-	
-	while (CheckWeapon ("CrateChooser") && GetActorProperty (ActivatorTID(), APROP_HEALTH) >= 0) {
-		id = CheckInventory ("CrateChooserRotation");
+
+	while( CheckWeapon( "CrateChooser" ) && GetActorProperty( ActivatorTID(), APROP_HEALTH ) >= 0 )
+	{	id = CheckInventory( "CrateChooserRotation" );
 		CrateNote = "";
-		
-		if (id == 13 && CheckInventory ("NoMechs"))
+
+		if( id == 13 && CheckInventory( "NoMechs" ))
 			CrateNote = "\cUMechs aren't allowed\n\cUon this match!";
-		
-		SetFont ("SMALLFONT");
-		HudMessage (s: "\cCCHOOSE YOUR CRATE\n\n",
-			s:CrateChooserColor (0), s:"ARMOUR UPGRADE\n",
-			s:CrateChooserColor (1), s:"CHEM PROOF\n",
-			s:CrateChooserColor (2), s:"FIREPOWER\n",
-			s:CrateChooserColor (3), s:"BONUS CREDITS\n",
-			s:CrateChooserColor (4), s:"BONUS EXP\n",
-			s:CrateChooserColor (5), s:"FIRE PROOF\n",
-			s:CrateChooserColor (6), s:"STEALTH\n",
-			s:CrateChooserColor (7), s:"KAMIKAZE\n",
-			s:CrateChooserColor (8), s:"PLASMA CANNON\n",
-			s:CrateChooserColor (9), s:"RESIGN\n",
-			s:CrateChooserColor (10), s:"SPEED UPGRADE\n",
-			s:CrateChooserColor (11), s:"TIME GUN\n",
-			s:CrateChooserColor (12), s:"UTILITY GUN\n",
-			s:CrateChooserColor (13), s:"GUARDIAN\n",
-			s:CrateChooserColor (14), s:"HEAL RADIUS\n",
-			s:CrateChooserColor (15), s:"AI MARINE\n",
-			s:CrateChooserColor (16), s:"TEAM REVIVAL\n",
-			s:CrateChooserColor (17), s:"CHAINSAW\n",
-			s:CrateChooserColor (18), s:"THERMAL CLOAKING\n",
-			s:CrateChooserColor (19), s:"REMOTE C4\n",
-			s:CrateChooserColor (20), s:"PARTIAL INVISIBILITY\n",
-			s:CrateChooserColor (21), s:"RANDOM WEAPON\n",
-			s:"\cCUse Alt-Fire to scroll,\n\cCprimary to activate.\n\n", s: CrateNote;
-			HUDMSG_FADEOUT, 15, CR_WHITE, -0.75, -0.25, 0.18, 0.5);
-		
-		delay (5);
+
+		SetFont( "SMALLFONT" );
+HudMessage( s: "\cCCHOOSE YOUR CRATE\n\n",
+s: CrateChooserColor( 0 ), s: "ARMOUR UPGRADE\n",
+s: CrateChooserColor( 1 ), s: "CHEM PROOF\n",
+s: CrateChooserColor( 2 ), s: "FIREPOWER\n",
+s: CrateChooserColor( 3 ), s: "BONUS CREDITS\n",
+s: CrateChooserColor( 4 ), s: "BONUS EXP\n",
+s: CrateChooserColor( 5 ), s: "FIRE PROOF\n",
+s: CrateChooserColor( 6 ), s: "STEALTH\n",
+s: CrateChooserColor( 7 ), s: "KAMIKAZE\n",
+s: CrateChooserColor( 8 ), s: "PLASMA CANNON\n",
+s: CrateChooserColor( 9 ), s: "RESIGN\n",
+s: CrateChooserColor( 10 ), s: "SPEED UPGRADE\n",
+s: CrateChooserColor( 11 ), s: "TIME GUN\n",
+s: CrateChooserColor( 12 ), s: "UTILITY GUN\n",
+s: CrateChooserColor( 13 ), s: "GUARDIAN\n",
+s: CrateChooserColor( 14 ), s: "HEAL RADIUS\n",
+s: CrateChooserColor( 15 ), s: "AI MARINE\n",
+s: CrateChooserColor( 16 ), s: "TEAM REVIVAL\n",
+s: CrateChooserColor( 17 ), s: "CHAINSAW\n",
+s: CrateChooserColor( 18 ), s: "THERMAL CLOAKING\n",
+s: CrateChooserColor( 19 ), s: "REMOTE C4\n",
+s: CrateChooserColor( 20 ), s: "PARTIAL INVISIBILITY\n",
+s: CrateChooserColor( 21 ), s: "RANDOM WEAPON\n",
+s: "\cCUse Alt-Fire to scroll,\n\cCprimary to activate.\n\n", s: CrateNote;
+		HUDMSG_FADEOUT, 15, CR_WHITE, -0.75, -0.25, 0.18, 0.5 );
+
+		delay( 5 );
 	}
 }
 
-function str CrateChooserColor (int id) {
-	bool disabled = false;
-	
-	if (id == 13 && CheckInventory ("NoMechs"))
+function str CrateChooserColor( int id )
+{	bool disabled = false;
+
+	if( id == 13 && CheckInventory( "NoMechs" ))
 		disabled = true;
-	
-	if (CheckInventory ("CrateChooserRotation") == id) {
-		if (disabled)
+
+	if( CheckInventory( "CrateChooserRotation" ) == id )
+	{	if( disabled )
 			return "\cU";
-		
+
 		return "\cD";
 	}
-	else {
-		if (disabled)
+	else
+	{	if( disabled )
 			return "\cM";
-		
+
 		return "\cQ";
 	}
-	
+
 	return "";
 }

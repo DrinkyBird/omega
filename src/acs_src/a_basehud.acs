@@ -1,70 +1,71 @@
 // BUILDING HUD CODE
-script 930 (int what, int team) {
-	if (ActivatorTID() == 0)
+script 930( int what, int team )
+{	if( ActivatorTID() == 0 )
 		terminate;
-		
+
 	int update = false;
-	
+
 	// Check did the health percentage change.
-	int LastHealth = CheckInventory ("TerminalLastHealth");
-	int perc = BuildingHealth (ActivatorTID());
-	
-	if (perc == LastHealth)
+	int LastHealth = CheckInventory( "TerminalLastHealth" );
+	int perc = BuildingHealth( ActivatorTID() );
+
+	if( perc == LastHealth )
 		terminate;
-	
+
 	// Store the new "last health"
-	SetInventory ("TerminalLastHealth", perc);
-	
+	SetInventory( "TerminalLastHealth", perc );
+
 	DrawBuildingHud();
 }
 
-function void DrawBuildingHud (void) {
-	SetFont ("SMALLFONT");
+function void DrawBuildingHud( void )
+{	SetFont( "SMALLFONT" );
 	int y = -0.36;
 	int team, b, tid;
 	int i = 8850;
-	
-	if (SuddenDeath || TicketPool) {
-		HudMessageBold(
-			s:"\cHLives\cC: ", s:FractionColor (Tickets[TEAM_BLUE], StartingTickets), d:Tickets[TEAM_BLUE],
-			s:"\n\cGLives\cC: ", s:FractionColor (Tickets[TEAM_RED], StartingTickets), d:Tickets[TEAM_RED];
-			HUDMSG_PLAIN, i++, CR_BLUE, 0.012, y, 0.0);
+
+	if( SuddenDeath || TicketPool )
+	{	HudMessageBold(
+	s: "\cHLives\cC: ", s: FractionColor( Tickets[TEAM_BLUE], StartingTickets ), d: Tickets[TEAM_BLUE],
+	s: "\n\cGLives\cC: ", s: FractionColor( Tickets[TEAM_RED], StartingTickets ), d: Tickets[TEAM_RED];
+			HUDMSG_PLAIN, i++, CR_BLUE, 0.012, y, 0.0 );
 	}
-	
+
 	y += 3 * -SMALLSPACE;
-	
-	for (team = 0; team < 2; ++team) {
-		str textcolo = GetTeamProperty (team, TPROP_TextColor);
+
+	for( team = 0; team < 2; ++team )
+	{	str textcolo = GetTeamProperty( team, TPROP_TextColor );
 		str name = TeamNames[team];
-		
-		for (b = 0; b < NUM_BUILDINGS; ++b) {
-			tid = GetBuildingTid (b, team);
-			
-			if (IsMinorBuilding (b)) {
-				HudMessageBold (s:ExistsBuildingGreen (tid), s:"++",
-					s:ExistsBuilding (tid), s:GetBuildingName (b, team), s:"\cc: ",
-					s:ColorCodeHealth (BuildingHealth (tid)),
-					d:BuildingHealth (tid), s:"\cc%\n";
-					HUDMSG_PLAIN, i++, CR_GRAY, 0.012, y, 0.0);
-			} else {
-				HudMessageBold (s:ExistsBuilding (tid),
-					s:GetBuildingName (b, team), s:"\cc: ",
-					s:ColorCodeHealth (BuildingHealth (tid)),
-					d:BuildingHealth (tid), s:"\cc%\n";
-					HUDMSG_PLAIN, i++, CR_GRAY, 0.012, y, 0.0);
+
+		for( b = 0; b < NUM_BUILDINGS; ++b )
+		{	tid = GetBuildingTid( b, team );
+
+			if( IsMinorBuilding( b ))
+			{	HudMessageBold( s: ExistsBuildingGreen( tid ), s: "++",
+				s: ExistsBuilding( tid ), s: GetBuildingName( b, team ), s: "\cc: ",
+				s: ColorCodeHealth( BuildingHealth( tid )),
+				d: BuildingHealth( tid ), s: "\cc%\n";
+								HUDMSG_PLAIN, i++, CR_GRAY, 0.012, y, 0.0 );
 			}
-			
+			else
+			{	HudMessageBold( s: ExistsBuilding( tid ),
+				s: GetBuildingName( b, team ), s: "\cc: ",
+				s: ColorCodeHealth( BuildingHealth( tid )),
+				d: BuildingHealth( tid ), s: "\cc%\n";
+								HUDMSG_PLAIN, i++, CR_GRAY, 0.012, y, 0.0 );
+			}
+
 			y += -SMALLSPACE;
 		}
-		
-		HudMessageBold (s:PortalLinkColor (TEAM_BLUE, 0), s:"++",
-			s:PortalLinkColor (TEAM_BLUE, 1), s:"Portal\cc: ",
-			s:ColorCodeHealth (BuildingHealth (TID_PORTAL_BLUE1)),
-			d:BuildingHealth (TID_PORTAL_BLUE1), s:"\cc% / ",
-			s:ColorCodeHealth (BuildingHealth (TID_PORTAL_BLUE2)),
-			d:BuildingHealth (TID_PORTAL_BLUE2), s:"\cc%";
-			HUDMSG_PLAIN, i++, CR_BLUE, 0.012, y, 0.0);
-		
+
+HudMessageBold( s: PortalLinkColor( TEAM_BLUE, 0 ), s: "++",
+				s: PortalLinkColor( TEAM_BLUE, 1 ), s: "Portal\cc: ",
+				s: ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE1 )),
+				d: BuildingHealth( TID_PORTAL_BLUE1 ), s: "\cc% / ",
+				s: ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE2 )),
+				d: BuildingHealth( TID_PORTAL_BLUE2 ), s: "\cc%";
+						HUDMSG_PLAIN, i++, CR_BLUE, 0.012, y, 0.0 );
+
 		y += 2 * -SMALLSPACE;
 	}
 }
@@ -73,76 +74,77 @@ function void DrawBuildingHud (void) {
  * HUD message from the server. Unfortunately this still means newly connecting
  * clients don't see the HUD for up to 15 seconds, but eh...
  */
-script SC_HUDTicker OPEN {
-	while (true) {
-		delay (15 * 35);
+script SC_HUDTicker OPEN
+{	while( true )
+	{	delay( 15 * 35 );
 		DrawBuildingHud();
 	}
 }
 
-function int BuildingHealth (int tid) {
-	if (ThingCount (T_NONE, tid) == 0)
+function int BuildingHealth( int tid )
+{	if( ThingCount( T_NONE, tid ) == 0 )
 		return 0;
-	
-	int p = ( (GetActorHealth (tid) * 99) / GetActorSpawnHealth (tid)) + 1;
-	
-	if (p < 0)
+
+	int p = ( ( GetActorHealth( tid ) * 99 ) / GetActorSpawnHealth( tid )) + 1;
+
+	if( p < 0 )
 		p = 0;
-	
+
 	return p;
 }
 
-function str PortalLinkColor (int team, int teamcolor) {
-	int t1 = TID_PORTAL_BLUE1 + 2 * team;
+function str PortalLinkColor( int team, int teamcolor )
+{	int t1 = TID_PORTAL_BLUE1 + 2 * team;
 	int t2 = TID_PORTAL_BLUE2 + 2 * team;
-	
-	if (ThingCount (T_NONE, t1) && ThingCount (T_NONE, t2)) {
-		if (!teamcolor)
+
+	if( ThingCount( T_NONE, t1 ) && ThingCount( T_NONE, t2 ))
+	{	if( !teamcolor )
 			return "\cD";
-		
-		if (team == TEAM_BLUE)
+
+		if( team == TEAM_BLUE )
 			return "\cF";
-		
+
 		return "\cG";
 	}
-	
+
 	return "\cM";
 }
 
-function str ColorCodeHealth (int Percentage) {
-	if (Percentage == 100) // 100%
+function str ColorCodeHealth( int Percentage )
+{	if( Percentage == 100 ) // 100%
 		return "\cq";
-	else if (Percentage > 75) // healthy
+	else if( Percentage > 75 ) // healthy
 		return "\cd";
-	else if (Percentage > 50) // moderate
+	else if( Percentage > 50 ) // moderate
 		return "\cf";
-	else if (Percentage > 25) // low
+	else if( Percentage > 25 ) // low
 		return "\ci";
-	else if (Percentage > 0) // critical
+	else if( Percentage > 0 ) // critical
 		return "\cr";
-	
+
 	return "\cm"; //destroyed
 }
 
-function str ExistsBuilding (int tid) {
-	if (tid <= 199 ||  (tid >= 900 && tid % 2 == 1)) {
-		if (ThingCount (T_NONE, tid) > 0)
+function str ExistsBuilding( int tid )
+{	if( tid <= 199 || ( tid >= 900 && tid % 2 == 1 ))
+	{	if( ThingCount( T_NONE, tid ) > 0 )
 			return "\cH";
 		else
 			return "\cM";
-	} else {
-		if (ThingCount (T_NONE, tid) > 0)
+	}
+	else
+	{	if( ThingCount( T_NONE, tid ) > 0 )
 			return "\cG";
 		else
 			return "\cM";
 	}
-	
+
 	return "\cU";
 }
 
-function str ExistsBuildingGreen (int tid) {
-	if (ThingCount (T_NONE, tid))
+function str ExistsBuildingGreen( int tid )
+{	if( ThingCount( T_NONE, tid ))
 		return "\cD";
-	
+
 	return "\cM";
 }

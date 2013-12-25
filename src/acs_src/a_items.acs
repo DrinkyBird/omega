@@ -5,102 +5,106 @@
 // You may use portions of this script in your project as long as you give credit where credit is
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
-script SC_InventoryItemUse (int action, int team) {
-	int x, y, z;
+script SC_InventoryItemUse( int action, int team )
+{	int x, y, z;
 	str marine;
-	
-	switch (action) {
-	case INVITEM_Beacon:
-		/* Plant superweapon beacon */
-		if (ActivatorTID() < TID_Player || ActivatorTID() >=  (TID_Player + MAXPLAYERS))
-			terminate;
-		
-		/* To prevent accidental planting, nukes must be double-used. */
-		if (!CheckInventory ("BeaconUseToken")) {
-			GiveInventory ("BeaconUseToken", 1);
-			ActivatorSound ("beacon/safetylock", 80);
-			SetFont ("BIGFONT");
-			HudMessage (s:"BEACON SAFETY LOCK DISENGAGED";
-				HUDMSG_FADEOUT, 0, CR_RED,
-				0.1, 0.95, 2.0, 0.25);
-			
-			delay (2 * 35);
-			TakeInventory ("BeaconUseToken", 1);
-			terminate;
-		}
-		
-		/* Begin planting sequence */
-		TakeInventory ("BeaconUseToken", 1);
-		SetPlayerProperty (0, 1, PROP_TOTALLYFROZEN);
-		
-		/* Wait 5 seconds. We have to iterate the delay second by second so that
-		 * if the player dies, this gets cancelled properly. */
-		for (int i = 0; i < 5; ++i) {
-			delay (35);
-			
-			if (GetHealth() <= 0)
+
+	switch( action )
+	{	case INVITEM_Beacon:
+
+			/* Plant superweapon beacon */
+			if( ActivatorTID() < TID_Player || ActivatorTID() >= ( TID_Player + MAXPLAYERS ))
 				terminate;
-		}
-		
-		/* Spawn the nuke beacon. */
-		if (PlayerTeam() == TEAM_BLUE)
-			SpawnProjectile (ActivatorTID(), "IonBeaconThrown", 0, 0, -5, 1, 0);
-		else
-			SpawnProjectile (ActivatorTID(), "NukeBeaconThrown", 0, 0, -5, 1, 0);
-		
-		/* Thaw the player now and write this event to the server log. */
-		Log (s: pname (-1), s: " plants ", s: cond (PlayerTeam() == TEAM_RED, "Nuclear Strike Beacon", "Ion Cannon Beacon"));
-		SetPlayerProperty (0, 0, PROP_TOTALLYFROZEN);
-		break;
-	
-	case INVITEM_RefillC4:
-		/* Refill remote C4 */
-		if (CheckInventory ("RemoteC4Count") > 0)
-			SetInventory ("RemoteC4", CheckInventory ("RemoteC4Count"));
-		
-		/* Mines */
-		if (CheckInventory ("ProxyMineCount") > 0)
-			SetInventory ("ProxyMine", CheckInventory ("ProxyMineCount"));
-		
-		/* Timed C4 */
-		if (CheckInventory ("TimedC4Count") > 0)
-			SetInventory ("TimedC4", CheckInventory ("TimedC4Count"));
-		
-		break;
-	
-	case INVITEM_MarineBeacon:
-		/* The marine beacon summons a marine - try spawn it 32 units above the
-		 * beacon. If success, signal the beacon that it should go away. Otherwise
-		 * it will try again after a second. This setup ensures that the player
-		 * actually gets the marine he requested. */
-		marine = cond (team == TEAM_BLUE, "BlueBackup", "RedBackup");
-		x = GetActorX (0);
-		y = GetActorY (0);
-		z = GetActorZ (0) + 32.0;
-		
-		if (Spawn (marine, x, y, z)) {
-			Spawn ("TeleportFog", x, y, z);
-			SetActorState (0, "Done");
-			terminate;
-		}
-		break;
-	
-	case INVITEM_SelfHeal:
-		/* Self-heal item was used - give the syringe and switch to it. This
-		 * cannot be done in DECORATE because of the necessary one-tic delay. */
-		if (CheckInventory ("SelfHeal"))
-			terminate;
-		
-		GiveInventory ("SelfHeal", 1);
-		delay (1);
-		SetWeapon ("SelfHeal");
-		break;
+
+			/* To prevent accidental planting, nukes must be double-used. */
+			if( !CheckInventory( "BeaconUseToken" ))
+			{	GiveInventory( "BeaconUseToken", 1 );
+				ActivatorSound( "beacon/safetylock", 80 );
+				SetFont( "BIGFONT" );
+HudMessage( s: "BEACON SAFETY LOCK DISENGAGED";
+							HUDMSG_FADEOUT, 0, CR_RED,
+							0.1, 0.95, 2.0, 0.25 );
+
+				delay( 2 * 35 );
+				TakeInventory( "BeaconUseToken", 1 );
+				terminate;
+			}
+
+			/* Begin planting sequence */
+			TakeInventory( "BeaconUseToken", 1 );
+			SetPlayerProperty( 0, 1, PROP_TOTALLYFROZEN );
+
+			/* Wait 5 seconds. We have to iterate the delay second by second so that
+			 * if the player dies, this gets cancelled properly. */
+			for( int i = 0; i < 5; ++i )
+			{	delay( 35 );
+
+				if( GetHealth() <= 0 )
+					terminate;
+			}
+
+			/* Spawn the nuke beacon. */
+			if( PlayerTeam() == TEAM_BLUE )
+				SpawnProjectile( ActivatorTID(), "IonBeaconThrown", 0, 0, -5, 1, 0 );
+			else
+				SpawnProjectile( ActivatorTID(), "NukeBeaconThrown", 0, 0, -5, 1, 0 );
+
+			/* Thaw the player now and write this event to the server log. */
+Log( s: pname( -1 ), s: " plants ", s: cond( PlayerTeam() == TEAM_RED, "Nuclear Strike Beacon", "Ion Cannon Beacon" ));
+			SetPlayerProperty( 0, 0, PROP_TOTALLYFROZEN );
+			break;
+
+		case INVITEM_RefillC4:
+
+			/* Refill remote C4 */
+			if( CheckInventory( "RemoteC4Count" ) > 0 )
+				SetInventory( "RemoteC4", CheckInventory( "RemoteC4Count" ));
+
+			/* Mines */
+			if( CheckInventory( "ProxyMineCount" ) > 0 )
+				SetInventory( "ProxyMine", CheckInventory( "ProxyMineCount" ));
+
+			/* Timed C4 */
+			if( CheckInventory( "TimedC4Count" ) > 0 )
+				SetInventory( "TimedC4", CheckInventory( "TimedC4Count" ));
+
+			break;
+
+		case INVITEM_MarineBeacon:
+			/* The marine beacon summons a marine - try spawn it 32 units above the
+			 * beacon. If success, signal the beacon that it should go away. Otherwise
+			 * it will try again after a second. This setup ensures that the player
+			 * actually gets the marine he requested. */
+			marine = cond( team == TEAM_BLUE, "BlueBackup", "RedBackup" );
+			x = GetActorX( 0 );
+			y = GetActorY( 0 );
+			z = GetActorZ( 0 ) + 32.0;
+
+			if( Spawn( marine, x, y, z ))
+			{	Spawn( "TeleportFog", x, y, z );
+				SetActorState( 0, "Done" );
+				terminate;
+			}
+
+			break;
+
+		case INVITEM_SelfHeal:
+
+			/* Self-heal item was used - give the syringe and switch to it. This
+			 * cannot be done in DECORATE because of the necessary one-tic delay. */
+			if( CheckInventory( "SelfHeal" ))
+				terminate;
+
+			GiveInventory( "SelfHeal", 1 );
+			delay( 1 );
+			SetWeapon( "SelfHeal" );
+			break;
 	}
 }
 
 /* =============================================================================
  * HEALING RADIUS CODE
- * 
+ *
  * This script is called by the healing radius regularly with action=0, in which
  * the radius looks around for nearby players. If any are found, the radius starts
  * another instance of this script, with action=1. In this instance, the radius heals
@@ -114,33 +118,35 @@ script SC_InventoryItemUse (int action, int team) {
 #define HEALRAD_SEEK 0
 #define HEALRAD_HEAL 1
 int IsBeingHealed[MAXPLAYERS];
-script SC_HealingRadius (int action, int i) {
-	int shp, n;
-	
-	switch (action) {
-	case HEALRAD_SEEK:
-		for (i = 0; i < MAXPLAYERS; i++) {
-			if (GetActorHealth (TID_Player + i) < GetActorSpawnHealth (TID_Player + i) && !CheckActorInventory (TID_Player + i, "IsMech"))
-				if (CheckActorDistance (0, TID_Player + i, HEALRAD_RANGE) && !IsBeingHealed[i])
-					ACS_ExecuteAlways (SC_HealingRadius, 0, HEALRAD_HEAL, i);
-		}
-		break;
-		
-	case HEALRAD_HEAL:
-		IsBeingHealed[i] = true;
-		shp = GetActorSpawnHealth (TID_Player + i);
-		
-		do {
-			n = GetActorHealth (TID_Player + i) + HEALRAD_AMOUNT;
-			
-			if (n > shp)
-				n = shp;
-			
-			SetActorHealth (TID_Player + i, n);
-			delay (HEALRAD_DELAY);
-		} while (n < shp && n > 0 && CheckActorDistance (0, TID_Player + i, HEALRAD_RANGE));
-		
-		IsBeingHealed[i] = false;
-		break;
+script SC_HealingRadius( int action, int i )
+{	int shp, n;
+
+	switch( action )
+	{	case HEALRAD_SEEK:
+			for( i = 0; i < MAXPLAYERS; i++ )
+			{	if( GetActorHealth( TID_Player + i ) < GetActorSpawnHealth( TID_Player + i ) && !CheckActorInventory( TID_Player + i, "IsMech" ))
+					if( CheckActorDistance( 0, TID_Player + i, HEALRAD_RANGE ) && !IsBeingHealed[i] )
+						ACS_ExecuteAlways( SC_HealingRadius, 0, HEALRAD_HEAL, i );
+			}
+
+			break;
+
+		case HEALRAD_HEAL:
+			IsBeingHealed[i] = true;
+			shp = GetActorSpawnHealth( TID_Player + i );
+
+			do
+			{	n = GetActorHealth( TID_Player + i ) + HEALRAD_AMOUNT;
+
+				if( n > shp )
+					n = shp;
+
+				SetActorHealth( TID_Player + i, n );
+				delay( HEALRAD_DELAY );
+			}
+			while( n < shp && n > 0 && CheckActorDistance( 0, TID_Player + i, HEALRAD_RANGE ));
+
+			IsBeingHealed[i] = false;
+			break;
 	}
 }

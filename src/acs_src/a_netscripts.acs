@@ -1,138 +1,148 @@
 // [SP] This allows a spectator to spawn outside of the team selection room
-script 940 (int which) NET CLIENTSIDE {
-	if (PlayerInGame (PlayerNumber())) {
-		DisplayCross();
-		SETFONT ("BigFont");
-	HudMessage (s: "You are not a spectator!";
-		HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
+script 940( int which ) NET CLIENTSIDE
+{	if( PlayerInGame( PlayerNumber() ))
+	{	DisplayCross();
+		SETFONT( "BigFont" );
+HudMessage( s: "You are not a spectator!";
+		HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
 		terminate;
 	}
-	
-	switch (Which) {
-	case 0:
-		Teleport (random (1, 2));
-		break;
-	case 1:
-		FadeTo (0, 0, 0, 0.0, 0.0);
-		break;
+
+	switch( Which )
+	{	case 0:
+			Teleport( random( 1, 2 ));
+			break;
+
+		case 1:
+			FadeTo( 0, 0, 0, 0.0, 0.0 );
+			break;
 	}
 }
 
 // [Dusk] This allows players to switch to the losing team
-script 942 (void) NET {
-	// You sorta need a team first
-	if (!PlayerInGame (PlayerNumber()))
+script 942( void ) NET
+{	// You sorta need a team first
+	if( !PlayerInGame( PlayerNumber() ))
 		terminate;
-	
+
 	// Not during warm-up
-	if (Timer() <= 5 * 60 * 35 && !GetCVar ("aow_debug")) {
-		Error ("Too early to use this!");
+	if( Timer() <= 5 * 60 * 35 && !GetCVar( "aow_debug" ))
+	{	Error( "Too early to use this!" );
 		terminate;
 	}
-	
+
 	int score;
 	int team = PlayerTeam();
 	int newteam = 1 - team;
-	int oldplayers = GetTeamProperty (team, TPROP_NumPlayers);
-	int newplayers = GetTeamProperty (newteam, TPROP_NumPlayers);
-	
-	if (newplayers + 1 >= oldplayers) {
-		Error (strparam (s:"There are already enough players on ", s:TeamNames[newteam], s:"!"));
+	int oldplayers = GetTeamProperty( team, TPROP_NumPlayers );
+	int newplayers = GetTeamProperty( newteam, TPROP_NumPlayers );
+
+	if( newplayers + 1 >= oldplayers )
+	{	Error( strparam( s: "There are already enough players on ", s: TeamNames[newteam], s: "!" ));
 		terminate;
 	}
-	
-	if (BaseLeft[newteam] > BaseLeft[team]) {
-		Error (strparam (s:TeamNames[newteam], s:" has more buildings than ", s:TeamNames[team], s:"!"));
+
+	if( BaseLeft[newteam] > BaseLeft[team] )
+	{	Error( strparam( s: TeamNames[newteam], s: " has more buildings than ", s: TeamNames[team], s: "!" ));
 		terminate;
 	}
-	
-	score = GetTeamProperty (team, TPROP_NumPlayers) - GetTeamProperty (newteam, TPROP_NumPlayers) - 1 +
-		( (BaseLeft[team] - BaseLeft[newteam]) * 2);
-	
+
+	score = GetTeamProperty( team, TPROP_NumPlayers ) - GetTeamProperty( newteam, TPROP_NumPlayers ) - 1 +
+	( ( BaseLeft[team] - BaseLeft[newteam] ) * 2 );
+
 	// Logs and notices
-	str newcolor = cond (newteam == TEAM_BLUE, "\cF", "\cG");
-	IntelMessageBold (strparam (n:0, s:" switches to ", s:newcolor, s:TeamNames[newteam]));
-	Log (s:pname (-1), s: " switches to ", s:TeamNames[newteam], s:". (Score: ", d:score, s:")");
-	
-	ChangePlayerTeam (PlayerNumber(), newteam);
-	
+	str newcolor = cond( newteam == TEAM_BLUE, "\cF", "\cG" );
+IntelMessageBold( strparam( n: 0, s: " switches to ", s: newcolor, s: TeamNames[newteam] ));
+Log( s: pname( -1 ), s: " switches to ", s: TeamNames[newteam], s: ". (Score: ", d: score, s: ")" );
+
+	ChangePlayerTeam( PlayerNumber(), newteam );
+
 	// Give the reward
-	delay (35 * 2);
-	AddExperience (score * 50);
-	delay (35);
-	LocalAmbientSound ("powerup/credsound", 127);
-	AwardCredits (score * 200);
+	delay( 35 * 2 );
+	AddExperience( score * 50 );
+	delay( 35 );
+	LocalAmbientSound( "powerup/credsound", 127 );
+	AwardCredits( score * 200 );
 }
 
 // This allows players to sell weapons. Kinda like partial resign.
-script 950 (void) NET {
-	// Disabled for now over server crashes...
+script 950( void ) NET
+{	// Disabled for now over server crashes...
 	terminate;
-	
-	if (!PlayerInGame (PlayerNumber()))
+
+	if( !PlayerInGame( PlayerNumber() ))
 		terminate;
-	
-	if (CheckInventory ("IsMech"))
+
+	if( CheckInventory( "IsMech" ))
 		terminate;
-	
+
 	int price = 0;
 	str weapon = "";
-	
+
 	// Most weapons are primary weapons of some class, so try find that
 	// first. Make the price be 25% of the cost of the first found class
 	// which uses this weapon as the primary weapon.
-	for (int i = 0; i < NUM_CLASSES; ++i) {
-		if (!CheckWeapon (GetClassItemName (i, 0)))
+	for( int i = 0; i < NUM_CLASSES; ++i )
+	{	if( !CheckWeapon( GetClassItemName( i, 0 )) )
 			continue;
-		
-		weapon = GetClassItemName (i, 0);
+
+		weapon = GetClassItemName( i, 0 );
 		price = Classes[i][CK_COST] / 4;
-		
+
 		// Make it worth at least something
-		if (price < 25)
+		if( price < 25 )
 			price = 25;
-		
+
 		break;
 	}
-	
+
 	// Also let these weapons be sold too. Also, don't let the bomb pack be sold
-	// either even though it's a primary weapon. 
-	if (i >= NUM_CLASSES || i == CLASS_SuicideBomber) {
-		if (CheckWeapon ("Handgun")) {
-			price = 25;
+	// either even though it's a primary weapon.
+	if( i >= NUM_CLASSES || i == CLASS_SuicideBomber )
+	{	if( CheckWeapon( "Handgun" ))
+		{	price = 25;
 			weapon = "Handgun";
-		} else if (CheckWeapon ("EagerBeaver")) {
-			price = 125;
+		}
+		else if( CheckWeapon( "EagerBeaver" ))
+		{	price = 125;
 			weapon = "EagerBeaver";
-		} else if (CheckWeapon ("PlasmaCannon")) {
-			price = 375;
+		}
+		else if( CheckWeapon( "PlasmaCannon" ))
+		{	price = 375;
 			weapon = "PlasmaCannon";
-		} else if (CheckWeapon ("LaserRifle")) {
-			price = 75;
+		}
+		else if( CheckWeapon( "LaserRifle" ))
+		{	price = 75;
 			weapon = "LaserRifle";
-		} else if (CheckWeapon ("SniperRifleWeak")) {
-			price = 93;
+		}
+		else if( CheckWeapon( "SniperRifleWeak" ))
+		{	price = 93;
 			weapon = "SniperRifleWeak";
-		} else {
-			Error ("You can't sell that!");
+		}
+		else
+		{	Error( "You can't sell that!" );
 			terminate;
 		}
 	}
-	
-	TakeInventory (weapon, 1);
-	GiveCredits (-1, price);
-	LocalAmbientSound ("powerup/credsound", 127);
-	IntelMessage (strparam (s:"You have sold your ", s:weapon, s:" for \cq$\cd", d: price));
-	Log (s:pname (-1), s:" sells ", s:weapon, s:" for $", d:price);
+
+	TakeInventory( weapon, 1 );
+	GiveCredits( -1, price );
+	LocalAmbientSound( "powerup/credsound", 127 );
+IntelMessage( strparam( s: "You have sold your ", s: weapon, s: " for \cq$\cd", d: price ));
+Log( s: pname( -1 ), s: " sells ", s: weapon, s: " for $", d: price );
 }
 
 // [Dusk] This allows players to see their speed factor.
-script 921 (void) NET CLIENTSIDE {
-	int f = GetSpeed();
-	if (CheckInventory ("PowerSpeedUpgrade")) f = FixedMul (f, 1.25);
-	if (CheckInventory ("PowerFatigue")) f = FixedMul (f, 0.55);
-	if (CheckInventory ("PowerTimeGunBoost")) f = FixedMul (f, 1.4);
-	if (CheckInventory ("PowerTimeGunSlow")) f = FixedMul (f, 0.6);
-	
-	Log (s: "My speed is ", f:f);
+script 921( void ) NET CLIENTSIDE
+{	int f = GetSpeed();
+
+	if( CheckInventory( "PowerSpeedUpgrade" )) f = FixedMul( f, 1.25 );
+
+	if( CheckInventory( "PowerFatigue" )) f = FixedMul( f, 0.55 );
+
+	if( CheckInventory( "PowerTimeGunBoost" )) f = FixedMul( f, 1.4 );
+
+	if( CheckInventory( "PowerTimeGunSlow" )) f = FixedMul( f, 0.6 );
+
+Log( s: "My speed is ", f: f );
 }

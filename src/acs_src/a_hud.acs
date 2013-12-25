@@ -5,34 +5,34 @@
 // You may use portions of this script in your project as long as you give credit where credit is
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
-script 5 RESPAWN {
-	while (PlayerInGame (PlayerNumber()) && GetHealth() > 0) {
-		delay (35);
-		
-		if (!CheckWeapon ("StealthLaserRifle") && !CheckWeapon ("Knife"))
-			ACS_ExecuteAlways (310, 0, 3);
+script 5 RESPAWN
+{	while( PlayerInGame( PlayerNumber() ) && GetHealth() > 0 )
+	{	delay( 35 );
+
+		if( !CheckWeapon( "StealthLaserRifle" ) && !CheckWeapon( "Knife" ))
+			ACS_ExecuteAlways( 310, 0, 3 );
 	}
 }
 
-script SC_UpdateCreditDisplay (int p) {
-	SetActivator (TID_Player + p);
-	
-	if (PlayerNumber() != p)
+script SC_UpdateCreditDisplay( int p )
+{	SetActivator( TID_Player + p );
+
+	if( PlayerNumber() != p )
 		terminate;
-	
-	int color = cond (PlayerTeam() == TEAM_BLUE, CR_LIGHTBLUE, CR_BRICK);
-	
-	SetFont ("SMALLFONT");
-	HudMessage (s:"Credits: \cQ$\cD", d:GetCredits (PlayerNumber()), s:"\n",
-		s:"Experience: \cD", d:Experience[PlayerNumber()], s:"\cQ/\cD", d:GetExpNeed(), s:" XP", s:"\n\cJ",
+
+	int color = cond( PlayerTeam() == TEAM_BLUE, CR_LIGHTBLUE, CR_BRICK );
+
+	SetFont( "SMALLFONT" );
+	HudMessage( s: "Credits: \cQ$\cD", d: GetCredits( PlayerNumber() ), s: "\n",
+		s:"Experience: \cD", d: Experience[PlayerNumber()], s: "\cQ/\cD", d: GetExpNeed(), s: " XP", s: "\n\cJ",
 		s:RankTitles[Rank[PlayerNumber()]];
-			HUDMSG_PLAIN, 50 + PlayerNumber(), color, -0.685, -0.805, 1.5);
-	
-	SetFont (GetRankPic());
-	HudMessage (s: "a";
-		HUDMSG_PLAIN, 5000 + PlayerNumber(), CR_LIGHTBLUE, -0.92, -0.78, 1.5);
+		HUDMSG_PLAIN, 50 + PlayerNumber(), color, -0.685, -0.805, 1.5 );
+
+	SetFont( GetRankPic() );
+	HudMessage( s: "a";
+		HUDMSG_PLAIN, 5000 + PlayerNumber(), CR_LIGHTBLUE, -0.92, -0.78, 1.5 );
 }
 
-function void ShowStatus (int p) {
-	ACS_ExecuteWithResult (SC_UpdateCreditDisplay, p);
+function void ShowStatus( int p )
+{	ACS_ExecuteWithResult( SC_UpdateCreditDisplay, p );
 }

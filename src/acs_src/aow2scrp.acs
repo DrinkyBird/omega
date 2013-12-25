@@ -224,8 +224,8 @@
 
 bool Bots[MAX_MARINES];
 
-int BaseTIDs[18] = {
-	TID_BARRACKS_BLUE, TID_BARRACKS_RED,
+int BaseTIDs[18] =
+{	TID_BARRACKS_BLUE, TID_BARRACKS_RED,
 	TID_REFINERY_BLUE, TID_REFINERY_RED,
 	TID_RESCENTRE_BLUE, TID_RESCENTRE_RED,
 	TID_FACTORY_BLUE, TID_FACTORY_RED,
@@ -236,8 +236,8 @@ int BaseTIDs[18] = {
 	TID_AMMOREGEN_BLUE, TID_AMMOREGEN_RED
 };
 
-str BuildingNames[11] = {
-	"Barracks",
+str BuildingNames[11] =
+{	"Barracks",
 	"Refinery",
 	"Research Centre",
 	"War Factory",
@@ -250,8 +250,8 @@ str BuildingNames[11] = {
 	"Teleporter #2"
 };
 
-str TeamNames[2] = {
-	"Blue",
+str TeamNames[2] =
+{	"Blue",
 	"Red"
 };
 
@@ -259,8 +259,8 @@ int EventScripts;
 int Credits[MAXPLAYERS];
 int Experience[MAXPLAYERS];
 int Rank[MAXPLAYERS];
-str RankTitles[8] = {
-	"Private",
+str RankTitles[8] =
+{	"Private",
 	"Corporal",
 	"Sergeant",
 	"Master Sgt.",
@@ -408,8 +408,8 @@ int Classes[NUM_CLASSES][64];
 #define AGF_DONTADD 32
 
 // =============================================================================
-str NormalWeaponNames[MAX_NORMAL_WEAPONS] = {
-	"ArtilleryCannon",
+str NormalWeaponNames[MAX_NORMAL_WEAPONS] =
+{	"ArtilleryCannon",
 	"ChemicalSprayer",
 	"DoubleShotgun",
 	"EagerBeaver",

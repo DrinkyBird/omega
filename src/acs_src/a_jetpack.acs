@@ -8,110 +8,110 @@
  */
 
 // Jetpack toggle
-script SC_JetpackToggle (void) NET {
-	// Cannot jetpack without a jetpack
-	if (!CheckInventory ("Jetpack") || CheckInventory ("JetpackStartup"))
+script SC_JetpackToggle( void ) NET
+{	// Cannot jetpack without a jetpack
+	if( !CheckInventory( "Jetpack" ) || CheckInventory( "JetpackStartup" ))
 		terminate;
-		
-	if (!CheckInventory ("JetpackActive")) {
-		// Start up
-		
+
+	if( !CheckInventory( "JetpackActive" ))
+	{	// Start up
+
 		// Can't startup without fuels
-		if (CheckInventory ("JetpackFuel") < 5)
+		if( CheckInventory( "JetpackFuel" ) < 5 )
 			terminate;
-			
-		SetInventory ("JetpackStartup", 1);
-		ActivatorSound ("jumpjet/start", 127);
-		
+
+		SetInventory( "JetpackStartup", 1 );
+		ActivatorSound( "jumpjet/start", 127 );
+
 		// Activate jet quake
-		ACS_ExecuteAlways (SC_CL_JETPACKQUAKE, 0);
-		
+		ACS_ExecuteAlways( SC_CL_JETPACKQUAKE, 0 );
+
 		// Wait 2 seconds. If the player dies during liftoff, we need to cancel
 		// the jetpack or the player's new body will be able to fly.
-		for (int i = 0; i < 2; i++) {
-			delay (35);
-			
-			if (GetHealth() <= 0)
+		for( int i = 0; i < 2; i++ )
+		{	delay( 35 );
+
+			if( GetHealth() <= 0 )
 				terminate;
 		}
-		
-		GiveInventory ("JetpackStart", 1);
-		SetInventory ("JetpackActive", 1);
-		SetPlayerProperty (0, true, PROP_Fly);
-		SetInventory ("JetpackStartup", 0);
-		
+
+		GiveInventory( "JetpackStart", 1 );
+		SetInventory( "JetpackActive", 1 );
+		SetPlayerProperty( 0, true, PROP_Fly );
+		SetInventory( "JetpackStartup", 0 );
+
 		// Begin fuel drain
 		int p = 0;
 		int delaytime = 5;
-		
-		while (CheckInventory ("JetpackActive") &&
-				CheckInventory ("JetpackFuel") > 0 &&
-				GetHealth() > 0) {
-			// Every second, take 1 fuel
-			if (! (p %  (35 / delaytime)))
-				TakeInventory ("JetpackFuel", 1);
-				
+
+		while( CheckInventory( "JetpackActive" ) &&
+				CheckInventory( "JetpackFuel" ) > 0 &&
+				GetHealth() > 0 )
+		{	// Every second, take 1 fuel
+			if( !( p % ( 35 / delaytime )) )
+				TakeInventory( "JetpackFuel", 1 );
+
 			// [Dusk] Since +moveup and +movedown based flight with
 			// jumpjet has reached BS-level status, this is now disallowed
 			// and using it results in the jetpack being shut down.
-			if (GetPlayerInput (-1, INPUT_BUTTONS) &  (BT_MOVEUP | BT_MOVEDOWN))
+			if( GetPlayerInput( -1, INPUT_BUTTONS ) & ( BT_MOVEUP | BT_MOVEDOWN ))
 				restart;
-				
-			delay (delaytime);
+
+			delay( delaytime );
 			p++;
 		}
-		
+
 		// If we broke out of the loop with the jetpack
 		// still active, deactivate it now.
-		if (CheckInventory ("JetpackActive"))
+		if( CheckInventory( "JetpackActive" ))
 			restart;
 	}
 	else {
 		// Shut down
-		SetInventory ("JetpackStartup", 1);
-		SetInventory ("JetpackActive", 0);
-		ActivatorSound ("jumpjet/stop", 127);
-		SetPlayerProperty (0, false, PROP_Fly);
-		SetActorProperty (0, APROP_Gravity, 0.5);
-		GiveInventory ("JetpackEnd1", 1);
-		
-		delay (70);
-		
-		SetActorProperty (0, APROP_Gravity, 1.0);
-		GiveInventory ("JetpackEnd2", 1);
-		SetInventory ("JetpackStartup", 0);
+		SetInventory( "JetpackStartup", 1 );
+		SetInventory( "JetpackActive", 0 );
+		ActivatorSound( "jumpjet/stop", 127 );
+		SetPlayerProperty( 0, false, PROP_Fly );
+		SetActorProperty( 0, APROP_Gravity, 0.5 );
+		GiveInventory( "JetpackEnd1", 1 );
+
+		delay( 70 );
+
+		SetActorProperty( 0, APROP_Gravity, 1.0 );
+		GiveInventory( "JetpackEnd2", 1 );
+		SetInventory( "JetpackStartup", 0 );
 	}
 }
 
 // Quake the view while jetting
-script SC_CL_JETPACKQUAKE (void) CLIENTSIDE {
-	// But not if it's not us.
-	if (PlayerNumber() != consoleplayer)
+script SC_CL_JETPACKQUAKE( void ) CLIENTSIDE
+{	// But not if it's not us.
+	if( PlayerNumber() != consoleplayer )
 		terminate;
-		
+
 	int i;
-	
+
 	// Jet starts up
-	for (i = 1; i < 5; i++) {
-		Radius_Quake (i, 16, 0, 4, 0);
-		delay (16);
-		
+	for( i = 1; i < 5; i++ )
+	{	Radius_Quake( i, 16, 0, 4, 0 );
+		delay( 16 );
+
 		// If we die during liftoff, cancel out now.
-		if (GetHealth() < 0)
+		if( GetHealth() < 0 )
 			terminate;
 	}
-	
-	Radius_Quake (i, 6, 0, 4, 0);
-	delay (6);
-	
-	while (CheckInventory ("JetpackActive") && GetHealth() > 0) {
-		Radius_Quake (5, 8, 0, 4, 0);
-		delay (8);
+
+	Radius_Quake( i, 6, 0, 4, 0 );
+	delay( 6 );
+
+	while( CheckInventory( "JetpackActive" ) && GetHealth() > 0 )
+	{	Radius_Quake( 5, 8, 0, 4, 0 );
+		delay( 8 );
 	}
-	
+
 	// Jetpack deactivates, wear the quake off
-	for (i = 4; i > 0; i--) {
-		Radius_Quake (i, 16, 0, 4, 0);
-		delay (16);
+	for( i = 4; i > 0; i-- )
+	{	Radius_Quake( i, 16, 0, 4, 0 );
+		delay( 16 );
 	}
 }

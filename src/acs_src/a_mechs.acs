@@ -7,323 +7,328 @@
 
 // [Dusk] Functions to store the armor information to memory. This way we
 // can remove the armor from the player upon morph and restore it upon unmorph.
-function void MECH_PushArmorMod (void) {
-	SetInventory ("StoredArmorModifier", GetArmorModifier());
-	SetArmorGrade (NOCHANGE, ARMOD_NONE);
+function void MECH_PushArmorMod( void )
+{	SetInventory( "StoredArmorModifier", GetArmorModifier() );
+	SetArmorGrade( NOCHANGE, ARMOD_NONE );
 }
 
-function void MECH_PopArmorMod (void) {
-	int mod = CheckInventory ("StoredArmorModifier");
-	TakeInventory ("StoredArmorModifier", mod);
-	SetArmorGrade (NOCHANGE, mod);
+function void MECH_PopArmorMod( void )
+{	int mod = CheckInventory( "StoredArmorModifier" );
+	TakeInventory( "StoredArmorModifier", mod );
+	SetArmorGrade( NOCHANGE, mod );
 }
 
-script 45 (void) ACS_Execute (80, 0, MECH_WOLVERINE);
-script 46 (void) ACS_Execute (80, 0, MECH_TITAN);
-script 47 (void) ACS_Execute (80, 0, MECH_RAVEN);
-script 48 (void) ACS_Execute (80, 0, MECH_MADCAT);
-script 58 (void) ACS_Execute (80, 0, MECH_ORCA);
-script 59 (void) ACS_Execute (80, 0, MECH_GUARDIAN);
+script 45( void ) ACS_Execute( 80, 0, MECH_WOLVERINE );
+script 46( void ) ACS_Execute( 80, 0, MECH_TITAN );
+script 47( void ) ACS_Execute( 80, 0, MECH_RAVEN );
+script 48( void ) ACS_Execute( 80, 0, MECH_MADCAT );
+script 58( void ) ACS_Execute( 80, 0, MECH_ORCA );
+script 59( void ) ACS_Execute( 80, 0, MECH_GUARDIAN );
 
 // [Dusk] Merged all mech purchase scripts to one
-script 80 (int mech) {
-	int cost;
+script 80( int mech )
+{	int cost;
 	str card, morph, nicename, ammo;
-	
+
 	int dest = 108;
 	int mapspot = 6000;
 	int door = 10;
-	
-	if (PlayerTeam() == TEAM_RED) {
-		dest = 208;
+
+	if( PlayerTeam() == TEAM_RED )
+	{	dest = 208;
 		mapspot = 6001;
 		door = 12;
 	}
-	
-	if (mech == MECH_ORCA) {
-		cost = 900;
+
+	if( mech == MECH_ORCA )
+	{	cost = 900;
 		card = "MECH05";
 		morph = "OrcaSwitch";
 		nicename = "Orca";
 		ammo = "OrcaAmmoPackage";
 	}
-	else if (mech == MECH_RAVEN) {
-		cost = 1200;
+	else if( mech == MECH_RAVEN )
+	{	cost = 1200;
 		card = "MECH03";
 		morph = "RavenSwitch";
 		nicename = "Raven";
 		ammo = "RavenAmmoPackage";
 	}
-	else if (mech == MECH_WOLVERINE) {
-		cost = 1250;
+	else if( mech == MECH_WOLVERINE )
+	{	cost = 1250;
 		card = "MECH01";
 		morph = "WolverineSwitch";
 		nicename = "Wolverine";
 		ammo = "WolverineAmmoPackage";
 	}
-	else if (mech == MECH_MADCAT) {
-		cost = 1750;
+	else if( mech == MECH_MADCAT )
+	{	cost = 1750;
 		card = "MECH04";
 		morph = "MadcatSwitch";
 		nicename = "Mad Cat";
 		ammo = "MadcatAmmoPackage";
 	}
-	else if (mech == MECH_TITAN) {
-		cost = 2000;
+	else if( mech == MECH_TITAN )
+	{	cost = 2000;
 		card = "MECH02";
 		morph = "TitanSwitch";
 		nicename = "Titan";
 		ammo = "TitanAmmoPackage";
 	}
-	else if (mech == MECH_GUARDIAN) {
-		cost = 3000;
+	else if( mech == MECH_GUARDIAN )
+	{	cost = 3000;
 		card = "MECH06";
 		morph = "JuggernautSwitch";
 		nicename = "Juggernaut MKII";
 		ammo = "JuggernautAmmoPackage";
 	}
-	
-	if (MitigateDoublePress())
+
+	if( MitigateDoublePress() )
 		terminate;
-	
-	if (!CheckFactory (PlayerTeam()))
+
+	if( !CheckFactory( PlayerTeam() ))
 		terminate;
-	
-	if (mech == MECH_GUARDIAN && JuggernautCount() >= GetCVAR ("aow_guardianlimit") && !!IsAdmin[PlayerNumber()]) {
-		Error ("At limit!");
+
+	if( mech == MECH_GUARDIAN && JuggernautCount() >= GetCVAR( "aow_guardianlimit" ) && !!IsAdmin[PlayerNumber()] )
+	{	Error( "At limit!" );
 		terminate;
 	}
-	
-	if (mech >= MECH_MADCAT)
-		if (!CheckAdvMechResearch (PlayerTeam()))
+
+	if( mech >= MECH_MADCAT )
+		if( !CheckAdvMechResearch( PlayerTeam() ))
 			terminate;
-	
-	if (!CheckFreeHanger (PlayerTeam()))
+
+	if( !CheckFreeHanger( PlayerTeam() ))
 		terminate;
-	
-	if (!IsSecondPress (card, cost))
+
+	if( !IsSecondPress( card, cost ))
 		terminate;
-	
-	if (!CheckCredits (cost))
+
+	if( !CheckCredits( cost ))
 		terminate;
-	
-	TakeInventory ("PurchaseToken", 1);
-	
-	if (!Teleport (dest)) {
-		// [Dusk] The teleportation did not succeed. Try clear the hanger.
-		SpawnSpotForced ("AntiUtilityExplosionLarge", dest, 0, 0);
-		delay (5);
-		
+
+	TakeInventory( "PurchaseToken", 1 );
+
+	if( !Teleport( dest ))
+	{	// [Dusk] The teleportation did not succeed. Try clear the hanger.
+		SpawnSpotForced( "AntiUtilityExplosionLarge", dest, 0, 0 );
+		delay( 5 );
+
 		// [Dusk] Try again. If we /still/ can't teleport, there isn't much we can do.
-		if (!Teleport (dest)) {
-			Error ("\cRTeleportation failed!");
+		if( !Teleport( dest ))
+		{	Error( "\cRTeleportation failed!" );
 			terminate;
 		}
 	}
-	
-	SetSpeed (1.0);
-	delay (1);
-	
+
+	SetSpeed( 1.0 );
+	delay( 1 );
+
 	// [Dusk] If we're still using the jump jet, de-activate it now
-	if (CheckInventory ("JumpjetSwitch"))
-		GiveInventory ("JumpjetDeactivate", 1);
-	
+	if( CheckInventory( "JumpjetSwitch" ))
+		GiveInventory( "JumpjetDeactivate", 1 );
+
 	// [Dusk] If the player is still in the utility menu, get him out of it
-	CheckAndRemove ("InUtilMenu");
-	
-	GiveInventory ("IsMech", 1);
-	GiveInventory (morph, 1);
-	GiveInventory (ammo, 1);
-	SetThingSpecial (0, ACS_ExecuteAlways, 317, 0, PlayerTeam());
-	
-	SpendCredits (cost);
+	CheckAndRemove( "InUtilMenu" );
+
+	GiveInventory( "IsMech", 1 );
+	GiveInventory( morph, 1 );
+	GiveInventory( ammo, 1 );
+	SetThingSpecial( 0, ACS_ExecuteAlways, 317, 0, PlayerTeam() );
+
+	SpendCredits( cost );
 	DisplayTick();
-	SetFont ("BIGFONT");
-	HudMessage (s: "You are now a \cF", s: nicename, s: "!";
-		HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 2.0, 1.0);
-	
+	SetFont( "BIGFONT" );
+HudMessage( s: "You are now a \cF", s: nicename, s: "!";
+				HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 2.0, 1.0 );
+
 	// [Dusk] extra notes
-	if (mech == MECH_GUARDIAN)
-	HudMessage (s: "Upon ejecting, the suit \ckself-destructs.";
-		HUDMSG_FADEOUT, 1860 + PlayerNumber(), CR_WHITE, 0.45, 0.5, 2.0, 1.0);
-	
+	if( mech == MECH_GUARDIAN )
+HudMessage( s: "Upon ejecting, the suit \ckself-destructs.";
+					HUDMSG_FADEOUT, 1860 + PlayerNumber(), CR_WHITE, 0.45, 0.5, 2.0, 1.0 );
+
 	// [Dusk] Mark down who is in the hanger so we can free the hanger
 	// if the player suddenly disconnects. Otherwise it gets locked down.
 	MechGetter[PlayerTeam()] = PlayerNumber();
-	
-	Log (s: pname (-1), s: " pilots ", s: nicename, s: ".");
-	
-	SetPlayerProperty (0, 1, PROP_TOTALLYFROZEN);
+
+Log( s: pname( -1 ), s: " pilots ", s: nicename, s: "." );
+
+	SetPlayerProperty( 0, 1, PROP_TOTALLYFROZEN );
 	GettingMech[PlayerTeam()] = true;
-	TagWait (door);
-	
+	TagWait( door );
+
 	// [Dusk] Update the angle multiple times, lagging clients don't seem to have
 	// their angle changed properly online.
 	// FIXME: Is this still needed?
-	for (int i = 0; i < 3; ++i) {
-		SetActorAngle (0, GetActorAngle (dest));
-		delay (18);
+	for( int i = 0; i < 3; ++i )
+	{	SetActorAngle( 0, GetActorAngle( dest ));
+		delay( 18 );
 	}
-	
-	delay (18);
-	Door_Open (door, 64);
-	TagWait (door);
-	
+
+	delay( 18 );
+	Door_Open( door, 64 );
+	TagWait( door );
+
 	// [NG] This will thrust the player out of the hanger.
 	// [Dusk] Added more thrust
-	ThrustThing (GetActorAngle (dest) >> 8, 50, 1, 0);
-	delay (35);
-	
-	SetPlayerProperty (0, 0, PROP_FROZEN);
-	SetPlayerProperty (0, 0, PROP_TOTALLYFROZEN);
-	ActivatorSound ("mech/start", 127);
-	
+	ThrustThing( GetActorAngle( dest ) >> 8, 50, 1, 0 );
+	delay( 35 );
+
+	SetPlayerProperty( 0, 0, PROP_FROZEN );
+	SetPlayerProperty( 0, 0, PROP_TOTALLYFROZEN );
+	ActivatorSound( "mech/start", 127 );
+
 	// [Dusk] Store which armor modifier does the player have and take it from the actual mech
 	MECH_PushArmorMod();
-	
-	SetFont ("BIGFONT");
-	if (mech == MECH_GUARDIAN)
-		HudMessage (s:"Powersuit online!";
-			HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-	else if (mech == MECH_ORCA)
-		HudMessage (s:"Gunship online!";
-			HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
+
+	SetFont( "BIGFONT" );
+
+	if( mech == MECH_GUARDIAN )
+HudMessage( s: "Powersuit online!";
+					HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
+	else if( mech == MECH_ORCA )
+HudMessage( s: "Gunship online!";
+					HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	else
-		HudMessage (s:"Mech online!";
-			HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0);
-	
-	ACS_ExecuteAlways (315, 0); // display mech HUD
-	
+HudMessage( s: "Mech online!";
+					HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
+
+	ACS_ExecuteAlways( 315, 0 ); // display mech HUD
+
 	int tid = 6000;
-	if (PlayerTeam() == TEAM_BLUE)
+
+	if( PlayerTeam() == TEAM_BLUE )
 		tid = 6001;
-	
+
 	// [Dusk] Ensure that the hanger door can close. Spawn some anti-utility
 	// explosions to clear the hanger door area. Since the door is kind of
 	// wide, a single explosion does not suffice. Use some trig to calculate
 	// two additional spots. This should cover the door area...
-	int x0 = GetActorX (tid);
-	int y0 = GetActorY (tid);
-	int z = GetActorZ (tid);
+	int x0 = GetActorX( tid );
+	int y0 = GetActorY( tid );
+	int z = GetActorZ( tid );
 	int x1, x2, y1, y2;
 	int d = 64.0;
-	int angle = GetActorAngle (tid);
-	x1 = x0 + FixedMul (sin (angle + 0.5), d);
-	y1 = y0 + FixedMul (cos (angle + 0.5), d);
-	x2 = x0 + FixedMul (sin (angle + 0.0), d);
-	y2 = y0 + FixedMul (cos (angle + 0.0), d);
-	Spawn ("AntiUtilityExplosion", x0, y0, z);
-	Spawn ("AntiUtilityExplosion", x1, y1, z);
-	Spawn ("AntiUtilityExplosion", x2, y2, z);
-	
-	Door_Close (door, 64);
-	
-	TagWait (door);
+	int angle = GetActorAngle( tid );
+	x1 = x0 + FixedMul( sin( angle + 0.5 ), d );
+	y1 = y0 + FixedMul( cos( angle + 0.5 ), d );
+	x2 = x0 + FixedMul( sin( angle + 0.0 ), d );
+	y2 = y0 + FixedMul( cos( angle + 0.0 ), d );
+	Spawn( "AntiUtilityExplosion", x0, y0, z );
+	Spawn( "AntiUtilityExplosion", x1, y1, z );
+	Spawn( "AntiUtilityExplosion", x2, y2, z );
+
+	Door_Close( door, 64 );
+
+	TagWait( door );
 	GettingMech[PlayerTeam()] = false;
 }
 
 // frag bounty
 // [Dusk] Is this needed anymore?
-script 317 (int team) {
-	if (team == PlayerTeam()) 
+script 317( int team )
+{	if( team == PlayerTeam() )
 		terminate;
-	
-	GiveCredits (-1, 200);
-	AddExperience (150);
+
+	GiveCredits( -1, 200 );
+	AddExperience( 150 );
 }
 
 //Mech Weapon Switching
-script 314 (void) {
-	if (!CheckInventory ("IsMech"))
+script 314( void )
+{	if( !CheckInventory( "IsMech" ))
 		terminate;
-	
-	if (CheckInventory ("WolverineWeapons")) {
-		if (CheckInventory ("Wolverine-WhatWeapon") == 0) {
-			GiveInventory ("Wolverine-WhatWeapon", 1);
-			SetFont ("DOOMFONT");
-			HudMessage (s: "\cfPulse Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
-			ActivatorSound ("switch/pulse", 128);
+
+	if( CheckInventory( "WolverineWeapons" ))
+	{	if( CheckInventory( "Wolverine-WhatWeapon" ) == 0 )
+		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
+			SetFont( "DOOMFONT" );
+HudMessage( s: "\cfPulse Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			ActivatorSound( "switch/pulse", 128 );
 		}
-		else if (CheckInventory ("Wolverine-WhatWeapon") == 1) {
-			GiveInventory ("Wolverine-WhatWeapon", 1);
-			SetFont ("DOOMFONT");
-			HudMessage (s: "\cfMinigun"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
-			ActivatorSound ("switch/minigun", 128);
+		else if( CheckInventory( "Wolverine-WhatWeapon" ) == 1 )
+		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
+			SetFont( "DOOMFONT" );
+HudMessage( s: "\cfMinigun"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			ActivatorSound( "switch/minigun", 128 );
 		}
-		else {
-			TakeInventory ("Wolverine-WhatWeapon", 3);
-			SetFont ("DOOMFONT");
-			HudMessage (s: "\cfLRM-10"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
-			ActivatorSound ("switch/lrm", 128);
-		}
-	}
-	
-	if (CheckInventory ("TitanWeapons")) {
-		if (CheckInventory ("Wolverine-WhatWeapon") == 0) {
-			GiveInventory ("Wolverine-WhatWeapon", 1);
-			SetFont ("DOOMFONT");
-			HudMessage (s: "\cfDual Flamethrowers"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
-			ActivatorSound ("switch/flamer", 128);
-		} else if (CheckInventory ("Wolverine-WhatWeapon") == 1) {
-			GiveInventory ("Wolverine-WhatWeapon", 1);
-			SetFont ("DOOMFONT");
-			HudMessage (s: "\cfLRM-20"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
-			ActivatorSound ("switch/lrm", 128);
-		} else { //if(CheckInventory("Wolverine-WhatWeapon") == 2)
-			TakeInventory ("Wolverine-WhatWeapon", 3);
-			SetFont ("DOOMFONT");
-			HudMessage (s: "\cf100mm Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
-			ActivatorSound ("switch/80mm", 128);
+		else
+		{	TakeInventory( "Wolverine-WhatWeapon", 3 );
+			SetFont( "DOOMFONT" );
+HudMessage( s: "\cfLRM-10"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			ActivatorSound( "switch/lrm", 128 );
 		}
 	}
-	
-	if (CheckInventory ("MadCatWeapons")) {
-		if (CheckInventory ("Wolverine-WhatWeapon") == 0) {
-			GiveInventory ("Wolverine-WhatWeapon", 1);
-			SetFont ("DOOMFONT");
-			HudMessage (s: "\cfDual Shock Autorifles"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
-			ActivatorSound ("switch/minigun", 128);
-		} else if (CheckInventory ("Wolverine-WhatWeapon") == 1)
-		{
-			GiveInventory ("Wolverine-WhatWeapon", 1);
-			SetFont ("DOOMFONT");
-			HudMessage (s: "\cfLRM-20"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
-			ActivatorSound ("switch/lrm", 128);
-		} else {
-			TakeInventory ("Wolverine-WhatWeapon", 3);
-			SetFont ("DOOMFONT");
-			HudMessage (s: "\cfDual Shock Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
-			ActivatorSound ("switch/pulse", 128);
+
+	if( CheckInventory( "TitanWeapons" ))
+	{	if( CheckInventory( "Wolverine-WhatWeapon" ) == 0 )
+		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
+			SetFont( "DOOMFONT" );
+HudMessage( s: "\cfDual Flamethrowers"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			ActivatorSound( "switch/flamer", 128 );
+		}
+		else if( CheckInventory( "Wolverine-WhatWeapon" ) == 1 )
+		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
+			SetFont( "DOOMFONT" );
+HudMessage( s: "\cfLRM-20"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			ActivatorSound( "switch/lrm", 128 );
+		}
+		else     //if(CheckInventory("Wolverine-WhatWeapon") == 2)
+		{	TakeInventory( "Wolverine-WhatWeapon", 3 );
+			SetFont( "DOOMFONT" );
+HudMessage( s: "\cf100mm Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			ActivatorSound( "switch/80mm", 128 );
 		}
 	}
-	
-	if (CheckInventory ("JuggernautWeapons")) {
-		SetFont ("SMALLFONT");
-		
-		if (!CheckInventory ("Wolverine-WhatWeapon")) {
-			GiveInventory ("Wolverine-WhatWeapon", 1);
-			HudMessage (s: "\cfSRM-15"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
-			ActivatorSound ("switch/lrm", 128);
+
+	if( CheckInventory( "MadCatWeapons" ))
+	{	if( CheckInventory( "Wolverine-WhatWeapon" ) == 0 )
+		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
+			SetFont( "DOOMFONT" );
+HudMessage( s: "\cfDual Shock Autorifles"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			ActivatorSound( "switch/minigun", 128 );
 		}
-		else if (CheckInventory ("Wolverine-WhatWeapon") == 1) {
-			GiveInventory ("Wolverine-WhatWeapon", 1);
-			HudMessage (s: "\cfFlak Minigun"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
-			ActivatorSound ("switch/minigun", 128);
+		else if( CheckInventory( "Wolverine-WhatWeapon" ) == 1 )
+		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
+			SetFont( "DOOMFONT" );
+HudMessage( s: "\cfLRM-20"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			ActivatorSound( "switch/lrm", 128 );
 		}
-		else if (CheckInventory ("Wolverine-WhatWeapon") == 2) {
-			GiveInventory ("Wolverine-WhatWeapon", 1);
-			
-			if (PlayerTeam() == TEAM_RED)
-				HudMessage (s: "\cfMini-nuke artillery"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
+		else
+		{	TakeInventory( "Wolverine-WhatWeapon", 3 );
+			SetFont( "DOOMFONT" );
+HudMessage( s: "\cfDual Shock Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			ActivatorSound( "switch/pulse", 128 );
+		}
+	}
+
+	if( CheckInventory( "JuggernautWeapons" ))
+	{	SetFont( "SMALLFONT" );
+
+		if( !CheckInventory( "Wolverine-WhatWeapon" ))
+		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
+HudMessage( s: "\cfSRM-15"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			ActivatorSound( "switch/lrm", 128 );
+		}
+		else if( CheckInventory( "Wolverine-WhatWeapon" ) == 1 )
+		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
+HudMessage( s: "\cfFlak Minigun"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			ActivatorSound( "switch/minigun", 128 );
+		}
+		else if( CheckInventory( "Wolverine-WhatWeapon" ) == 2 )
+		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
+
+			if( PlayerTeam() == TEAM_RED )
+HudMessage( s: "\cfMini-nuke artillery"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			else
-				HudMessage (s: "\cfIon-bomb artillery"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
-			
-			ActivatorSound ("switch/80mm", 128);
+HudMessage( s: "\cfIon-bomb artillery"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+
+			ActivatorSound( "switch/80mm", 128 );
 		}
-		else {
-			TakeInventory ("Wolverine-WhatWeapon", 3);
-			HudMessage (s: "Twin Mass Drivers"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5);
-			ActivatorSound ("switch/lrm", 128);
+		else
+		{	TakeInventory( "Wolverine-WhatWeapon", 3 );
+HudMessage( s: "Twin Mass Drivers"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			ActivatorSound( "switch/lrm", 128 );
 		}
 	}
 }
@@ -332,297 +337,302 @@ script 314 (void) {
 // [Dusk] Added colors to the mech weapon so that
 // the current weapon is visible and which ones are out
 // for cool-down.
-script 315 (void) NET CLIENTSIDE {
-	if (!CheckInventory ("IsMech")) terminate;
-	
-	SetFont ("SMALLFONT");
-	
+script 315( void ) NET CLIENTSIDE
+{	if( !CheckInventory( "IsMech" )) terminate;
+
+	SetFont( "SMALLFONT" );
+
 	//Wolverine
-	if (CheckWeapon ("WolverineWeapons")) {
-		HudMessage (s: MechHudColor (0, "Reload-LRM"), s: "LRM-10:\n",
-			s: MechHudColor (1, ""), s: "PULSE:\n",
-			s: MechHudColor (2, ""), s: "MINIGUN: ";
-			HUDMSG_PLAIN, 0, CR_Gold, 0.8, 0.7, 0.2);
-		
-		HudMessage (d: CheckInventory ("MechRocketAmmo"),
-			s: "\n-\n", d: CheckInventory ("Wolverine-MinigunAmmo");
-			HUDMSG_PLAIN, 0, CR_White, 0.85, 0.7, 0.2);
-		
-		delay (2);
+	if( CheckWeapon( "WolverineWeapons" ))
+	{	HudMessage( s: MechHudColor( 0, "Reload-LRM" ), s: "LRM-10:\n",
+s: MechHudColor( 1, "" ), s: "PULSE:\n",
+s: MechHudColor( 2, "" ), s: "MINIGUN: ";
+		HUDMSG_PLAIN, 0, CR_Gold, 0.8, 0.7, 0.2 );
+
+HudMessage( d: CheckInventory( "MechRocketAmmo" ),
+s: "\n-\n", d: CheckInventory( "Wolverine-MinigunAmmo" );
+		HUDMSG_PLAIN, 0, CR_White, 0.85, 0.7, 0.2 );
+
+		delay( 2 );
 		restart;
 	}
-	else if (CheckWeapon ("MadCatWeapons")) {
-		HudMessage (s: MechHudColor (0, "Reload-ShockCannon"), s: "SHOCK CANNON:\n",
-			s: MechHudColor (1, ""), s: "SHOCK RIFLE:\n",
-			s: MechHudColor (2, "Reload-LRM"), s: "LRM-20:\n";
-			HUDMSG_PLAIN, 0, CR_Gold, 0.8, 0.7, 0.2);
-		HudMessage (s: "-",
-			s: "\n", d: CheckInventory ("GeneporiumCharge"),
-			s: "\n", d: CheckInventory ("MechRocketAmmo");
-			HUDMSG_PLAIN, 0, CR_White, 0.85, 0.7, 0.2);
-		delay (2);
+	else if( CheckWeapon( "MadCatWeapons" ))
+	{	HudMessage( s: MechHudColor( 0, "Reload-ShockCannon" ), s: "SHOCK CANNON:\n",
+s: MechHudColor( 1, "" ), s: "SHOCK RIFLE:\n",
+s: MechHudColor( 2, "Reload-LRM" ), s: "LRM-20:\n";
+		HUDMSG_PLAIN, 0, CR_Gold, 0.8, 0.7, 0.2 );
+HudMessage( s: "-",
+s: "\n", d: CheckInventory( "GeneporiumCharge" ),
+s: "\n", d: CheckInventory( "MechRocketAmmo" );
+		HUDMSG_PLAIN, 0, CR_White, 0.85, 0.7, 0.2 );
+		delay( 2 );
 		restart;
 	}
-	else if (CheckWeapon ("TitanWeapons")) {
-		HudMessage (s: MechHudColor (0, "Reload-80mm"), s: "100MM:\n",
-			s: MechHudColor (1, ""), s: "FLAMER:\n",
-			s: MechHudColor (2, "Reload-LRM"), s: "LRM-20: ";
-			HUDMSG_PLAIN, 0, CR_Gold, 0.8, 0.7, 0.2);
-		HudMessage (d: CheckInventory ("Titan-80mmAmmo"),
-			s: "\n", d: CheckInventory ("Titan-FlamerAmmo"),
-			s: "\n", d: CheckInventory ("MechRocketAmmo");
-		HUDMSG_PLAIN, 0, CR_White, 0.85, 0.7, 0.2);
-		delay (2);
+	else if( CheckWeapon( "TitanWeapons" ))
+	{	HudMessage( s: MechHudColor( 0, "Reload-80mm" ), s: "100MM:\n",
+s: MechHudColor( 1, "" ), s: "FLAMER:\n",
+s: MechHudColor( 2, "Reload-LRM" ), s: "LRM-20: ";
+		HUDMSG_PLAIN, 0, CR_Gold, 0.8, 0.7, 0.2 );
+HudMessage( d: CheckInventory( "Titan-80mmAmmo" ),
+s: "\n", d: CheckInventory( "Titan-FlamerAmmo" ),
+s: "\n", d: CheckInventory( "MechRocketAmmo" );
+		HUDMSG_PLAIN, 0, CR_White, 0.85, 0.7, 0.2 );
+		delay( 2 );
 		restart;
 	}
-	else if (CheckWeapon ("JuggernautWeapons")) {
-		// [Dusk] Juggernaut weapons. The nuke is an ion bomb for blue
+	else if( CheckWeapon( "JuggernautWeapons" ))
+	{	// [Dusk] Juggernaut weapons. The nuke is an ion bomb for blue
 		str nukename = "NUKE";
-		
-		if (PlayerTeam() == TEAM_BLUE)
+
+		if( PlayerTeam() == TEAM_BLUE )
 			nukename = "ION BOMB";
-		
-		HudMessage (s: MechHudColor (0, "Reload-80mm"), s: "80MM:\n",
-			s: MechHudColor (1, "Reload-LRM"), s: "SRM-15:\n",
-			s: MechHudColor (2, ""), s: "FLAK:\n",
-			s: MechHudColor (3, "Reload-Nuke"), s: nukename, s: ":";
-			HUDMSG_PLAIN, 0, CR_Gold, 0.8, 0.7, 0.2);
-		HudMessage (d: CheckInventory ("ArtilleryShellAmmo"),
-			s: "\n", d: CheckInventory ("ShortRangeMissileAmmo"),
-			s: "\n", d: CheckInventory ("MachineGunAmmo"),
-			s: "\n", d: CheckInventory ("NukeAmmo");
-			HUDMSG_PLAIN, 0, CR_White, 0.85, 0.7, 0.2);
-		delay (2);
+
+HudMessage( s: MechHudColor( 0, "Reload-80mm" ), s: "80MM:\n",
+s: MechHudColor( 1, "Reload-LRM" ), s: "SRM-15:\n",
+s: MechHudColor( 2, "" ), s: "FLAK:\n",
+s: MechHudColor( 3, "Reload-Nuke" ), s: nukename, s: ":";
+		HUDMSG_PLAIN, 0, CR_Gold, 0.8, 0.7, 0.2 );
+HudMessage( d: CheckInventory( "ArtilleryShellAmmo" ),
+s: "\n", d: CheckInventory( "ShortRangeMissileAmmo" ),
+s: "\n", d: CheckInventory( "MachineGunAmmo" ),
+s: "\n", d: CheckInventory( "NukeAmmo" );
+		HUDMSG_PLAIN, 0, CR_White, 0.85, 0.7, 0.2 );
+		delay( 2 );
 		restart;
 	}
 }
 
-function str MechHudColor (int weapon, str cooldownitem) {
-	if (CheckInventory (cooldownitem)) {
-		if (CheckInventory ("Wolverine-WhatWeapon") == weapon)
+function str MechHudColor( int weapon, str cooldownitem )
+{	if( CheckInventory( cooldownitem ))
+	{	if( CheckInventory( "Wolverine-WhatWeapon" ) == weapon )
 			return "\cA";
-			
+
 		return "\cG";
 	}
-	else {
-		if (CheckInventory ("Wolverine-WhatWeapon") == weapon)
+	else
+	{	if( CheckInventory( "Wolverine-WhatWeapon" ) == weapon )
 			return "\cD";
-			
+
 		return "\cQ";
 	}
-	
+
 	return "";
 }
 
 //EJECT MECH
-script 697 (void) {
-	int MechType = 1;
-	
-	if (CheckInventory ("RavenWeapons")) MechType = 1;
-	if (CheckInventory ("MadCatWeapons")) MechType = 2;
-	if (CheckInventory ("WolverineWeapons")) MechType = 3;
-	if (CheckInventory ("TitanWeapons")) MechType = 4;
-	if (CheckInventory ("OrcaWeapons")) MechType = 5;
-	if (CheckInventory ("JuggernautWeapons")) MechType = 6;
-	
-	int x = GetActorX (0);
-	int y = GetActorY (0);
-	int z = GetActorZ (0);
-	int angle = GetActorAngle (ActivatorTID());
-	
+script 697( void )
+{	int MechType = 1;
+
+	if( CheckInventory( "RavenWeapons" )) MechType = 1;
+
+	if( CheckInventory( "MadCatWeapons" )) MechType = 2;
+
+	if( CheckInventory( "WolverineWeapons" )) MechType = 3;
+
+	if( CheckInventory( "TitanWeapons" )) MechType = 4;
+
+	if( CheckInventory( "OrcaWeapons" )) MechType = 5;
+
+	if( CheckInventory( "JuggernautWeapons" )) MechType = 6;
+
+	int x = GetActorX( 0 );
+	int y = GetActorY( 0 );
+	int z = GetActorZ( 0 );
+	int angle = GetActorAngle( ActivatorTID() );
+
 	//Raven
-	if (MechType == 1) {
-		if (GetActorProperty (0, APROP_Health) >= 1000)
-			Spawn ("EjectedRaven", x, y, z, 0, angle);
+	if( MechType == 1 )
+	{	if( GetActorProperty( 0, APROP_Health ) >= 1000 )
+			Spawn( "EjectedRaven", x, y, z, 0, angle );
 		else
-			Spawn ("DamagedRaven", x, y, z, 0, angle);
+			Spawn( "DamagedRaven", x, y, z, 0, angle );
 	}
-	
+
 	// Mad Cat
-	if (MechType == 2) {
-		if (GetActorProperty (0, APROP_Health) >= 2000)
-			Spawn ("EjectedMadCat", x, y, z, 0, angle);
+	if( MechType == 2 )
+	{	if( GetActorProperty( 0, APROP_Health ) >= 2000 )
+			Spawn( "EjectedMadCat", x, y, z, 0, angle );
 		else
-			Spawn ("DamagedMadCat", x, y, z, 0, angle);
+			Spawn( "DamagedMadCat", x, y, z, 0, angle );
 	}
-	
+
 	//Wolverine
-	if (MechType == 3) {
-		if (GetActorProperty (0, APROP_Health) >= 1500)
-			Spawn ("EjectedWolverine", x, y, z, 0, angle);
+	if( MechType == 3 )
+	{	if( GetActorProperty( 0, APROP_Health ) >= 1500 )
+			Spawn( "EjectedWolverine", x, y, z, 0, angle );
 		else
-			Spawn ("DamagedWolverine", x, y, z, 0, angle);
+			Spawn( "DamagedWolverine", x, y, z, 0, angle );
 	}
-	
+
 	//Titan
-	if (MechType == 4) {
-		if (GetActorProperty (0, APROP_Health) >= 2500)
-			Spawn ("EjectedTitan", x, y, z, 0, angle);
+	if( MechType == 4 )
+	{	if( GetActorProperty( 0, APROP_Health ) >= 2500 )
+			Spawn( "EjectedTitan", x, y, z, 0, angle );
 		else
-			Spawn ("DamagedTitan", x, y, z, 0, angle);
+			Spawn( "DamagedTitan", x, y, z, 0, angle );
 	}
-	
+
 	//Orca
-	if (MechType == 5)
-		SpawnSpotFacing ("EjectedOrcaSpawner", ActivatorTID(), 0);
-	
+	if( MechType == 5 )
+		SpawnSpotFacing( "EjectedOrcaSpawner", ActivatorTID(), 0 );
+
 	// Juggernaut
-	if (MechType == 6)
-		SpawnSpotFacing ("EjectedJuggernaut", ActivatorTID(), 0);
-	
-	UnMorphActor (0, 0);
-	
-	delay (5);
-	
-	SetActorProperty (0, APROP_Invulnerable, false);
-	SetPlayerProperty (0, 0, 3);
-	CheckAndRemove ("MechEjectButton");
-	ACS_ExecuteAlways (10, 0);
-	TakeInventory ("IsMech", 1);
+	if( MechType == 6 )
+		SpawnSpotFacing( "EjectedJuggernaut", ActivatorTID(), 0 );
+
+	UnMorphActor( 0, 0 );
+
+	delay( 5 );
+
+	SetActorProperty( 0, APROP_Invulnerable, false );
+	SetPlayerProperty( 0, 0, 3 );
+	CheckAndRemove( "MechEjectButton" );
+	ACS_ExecuteAlways( 10, 0 );
+	TakeInventory( "IsMech", 1 );
 	MECH_PopArmorMod();
-	
-	delay (1);
-	
-	TakeInventory ("IsInSpawnRoom", 1);
-	SetPlayerProperty (0, false, PROP_FROZEN);
-	SetSpeed (PlayerSpeeds[PlayerNumber()]);
+
+	delay( 1 );
+
+	TakeInventory( "IsInSpawnRoom", 1 );
+	SetPlayerProperty( 0, false, PROP_FROZEN );
+	SetSpeed( PlayerSpeeds[PlayerNumber()] );
 }
 
 // Get in Mech animation
-script 699 (void) {
-	delay (1);
-	SetActorState (0, "Spawn2");
-	
+script 699( void )
+{	delay( 1 );
+	SetActorState( 0, "Spawn2" );
+
 	// [Dusk] If the player is still in the menu, get him out of it
-	CheckAndRemove ("InUtilMenu");
+	CheckAndRemove( "InUtilMenu" );
 }
 
 // Activates weapon reload.
-script 319 (int Weapon, int ReloadTime) {
-	if (Weapon == 1) {
-		GiveInventory ("Reload-LRM", 1);
-		delay (35 * ReloadTime - 1);
-		ActivatorSound ("lrm/reload", 127);
-		ActivatorSound ("lrm/reload", 127);
-		delay (20);
-		TakeInventory ("Reload-LRM", 1);
+script 319( int Weapon, int ReloadTime )
+{	if( Weapon == 1 )
+	{	GiveInventory( "Reload-LRM", 1 );
+		delay( 35 * ReloadTime - 1 );
+		ActivatorSound( "lrm/reload", 127 );
+		ActivatorSound( "lrm/reload", 127 );
+		delay( 20 );
+		TakeInventory( "Reload-LRM", 1 );
 	}
-	
-	if (Weapon == 2) {
-		GiveInventory ("Reload-ShockCannon", 1);
-		delay (35 * ReloadTime - 1);
-		ActivatorSound ("ppc/reload", 255);
-		ActivatorSound ("ppc/reload", 128);
-		SetFont ("DOOMFONT");
-		delay (20);
-		TakeInventory ("Reload-ShockCannon", 1);
+
+	if( Weapon == 2 )
+	{	GiveInventory( "Reload-ShockCannon", 1 );
+		delay( 35 * ReloadTime - 1 );
+		ActivatorSound( "ppc/reload", 255 );
+		ActivatorSound( "ppc/reload", 128 );
+		SetFont( "DOOMFONT" );
+		delay( 20 );
+		TakeInventory( "Reload-ShockCannon", 1 );
 	}
-	
-	if (Weapon == 3) {
-		GiveInventory ("Reload-80mm", 1);
-		delay (35 * ReloadTime - 1);
-		ActivatorSound ("artillery/reload", 255);
-		ActivatorSound ("artillery/reload", 128);
-		SetFont ("DOOMFONT");
-		delay (20);
-		TakeInventory ("Reload-80mm", 1);
+
+	if( Weapon == 3 )
+	{	GiveInventory( "Reload-80mm", 1 );
+		delay( 35 * ReloadTime - 1 );
+		ActivatorSound( "artillery/reload", 255 );
+		ActivatorSound( "artillery/reload", 128 );
+		SetFont( "DOOMFONT" );
+		delay( 20 );
+		TakeInventory( "Reload-80mm", 1 );
 	}
-	
-	if (Weapon == 4) {
-		GiveInventory ("Reload-Plasma", 1);
-		delay (35 * ReloadTime - 1);
-		ActivatorSound ("ppc/reload", 255);
-		ActivatorSound ("ppc/reload", 128);
-		delay (20);
-		TakeInventory ("Reload-Plasma", 1);
+
+	if( Weapon == 4 )
+	{	GiveInventory( "Reload-Plasma", 1 );
+		delay( 35 * ReloadTime - 1 );
+		ActivatorSound( "ppc/reload", 255 );
+		ActivatorSound( "ppc/reload", 128 );
+		delay( 20 );
+		TakeInventory( "Reload-Plasma", 1 );
 	}
-	
-	if (Weapon == 5) {
-		GiveInventory ("Reload-Artillery", 1);
-		delay (35 * ReloadTime - 1);
-		ActivatorSound ("lrm/reload", 255);
-		ActivatorSound ("lrm/reload", 128);
-		delay (20);
-		TakeInventory ("Reload-Artillery", 1);
+
+	if( Weapon == 5 )
+	{	GiveInventory( "Reload-Artillery", 1 );
+		delay( 35 * ReloadTime - 1 );
+		ActivatorSound( "lrm/reload", 255 );
+		ActivatorSound( "lrm/reload", 128 );
+		delay( 20 );
+		TakeInventory( "Reload-Artillery", 1 );
 	}
-	
-	if (Weapon == 6) {
-		GiveInventory ("Reload-Nuke", 1);
-		delay (35 * ReloadTime - 1);
-		ActivatorSound ("artillery/reload", 255);
-		ActivatorSound ("artillery/reload", 128);
-		delay (20);
-		TakeInventory ("Reload-Nuke", 1);
+
+	if( Weapon == 6 )
+	{	GiveInventory( "Reload-Nuke", 1 );
+		delay( 35 * ReloadTime - 1 );
+		ActivatorSound( "artillery/reload", 255 );
+		ActivatorSound( "artillery/reload", 128 );
+		delay( 20 );
+		TakeInventory( "Reload-Nuke", 1 );
 	}
 }
 
-script 332 (void) CLIENTSIDE {
-	while (CheckInventory ("IsMech")) {
-		if (GetHealth() <= GetSpawnHealth() / 5) {
-			SETFONT ("BigFont");
-			HudMessage (s: "\cR== Health Level Critical =="; HUDMSG_PLAIN, 0, CR_Green, 0.5, 0.59, 0.75);
-			HudMessage (s: "\cFPrepare to Eject"; HUDMSG_PLAIN, 0, CR_Green, 0.5, 0.63, 0.75);
+script 332( void ) CLIENTSIDE
+{	while( CheckInventory( "IsMech" ))
+	{	if( GetHealth() <= GetSpawnHealth() / 5 )
+		{	SETFONT( "BigFont" );
+HudMessage( s: "\cR== Health Level Critical =="; HUDMSG_PLAIN, 0, CR_Green, 0.5, 0.59, 0.75 );
+HudMessage( s: "\cFPrepare to Eject"; HUDMSG_PLAIN, 0, CR_Green, 0.5, 0.63, 0.75 );
 		}
-		
-		delay (35 * 5);
+
+		delay( 35 * 5 );
 	}
 }
 
 // check if you can enter an ejected mech
-script 353 (void) {
-	SetResultValue (0);
-	
-	if (CheckInventory ("HighUpgrade"))
+script 353( void )
+{	SetResultValue( 0 );
+
+	if( CheckInventory( "HighUpgrade" ))
 		terminate;
-	else if (CheckInventory ("IsMech")) //[SP] disallow other mech pickups
+	else if( CheckInventory( "IsMech" )) //[SP] disallow other mech pickups
 		terminate;
-		
-	SetResultValue (1);
-	
+
+	SetResultValue( 1 );
+
 	// [Dusk] Push the armor modifier so that it doesn't actually affect the mech
 	MECH_PushArmorMod();
 }
 
 // [Dusk] thrusts the player with the specified angle if they are in a mech
 // Meant to be used in maps to block areas off from mechs
-script 150 (int angle) {
-	if (CheckInventory ("IsMech")) {
-		DisplayCross();
-		SETFONT ("BigFont");
-		HudMessage (s: "You can't go there in a mech!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-		ThrustThing (angle, 40, 1, 0);
+script 150( int angle )
+{	if( CheckInventory( "IsMech" ))
+	{	DisplayCross();
+		SETFONT( "BigFont" );
+HudMessage( s: "You can't go there in a mech!";
+					HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
+		ThrustThing( angle, 40, 1, 0 );
 	}
 }
 
 // [Dusk] We're activating a used mech - set the hp to half
-script 359 (void) {
-	delay (5);
-	SetHealth (GetSpawnHealth() / 2);
+script 359( void )
+{	delay( 5 );
+	SetHealth( GetSpawnHealth() / 2 );
 }
 
 // Tiger's hanger stuff
-script 84 (void) {}
+script 84( void ) {}
 
-script 86 (int x) {
-	if (LineSide()) terminate;
-	
+script 86( int x )
+{	if( LineSide() ) terminate;
+
 	DisplayCross();
-	SetFont ("BIGFONT");
-	HudMessage (s: "You can't enter here!";
-		HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0);
-	
-	if (!CheckInventory ("IsMech"))
-		ThrustThing (GetActorAngle (6000 + x) >> 8, 35, 1, 0);
+	SetFont( "BIGFONT" );
+HudMessage( s: "You can't enter here!";
+				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
+
+	if( !CheckInventory( "IsMech" ))
+		ThrustThing( GetActorAngle( 6000 + x ) >> 8, 35, 1, 0 );
 	else
-		ThrustThing (GetActorAngle (6000 + x) >> 8, 20, 0, 0);
+		ThrustThing( GetActorAngle( 6000 + x ) >> 8, 20, 0, 0 );
 }
 
 // duplicates..
-script 85 (void)
-	ACS_ExecuteAlways (84, 0);
+script 85( void )
+ACS_ExecuteAlways( 84, 0 );
 
-script 88 (void)
-	ACS_ExecuteAlways (86, 0, 1);
+script 88( void )
+ACS_ExecuteAlways( 86, 0, 1 );
 
-script 89 (void) {} // dummy - present because maps actually call this. even though it was empty
+script 89( void ) {} // dummy - present because maps actually call this. even though it was empty

@@ -1,83 +1,83 @@
 //REGENERATION
-script 343 OPEN {
-	int n, r;
-	
-	for (n = 0; n < MAXPLAYERS; n++) {
-		if (!PlayerInGame (n))
+script 343 OPEN
+{	int n, r;
+
+	for( n = 0; n < MAXPLAYERS; n++ )
+	{	if( !PlayerInGame( n ))
 			continue;
-			
-		if (CheckActorInventory (TID_Player + n, "PlayerRank") < 3) continue;
-		
-		if (CheckActorInventory (TID_Player + n, "IsMech"))
+
+		if( CheckActorInventory( TID_Player + n, "PlayerRank" ) < 3 ) continue;
+
+		if( CheckActorInventory( TID_Player + n, "IsMech" ))
 			r = 20;
 		else
 			r = 5;
-			
-		if (GetActorHealth (TID_Player + n) + r >= GetActorSpawnHealth (TID_Player + n))
-			SetActorHealth (TID_Player + n, GetActorSpawnHealth (TID_Player + n));
+
+		if( GetActorHealth( TID_Player + n ) + r >= GetActorSpawnHealth( TID_Player + n ))
+			SetActorHealth( TID_Player + n, GetActorSpawnHealth( TID_Player + n ));
 		else
-			SetActorHealth (TID_Player + n, GetActorHealth (TID_Player + n) + r);
+			SetActorHealth( TID_Player + n, GetActorHealth( TID_Player + n ) + r );
 	}
-	
-	delay (35 * 5);
+
+	delay( 35 * 5 );
 	restart;
 }
 
 // MEDIC REGENERATION
-script SC_MedicHealthRegen (void) {
-	if (GetHealth() <= 0 || !CheckInventory ("IsMedic") || !PlayerInGame (PlayerNumber()))
+script SC_MedicHealthRegen( void )
+{	if( GetHealth() <= 0 || !CheckInventory( "IsMedic" ) || !PlayerInGame( PlayerNumber() ))
 		terminate;
-		
-	if (GetHealth() < GetSpawnHealth()) {
-		if (CheckInventory ("IsMech"))
-			HealThing (6);
+
+	if( GetHealth() < GetSpawnHealth() )
+	{	if( CheckInventory( "IsMech" ))
+			HealThing( 6 );
 		else
-			HealThing (3);
+			HealThing( 3 );
 	}
-	
-	delay (35);
+
+	delay( 35 );
 	restart;
 }
 
 // HP/AMMO REGENERATION
-script 354 OPEN {
-	int i, hp, shp;
+script 354 OPEN
+{	int i, hp, shp;
 	int counter;
-	
-	while (1) {
-		if (GlobalMedic[0] || GlobalMedic[1]) {
-			for (i = 0; i < 32; i++) {
-				if (GlobalMedic[1 - GetPlayerInfo (i, PLAYERINFO_TEAM)]) {
-					hp = GetActorHealth (TID_Player + i);
-					shp = GetActorSpawnHealth (TID_Player + i);
-					
-					if (hp == shp) continue;
-					
-					if (CheckActorInventory (TID_Player + i, "IsMech")) hp += 2;
+
+	while( 1 )
+	{	if( GlobalMedic[0] || GlobalMedic[1] )
+		{	for( i = 0; i < 32; i++ )
+			{	if( GlobalMedic[1 - GetPlayerInfo( i, PLAYERINFO_TEAM )] )
+				{	hp = GetActorHealth( TID_Player + i );
+					shp = GetActorSpawnHealth( TID_Player + i );
+
+					if( hp == shp ) continue;
+
+					if( CheckActorInventory( TID_Player + i, "IsMech" )) hp += 2;
 					else hp++;
-					
-					if (hp > shp) {
-						hp = shp;
+
+					if( hp > shp )
+					{	hp = shp;
 					}
-					
-					SetActorHealth (TID_Player + i, hp);
+
+					SetActorHealth( TID_Player + i, hp );
 				}
 			}
 		}
-		
-		if (!counter &&  (GlobalAmmo[0] || GlobalAmmo[1])) {
-			for (i = 0; i < 32; i++) {
-				if (GlobalAmmo[1 - GetPlayerInfo (i, PLAYERINFO_TEAM)])
-					GiveActorInventory (TID_Player + i, "AmmoRegenerationPack", 1);
+
+		if( !counter && ( GlobalAmmo[0] || GlobalAmmo[1] ))
+		{	for( i = 0; i < 32; i++ )
+			{	if( GlobalAmmo[1 - GetPlayerInfo( i, PLAYERINFO_TEAM )] )
+					GiveActorInventory( TID_Player + i, "AmmoRegenerationPack", 1 );
 			}
 		}
-		
+
 		counter++;
-		
-		if (counter >= 10) {
-			counter = 0;
+
+		if( counter >= 10 )
+		{	counter = 0;
 		}
-		
-		delay (35);
+
+		delay( 35 );
 	}
 }

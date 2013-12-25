@@ -1,109 +1,108 @@
 // SURRENDER SCRIPT
-script 342 (void) NET {
-	if (!PlayerInGame (PlayerNumber())) {
-		DisplayCross();
-		SETFONT ("BigFont");
-		HudMessage (s:"You can't surrender as a spectator!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+script 342( void ) NET
+{	if( !PlayerInGame( PlayerNumber() ))
+	{	DisplayCross();
+		SETFONT( "BigFont" );
+HudMessage( s: "You can't surrender as a spectator!";
+		HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
 		terminate;
 	}
-	
-	if (GetCVAR ("aow_surrendermode") == 2) {
-		DisplayCross();
-		SETFONT ("BigFont");
-		HudMessage (s:"Surrender is disabled!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+
+	if( GetCVAR( "aow_surrendermode" ) == 2 )
+	{	DisplayCross();
+		SETFONT( "BigFont" );
+HudMessage( s: "Surrender is disabled!";
+		HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
 		terminate;
 	}
-	
-	else if (GetCVAR ("aow_surrendermode") == 1) {
-		if (PlayerTeam() == TEAM_RED) {
-			if (BaseLeft[0] >= 5) {
-				DisplayCross();
-				SETFONT ("BigFont");
-				HudMessage (s:"It's too early to surrender!";
-					HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+
+	else if( GetCVAR( "aow_surrendermode" ) == 1 )
+	{	if( PlayerTeam() == TEAM_RED )
+		{	if( BaseLeft[0] >= 5 )
+			{	DisplayCross();
+				SETFONT( "BigFont" );
+HudMessage( s: "It's too early to surrender!";
+				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
 				terminate;
 			}
 		}
-		
-		if (PlayerTeam() == TEAM_BLUE) {
-			if (BaseLeft[1] >= 5) {
-				DisplayCross();
-				SETFONT ("BigFont");
-				HudMessage (s:"It's too early to surrender!";
-					HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+
+		if( PlayerTeam() == TEAM_BLUE )
+		{	if( BaseLeft[1] >= 5 )
+			{	DisplayCross();
+				SETFONT( "BigFont" );
+HudMessage( s: "It's too early to surrender!";
+							HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
 				terminate;
 			}
 		}
 	}
-	
-	if (Timer() - LastSurrenderTime[PlayerNumber()] < 35 * SurrenderWaitTime) {
-		DisplayCross();
-		SETFONT ("BigFont");
-		HudMessage (s:"Please wait to revote for surrender!";
-			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0);
+
+	if( Timer() - LastSurrenderTime[PlayerNumber()] < 35 * SurrenderWaitTime )
+	{	DisplayCross();
+		SETFONT( "BigFont" );
+HudMessage( s: "Please wait to revote for surrender!";
+					HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
 		terminate;
 	}
-	
+
 	LastSurrenderTime[PlayerNumber()] = Timer();
-	
+
 	Surrender[PlayerNumber()] = !Surrender[PlayerNumber()];
-	
-	if (PlayerTeam() == TEAM_RED)
-		IntelMessageBold (strparam (s:"\cD", d:SurrenderCount (TEAM_RED), s:"\cQ/\cD", d:RedCount(), s:" ",
-			s:"\cJof \cGRed\cJ\n have voted to surrender"));
+
+	if( PlayerTeam() == TEAM_RED )
+IntelMessageBold( strparam( s: "\cD", d: SurrenderCount( TEAM_RED ), s: "\cQ/\cD", d: RedCount(), s: " ",
+							s: "\cJof \cGRed\cJ\n have voted to surrender" ));
 	else
-		IntelMessageBold (strparam (s:"\cD", d:SurrenderCount (TEAM_BLUE), s:"\cQ/\cD", d:BlueCount(), s:" ",
-		s:"\cJof \cHBlue\cJ\n have voted to surrender"));
-	
-	delay (35 * 2);
-	ACS_Execute (751, 0);
+IntelMessageBold( strparam( s: "\cD", d: SurrenderCount( TEAM_BLUE ), s: "\cQ/\cD", d: BlueCount(), s: " ",
+							s: "\cJof \cHBlue\cJ\n have voted to surrender" ));
+
+	delay( 35 * 2 );
+	ACS_Execute( 751, 0 );
 }
 
-script 751 (void) {
-	SetActivator (-1);
-	
-	int count = SurrenderCount (TEAM_BLUE);
-	if ((count > BlueCount() / 2 && BlueCount() <= 6 && RedCount() != 0) ||
-		(count >= BlueCount() - 3 && BlueCount() > 6 && RedCount() != 0))
-	{
-		BigMessageBold ("\cHBlue Team surrenders");
+script 751( void )
+{	SetActivator( -1 );
+
+	int count = SurrenderCount( TEAM_BLUE );
+
+	if( ( count > BlueCount() / 2 && BlueCount() <= 6 && RedCount() != 0 ) ||
+			( count >= BlueCount() - 3 && BlueCount() > 6 && RedCount() != 0 ))
+	{	BigMessageBold( "\cHBlue Team surrenders" );
 		FreezeBold();
-		delay (35 * 2);
-		Thing_Destroy (101);
-		delay (5);
-		Thing_Destroy (103);
-		delay (5);
-		Thing_Destroy (105);
-		delay (5);
-		Thing_Destroy (107);
-		delay (5);
-		Thing_Destroy (109);
-		delay (5);
-		Thing_Destroy (114);
-		Log (s:"Blue Team surrenders.");
+		delay( 35 * 2 );
+		Thing_Destroy( 101 );
+		delay( 5 );
+		Thing_Destroy( 103 );
+		delay( 5 );
+		Thing_Destroy( 105 );
+		delay( 5 );
+		Thing_Destroy( 107 );
+		delay( 5 );
+		Thing_Destroy( 109 );
+		delay( 5 );
+		Thing_Destroy( 114 );
+Log( s: "Blue Team surrenders." );
 	}
-	
-	count = SurrenderCount (TEAM_RED);
-	
-	if ((count > RedCount() / 2 && RedCount() <= 6 && BlueCount() != 0) ||
-		(count >= RedCount() - 3 && RedCount() > 6 && BlueCount() != 0))
-	{
-		BigMessageBold ("\cRed Team surrenders");
+
+	count = SurrenderCount( TEAM_RED );
+
+	if( ( count > RedCount() / 2 && RedCount() <= 6 && BlueCount() != 0 ) ||
+			( count >= RedCount() - 3 && RedCount() > 6 && BlueCount() != 0 ))
+	{	BigMessageBold( "\cRed Team surrenders" );
 		FreezeBold();
-		delay (35 * 2);
-		Thing_Destroy (201);
-		delay (5);
-		Thing_Destroy (203);
-		delay (5);
-		Thing_Destroy (205);
-		delay (5);
-		Thing_Destroy (207);
-		delay (5);
-		Thing_Destroy (209);
-		delay (5);
-		Thing_Destroy (214);
-		Log (s:"Red surrenders.");
+		delay( 35 * 2 );
+		Thing_Destroy( 201 );
+		delay( 5 );
+		Thing_Destroy( 203 );
+		delay( 5 );
+		Thing_Destroy( 205 );
+		delay( 5 );
+		Thing_Destroy( 207 );
+		delay( 5 );
+		Thing_Destroy( 209 );
+		delay( 5 );
+		Thing_Destroy( 214 );
+Log( s: "Red surrenders." );
 	}
 }

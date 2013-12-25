@@ -11,803 +11,809 @@
 // [Dusk] There's some anomaly going around with the RNG which causes the powerup crate
 // to favor one effect over another. Get around this by re-rolling the crate number
 // every second.
-script 312 OPEN {
-	while (1) {
-		CrateNumber += random (0, MAX_CRATE);
+script 312 OPEN
+{	while( 1 )
+	{	CrateNumber += random( 0, MAX_CRATE );
 		CrateNumber %= MAX_CRATE;
 		CrateNumber++;
-		delay (35);
+		delay( 35 );
 	}
-	
+
 	restart;
 }
 
-script 309 (int Crate, int Override) {
-	// Crate determines which crate is given, 0 means random
+script 309( int Crate, int Override )
+{	// Crate determines which crate is given, 0 means random
 	// Override means whether all limits should be overridden. Open Deck needs this.
 	int i, tid;
 	int amount;
-	
-	if (!Crate) {
-		// Crate = random(1, MAX_CRATE);
+
+	if( !Crate )
+	{	// Crate = random(1, MAX_CRATE);
 		Crate = CrateNumber;
 		Override = false;
-		
+
 		// [Dusk] Re-roll CrateNumber now to keep two simultaneous crates from
 		// having the same effect.
-		CrateNumber += random (0, MAX_CRATE);
+		CrateNumber += random( 0, MAX_CRATE );
 		CrateNumber %= MAX_CRATE;
 		CrateNumber++;
 	}
-	
-	switch (crate) {
-	case 1:
-	case 17:
-	case 56:
-		if (GetArmorGrade() >= 5 && !Override) {
-			crate = 0;
-			restart;
-		}
-		
-		IntelMessage ("\cKArmor upgraded!");
-		LocalAmbientSound ("powerup/armr", 255);
-		SetArmorGrade (1, AGF_ADDITIVE | ARMOD_NOCHANGE);
-		Log (s:pname (-1), s:" gets Armor Upgrade crate.");
-		break;
-	
-	case 2:
-		SetFont ("SMALLFONT");
-		AmbientSound ("powerup/base", 127);
-		Log (s:pname (-1), s:" gets Base Miracle.");
-		
-		for (i = 0; i < NUM_BUILDINGS; ++i) {
-			tid = GetBuildingTID (i, PlayerTeam());
-			if (ThingCount (T_NONE, tid) == 0)
-				continue; // Skip dead buildings
-			
-			SetActorHealth (tid, GetActorSpawnHealth (tid));
-		}
-		
-		DrawBuildingHUD();
 
-		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("\cGRed\cJ got \cDBase Miracle!");
-		else
-			IntelMessageBold ("\cHBlue\cJ got \cDBase Miracle!");
-		
-		IntelMessage ("\cDBase miracle!");
-		break;
-	
-	case 3:
-	case 21:
-		if ( (CheckInventory ("ChemicalArmor") || CheckInventory ("PowerChemicalProof")) && !Override) {
-			crate = 1; // armor upgrade
-			restart;
-		}
-		
-		SetFont ("SMALLFONT");
-		IntelMessage ("\cDChemical proof!");
-		
-		LocalAmbientSound ("powerup/chem", 255);
-		LocalAmbientSound ("misc/armor_pkup", 127);
-		GiveInventory ("ChemicalArmor", 1);
-		Log (s:pname (-1), s:" gets Chem Proof.");
-		break;
-	
-	case 4:
-	case 22:
-		if (CheckInventory ("PowerFirepowerUpgrade") && !Override) {
-			crate = 0;
-			restart;
-		}
-		
-		SetFont ("SMALLFONT");
-		IntelMessage ("\cKFirepower upgraded!");
-		LocalAmbientSound ("powerup/dama", 255);
-		GiveInventory ("FirepowerUpgrade", 1);
-		Log (s:pname (-1), s:" gets FirePower Upgrade crate.");
-		break;
-	
-	case 5:
-	case 16:
-		if (GetCredits (-1) >= GetCVAR ("aow_creditlimit")) {
-			crate = 0;
-			restart;
-		}
-		
-		amount = GetCVAR ("aow_bonusamount") +  (GetCredits (-1) / 4);
-		IntelMessage (strparam (s:"Bonus credits! You get \cQ$\cD", d:amount, s:"!"));
-		LocalAmbientSound ("powerup/cred", 255);
-		Delay (4);
-		LocalAmbientSound ("powerup/credsound", 255);
-		IncrCredits (PlayerNumber(), amount);
-		Log (s:pname (-1), s:" gets Bonus Credits Crate.");
-		break;
-	
-	case 6:
-	case 23:
-		if (Rank[PlayerNumber()] >= RANK_COMMANDO && !Override) {
-			crate = 0;
-			restart;
-		}
-		
-		Log (s:pname (-1), s:" gets Bonus XP crate.");
-		IntelMessage ("\cJYou got \cD250 \cQXP\cJ!");
-		LocalAmbientSound ("powerup/exp", 255);
-		
-		for (i = 0; i < 5; i++) {
-			Delay (5);
-			LocalAmbientSound ("c4/use", 255);
-			AddExperience (50);
-		}
-		break;
-	
-	case 7:
-	case 18:
-		if ( (CheckInventory ("FireArmor") || CheckInventory ("PowerFireProof")) && !Override) {
-			crate = 1; // armor upgrade
-			restart;
-		}
-		
-		IntelMessage ("\cKFire proof!");
-		LocalAmbientSound ("powerup/fire", 255);
-		LocalAmbientSound ("misc/armor_pkup", 127);
-		GiveInventory ("FireArmor", 1);
-		Log (s:pname (-1), s:" gets Fire Proof crate.");
-		break;
-	
-	case 8:
-	case 24:
-		if (!Override &&  (CheckInventory ("StealthLaserRifle") || CheckInventory ("Knife"))) {
-			crate = 0;
-			restart;
-		}
-		
-		if (!Override &&  (CheckInventory ("PowerInvisibility"))) {
-			crate = 0;
-			restart;
-		}
-		
-		LocalAmbientSound ("powerup/invi", 255);
-		LocalAmbientSound ("powerup/invisound", 255);
-		
-		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("\cGRed\c- got \cUStealth Crate!");
-		else
-			IntelMessageBold ("\cHBlue\c- got \cUStealth Crate!");
-			
-		SetArmorGrade (-1, AGF_ADDITIVE | ARMOD_NOCHANGE);
-		GiveInventory ("StealthLaserRifle", 1);
-		GiveInventory ("LaserRifleAmmo", 100);
-		SetActorProperty (0, APROP_DeathSound, "stealth/death");
-		Log (s:pname (-1), s:" gets Stealth crate.");
-		
-		// [Dusk] This kind of sounds awkward, is there anything better to go here?
-		IntelMessage ("\cUStealth rifle!");
-		delay (2 * 35);
-		IntelMessage ("\cJUse the rifle's \cKAlt-Fire\cJ\nto toggle \cUstealth!");
-		break;
-		
-	case 9:
-	case 25:
-		if (CheckInventory ("PowerInvulnerable") && !Override) {
-			crate = 0;
-			restart;
-		}
-		
-		SetFont ("SMALLFONT");
-		LocalAmbientSound ("powerup/iron", 255);
-		LocalAmbientSound ("powerup/invisound", 255);
-		GiveInventory ("IronCurtain", 1);
-		Log (s:pname (-1), s:" gets Iron Curtain.");
-		
-		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("\cGRed\cJ got \cCIron Curtain!!");
-		else if (PlayerTeam() == TEAM_BLUE)
-			IntelMessageBold ("\cHBlue\cJ got \cCIron Curtain!!");
-		
-		IntelMessage ("\cCIron curtain!!");
-		break;
-		
-	case 10:
-	case 26:
-	case 36:
-		if (CheckInventory ("IsKamikaze") && !Override) {
-			crate = 0;
-			restart;
-		}
-		
-		LocalAmbientSound ("powerup/kama", 255);
-		
-		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("Some crazy ass \cGRed\cJ got\nthe \cKKamikaze Crate!!");
-		else
-			IntelMessageBold ("Some crazy ass \cHBlue\cJ got\nthe \cKKamikaze Crate!!");
-			
-		IntelMessage ("\cKKamikaze!");
-		GiveInventory ("IsKamikaze", 1);
-		Log (s:pname (-1), s:" gets Kamikaze.");
-		break;
-		
-	case 11:
-	case 27:
-		if (!Override &&  (CrateTime || CheckInventory ("PlasmaCannon"))) {
-			ACS_ExecuteAlways (309, 0);
-			terminate;
-		}
-		
-		LocalAmbientSound ("powerup/plas", 255);
-		
-		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("\cGRed\cJ got \cNPlasma Cannon Crate!");
-		else if (PlayerTeam() == TEAM_BLUE)
-			IntelMessageBold ("\cHBlue\cJ got \cNPlasma Cannon Crate!");
-		
-		IntelMessage ("\cNPlasma Cannon!");
-		
-		GiveInventory ("PlasmaCannon", 1);
-		GiveInventory ("PlasmaCannonAmmo", 10);
-		RecountPlasma();
-		Log (s:pname (-1), s:" gets Plasma Cannon.");
-		break;
-	
-	case 12:
-	case 19:
-		if (!CheckInventory ("HasClass") && !Override) {
-			crate = 0;
-			restart;
-		}
-		
-		BigMessage ("\ciRESIGNED");
-		LocalAmbientSound ("powerup/resi", 255);
-		SetFont ("SMALLFONT");
-		Delay (10);
-		
-		if (PlayerTeam() == TEAM_RED)
-			Teleport (71);
-		else if (PlayerTeam() == TEAM_BLUE)
-			Teleport (70);
-			
-		ACS_ExecuteAlways (95, 0);
-		Log (s:pname (-1), s:" gets Resign Crate.");
-		break;
-	
-	case 13:
-	case 20:
-		SetFont ("SMALLFONT");
-		
-		if (!Override) {
-			if (CheckInventory ("PowerSpeedUpgrade")) {
-				crate = 0;
+	switch( crate )
+	{	case 1:
+		case 17:
+		case 56:
+			if( GetArmorGrade() >= 5 && !Override )
+			{	crate = 0;
 				restart;
 			}
-			
-			// this crate ruins stealth due to speed trails
-			if (CheckInventory ("StealthLaserRifle") || CheckInventory ("Knife")) {
-				crate = 0;
+
+			IntelMessage( "\cKArmor upgraded!" );
+			LocalAmbientSound( "powerup/armr", 255 );
+			SetArmorGrade( 1, AGF_ADDITIVE | ARMOD_NOCHANGE );
+Log( s: pname( -1 ), s: " gets Armor Upgrade crate." );
+			break;
+
+		case 2:
+			SetFont( "SMALLFONT" );
+			AmbientSound( "powerup/base", 127 );
+Log( s: pname( -1 ), s: " gets Base Miracle." );
+
+			for( i = 0; i < NUM_BUILDINGS; ++i )
+			{	tid = GetBuildingTID( i, PlayerTeam() );
+
+				if( ThingCount( T_NONE, tid ) == 0 )
+					continue; // Skip dead buildings
+
+				SetActorHealth( tid, GetActorSpawnHealth( tid ));
+			}
+
+			DrawBuildingHUD();
+
+			if( PlayerTeam() == TEAM_RED )
+				IntelMessageBold( "\cGRed\cJ got \cDBase Miracle!" );
+			else
+				IntelMessageBold( "\cHBlue\cJ got \cDBase Miracle!" );
+
+			IntelMessage( "\cDBase miracle!" );
+			break;
+
+		case 3:
+		case 21:
+			if( ( CheckInventory( "ChemicalArmor" ) || CheckInventory( "PowerChemicalProof" )) && !Override )
+			{	crate = 1; // armor upgrade
 				restart;
 			}
-			
-			// also blurspheres
-			if (CheckInventory ("PowerInvisibility")) {
-				crate = 0;
+
+			SetFont( "SMALLFONT" );
+			IntelMessage( "\cDChemical proof!" );
+
+			LocalAmbientSound( "powerup/chem", 255 );
+			LocalAmbientSound( "misc/armor_pkup", 127 );
+			GiveInventory( "ChemicalArmor", 1 );
+Log( s: pname( -1 ), s: " gets Chem Proof." );
+			break;
+
+		case 4:
+		case 22:
+			if( CheckInventory( "PowerFirepowerUpgrade" ) && !Override )
+			{	crate = 0;
 				restart;
 			}
-		}
-		
-		LocalAmbientSound ("powerup/sped", 255);
-		IntelMessage ("\cDSpeed upgraded!");
-		GiveInventory ("SpeedUpgrade", 1);
-		Log (s:pname (-1), s:" gets Speed Upgrade.");
-		break;
-		
-	case 14:
-	case 28:
-		// [Dusk] Take half the credits instead
-		amount =  (GetCredits (-1) / 2);
-		
-		if (!amount) {
-			// Nothing to steal
-			crate = 0;
-			restart;
-		}
-		
-		SetFont ("SMALLFONT");
-		IntelMessage (strparam (s:"\cACredits stolen! (\cQ$\cD", d:amount, s:"\c-)"));
-		
-		LocalAmbientSound ("powerup/stol", 255);
-		Delay (4);
-		LocalAmbientSound ("powerup/stolsound", 255);
-		Log (s:pname (-1), s:" gets Credits Stolen.");
-		
-		DecrCredits (PlayerNumber(), amount);
-		
-		// [Dusk] Spread the amount evenly amongst the enemy team
-		int enemy = 1 - PlayerTeam();
-		int enemyplayers =  (GetTeamProperty (enemy, TPROP_NumPlayers));
-		
-		for (i = 0; i < MAXPLAYERS; ++i) {
-			if (!PlayerInGame (i) || GetPlayerTeam (i) != enemy)
-				continue;
-				
-			IncrCredits (i, amount / enemyplayers);
-			SetActivator (TID_Player + i);
-			IntelMessage (strparam (s:"Espionage crew has recovered you and your team \cQ$\cD", d:amount / enemyplayers));
-		}
-		break;
-	
-	case 15:
-		if (CheckInventory ("TimeGun") && !Override) {
-			crate = 0;
-			restart;
-		}
-		
-		LocalAmbientSound ("powerup/time", 127);
-		LocalAmbientSound ("misc/timewarp", 64);
-		GiveInventory ("TimeGunAmmo", 30);
-		GiveInventory ("TimeGun", 1);
-		
-		IntelMessage ("You got the \cITime Gun!");
-		
-		Log (s:pname (-1), s:" gets Time Gun Crate.");
-		RecountTimeCops();
-		break;
-	
-	case 29:
-	case 30:
-	case 31:
-	case 32:
-		// [Dusk] High ranking dudes get less of these
-		if (Rank[PlayerNumber()] >= RANK_LIEUTENANT && !random (0, 2)) {
-			Crate = 0;
-			restart;
-		}
-		
-		BigMessage ("BOMB CRATE!");
-		
-		if (PlayerTeam() == TEAM_BLUE)
-			GiveInventory ("BombCrateFXGiverBlue", 1);
-		else
-			GiveInventory ("BombCrateFXGiverRed", 1);
-			
-		ActivatorSound ("powerup/bomb", 127);
-		
-		for (i = 0; i < 4; i++) {
-			if (GetHealth() <= 0) {
-				FadeTo (0, 0, 0, 0, 1.0);
+
+			SetFont( "SMALLFONT" );
+			IntelMessage( "\cKFirepower upgraded!" );
+			LocalAmbientSound( "powerup/dama", 255 );
+			GiveInventory( "FirepowerUpgrade", 1 );
+Log( s: pname( -1 ), s: " gets FirePower Upgrade crate." );
+			break;
+
+		case 5:
+		case 16:
+			if( GetCredits( -1 ) >= GetCVAR( "aow_creditlimit" ))
+			{	crate = 0;
+				restart;
+			}
+
+			amount = GetCVAR( "aow_bonusamount" ) + ( GetCredits( -1 ) / 4 );
+IntelMessage( strparam( s: "Bonus credits! You get \cQ$\cD", d: amount, s: "!" ));
+			LocalAmbientSound( "powerup/cred", 255 );
+			Delay( 4 );
+			LocalAmbientSound( "powerup/credsound", 255 );
+			IncrCredits( PlayerNumber(), amount );
+Log( s: pname( -1 ), s: " gets Bonus Credits Crate." );
+			break;
+
+		case 6:
+		case 23:
+			if( Rank[PlayerNumber()] >= RANK_COMMANDO && !Override )
+			{	crate = 0;
+				restart;
+			}
+
+Log( s: pname( -1 ), s: " gets Bonus XP crate." );
+			IntelMessage( "\cJYou got \cD250 \cQXP\cJ!" );
+			LocalAmbientSound( "powerup/exp", 255 );
+
+			for( i = 0; i < 5; i++ )
+			{	Delay( 5 );
+				LocalAmbientSound( "c4/use", 255 );
+				AddExperience( 50 );
+			}
+
+			break;
+
+		case 7:
+		case 18:
+			if( ( CheckInventory( "FireArmor" ) || CheckInventory( "PowerFireProof" )) && !Override )
+			{	crate = 1; // armor upgrade
+				restart;
+			}
+
+			IntelMessage( "\cKFire proof!" );
+			LocalAmbientSound( "powerup/fire", 255 );
+			LocalAmbientSound( "misc/armor_pkup", 127 );
+			GiveInventory( "FireArmor", 1 );
+Log( s: pname( -1 ), s: " gets Fire Proof crate." );
+			break;
+
+		case 8:
+		case 24:
+			if( !Override && ( CheckInventory( "StealthLaserRifle" ) || CheckInventory( "Knife" )) )
+			{	crate = 0;
+				restart;
+			}
+
+			if( !Override && ( CheckInventory( "PowerInvisibility" )) )
+			{	crate = 0;
+				restart;
+			}
+
+			LocalAmbientSound( "powerup/invi", 255 );
+			LocalAmbientSound( "powerup/invisound", 255 );
+
+			if( PlayerTeam() == TEAM_RED )
+				IntelMessageBold( "\cGRed\c- got \cUStealth Crate!" );
+			else
+				IntelMessageBold( "\cHBlue\c- got \cUStealth Crate!" );
+
+			SetArmorGrade( -1, AGF_ADDITIVE | ARMOD_NOCHANGE );
+			GiveInventory( "StealthLaserRifle", 1 );
+			GiveInventory( "LaserRifleAmmo", 100 );
+			SetActorProperty( 0, APROP_DeathSound, "stealth/death" );
+Log( s: pname( -1 ), s: " gets Stealth crate." );
+
+			// [Dusk] This kind of sounds awkward, is there anything better to go here?
+			IntelMessage( "\cUStealth rifle!" );
+			delay( 2 * 35 );
+			IntelMessage( "\cJUse the rifle's \cKAlt-Fire\cJ\nto toggle \cUstealth!" );
+			break;
+
+		case 9:
+		case 25:
+			if( CheckInventory( "PowerInvulnerable" ) && !Override )
+			{	crate = 0;
+				restart;
+			}
+
+			SetFont( "SMALLFONT" );
+			LocalAmbientSound( "powerup/iron", 255 );
+			LocalAmbientSound( "powerup/invisound", 255 );
+			GiveInventory( "IronCurtain", 1 );
+Log( s: pname( -1 ), s: " gets Iron Curtain." );
+
+			if( PlayerTeam() == TEAM_RED )
+				IntelMessageBold( "\cGRed\cJ got \cCIron Curtain!!" );
+			else if( PlayerTeam() == TEAM_BLUE )
+				IntelMessageBold( "\cHBlue\cJ got \cCIron Curtain!!" );
+
+			IntelMessage( "\cCIron curtain!!" );
+			break;
+
+		case 10:
+		case 26:
+		case 36:
+			if( CheckInventory( "IsKamikaze" ) && !Override )
+			{	crate = 0;
+				restart;
+			}
+
+			LocalAmbientSound( "powerup/kama", 255 );
+
+			if( PlayerTeam() == TEAM_RED )
+				IntelMessageBold( "Some crazy ass \cGRed\cJ got\nthe \cKKamikaze Crate!!" );
+			else
+				IntelMessageBold( "Some crazy ass \cHBlue\cJ got\nthe \cKKamikaze Crate!!" );
+
+			IntelMessage( "\cKKamikaze!" );
+			GiveInventory( "IsKamikaze", 1 );
+Log( s: pname( -1 ), s: " gets Kamikaze." );
+			break;
+
+		case 11:
+		case 27:
+			if( !Override && ( CrateTime || CheckInventory( "PlasmaCannon" )) )
+			{	ACS_ExecuteAlways( 309, 0 );
 				terminate;
 			}
-			
-			// CancelFade () doesn't work online
-			if (PlayerTeam() == TEAM_BLUE)
-				FadeTo (0, 0, 255, i * 0.1, 1.0);
+
+			LocalAmbientSound( "powerup/plas", 255 );
+
+			if( PlayerTeam() == TEAM_RED )
+				IntelMessageBold( "\cGRed\cJ got \cNPlasma Cannon Crate!" );
+			else if( PlayerTeam() == TEAM_BLUE )
+				IntelMessageBold( "\cHBlue\cJ got \cNPlasma Cannon Crate!" );
+
+			IntelMessage( "\cNPlasma Cannon!" );
+
+			GiveInventory( "PlasmaCannon", 1 );
+			GiveInventory( "PlasmaCannonAmmo", 10 );
+			RecountPlasma();
+Log( s: pname( -1 ), s: " gets Plasma Cannon." );
+			break;
+
+		case 12:
+		case 19:
+			if( !CheckInventory( "HasClass" ) && !Override )
+			{	crate = 0;
+				restart;
+			}
+
+			BigMessage( "\ciRESIGNED" );
+			LocalAmbientSound( "powerup/resi", 255 );
+			SetFont( "SMALLFONT" );
+			Delay( 10 );
+
+			if( PlayerTeam() == TEAM_RED )
+				Teleport( 71 );
+			else if( PlayerTeam() == TEAM_BLUE )
+				Teleport( 70 );
+
+			ACS_ExecuteAlways( 95, 0 );
+Log( s: pname( -1 ), s: " gets Resign Crate." );
+			break;
+
+		case 13:
+		case 20:
+			SetFont( "SMALLFONT" );
+
+			if( !Override )
+			{	if( CheckInventory( "PowerSpeedUpgrade" ))
+				{	crate = 0;
+					restart;
+				}
+
+				// this crate ruins stealth due to speed trails
+				if( CheckInventory( "StealthLaserRifle" ) || CheckInventory( "Knife" ))
+				{	crate = 0;
+					restart;
+				}
+
+				// also blurspheres
+				if( CheckInventory( "PowerInvisibility" ))
+				{	crate = 0;
+					restart;
+				}
+			}
+
+			LocalAmbientSound( "powerup/sped", 255 );
+			IntelMessage( "\cDSpeed upgraded!" );
+			GiveInventory( "SpeedUpgrade", 1 );
+Log( s: pname( -1 ), s: " gets Speed Upgrade." );
+			break;
+
+		case 14:
+		case 28:
+			// [Dusk] Take half the credits instead
+			amount = ( GetCredits( -1 ) / 2 );
+
+			if( !amount )
+			{	// Nothing to steal
+				crate = 0;
+				restart;
+			}
+
+			SetFont( "SMALLFONT" );
+IntelMessage( strparam( s: "\cACredits stolen! (\cQ$\cD", d: amount, s: "\c-)" ));
+
+			LocalAmbientSound( "powerup/stol", 255 );
+			Delay( 4 );
+			LocalAmbientSound( "powerup/stolsound", 255 );
+Log( s: pname( -1 ), s: " gets Credits Stolen." );
+
+			DecrCredits( PlayerNumber(), amount );
+
+			// [Dusk] Spread the amount evenly amongst the enemy team
+			int enemy = 1 - PlayerTeam();
+			int enemyplayers = ( GetTeamProperty( enemy, TPROP_NumPlayers ));
+
+			for( i = 0; i < MAXPLAYERS; ++i )
+			{	if( !PlayerInGame( i ) || GetPlayerTeam( i ) != enemy )
+					continue;
+
+				IncrCredits( i, amount / enemyplayers );
+				SetActivator( TID_Player + i );
+IntelMessage( strparam( s: "Espionage crew has recovered you and your team \cQ$\cD", d: amount / enemyplayers ));
+			}
+
+			break;
+
+		case 15:
+			if( CheckInventory( "TimeGun" ) && !Override )
+			{	crate = 0;
+				restart;
+			}
+
+			LocalAmbientSound( "powerup/time", 127 );
+			LocalAmbientSound( "misc/timewarp", 64 );
+			GiveInventory( "TimeGunAmmo", 30 );
+			GiveInventory( "TimeGun", 1 );
+
+			IntelMessage( "You got the \cITime Gun!" );
+
+Log( s: pname( -1 ), s: " gets Time Gun Crate." );
+			RecountTimeCops();
+			break;
+
+		case 29:
+		case 30:
+		case 31:
+		case 32:
+
+			// [Dusk] High ranking dudes get less of these
+			if( Rank[PlayerNumber()] >= RANK_LIEUTENANT && !random( 0, 2 ))
+			{	Crate = 0;
+				restart;
+			}
+
+			BigMessage( "BOMB CRATE!" );
+
+			if( PlayerTeam() == TEAM_BLUE )
+				GiveInventory( "BombCrateFXGiverBlue", 1 );
 			else
-				FadeTo (255, 128, 0, i * 0.1, 1.0);
-				
-			delay (35);
-		}
-		
-		if (PlayerTeam() == TEAM_BLUE)
-			FadeTo (0, 0, 255, 0.48, 0.8);
-		else
-			FadeTo (255, 128, 0, 0.48, 0.8);
-			
-		delay (28);
-		FadeTo (0, 0, 0, 0, 1.0);
-		
-		if (!CheckInventory ("IsInSpawnRoom")) GiveInventory ("IsKamikaze", 1);
-		
-		delay (1);
-		Thing_Destroy (ActivatorTID(), 1);
-		terminate;
-	
-	case 35:
-		if (CrateTime == True) {
-			ACS_ExecuteAlways (309, 0);
+				GiveInventory( "BombCrateFXGiverRed", 1 );
+
+			ActivatorSound( "powerup/bomb", 127 );
+
+			for( i = 0; i < 4; i++ )
+			{	if( GetHealth() <= 0 )
+				{	FadeTo( 0, 0, 0, 0, 1.0 );
+					terminate;
+				}
+
+				// CancelFade () doesn't work online
+				if( PlayerTeam() == TEAM_BLUE )
+					FadeTo( 0, 0, 255, i * 0.1, 1.0 );
+				else
+					FadeTo( 255, 128, 0, i * 0.1, 1.0 );
+
+				delay( 35 );
+			}
+
+			if( PlayerTeam() == TEAM_BLUE )
+				FadeTo( 0, 0, 255, 0.48, 0.8 );
+			else
+				FadeTo( 255, 128, 0, 0.48, 0.8 );
+
+			delay( 28 );
+			FadeTo( 0, 0, 0, 0, 1.0 );
+
+			if( !CheckInventory( "IsInSpawnRoom" )) GiveInventory( "IsKamikaze", 1 );
+
+			delay( 1 );
+			Thing_Destroy( ActivatorTID(), 1 );
 			terminate;
-		}
-		
-		AmbientSound ("weapons/rocklx", 255);
-		AmbientSound ("powerup/crsh", 255);
-		
-		if (PlayerTeam() == TEAM_RED) {
-			IntelMessageBold ("Poor \cGRed\cJ got \cRBase Crasher");
-			Thing_Damage (201, 4000, 0);
-			Thing_Damage (203, 4000, 0);
-			Thing_Damage (205, 4000, 0);
-			Thing_Damage (207, 4000, 0);
-			Thing_Damage (214, 2500, 0);
-		}
-		else if (PlayerTeam() == TEAM_BLUE) {
-			IntelMessageBold ("Poor \cFRed\cJ got \cRBase Crasher");
-			Thing_Damage (101, 4000, 0);
-			Thing_Damage (103, 4000, 0);
-			Thing_Damage (105, 4000, 0);
-			Thing_Damage (107, 4000, 0);
-			Thing_Damage (114, 2500, 0);
-		}
-		
-		IntelMessage ("\cRBase crasher!");
-		ACS_ExecuteAlways (930, 0, BUILDING_ALL, PlayerTeam()); // update the hud
-		break;
-	
-	case 37:
-	case 38:
-	case 33:
-		if (CheckInventory ("UtilityGun") && !Override) {
-			crate = 0;
-			restart;
-		}
-		
-		GiveInventory ("UtilityGun", 75);
-		GiveInventory ("Utility_Ammo", 75);
-		Log (s:pname (-1), s:" gets Utility Gun crate.");
-		IntelMessage ("You got the \cKUtility Gun!");
-		delay (2 * 35);
-		IntelMessage ("Use \cFAlt-Fire\cJ for \cNitem selection menu!");
-		break;
-	
-	case 39:
-	case 40:
-	case 34:
-		if ( (CheckInventory ("LaserArmor") || CheckInventory ("PowerLaserResistance")) && !Override) {
-			crate = 1; // armor upgrade
-			restart;
-		}
-		
-		SetFont ("SMALLFONT");
-		IntelMessage ("\cNLaser resistance!");
-		LocalAmbientSound ("powerup/resistlaser", 127);
-		LocalAmbientSound ("misc/armor_pkup", 127);
-		GiveInventory ("LaserArmor", 1);
-		Log (s:pname (-1), s:" gets Laser Resistance.");
-		break;
-	
-	case 41:
-	case 42:
-		if ( (CheckInventory ("ExplosionArmor") || CheckInventory ("PowerExplosiveResistance")) && !Override) {
-			crate = 1; // armor upgrade
-			restart;
-		}
-		
-		IntelMessage ("\cIExplosive resistance!");
-		LocalAmbientSound ("powerup/resistexplosive", 127);
-		LocalAmbientSound ("misc/armor_pkup", 127);
-		GiveInventory ("ExplosionArmor", 1);
-		Log (s:pname (-1), s:" gets Explosive Resistance.");
-		break;
-	
-	case 43:
-	case 44:
-		if ( (CheckInventory ("BulletArmor") || CheckInventory ("PowerBulletResistance")) && !Override) {
-			crate = 1; // armor upgrade
-			restart;
-		}
-		
-		SetFont ("SMALLFONT");
-		IntelMessage ("\cUBulletproof Vest!");
-		LocalAmbientSound ("powerup/resistbullet", 255);
-		LocalAmbientSound ("misc/armor_pkup", 127);
-		GiveInventory ("BulletArmor", 1);
-		Log (s:pname (-1), s:" gets Bulletproof Vest.");
-		break;
-	
-	case 45:
-		if (!Override &&  (CrateTime ||
-			CheckInventory ("IsMech") ||
-			!GetCVAR ("aow_mechs") ||
-			CheckInventory ("JuggernautPowerup"))) {
-			crate = 0;
-			restart;
-		}
-		
-		Log (s:pname (-1), s:" gets Juggernaut crate.");
-		GiveInventory ("JuggernautPowerup", 1);
-		GiveInventory ("FlamerAmmo", 200);
-		GiveInventory ("NukeAmmo", 1);
-		
-		LocalAmbientSound ("switch/lrm", 127);
-		
-		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("\cGRed\cJ got \cKJuggernaut Crate!");
-		else if (PlayerTeam() == TEAM_BLUE)
-			IntelMessageBold ("\cHBlue\cJ got \cKJuggernaut Crate!");
-		
-		IntelMessage (strparam (s:"\cJJuggernaut suit!\nPress \cF", k: "invuse", s:"\cJ to enter"));
-		break;
-	
-	case 46:
-		if (CrateTime || CheckInventory ("IsMech") || CheckInventory ("PowerBerserk")) {
-			crate = 0;
-			restart;
-		}
-		
-		GiveInventory ("BerserkSwitch", 1);
-		
-		// [Dusk] Workaround, the hue doesn't seem to show up properly otherwise
-		delay (5);
-		GiveInventory ("BerserkHue", 1);
-		
-		if (PlayerTeam() == TEAM_RED)
-			IntelMessageBold ("\cHBlue\cJ got \cGBerserk!");
-		else if (PlayerTeam() == TEAM_BLUE)
-			IntelMessageBold ("\cGRed\cJ got \cGBerserk!");
-		
-		IntelMessage ("\cGBerserk!");
-		Log (s:pname (-1), s:" gets Berserk Crate.");
-		break;
-	
-	case 47:
-	case 48:
-		if (CheckInventory ("HealingRadiusItem") && !Override) {
-			crate = 0;
-			restart;
-		}
-		
-		IntelMessage ("\cAHealing Radius!");
-		GiveInventory ("HealingRadiusItem", 1);
-		Log (s:pname (-1), s:" gets Healing Radius crate.");
-		break;
-	
-	case 49:
-	case 50:
-	case 51:
-	case 52:
-		if (!Override && CheckInventory ("EagerBeaver")) {
-			crate = 0;
-			restart;
-		}
-		
-		IntelMessage ("\cKA chainsaw! Find some meat!");
-		GiveInventory ("EagerBeaver", 1);
-		Log (s:pname (-1), s:" gets Chainsaw crate.");
-		
-		// [Dusk] The chainsaw replaces unarmed, therefore
-		// if we use the fists, switch to the chainsaw.
-		if (CheckWeapon ("Unarmed"))
-			SetWeapon ("EagerBeaver");
-		else
-			LocalAmbientSound ("weapons/sawup", 127);
-		
-		TakeInventory ("Unarmed", 1);
-		break;
-	
-	case 53:
-	case 54:
-		if (!Override && CheckInventory ("MarineBeaconItem")) {
-			crate = 0;
-			restart;
-		}
-		
-		if (AIMarineCount >= MAX_MARINES) {
-			crate = 0;
-			restart;
-		}
-		
-		IntelMessage ("\cFMarine Beacon!");
-		GiveInventory ("MarineBeaconItem", 1);
-		Log (s:pname (-1), s:" gets Marine Beacon.");
-		break;
-	
-	case 55:
-		if( (Timer() < 10 * 60 * 35 || CheckInventory ("CrateChooser")) && !Override) {
-			Crate = 0;
-			restart;
-		}
-		
-		IntelMessage ("\cKOPEN DECK!");
-		LocalAmbientSound ("powerup/invisound", 127);
-		GiveInventory ("CrateChooser", 1);
-		Log (s:pname (-1), s:" gets Open Deck.");
-		break;
-	
-	case 57:
-	case 58:
-		SetFont ("SMALLFONT");
-		GiveInventory ("ThermalCloakingTime", 90);
-		ACS_ExecuteAlways (953, 0);
-		Log (s:pname (-1), s:" gets Thermal Cloaking.");
-		IntelMessage ("\cUThermal cloaking!");
-		delay (35);
-		IntelMessage ("Turrets cannot see you for 90 seconds");
-		break;
-	
-	case 59:
-	case 60:
-		// high rank dudes get less of these
-		if (Rank[PlayerNumber()] >= RANK_LIEUTENANT && !random (0, 2)) {
-			Crate = 0;
-			restart;
-		}
-		
-		if (CheckInventory ("IsMech")) {
-			crate = 0;
-			restart;
-		}
-		
-		BigMessage ("\cGDisarm crate!");
-		SetFont ("SMALLFONT");
-		Log (s:pname (-1), s:" gets disarm crate.");
-		
-		CheckAndRemove ("Boomstick");
-		CheckAndRemove ("DoubleShotgun");
-		CheckAndRemove ("Rifle");
-		CheckAndRemove ("GaussRifle");
-		CheckAndRemove ("GrenadeLauncher");
-		CheckAndRemove ("StealthLaserRifle");
-		CheckAndRemove ("LaserRifle");
-		CheckAndRemove ("TimeGun");
-		CheckAndRemove ("MissileLauncher");
-		CheckAndRemove ("CrateChooser");
-		CheckAndRemove ("LaserChaingun");
-		CheckAndRemove ("UtilityGun");
-		CheckAndRemove ("PlasmaCannon");
-		CheckAndRemove ("ArtilleryCannon");
-		CheckAndRemove ("ChemicalSprayer");
-		CheckAndRemove ("TiberiumAutorifleWeak");
-		CheckAndRemove ("TiberiumAutorifle");
-		CheckAndRemove ("FragGrenade");
-		CheckAndRemove ("RepairGunUpgrade");
-		
-		if (Rank[PlayerNumber()] != RANK_COMMANDO) CheckAndRemove ("RepairGun");
-		
-		CheckAndRemove ("HealGun");
-		CheckAndRemove ("BombSquadGun");
-		CheckAndRemove ("SubMachineGun");
-		CheckAndRemove ("Flamer");
-		CheckAndRemove ("ShockRifle");
-		CheckAndRemove ("SniperRifle");
-		CheckAndRemove ("SniperRifleWeak");
-		CheckAndRemove ("PlasmaGun");
-		CheckAndRemove ("MachineGun");
-		CheckAndRemove ("GatlingGun");
-		CheckAndRemove ("JumpjetGatlingGun");
-		
-		if (CheckInventory ("EagerBeaver")) {
-			TakeInventory ("EagerBeaver", 1);
-			GiveInventory ("Unarmed", 1);
-		}
-		
-		if (CheckInventory ("Knife"))
-			SetWeapon ("Knife");
-		else
-			SetWeapon ("Handgun");
-			
-		SetActorSpeed (0, 1.0);
-		PlayerSpeeds[PlayerNumber()] = 1.0;
-		
-		GiveCredits (-1, CheckInventory ("Refunds"));
-		TakeInventory ("Refunds", CheckInventory ("Refunds"));
-		SpawnSpotForced ("TeleportFog", 0, 0, 0);
-		delay (15);
-		ActivatorSound ("heavy/argh", 127);
-		break;
-	
-	case 61:
-	case 62:
-		if (CheckInventory ("PowerFatigue")) {
-			crate = 0;
-			restart;
-		}
-		
-		// [Dusk] This crate ruins stealth due to speed trails
-		if (CheckInventory ("StealthLaserRifle") || CheckInventory ("Knife")) {
-			Crate = 0;
-			restart;
-		}
-		
-		if (CheckInventory ("PowerInvisibility")) {
-			Crate = 0;
-			restart;
-		}
-		
-		SetFont ("SMALLFONT");
-		IntelMessage ("\cAFatigue!");
-		GiveInventory ("SpeedDowngrade", 1);
-		Log (s:pname (-1), s:" gets Fatigue crate.");
-		break;
-	
-	case 63:
-	case 64:
-		if (CheckInventory ("RemoteC4") && !Override) {
-			ACS_ExecuteAlways (309, 0);
-			terminate;
-		}
-		
-		SetFont ("SMALLFONT");
-		IntelMessage ("\cFRemote C4!");
-		LocalAmbientSound ("c4/remote", 127);
-		GiveInventory ("RemoteC4", 1);
-		GiveInventory ("RemoteC4Ammo", 5);
-		Log (s:pname (-1), s:" gets Remote C4 crate.");
-		break;
-	
-	case 65:
-	case 66:
-		if (!Override) {
-			// stealth just breaks this
-			if (CheckInventory ("StealthLaserRifle") || CheckInventory ("Knife")) {
-				crate = 0;
+
+		case 35:
+			if( CrateTime == True )
+			{	ACS_ExecuteAlways( 309, 0 );
+				terminate;
+			}
+
+			AmbientSound( "weapons/rocklx", 255 );
+			AmbientSound( "powerup/crsh", 255 );
+
+			if( PlayerTeam() == TEAM_RED )
+			{	IntelMessageBold( "Poor \cGRed\cJ got \cRBase Crasher" );
+				Thing_Damage( 201, 4000, 0 );
+				Thing_Damage( 203, 4000, 0 );
+				Thing_Damage( 205, 4000, 0 );
+				Thing_Damage( 207, 4000, 0 );
+				Thing_Damage( 214, 2500, 0 );
+			}
+			else if( PlayerTeam() == TEAM_BLUE )
+			{	IntelMessageBold( "Poor \cFRed\cJ got \cRBase Crasher" );
+				Thing_Damage( 101, 4000, 0 );
+				Thing_Damage( 103, 4000, 0 );
+				Thing_Damage( 105, 4000, 0 );
+				Thing_Damage( 107, 4000, 0 );
+				Thing_Damage( 114, 2500, 0 );
+			}
+
+			IntelMessage( "\cRBase crasher!" );
+			ACS_ExecuteAlways( 930, 0, BUILDING_ALL, PlayerTeam() ); // update the hud
+			break;
+
+		case 37:
+		case 38:
+		case 33:
+			if( CheckInventory( "UtilityGun" ) && !Override )
+			{	crate = 0;
 				restart;
 			}
-			
-			// no duplicates
-			if (CheckInventory ("PowerInvisibility")) {
-				crate = 0;
+
+			GiveInventory( "UtilityGun", 75 );
+			GiveInventory( "Utility_Ammo", 75 );
+Log( s: pname( -1 ), s: " gets Utility Gun crate." );
+			IntelMessage( "You got the \cKUtility Gun!" );
+			delay( 2 * 35 );
+			IntelMessage( "Use \cFAlt-Fire\cJ for \cNitem selection menu!" );
+			break;
+
+		case 39:
+		case 40:
+		case 34:
+			if( ( CheckInventory( "LaserArmor" ) || CheckInventory( "PowerLaserResistance" )) && !Override )
+			{	crate = 1; // armor upgrade
 				restart;
 			}
-		}
-		
-		IntelMessage ("\cFPartial Invisibility!");
-		GiveInventory ("BlurSphere", 1);
-		Log (s:pname (-1), s:" gets Partial Invisibility crate.");
-		break;
-	
-	case 67:
-	case 68:
-		str RandomWeapon = -1;
-		str x;
-		
-		// Try determine a random weapon the player doesn't have.
-		for (i = 0; i <= 7; i++) {
-			x = NormalWeaponNames[random (0, MAX_NORMAL_WEAPONS - 1)];
-			
-			if (!CheckInventory (x)) {
-				RandomWeapon = x;
-				break;
+
+			SetFont( "SMALLFONT" );
+			IntelMessage( "\cNLaser resistance!" );
+			LocalAmbientSound( "powerup/resistlaser", 127 );
+			LocalAmbientSound( "misc/armor_pkup", 127 );
+			GiveInventory( "LaserArmor", 1 );
+Log( s: pname( -1 ), s: " gets Laser Resistance." );
+			break;
+
+		case 41:
+		case 42:
+			if( ( CheckInventory( "ExplosionArmor" ) || CheckInventory( "PowerExplosiveResistance" )) && !Override )
+			{	crate = 1; // armor upgrade
+				restart;
 			}
-		}
-		
-		if (RandomWeapon != -1) {
-			LocalAmbientSound ("misc/w_pkup", 127);
-			IntelMessage (strparam (s:"\cFRandom Weapon!\nYou get a \cF", s:RandomWeapon));
-			GiveInventory (RandomWeapon, 1);
-		}
-		else {
-			// could not find a weapon the player doesn't have. reroll
-			Crate = 0;
-			restart;
-		}
-		break;
+
+			IntelMessage( "\cIExplosive resistance!" );
+			LocalAmbientSound( "powerup/resistexplosive", 127 );
+			LocalAmbientSound( "misc/armor_pkup", 127 );
+			GiveInventory( "ExplosionArmor", 1 );
+Log( s: pname( -1 ), s: " gets Explosive Resistance." );
+			break;
+
+		case 43:
+		case 44:
+			if( ( CheckInventory( "BulletArmor" ) || CheckInventory( "PowerBulletResistance" )) && !Override )
+			{	crate = 1; // armor upgrade
+				restart;
+			}
+
+			SetFont( "SMALLFONT" );
+			IntelMessage( "\cUBulletproof Vest!" );
+			LocalAmbientSound( "powerup/resistbullet", 255 );
+			LocalAmbientSound( "misc/armor_pkup", 127 );
+			GiveInventory( "BulletArmor", 1 );
+Log( s: pname( -1 ), s: " gets Bulletproof Vest." );
+			break;
+
+		case 45:
+			if( !Override && ( CrateTime ||
+							   CheckInventory( "IsMech" ) ||
+							   !GetCVAR( "aow_mechs" ) ||
+							   CheckInventory( "JuggernautPowerup" )) )
+			{	crate = 0;
+				restart;
+			}
+
+Log( s: pname( -1 ), s: " gets Juggernaut crate." );
+			GiveInventory( "JuggernautPowerup", 1 );
+			GiveInventory( "FlamerAmmo", 200 );
+			GiveInventory( "NukeAmmo", 1 );
+
+			LocalAmbientSound( "switch/lrm", 127 );
+
+			if( PlayerTeam() == TEAM_RED )
+				IntelMessageBold( "\cGRed\cJ got \cKJuggernaut Crate!" );
+			else if( PlayerTeam() == TEAM_BLUE )
+				IntelMessageBold( "\cHBlue\cJ got \cKJuggernaut Crate!" );
+
+IntelMessage( strparam( s: "\cJJuggernaut suit!\nPress \cF", k: "invuse", s: "\cJ to enter" ));
+			break;
+
+		case 46:
+			if( CrateTime || CheckInventory( "IsMech" ) || CheckInventory( "PowerBerserk" ))
+			{	crate = 0;
+				restart;
+			}
+
+			GiveInventory( "BerserkSwitch", 1 );
+
+			// [Dusk] Workaround, the hue doesn't seem to show up properly otherwise
+			delay( 5 );
+			GiveInventory( "BerserkHue", 1 );
+
+			if( PlayerTeam() == TEAM_RED )
+				IntelMessageBold( "\cHBlue\cJ got \cGBerserk!" );
+			else if( PlayerTeam() == TEAM_BLUE )
+				IntelMessageBold( "\cGRed\cJ got \cGBerserk!" );
+
+			IntelMessage( "\cGBerserk!" );
+Log( s: pname( -1 ), s: " gets Berserk Crate." );
+			break;
+
+		case 47:
+		case 48:
+			if( CheckInventory( "HealingRadiusItem" ) && !Override )
+			{	crate = 0;
+				restart;
+			}
+
+			IntelMessage( "\cAHealing Radius!" );
+			GiveInventory( "HealingRadiusItem", 1 );
+Log( s: pname( -1 ), s: " gets Healing Radius crate." );
+			break;
+
+		case 49:
+		case 50:
+		case 51:
+		case 52:
+			if( !Override && CheckInventory( "EagerBeaver" ))
+			{	crate = 0;
+				restart;
+			}
+
+			IntelMessage( "\cKA chainsaw! Find some meat!" );
+			GiveInventory( "EagerBeaver", 1 );
+Log( s: pname( -1 ), s: " gets Chainsaw crate." );
+
+			// [Dusk] The chainsaw replaces unarmed, therefore
+			// if we use the fists, switch to the chainsaw.
+			if( CheckWeapon( "Unarmed" ))
+				SetWeapon( "EagerBeaver" );
+			else
+				LocalAmbientSound( "weapons/sawup", 127 );
+
+			TakeInventory( "Unarmed", 1 );
+			break;
+
+		case 53:
+		case 54:
+			if( !Override && CheckInventory( "MarineBeaconItem" ))
+			{	crate = 0;
+				restart;
+			}
+
+			if( AIMarineCount >= MAX_MARINES )
+			{	crate = 0;
+				restart;
+			}
+
+			IntelMessage( "\cFMarine Beacon!" );
+			GiveInventory( "MarineBeaconItem", 1 );
+Log( s: pname( -1 ), s: " gets Marine Beacon." );
+			break;
+
+		case 55:
+			if( ( Timer() < 10 * 60 * 35 || CheckInventory( "CrateChooser" )) && !Override )
+			{	Crate = 0;
+				restart;
+			}
+
+			IntelMessage( "\cKOPEN DECK!" );
+			LocalAmbientSound( "powerup/invisound", 127 );
+			GiveInventory( "CrateChooser", 1 );
+Log( s: pname( -1 ), s: " gets Open Deck." );
+			break;
+
+		case 57:
+		case 58:
+			SetFont( "SMALLFONT" );
+			GiveInventory( "ThermalCloakingTime", 90 );
+			ACS_ExecuteAlways( 953, 0 );
+Log( s: pname( -1 ), s: " gets Thermal Cloaking." );
+			IntelMessage( "\cUThermal cloaking!" );
+			delay( 35 );
+			IntelMessage( "Turrets cannot see you for 90 seconds" );
+			break;
+
+		case 59:
+		case 60:
+
+			// high rank dudes get less of these
+			if( Rank[PlayerNumber()] >= RANK_LIEUTENANT && !random( 0, 2 ))
+			{	Crate = 0;
+				restart;
+			}
+
+			if( CheckInventory( "IsMech" ))
+			{	crate = 0;
+				restart;
+			}
+
+			BigMessage( "\cGDisarm crate!" );
+			SetFont( "SMALLFONT" );
+Log( s: pname( -1 ), s: " gets disarm crate." );
+
+			CheckAndRemove( "Boomstick" );
+			CheckAndRemove( "DoubleShotgun" );
+			CheckAndRemove( "Rifle" );
+			CheckAndRemove( "GaussRifle" );
+			CheckAndRemove( "GrenadeLauncher" );
+			CheckAndRemove( "StealthLaserRifle" );
+			CheckAndRemove( "LaserRifle" );
+			CheckAndRemove( "TimeGun" );
+			CheckAndRemove( "MissileLauncher" );
+			CheckAndRemove( "CrateChooser" );
+			CheckAndRemove( "LaserChaingun" );
+			CheckAndRemove( "UtilityGun" );
+			CheckAndRemove( "PlasmaCannon" );
+			CheckAndRemove( "ArtilleryCannon" );
+			CheckAndRemove( "ChemicalSprayer" );
+			CheckAndRemove( "TiberiumAutorifleWeak" );
+			CheckAndRemove( "TiberiumAutorifle" );
+			CheckAndRemove( "FragGrenade" );
+			CheckAndRemove( "RepairGunUpgrade" );
+
+			if( Rank[PlayerNumber()] != RANK_COMMANDO ) CheckAndRemove( "RepairGun" );
+
+			CheckAndRemove( "HealGun" );
+			CheckAndRemove( "BombSquadGun" );
+			CheckAndRemove( "SubMachineGun" );
+			CheckAndRemove( "Flamer" );
+			CheckAndRemove( "ShockRifle" );
+			CheckAndRemove( "SniperRifle" );
+			CheckAndRemove( "SniperRifleWeak" );
+			CheckAndRemove( "PlasmaGun" );
+			CheckAndRemove( "MachineGun" );
+			CheckAndRemove( "GatlingGun" );
+			CheckAndRemove( "JumpjetGatlingGun" );
+
+			if( CheckInventory( "EagerBeaver" ))
+			{	TakeInventory( "EagerBeaver", 1 );
+				GiveInventory( "Unarmed", 1 );
+			}
+
+			if( CheckInventory( "Knife" ))
+				SetWeapon( "Knife" );
+			else
+				SetWeapon( "Handgun" );
+
+			SetActorSpeed( 0, 1.0 );
+			PlayerSpeeds[PlayerNumber()] = 1.0;
+
+			GiveCredits( -1, CheckInventory( "Refunds" ));
+			TakeInventory( "Refunds", CheckInventory( "Refunds" ));
+			SpawnSpotForced( "TeleportFog", 0, 0, 0 );
+			delay( 15 );
+			ActivatorSound( "heavy/argh", 127 );
+			break;
+
+		case 61:
+		case 62:
+			if( CheckInventory( "PowerFatigue" ))
+			{	crate = 0;
+				restart;
+			}
+
+			// [Dusk] This crate ruins stealth due to speed trails
+			if( CheckInventory( "StealthLaserRifle" ) || CheckInventory( "Knife" ))
+			{	Crate = 0;
+				restart;
+			}
+
+			if( CheckInventory( "PowerInvisibility" ))
+			{	Crate = 0;
+				restart;
+			}
+
+			SetFont( "SMALLFONT" );
+			IntelMessage( "\cAFatigue!" );
+			GiveInventory( "SpeedDowngrade", 1 );
+Log( s: pname( -1 ), s: " gets Fatigue crate." );
+			break;
+
+		case 63:
+		case 64:
+			if( CheckInventory( "RemoteC4" ) && !Override )
+			{	ACS_ExecuteAlways( 309, 0 );
+				terminate;
+			}
+
+			SetFont( "SMALLFONT" );
+			IntelMessage( "\cFRemote C4!" );
+			LocalAmbientSound( "c4/remote", 127 );
+			GiveInventory( "RemoteC4", 1 );
+			GiveInventory( "RemoteC4Ammo", 5 );
+Log( s: pname( -1 ), s: " gets Remote C4 crate." );
+			break;
+
+		case 65:
+		case 66:
+			if( !Override )
+			{	// stealth just breaks this
+				if( CheckInventory( "StealthLaserRifle" ) || CheckInventory( "Knife" ))
+				{	crate = 0;
+					restart;
+				}
+
+				// no duplicates
+				if( CheckInventory( "PowerInvisibility" ))
+				{	crate = 0;
+					restart;
+				}
+			}
+
+			IntelMessage( "\cFPartial Invisibility!" );
+			GiveInventory( "BlurSphere", 1 );
+Log( s: pname( -1 ), s: " gets Partial Invisibility crate." );
+			break;
+
+		case 67:
+		case 68:
+			str RandomWeapon = -1;
+			str x;
+
+			// Try determine a random weapon the player doesn't have.
+			for( i = 0; i <= 7; i++ )
+			{	x = NormalWeaponNames[random( 0, MAX_NORMAL_WEAPONS - 1 )];
+
+				if( !CheckInventory( x ))
+				{	RandomWeapon = x;
+					break;
+				}
+			}
+
+			if( RandomWeapon != -1 )
+			{	LocalAmbientSound( "misc/w_pkup", 127 );
+IntelMessage( strparam( s: "\cFRandom Weapon!\nYou get a \cF", s: RandomWeapon ));
+				GiveInventory( RandomWeapon, 1 );
+			}
+			else
+			{	// could not find a weapon the player doesn't have. reroll
+				Crate = 0;
+				restart;
+			}
+
+			break;
 	}
 }
 
 // THERMAL CLOAKING
-script 953 (void) {
-	int k = 0;
-	SetPlayerProperty (0, 1, PROP_NOTARGET);
-	
-	while (CheckInventory ("ThermalCloakingTime") > 0) {
-		k = CheckInventory ("ThermalCloakingTime");
-		SetFont ("SMALLFONT");
-		HudMessage (s:"Thermal Cloaking: ", d:k, s:" seconds remaining";
-			0, 8600 + PlayerNumber(), CR_GOLD, 1.0, 0.0, 2.0);
-		delay (35);
-		TakeInventory ("ThermalCloakingTime", 1);
+script 953( void )
+{	int k = 0;
+	SetPlayerProperty( 0, 1, PROP_NOTARGET );
+
+	while( CheckInventory( "ThermalCloakingTime" ) > 0 )
+	{	k = CheckInventory( "ThermalCloakingTime" );
+		SetFont( "SMALLFONT" );
+HudMessage( s: "Thermal Cloaking: ", d: k, s: " seconds remaining";
+					0, 8600 + PlayerNumber(), CR_GOLD, 1.0, 0.0, 2.0 );
+		delay( 35 );
+		TakeInventory( "ThermalCloakingTime", 1 );
 	}
-	
-	SetPlayerProperty (0, 0, PROP_NOTARGET);
-	HudMessage (s:"WARNING! Thermal Cloaking: 0 seconds remaining";
-		HUDMSG_FADEOUT, 8600 + PlayerNumber(), CR_RED, 1.0, 0.0, 5.0, 2.0);
+
+	SetPlayerProperty( 0, 0, PROP_NOTARGET );
+HudMessage( s: "WARNING! Thermal Cloaking: 0 seconds remaining";
+				HUDMSG_FADEOUT, 8600 + PlayerNumber(), CR_RED, 1.0, 0.0, 5.0, 2.0 );
 }
 
 // [Dusk] This client-side script positions the bomb crate aura onto the victim player.
-script 966 (void) CLIENTSIDE {
-	// [Dusk] Don't display this actor for the player who's currently
+script 966( void ) CLIENTSIDE
+{	// [Dusk] Don't display this actor for the player who's currently
 	// getting the bomb crate - said player gets a fade instead.
-	if (GetTargetInfo (TARGETINFO_PlayerNum) == ConsolePlayer) {
-		SetActorState (0, "Clear");
+	if( GetTargetInfo( TARGETINFO_PlayerNum ) == ConsolePlayer )
+	{	SetActorState( 0, "Clear" );
 		terminate;
 	}
-	
+
 	// If the player dies, the aura goes out.
-	if (GetTargetInfo (TARGETINFO_HEALTH) <= 0) {
-		SetActorState (0, "Clear");
+	if( GetTargetInfo( TARGETINFO_HEALTH ) <= 0 )
+	{	SetActorState( 0, "Clear" );
 		terminate;
 	}
-	
-	int x = GetTargetInfo (TARGETINFO_X);
-	int y = GetTargetInfo (TARGETINFO_Y);
-	int z = GetTargetInfo (TARGETINFO_Z);
-	SetActorPosition (0, x, y, z, 0);
+
+	int x = GetTargetInfo( TARGETINFO_X );
+	int y = GetTargetInfo( TARGETINFO_Y );
+	int z = GetTargetInfo( TARGETINFO_Z );
+	SetActorPosition( 0, x, y, z, 0 );
 }

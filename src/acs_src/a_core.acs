@@ -8,11 +8,11 @@
  * of this and call it your own. Thanks!
  */
 
-script 999 OPEN {
-	delay (1);
-	
+script 999 OPEN
+{	delay( 1 );
+
 	InitClasses();
-	
+
 	RankTitles[0] = "Private";
 	RankTitles[1] = "Corporal";
 	RankTitles[2] = "Sergeant";
@@ -21,12 +21,12 @@ script 999 OPEN {
 	RankTitles[5] = "Lieutenant";
 	RankTitles[6] = "Major";
 	RankTitles[7] = "General";
-	
-	if (GetCVar ("aow_disablemechs") == 0)
-		ConsoleCommand ("set aow_mechs 1");
+
+	if( GetCVar( "aow_disablemechs" ) == 0 )
+		ConsoleCommand( "set aow_mechs 1" );
 	else
-		ConsoleCommand ("set aow_mechs 0");
-		
+		ConsoleCommand( "set aow_mechs 0" );
+
 	//Red
 	GotRefinery[0] = True;
 	GotBarracks[0] = True;
@@ -43,231 +43,257 @@ script 999 OPEN {
 	GotRepair[1] = True;
 	GotObelisk[1] = True;
 	BaseLeft[1] = 5;
-	
-	if (GetCVAR ("aow_tickets") <= 1 && TicketPool == False)
-		ConsoleCommand ("set aow_tickets 75");
-	else if (GetCVAR ("aow_tickets") <= 100 && TicketPool == True)
-		ConsoleCommand ("set aow_tickets 250");
-		
-	StartingTickets = GetCVAR ("aow_tickets");
-	
+
+	if( GetCVAR( "aow_tickets" ) <= 1 && TicketPool == False )
+		ConsoleCommand( "set aow_tickets 75" );
+	else if( GetCVAR( "aow_tickets" ) <= 100 && TicketPool == True )
+		ConsoleCommand( "set aow_tickets 250" );
+
+	StartingTickets = GetCVAR( "aow_tickets" );
+
 	Tickets[0] = StartingTickets;
 	Tickets[1] = StartingTickets;
-	TicketPool = GetCVAR ("aow_ticketpool");
-	
-	SetLineSpecial (159, 80, 342, 0, 0, 0, 0);
-	
+	TicketPool = GetCVAR( "aow_ticketpool" );
+
+	SetLineSpecial( 159, 80, 342, 0, 0, 0, 0 );
+
 	// Draw initial building HUD
 	DrawBuildingHud();
-	
-	SpawnSpotForced ("CrateMapMarker", TID_CRATE, 0, 0);
-	SpawnSpotForced ("TiberiumMapMarker", TID_TIBERIUM, 0, 0);
-	
+
+	SpawnSpotForced( "CrateMapMarker", TID_CRATE, 0, 0 );
+	SpawnSpotForced( "TiberiumMapMarker", TID_TIBERIUM, 0, 0 );
+
 	// wf unavailability
-	if (!ThingCount (T_NONE, 107) && !ThingCount (T_NONE, 207)) {
-		GotFactory[0] = 0;
+	if( !ThingCount( T_NONE, 107 ) && !ThingCount( T_NONE, 207 ))
+	{	GotFactory[0] = 0;
 		GotFactory[1] = 0;
-		Team_GivePoints (TEAM_RED, 1, 0);
-		Team_GivePoints (TEAM_BLUE, 1, 0);
+		Team_GivePoints( TEAM_RED, 1, 0 );
+		Team_GivePoints( TEAM_BLUE, 1, 0 );
 	}
-	
-	ACS_ExecuteAlways (930, 0, BUILDING_ALL, TEAM_RED);
-	ACS_ExecuteAlways (930, 0, BUILDING_ALL, TEAM_BLUE);
-	
+
+	ACS_ExecuteAlways( 930, 0, BUILDING_ALL, TEAM_RED );
+	ACS_ExecuteAlways( 930, 0, BUILDING_ALL, TEAM_BLUE );
+
 	// [Dusk] If ticket pool is enabled, spawn ticket counters. These counters
 	// are used to inform clients about ticket values, since the left-hand
 	// hud is client-sided. "Physically", the ticket counters are map spots
 	// spawned at the respective team's Repair Facilities. The counters'
 	// angle tells the starting ticket amount, their speed tells the current
 	// ticket amount.
-	SpawnSpotForced ("MapSpot", 109, TID_TICKETCOUNTER_BLUE, 0);
-	SpawnSpotForced ("MapSpot", 209, TID_TICKETCOUNTER_RED, 0);
-	SetActorAngle (TID_TICKETCOUNTER_BLUE, StartingTickets);
-	SetActorAngle (TID_TICKETCOUNTER_RED, StartingTickets);
-	
-	if (TicketPool) {
-		SetActorSpeed (TID_TICKETCOUNTER_BLUE, StartingTickets);
-		SetActorSpeed (TID_TICKETCOUNTER_RED, StartingTickets);
+	SpawnSpotForced( "MapSpot", 109, TID_TICKETCOUNTER_BLUE, 0 );
+	SpawnSpotForced( "MapSpot", 209, TID_TICKETCOUNTER_RED, 0 );
+	SetActorAngle( TID_TICKETCOUNTER_BLUE, StartingTickets );
+	SetActorAngle( TID_TICKETCOUNTER_RED, StartingTickets );
+
+	if( TicketPool )
+	{	SetActorSpeed( TID_TICKETCOUNTER_BLUE, StartingTickets );
+		SetActorSpeed( TID_TICKETCOUNTER_RED, StartingTickets );
 	}
 	else {
-		SetActorSpeed (TID_TICKETCOUNTER_BLUE, 0);
-		SetActorSpeed (TID_TICKETCOUNTER_RED, 0);
+		SetActorSpeed( TID_TICKETCOUNTER_BLUE, 0 );
+		SetActorSpeed( TID_TICKETCOUNTER_RED, 0 );
 	}
 }
 
 // Server settings
-script 599 OPEN {
-	delay (1);
-	
+script 599 OPEN
+{	delay( 1 );
+
 	// ==================================
 	// DMFLAGS
-	if (!GetCVAR ("sv_doubleammo")) ConsoleCommand ("sv_doubleammo 1");
-	if (!GetCVAR ("sv_nofov")) ConsoleCommand ("sv_nofov 1");
-	if (!GetCVAR ("alwaysapplydmflags")) ConsoleCommand ("alwaysapplydmflags 1");
-	if (!GetCVAR ("sv_weapondrop")) ConsoleCommand ("sv_weapondrop 1");
-	if (!GetCVAR ("sv_itemrespawn")) ConsoleCommand ("sv_itemrespawn 1");
-	if (!GetCVAR ("compat_limited_airmovement")) ConsoleCommand ("compat_limited_airmovement 1");
-	if (!GetCVAR ("compat_clientssendfullbuttoninfo")) ConsoleCommand ("compat_clientssendfullbuttoninfo 1");
-	
+	if( !GetCVAR( "sv_doubleammo" )) ConsoleCommand( "sv_doubleammo 1" );
+
+	if( !GetCVAR( "sv_nofov" )) ConsoleCommand( "sv_nofov 1" );
+
+	if( !GetCVAR( "alwaysapplydmflags" )) ConsoleCommand( "alwaysapplydmflags 1" );
+
+	if( !GetCVAR( "sv_weapondrop" )) ConsoleCommand( "sv_weapondrop 1" );
+
+	if( !GetCVAR( "sv_itemrespawn" )) ConsoleCommand( "sv_itemrespawn 1" );
+
+	if( !GetCVAR( "compat_limited_airmovement" )) ConsoleCommand( "compat_limited_airmovement 1" );
+
+	if( !GetCVAR( "compat_clientssendfullbuttoninfo" )) ConsoleCommand( "compat_clientssendfullbuttoninfo 1" );
+
 	// [Dusk] enforce no pointlimit until game is considered over. Pointlimit is used
 	// to end the game when needed. We don't want this script to conflict it at any
 	// given time.
-	if (!GameOver && GetCVAR ("pointlimit") != 0) ConsoleCommand ("pointlimit 0");
-	
+	if( !GameOver && GetCVAR( "pointlimit" ) != 0 ) ConsoleCommand( "pointlimit 0" );
+
 	// ==================================
 	// CUSTOM CVARS
 	// w/ sanity checks
-	if (GetCVAR ("aow_greedkill") < 0) ConsoleCommand ("set aow_greedkill 0");
-	if (!GetCVAR ("aow_creditlimit")) ConsoleCommand ("set aow_creditlimit 10000");
-	if (GetCVAR ("aow_economy_mode") < 0) ConsoleCommand ("set aow_economy_mode 0");
-	if (GetCVAR ("aow_economy_mode") > 1) ConsoleCommand ("set aow_economy_mode 1");
-	if (GetCVAR ("aow_harvestbonus") <= 0) ConsoleCommand ("set aow_harvestbonus 10");
-	if (GetCVAR ("aow_enharvestbonus") <= 0) ConsoleCommand ("set aow_enharvestbonus 20");
-	if (GetCVAR ("aow_harvestbonusadv") <= 0) ConsoleCommand ("set aow_harvestbonusadv 25");
-	if (GetCVAR ("aow_enharvestbonusadv") <= 0) ConsoleCommand ("set aow_enharvestbonusadv 50");
-	if (!GetCVAR ("aow_credflow")) ConsoleCommand ("set aow_credflow 4");
-	if (GetCVAR ("aow_startcredits") <= 0) ConsoleCommand ("set aow_startcredits 300");
-	if (GetCVAR ("aow_creditfrag") <= 0) ConsoleCommand ("set aow_creditfrag 50");
-	if (GetCVAR ("aow_bonusamount") <= 0) ConsoleCommand ("set aow_bonusamount 300");
-	if (GetCVAR ("aow_bonustime") <= 0) ConsoleCommand ("set aow_bonustime 5");
-	if (GetCVAR ("aow_medicbonusneed") <= 0) ConsoleCommand ("set aow_medicbonusneed 175");
-	if (GetCVAR ("aow_repairbonus") <= 0) ConsoleCommand ("set aow_repairbonus 1");
-	if (GetCVAR ("aow_guardianlimit") <= 0) ConsoleCommand ("set aow_guardianlimit 2");
-	if (GetCVAR ("aow_ticketpool") <= 0) ConsoleCommand ("set aow_ticketpool 0");
-	
+	if( GetCVAR( "aow_greedkill" ) < 0 ) ConsoleCommand( "set aow_greedkill 0" );
+
+	if( !GetCVAR( "aow_creditlimit" )) ConsoleCommand( "set aow_creditlimit 10000" );
+
+	if( GetCVAR( "aow_economy_mode" ) < 0 ) ConsoleCommand( "set aow_economy_mode 0" );
+
+	if( GetCVAR( "aow_economy_mode" ) > 1 ) ConsoleCommand( "set aow_economy_mode 1" );
+
+	if( GetCVAR( "aow_harvestbonus" ) <= 0 ) ConsoleCommand( "set aow_harvestbonus 10" );
+
+	if( GetCVAR( "aow_enharvestbonus" ) <= 0 ) ConsoleCommand( "set aow_enharvestbonus 20" );
+
+	if( GetCVAR( "aow_harvestbonusadv" ) <= 0 ) ConsoleCommand( "set aow_harvestbonusadv 25" );
+
+	if( GetCVAR( "aow_enharvestbonusadv" ) <= 0 ) ConsoleCommand( "set aow_enharvestbonusadv 50" );
+
+	if( !GetCVAR( "aow_credflow" )) ConsoleCommand( "set aow_credflow 4" );
+
+	if( GetCVAR( "aow_startcredits" ) <= 0 ) ConsoleCommand( "set aow_startcredits 300" );
+
+	if( GetCVAR( "aow_creditfrag" ) <= 0 ) ConsoleCommand( "set aow_creditfrag 50" );
+
+	if( GetCVAR( "aow_bonusamount" ) <= 0 ) ConsoleCommand( "set aow_bonusamount 300" );
+
+	if( GetCVAR( "aow_bonustime" ) <= 0 ) ConsoleCommand( "set aow_bonustime 5" );
+
+	if( GetCVAR( "aow_medicbonusneed" ) <= 0 ) ConsoleCommand( "set aow_medicbonusneed 175" );
+
+	if( GetCVAR( "aow_repairbonus" ) <= 0 ) ConsoleCommand( "set aow_repairbonus 1" );
+
+	if( GetCVAR( "aow_guardianlimit" ) <= 0 ) ConsoleCommand( "set aow_guardianlimit 2" );
+
+	if( GetCVAR( "aow_ticketpool" ) <= 0 ) ConsoleCommand( "set aow_ticketpool 0" );
+
 	//[SP]How long you can stay on a team before you are never switched.
-	if (GetCVAR ("aow_teamstaytime") <= 0) ConsoleCommand ("set aow_teamstaytime 2");
-	
+	if( GetCVAR( "aow_teamstaytime" ) <= 0 ) ConsoleCommand( "set aow_teamstaytime 2" );
+
 	// Plasma Cannon initial delay
-	if (!GetCVAR ("aow_plasmapurchasedelay")) ConsoleCommand ("set aow_plasmapurchasedelay 5");
-	
+	if( !GetCVAR( "aow_plasmapurchasedelay" )) ConsoleCommand( "set aow_plasmapurchasedelay 5" );
+
 	//[SP]Maximum number of plasma cannons per team. (Set to -1 for unlimited)
-	if (!GetCVAR ("aow_maxcannonsperteam")) ConsoleCommand ("set aow_maxcannonsperteam 4");
-	
+	if( !GetCVAR( "aow_maxcannonsperteam" )) ConsoleCommand( "set aow_maxcannonsperteam 4" );
+
 	// [Dusk] Time (in minutes) to determine plasma cannon cooldown. Use -1 to disable
-	if (!GetCVAR ("aow_plasmacooldown")) ConsoleCommand ("set aow_plasmacooldown 3");
-	
+	if( !GetCVAR( "aow_plasmacooldown" )) ConsoleCommand( "set aow_plasmacooldown 3" );
+
 	//[SP]How long you have to wait to buy a new superweapon beacon. (Minutes) (Set to -1 to disable wait)
-	if (!GetCVAR ("aow_beaconpurchasedelay"))ConsoleCommand ("set aow_beaconpurchasedelay 5");
-	
+	if( !GetCVAR( "aow_beaconpurchasedelay" ))ConsoleCommand( "set aow_beaconpurchasedelay 5" );
+
 	// [SP]Maximum number of time cops per team. (Set to -1 for unlimited)
-	if (!GetCVAR ("aow_maxtimecopsperteam")) ConsoleCommand ("set aow_maxtimecopsperteam 1");
-	
+	if( !GetCVAR( "aow_maxtimecopsperteam" )) ConsoleCommand( "set aow_maxtimecopsperteam 1" );
+
 	// [Dusk] How many minutes until Timed C4 can be used. (-1 to disable)
-	if (!GetCVAR ("aow_c4delay")) ConsoleCommand ("set aow_c4delay 5");
-	
+	if( !GetCVAR( "aow_c4delay" )) ConsoleCommand( "set aow_c4delay 5" );
+
 	//[SP] Time (in minutes) before sudden death.
 	// [Dusk] changed default to 45, -1 means immediate
-	if (GetCVAR ("aow_suddendeathtime") == 0) ConsoleCommand ("set aow_suddendeathtime 45");
-	
-	if (GetCVAR ("aow_disablemechs") <= 0) ConsoleCommand ("set aow_disablemechs 0");
-	if (GetCVAR ("aow_surrendermode") <= 0) ConsoleCommand ("set aow_surrendermode 0");
-	
+	if( GetCVAR( "aow_suddendeathtime" ) == 0 ) ConsoleCommand( "set aow_suddendeathtime 45" );
+
+	if( GetCVAR( "aow_disablemechs" ) <= 0 ) ConsoleCommand( "set aow_disablemechs 0" );
+
+	if( GetCVAR( "aow_surrendermode" ) <= 0 ) ConsoleCommand( "set aow_surrendermode 0" );
+
 	// [Dusk] How much score does destroying a building award you, in addition to difference?
-	if (GetCVAR ("aow_buildingpoints") <= 0) ConsoleCommand ("set aow_buildingpoints 125");
-	
-	delay (35 * 5);
+	if( GetCVAR( "aow_buildingpoints" ) <= 0 ) ConsoleCommand( "set aow_buildingpoints 125" );
+
+	delay( 35 * 5 );
 	restart;
 }
 
 //Setting Player scripts
-script 10 RESPAWN {
-	if (StartTime[PlayerNumber()] == 0)
+script 10 RESPAWN
+{	if( StartTime[PlayerNumber()] == 0 )
 		InitPlayer();
-	
-	GiveInventory ("Ingame", 1);
-	GiveInventory ("IsInSpawnRoom", 1);
-	SetInventory ("IsBlue", PlayerTeam() == TEAM_BLUE);
-	SetInventory ("IsRed", PlayerTeam() == TEAM_RED);
-	Thing_ChangeTID (0, PlayerNumber() + TID_Player);
-	
-	if (GetPlayerInfo (PlayerNumber(), PLAYERINFO_GENDER) == 1) {
-		SetActorProperty (0, APROP_DeathSound, "female/death");
-		GiveInventory ("IsFemale", 1);
+
+	GiveInventory( "Ingame", 1 );
+	GiveInventory( "IsInSpawnRoom", 1 );
+	SetInventory( "IsBlue", PlayerTeam() == TEAM_BLUE );
+	SetInventory( "IsRed", PlayerTeam() == TEAM_RED );
+	Thing_ChangeTID( 0, PlayerNumber() + TID_Player );
+
+	if( GetPlayerInfo( PlayerNumber(), PLAYERINFO_GENDER ) == 1 )
+	{	SetActorProperty( 0, APROP_DeathSound, "female/death" );
+		GiveInventory( "IsFemale", 1 );
 	}
-	
-	ACS_ExecuteAlways (97, 0);
-	SetWeapon ("Unarmed");
+
+	ACS_ExecuteAlways( 97, 0 );
+	SetWeapon( "Unarmed" );
 }
 
-script 11 ENTER {
-	// [Dusk] This player's joining might throw off team balance, so check that now.
+script 11 ENTER
+{	// [Dusk] This player's joining might throw off team balance, so check that now.
 	CheckTeamBalance();
-	
-	delay (5);
+
+	delay( 5 );
 	InitPlayer();
-	
-	GiveInventory ("Ingame", 1);
-	GiveInventory ("IsInSpawnRoom", 1);
-	SetInventory ("IsBlue", PlayerTeam() == TEAM_BLUE);
-	SetInventory ("IsRed", PlayerTeam() == TEAM_RED);
-	Thing_ChangeTID (0, PlayerNumber() + TID_Player);
-	
-	if (GetPlayerInfo (PlayerNumber(), PLAYERINFO_GENDER) == 1) {
-		SetActorProperty (0, APROP_DeathSound, "female/death");
-		GiveInventory ("IsFemale", 1);
+
+	GiveInventory( "Ingame", 1 );
+	GiveInventory( "IsInSpawnRoom", 1 );
+	SetInventory( "IsBlue", PlayerTeam() == TEAM_BLUE );
+	SetInventory( "IsRed", PlayerTeam() == TEAM_RED );
+	Thing_ChangeTID( 0, PlayerNumber() + TID_Player );
+
+	if( GetPlayerInfo( PlayerNumber(), PLAYERINFO_GENDER ) == 1 )
+	{	SetActorProperty( 0, APROP_DeathSound, "female/death" );
+		GiveInventory( "IsFemale", 1 );
 	}
-	
-	delay (5);
-	ShowStatus (PlayerNumber()); // display credits/exp HUD
-	ACS_ExecuteAlways (92, 0);
+
+	delay( 5 );
+	ShowStatus( PlayerNumber() ); // display credits/exp HUD
+	ACS_ExecuteAlways( 92, 0 );
 }
 
 //--------------------------START UP MESSAGES
-script 301 ENTER CLIENTSIDE {
-	SetFont ("BIGFONT");
-	HudMessage (s: "Welcome to \cFAll Out War 2!";
-		HUDMSG_FADEINOUT, HID_ENTER, CR_WHITE, 0.5, 0.3, 7.0, 0.5, 1.0);
-	
-	SetFont ("SMALLFONT");
-	HudMessage (s: "See \cFOptions \cN-> \cFCustomise Controls\c- for keybinds";
-		HUDMSG_FADEOUT, HID_ENTER + 1, CR_WHITE, 0.5, 0.5, 7.0, 1.0);
-	
-	delay (20);
-	LocalAmbientSound ("voltlock/welcome", 127);
+script 301 ENTER CLIENTSIDE
+{	SetFont( "BIGFONT" );
+HudMessage( s: "Welcome to \cFAll Out War 2!";
+	HUDMSG_FADEINOUT, HID_ENTER, CR_WHITE, 0.5, 0.3, 7.0, 0.5, 1.0 );
+
+	SetFont( "SMALLFONT" );
+HudMessage( s: "See \cFOptions \cN-> \cFCustomise Controls\c- for keybinds";
+	HUDMSG_FADEOUT, HID_ENTER + 1, CR_WHITE, 0.5, 0.5, 7.0, 1.0 );
+
+	delay( 20 );
+	LocalAmbientSound( "voltlock/welcome", 127 );
 }
 
-Script 8 (int Gone) DISCONNECT {
-	IsAdmin[gone] = false;
+Script 8( int Gone ) DISCONNECT
+{	IsAdmin[gone] = false;
 	Experience[gone] = 0;
 	Rank[gone] = RANK_PRIVATE;
 	Surrender[gone] = 0;
 	PlasmaCooldown[gone] = 0;
 	StartTime[gone] = 0;
-	
-	for (int i = 0; i < 2; ++i)
-		if (MechGetter[i] == Gone && GettingMech[i])
+
+	for( int i = 0; i < 2; ++i )
+		if( MechGetter[i] == Gone && GettingMech[i] )
 			GettingMech[i] = 0;
-			
-	if (Surrender[gone]) {
-		Surrender[gone] = false;
-		
+
+	if( Surrender[gone] )
+	{	Surrender[gone] = false;
+
 		int t = PlayersTeam[gone];
-		IntelMessageBold (strparam (s:"\cD", d:SurrenderCount (t), s:" \cQof\cD ",
-			d:GetTeamProperty (t, TPROP_NumPlayers), s:"\cJ of ",
-			s:GetTeamProperty (t, TPROP_TextColor), s:TeamNames[t],
-			s:"\n have voted to surrender."));
+IntelMessageBold( strparam( s: "\cD", d: SurrenderCount( t ), s: " \cQof\cD ",
+d: GetTeamProperty( t, TPROP_NumPlayers ), s: "\cJ of ",
+s: GetTeamProperty( t, TPROP_TextColor ), s: TeamNames[t],
+s: "\n have voted to surrender." ));
 	}
 	else // % of players surrendering could now be higher. Al demands a recount!
-		ACS_Execute (751, 0);
-		
+		ACS_Execute( 751, 0 );
+
 	// Check teams for possible imbalance
 	CheckTeamBalance();
 }
 
-script 303 OPEN {
-	// these maps are too small to have portals
-	delay (5);
-	int levelnum = GetLevelInfo (LEVELINFO_LEVELNUM);
-	
-	if (levelnum ==  2) UsePortals = 0;
-	if (levelnum ==  4) UsePortals = 0;
-	if (levelnum ==  7) UsePortals = 0;
-	if (levelnum == 15) UsePortals = 0;
+script 303 OPEN
+{	// these maps are too small to have portals
+	delay( 5 );
+	int levelnum = GetLevelInfo( LEVELINFO_LEVELNUM );
+
+	if( levelnum ==  2 ) UsePortals = 0;
+
+	if( levelnum ==  4 ) UsePortals = 0;
+
+	if( levelnum ==  7 ) UsePortals = 0;
+
+	if( levelnum == 15 ) UsePortals = 0;
 }
 
-function void InitPlayer (void) {
-	SetCredits (PlayerNumber(), GetCVAR ("aow_startcredits"));
+function void InitPlayer( void )
+{	SetCredits( PlayerNumber(), GetCVAR( "aow_startcredits" ));
 	Experience[PlayerNumber()] = 0;
 	Rank[PlayerNumber()] = RANK_PRIVATE;
 	Surrender[PlayerNumber()] = False;

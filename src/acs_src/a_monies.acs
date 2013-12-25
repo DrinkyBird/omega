@@ -1,234 +1,240 @@
 // MONEY RELATED SCRIPTS
-function int IncrCredits (int p, int amount) {
-	if (IsAdmin[PlayerNumber()])
+function int IncrCredits( int p, int amount )
+{	if( IsAdmin[PlayerNumber()] )
 		return false;
-	
+
 	Credits[p] += amount;
-	
-	if (Credits[p] > GetCVAR ("aow_creditlimit") && GetCVAR ("aow_creditlimit") > 0)
-		Credits[p] = GetCVAR ("aow_creditlimit");
-	
-	ShowStatus (p);
-	
+
+	if( Credits[p] > GetCVAR( "aow_creditlimit" ) && GetCVAR( "aow_creditlimit" ) > 0 )
+		Credits[p] = GetCVAR( "aow_creditlimit" );
+
+	ShowStatus( p );
+
 	return true;
 }
 
-function int DecrCredits (int p, int amount) {
-	if (IsAdmin[PlayerNumber()])
+function int DecrCredits( int p, int amount )
+{	if( IsAdmin[PlayerNumber()] )
 		return false;
-	
+
 	Credits[p] -= amount;
-	
-	if (Credits[p] < 0)
+
+	if( Credits[p] < 0 )
 		Credits[p] = 0;
-	
-	ShowStatus (p);
-	
+
+	ShowStatus( p );
+
 	return true;
 }
 
-Function int SpendCredits (int amount) {
-	if (IsAdmin[PlayerNumber()])
+Function int SpendCredits( int amount )
+{	if( IsAdmin[PlayerNumber()] )
 		return -1;
-		
-	int delta = Discount (amount);
+
+	int delta = Discount( amount );
 	amount -= delta;
-	
-	DecrCredits (PlayerNumber(), amount);
-	
-	SETFONT ("BigFont");
-	
-	if (delta == 0)
-		HudMessage (s:"\cJYou have spent \cQ$\cD", d:amount;
-			HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0);
+
+	DecrCredits( PlayerNumber(), amount );
+
+	SETFONT( "BigFont" );
+
+	if( delta == 0 )
+HudMessage( s: "\cJYou have spent \cQ$\cD", d: amount;
+					HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0 );
 	else
-		HudMessage (s:"\cJYou have spent \cQ$\cD", d:amount, s:" \cF[\cQ-$\cD", d:delta, s:"\cF]";
-			HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0);
-	
+HudMessage( s: "\cJYou have spent \cQ$\cD", d: amount, s: " \cF[\cQ-$\cD", d: delta, s: "\cF]";
+					HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0 );
+
 	return amount;
 }
 
-function void AwardCredits (int amount) {
-	int p = PlayerNumber();
-	
-	if (IsAdmin[p])
+function void AwardCredits( int amount )
+{	int p = PlayerNumber();
+
+	if( IsAdmin[p] )
 		return;
-	
-	IncrCredits (p, amount);
-	IntelMessage (strparam (s: "You have been awarded with \cQ$\cD", d:amount));
+
+	IncrCredits( p, amount );
+IntelMessage( strparam( s: "You have been awarded with \cQ$\cD", d: amount ));
 }
 
 // [Dusk] cleaner version :|
-function void GiveCredits (int p, int amount) {
-	if (p < 0)
+function void GiveCredits( int p, int amount )
+{	if( p < 0 )
 		p = PlayerNumber();
-	
-	if (IsAdmin[p])
+
+	if( IsAdmin[p] )
 		return;
-	
-	IncrCredits (p, amount);
+
+	IncrCredits( p, amount );
 }
 
-function int GetCredits (int p) {
-	if (p < 0)
+function int GetCredits( int p )
+{	if( p < 0 )
 		p = PlayerNumber();
-		
-	if (!PlayerInGame (p))
+
+	if( !PlayerInGame( p ))
 		return 0;
-		
+
 	return Credits[p];
 }
 
 // testing script
-Script 32 (int amount, int i) {
-	if (IsAdmin [i])
+Script 32( int amount, int i )
+{	if( IsAdmin [i] )
 		terminate;
-		
-	GiveCredits (i, amount);
-	IntelMessageBold (strparam (s: "\cRServer \cJhas given \cQ$\cD", d: amount, s: " \cJto ", n: i + 1));
+
+	GiveCredits( i, amount );
+IntelMessageBold( strparam( s: "\cRServer \cJhas given \cQ$\cD", d: amount, s: " \cJto ", n: i + 1 ));
 }
 
 // Backpacks and credit items use this to give the player credits
-script 321 (int amount) {
-	if (IsAdmin[PlayerNumber()])
+script 321( int amount )
+{	if( IsAdmin[PlayerNumber()] )
 		terminate;
-		
-	GiveCredits (PlayerNumber(), amount);
+
+	GiveCredits( PlayerNumber(), amount );
 }
 
 //Price check
-script 330 (int Price) {
-	int delta = Discount (Price);
+script 330( int Price )
+{	int delta = Discount( Price );
 	Price -= delta;
-	
-	SetFont ("BIGFONT");
-	
-	if (delta != 0)
-		HudMessage (s: "\cJDiscount \cQ-$\cD", d: delta, s: "\cF = \cQ$\cD", d: Price;
-			HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.25, 0.1, 2.0, 1.0);
-	
-	SetResultValue (Price);
+
+	SetFont( "BIGFONT" );
+
+	if( delta != 0 )
+HudMessage( s: "\cJDiscount \cQ-$\cD", d: delta, s: "\cF = \cQ$\cD", d: Price;
+					HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.25, 0.1, 2.0, 1.0 );
+
+	SetResultValue( Price );
 }
 
 // CREDIT BONUS
-Script 326 OPEN {
-	while (GetCVAR ("aow_bonustime") <= 0)
-		delay (5 * 35);
-	
-	delay (35 * 60 * GetCVAR ("aow_bonustime"));
-	
-	for (int i = 0; i < MAXPLAYERS; i++)
-		if (PlayerInGame (i) && !IsAdmin[i])
-			IncrCredits (i, GetCVAR ("aow_bonusamount"));
-			
-	AmbientSound ("powerup/credsound", 127);
-	IntelMessageBold (strparam (s:"Credit bonus! \cQ$\cD", d:GetCVAR ("aow_bonusamount")));
+Script 326 OPEN
+{	while( GetCVAR( "aow_bonustime" ) <= 0 )
+		delay( 5 * 35 );
+
+	delay( 35 * 60 * GetCVAR( "aow_bonustime" ));
+
+	for( int i = 0; i < MAXPLAYERS; i++ )
+		if( PlayerInGame( i ) && !IsAdmin[i] )
+			IncrCredits( i, GetCVAR( "aow_bonusamount" ));
+
+	AmbientSound( "powerup/credsound", 127 );
+IntelMessageBold( strparam( s: "Credit bonus! \cQ$\cD", d: GetCVAR( "aow_bonusamount" )) );
 	restart;
 }
 
-function int Discount (int amount) {
-	if (Rank[PlayerNumber()] == RANK_PRIVATE)
+function int Discount( int amount )
+{	if( Rank[PlayerNumber()] == RANK_PRIVATE )
 		return 0;
-		
+
 	int delta, factor;
-	
-	if (amount < 200 && amount > 0)
+
+	if( amount < 200 && amount > 0 )
 		factor = 10;
-	else if (amount >= 200 && amount < 400)
+	else if( amount >= 200 && amount < 400 )
 		factor = 15;
-	else if (amount >= 400 && amount < 800)
+	else if( amount >= 400 && amount < 800 )
 		factor = 30;
-	else if (amount >= 800 && amount < 1600)
+	else if( amount >= 800 && amount < 1600 )
 		factor = 50;
-	else if (amount > 1600)
+	else if( amount > 1600 )
 		factor = 75;
-		
-	switch (Rank[PlayerNumber()]) {
-	case RANK_CORPORAL:
-	case RANK_SERGEANT:
-		delta = factor;
-		break;
-		
-	case RANK_MASTERSGT:
-	case RANK_OFFICER:
-		delta = factor * 2;
-		break;
-		
-	case RANK_LIEUTENANT:
-	case RANK_MAJOR:
-	case RANK_COMMANDO:
-		delta = factor * 4;
-		break;
+
+	switch( Rank[PlayerNumber()] )
+	{	case RANK_CORPORAL:
+		case RANK_SERGEANT:
+			delta = factor;
+			break;
+
+		case RANK_MASTERSGT:
+		case RANK_OFFICER:
+			delta = factor * 2;
+			break;
+
+		case RANK_LIEUTENANT:
+		case RANK_MAJOR:
+		case RANK_COMMANDO:
+			delta = factor * 4;
+			break;
 	}
-	
+
 	return delta;
 }
 
 // ------------------------------------------------------------------------------------
-function void SetCredits (int p, int amount) {
-	if (IsAdmin[PlayerNumber()])
+function void SetCredits( int p, int amount )
+{	if( IsAdmin[PlayerNumber()] )
 		return;
-	
-	if (amount < 0)
+
+	if( amount < 0 )
 		amount = 0;
-	
-	if (amount > 10000)
+
+	if( amount > 10000 )
 		amount = 10000;
-	
-	if (Credits[p] != amount) {
-		Credits[p] = amount;
-		ShowStatus (p);
+
+	if( Credits[p] != amount )
+	{	Credits[p] = amount;
+		ShowStatus( p );
 	}
 }
 
-Function int AddCredits (int Player, int NewCredits) {
-	if (IsAdmin[PlayerNumber()])
+Function int AddCredits( int Player, int NewCredits )
+{	if( IsAdmin[PlayerNumber()] )
 		return -1;
-		
-	if (IncrCredits (PlayerNumber(), NewCredits))
-		IntelMessage (strparam (s: "You have been awarded with \cQ$\cD", d: NewCredits));
-	
+
+	if( IncrCredits( PlayerNumber(), NewCredits ))
+IntelMessage( strparam( s: "You have been awarded with \cQ$\cD", d: NewCredits ));
+
 	return NewCredits;
 }
 
-Function int RefundCredits (int NewCredits) {
-	if (IsAdmin[PlayerNumber()])
+Function int RefundCredits( int NewCredits )
+{	if( IsAdmin[PlayerNumber()] )
 		return -1;
-		
-	if (IncrCredits (PlayerNumber(), NewCredits))
-		IntelMessage (strparam (s: "You have been refunded with \cQ$\cD", d: NewCredits));
-	
+
+	if( IncrCredits( PlayerNumber(), NewCredits ))
+IntelMessage( strparam( s: "You have been refunded with \cQ$\cD", d: NewCredits ));
+
 	return NewCredits;
 }
 
 // Credit flow
-script 4 OPEN {
-	int i, p, redflow, blueflow;
-	
-	while (1) {
+script 4 OPEN
+{	int i, p, redflow, blueflow;
+
+	while( 1 )
+	{	p = 25;
+
+		if( GotPlant[TEAM_RED] == 1 ) p += 25;
+
+		if( GotRefinery[TEAM_RED] == 1 ) p += 50;
+
+		if( MiniRefinery[TEAM_RED] == 1 ) p += 75;
+
+		redflow = ( GetCVAR( "aow_credflow" ) * p ) / 100;
+
 		p = 25;
-		
-		if (GotPlant[TEAM_RED] == 1) p += 25;
-		if (GotRefinery[TEAM_RED] == 1) p += 50;
-		if (MiniRefinery[TEAM_RED] == 1) p += 75;
-		redflow =  (GetCVAR ("aow_credflow") * p) / 100;
-		
-		p = 25;
-		
-		if (GotPlant[TEAM_BLUE] == 1) p += 25;
-		if (GotRefinery[TEAM_BLUE] == 1) p += 50;
-		if (MiniRefinery[TEAM_BLUE] == 1) p += 75;
-		blueflow =  (GetCVAR ("aow_credflow") * p) / 100;
-		
-		for (i = 0; i < MAXPLAYERS; i++) {
-			if (PlayerInGame (i) && GetActorHealth (TID_Player + i) > 0) {
-				if (GetPlayerInfo (i, PLAYERINFO_TEAM) == TEAM_RED)
-					GiveCredits (i, redflow);
-				else if (GetPlayerInfo (i, PLAYERINFO_TEAM) == TEAM_BLUE)
-					GiveCredits (i, blueflow);
+
+		if( GotPlant[TEAM_BLUE] == 1 ) p += 25;
+
+		if( GotRefinery[TEAM_BLUE] == 1 ) p += 50;
+
+		if( MiniRefinery[TEAM_BLUE] == 1 ) p += 75;
+
+		blueflow = ( GetCVAR( "aow_credflow" ) * p ) / 100;
+
+		for( i = 0; i < MAXPLAYERS; i++ )
+		{	if( PlayerInGame( i ) && GetActorHealth( TID_Player + i ) > 0 )
+			{	if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_RED )
+					GiveCredits( i, redflow );
+				else if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_BLUE )
+					GiveCredits( i, blueflow );
 			}
 		}
-		
-		delay (35);
+
+		delay( 35 );
 	}
 }
