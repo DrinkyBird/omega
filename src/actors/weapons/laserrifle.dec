@@ -73,12 +73,13 @@ actor StealthLaserRifle : AOWWeapon {
 		LSRF D 3 offset(1,31)
 		LSRF E 2 offset(-2,28)
 		LSRF E 2 offset(-6,27)
-		LSRF FFFF 2 A_FireCustomMissile ("OverheatSmokeSpawner", 0, false)
+		LSRF F 4 A_FireCustomMissile ("OverheatSmokeSpawner", 0, false)
+		LSRF F 4 A_FireCustomMissile ("OverheatSmokeSpawner", 0, false)
 		LSRF F 1 offset(-3,30)
 		LSRF F 1 offset(-1,33)
 		LSRF F 1 offset(2,37)
 		LSRF F 1 offset(5,42)
-		LSRF F 1 offset(7,43)
+		LSRF F 1 offset(7,43) A_FireCustomMissile ("OverheatSmokeSpawner", 0, false)
 		LSRF F 1 offset(9,44)
 		goto Restealth
 	Fire.Blue:
@@ -93,12 +94,13 @@ actor StealthLaserRifle : AOWWeapon {
 		LSRB D 3 offset(1,31)
 		LSRB E 2 offset(-2,28)
 		LSRB E 2 offset(-6,27)
-		LSRB FFFF 2 A_FireCustomMissile ("OverheatSmokeSpawner", 0, false)
+		LSRB F 4 A_FireCustomMissile ("OverheatSmokeSpawner", 0, false)
+		LSRB F 4 A_FireCustomMissile ("OverheatSmokeSpawner", 0, false)
 		LSRB F 1 offset(-3,30)
 		LSRB F 1 offset(-1,33)
 		LSRB F 1 offset(2,37)
 		LSRB F 1 offset(5,42)
-		LSRB F 1 offset(7,43)
+		LSRB F 1 offset(7,43) A_FireCustomMissile ("OverheatSmokeSpawner", 0, false)
 		LSRB F 1 offset(9,44)
 		goto Restealth
 	Fire.Stealth:
