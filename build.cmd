@@ -33,10 +33,10 @@ set /p branch=<%tmp%
 rem Now do the checking
 if "%stat2%" NEQ "" set revnum=%revnum%m
 
-if "%branch%" EQ "master" (
-	set fname=aow2-omega-r%revnum%-%cset%.pk3
-) else (
+if "%branch%" NEQ "master" (
 	set fname=aow2-omega-%branch%-r%revnum%-%cset%.pk3
+) else (
+	set fname=aow2-omega-r%revnum%-%cset%.pk3
 )
 
 rem We don't need the temp file anymore
