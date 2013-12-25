@@ -16,14 +16,13 @@ set ^"stat2=!stat:^
 = !"
 
 git describe >%tmp%
-set /p descrb=<%tmp%
-if "%descrb%"=="" (	
+set /p dsc=<%tmp%
+if "%dsc%"=="" (	
 	echo no git installed
 	pause
 	goto :eof
 )
 
-set dsc=initial-293-g1932f81
 for /f "tokens=1,2,3 delims=-" %%a in ("%dsc%") do set tag=%%a&set revnum=%%b&set cset=%%c
 set cset=%cset:~-7%
 
