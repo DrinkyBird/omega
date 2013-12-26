@@ -43,14 +43,14 @@ function void DrawBuildingHud( void )
 			if( IsMinorBuilding( b ))
 			{	HudMessageBold( s: ExistsBuildingGreen( tid ), s: "++",
 					s: ExistsBuilding( tid ), s: GetBuildingName( b, team ), s: "\cc: ",
-					s: ColorCodeHealth( BuildingHealth( tid )),
+					s: ColorCodeHealth( b, team, BuildingHealth( tid )),
 					d: BuildingHealth( tid ), s: "\cc%\n";
 					HUDMSG_PLAIN, i++, CR_GRAY, 0.012, y, 0.0 );
 			}
 			else
 			{	HudMessageBold( s: ExistsBuilding( tid ),
 					s: GetBuildingName( b, team ), s: "\cc: ",
-					s: ColorCodeHealth( BuildingHealth( tid )),
+					s: ColorCodeHealth( b, team, BuildingHealth( tid )),
 					d: BuildingHealth( tid ), s: "\cc%\n";
 					HUDMSG_PLAIN, i++, CR_GRAY, 0.012, y, 0.0 );
 			}
@@ -58,12 +58,12 @@ function void DrawBuildingHud( void )
 			y += -SMALLSPACE;
 		}
 
-		HudMessageBold( s: PortalLinkColor( TEAM_BLUE, 0 ), s: "++",
-			s: PortalLinkColor( TEAM_BLUE, 1 ), s: "Portal\cc: ",
-			s: ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE1 )),
-			d: BuildingHealth( TID_PORTAL_BLUE1 ), s: "\cc% / ",
-			s: ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE2 )),
-			d: BuildingHealth( TID_PORTAL_BLUE2 ), s: "\cc%";
+		HudMessageBold( s:PortalLinkColor( TEAM_BLUE, 0 ), s: "++",
+			s:PortalLinkColor( TEAM_BLUE, 1 ), s: "Portal\cc: ",
+			s:ColorCodeHealth( BUILDING_PORTAL, team, BuildingHealth( TID_PORTAL_BLUE1 )),
+			d:BuildingHealth( TID_PORTAL_BLUE1 ), s: "\cc% / ",
+			s:ColorCodeHealth( BUILDING_PORTAL_2, team, BuildingHealth( TID_PORTAL_BLUE2 )),
+			d:BuildingHealth( TID_PORTAL_BLUE2 ), s: "\cc%";
 			HUDMSG_PLAIN, i++, CR_BLUE, 0.012, y, 0.0 );
 
 		y += 2 * -SMALLSPACE;
@@ -85,7 +85,7 @@ function int BuildingHealth( int tid )
 {	if( ThingCount( T_NONE, tid ) == 0 )
 		return 0;
 
-	int p = ( ( GetActorHealth( tid ) * 99 ) / GetActorSpawnHealth( tid )) + 1;
+	int p = (( GetActorHealth( tid ) * 99 ) / GetActorSpawnHealth( tid )) + 1;
 
 	if( p < 0 )
 		p = 0;
@@ -110,8 +110,12 @@ function str PortalLinkColor( int team, int teamcolor )
 	return "\cM";
 }
 
-function str ColorCodeHealth( int Percentage )
-{	if( Percentage == 100 ) // 100%
+function str ColorCodeHealth( int b, int team, int Percentage )
+{	// [Dusk] If this is an obelisk that's being revived, we use white color for the health
+	if( b == BUILDING_OBELISK && ObeliskRevival[team] == true )
+		return "\cJ";
+
+	if( Percentage == 100 ) // 100%
 		return "\cq";
 	else if( Percentage > 75 ) // healthy
 		return "\cd";
@@ -126,7 +130,11 @@ function str ColorCodeHealth( int Percentage )
 }
 
 function str ExistsBuilding( int tid )
-{	if( tid <= 199 || ( tid >= 900 && tid % 2 == 1 ))
+{	// use white color if being revived
+	if(( tid == TID_OBELISK && ObeliskRevival[TEAM_RED] ) || ( tid == TID_TESLACOIL && ObeliskRevival[TEAM_BLUE] ))
+		return "\cJ";
+
+	if( tid <= 199 || ( tid >= 900 && tid % 2 == 1 ))
 	{	if( ThingCount( T_NONE, tid ) > 0 )
 			return "\cH";
 		else

@@ -135,8 +135,8 @@
 #define TID_FACTORY_RED 207
 #define TID_REPAIR_BLUE 109
 #define TID_REPAIR_RED 209
-#define TID_OBELISK_BLUE 114
-#define TID_OBELISK_RED 214
+#define TID_TESLACOIL 114
+#define TID_OBELISK 214
 #define TID_CRATE 401
 #define TID_TIBERIUM 402
 #define TID_TICKETCOUNTER_BLUE 410
@@ -149,15 +149,17 @@
 #define TID_AMMOREGEN_RED 904
 
 // new tids
-#define TID_PORTAL_BLUE1        1500
-#define TID_PORTAL_BLUE2        1501
-#define TID_PORTAL_RED1         1502
-#define TID_PORTAL_RED2         1503
-#define TID_PORTAL_TELEDEST     1504 // - 1507
-#define TID_PORTAL_FX           1508 // - 1511
-#define TID_MARINE              1520 // - 1544
-#define TID_TESLACOIL_ORB       1600
-#define TID_Player              2000 // - 2063
+#define TID_PORTAL_BLUE1				1500
+#define TID_PORTAL_BLUE2				1501
+#define TID_PORTAL_RED1					1502
+#define TID_PORTAL_RED2     		    1503
+#define TID_PORTAL_TELEDEST 		    1504 // - 1507
+#define TID_PORTAL_FX					1508 // - 1511
+#define TID_MARINE						1520 // - 1544
+#define TID_TESLACOIL_ORB				1600
+#define TID_TESLACOIL_EYE				1700
+#define TID_OBELISK_EYE					1701
+#define TID_Player						2000 // - 2063
 
 #define TARGETINFO_X			0  // X-coordinate
 #define TARGETINFO_Y			1  // Y-coordinate
@@ -191,6 +193,7 @@
 #define SC_PORTAL_FUNCTION        937
 #define SC_MARINE_INIT            938
 #define SC_MARINE_COMPENSATION    939
+#define SC_ReviveObelisk          944
 #define SC_InventoryItemUse       951
 #define SC_HealingRadius          952
 #define SC_TimeGun                958
@@ -219,7 +222,7 @@ int BaseTIDs[18] =
 	TID_REFINERY_BLUE, TID_REFINERY_RED,
 	TID_RESCENTRE_BLUE, TID_RESCENTRE_RED,
 	TID_FACTORY_BLUE, TID_FACTORY_RED,
-	TID_OBELISK_BLUE, TID_OBELISK_RED,
+	TID_TESLACOIL, TID_OBELISK,
 	TID_REPAIR_BLUE, TID_REPAIR_RED,
 	TID_MINIREF_BLUE, TID_MINIREF_RED,
 	TID_HEALTHREGEN_BLUE, TID_HEALTHREGEN_RED,
@@ -313,6 +316,9 @@ int MaxTurretDistance = 2500;
 int MinEnemyTurretDistance = 1500;
 
 int SurrenderWaitTime = 20;
+
+// [Dusk]
+int ObeliskRevival[2];
 
 //RESEARCHES!!!!!!!!
 bool EnhancedRefining[2]; //Increases profits from harvesting by $50 //Costs $2000

@@ -115,6 +115,7 @@ Log( s: pname( -1 ), s: " destroys Blue Repair Facility." );
 script 114( VOID )
 {	Thing_Destroy( 114, 0 );
 	Thing_Destroy( 115, 0 );
+	Thing_Destroy( TID_TESLACOIL_EYE, 0 );
 	ACS_ExecuteAlways( 99, 0, TEAM_BLUE );
 	GotObelisk[TEAM_BLUE] = False;
 	BaseLeft[TEAM_BLUE]--;
@@ -122,13 +123,12 @@ script 114( VOID )
 	SetLineTexture( 11, SIDE_FRONT, TEXTURE_BOTTOM, "MCT2" );
 
 	SetFont( "BIGFONT" );
-
-HudMessageBold( s: "The \cHBlue Tesla Coil\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
-Log( s: pname( -1 ), s: " destroys Blue Tesla Coil." );
+	HudMessageBold( s: "The \cHBlue Tesla Coil\cd has been destroyed!!"; HUDMSG_FADEOUT, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
+	Log( s: pname( -1 ), s: " destroys Tesla Coil." );
 	AwardBuildingDestruction( TEAM_RED, false );
 	ACS_ExecuteAlways( 930, 0, BUILDING_OBELISK, TEAM_BLUE );
 
-	// [Dusk] Remove the coil orb
+	// [Dusk] Remove the orb
 	Thing_Remove( TID_TESLACOIL_ORB );
 
 	if( EventScripts )
@@ -245,10 +245,11 @@ script 205( VOID )
 	AwardBuildingDestruction( TEAM_BLUE, true );
 }
 
-//---------------------------RED OBELISK DEATH
+//---------------------------OBELISK DEATH
 script 214( VOID )
 {	Thing_Destroy( 214, 0 );
 	Thing_Destroy( 215, 0 );
+	Thing_Destroy( TID_OBELISK_EYE, 0 );
 	ACS_ExecuteAlways( 99, 0, TEAM_RED );
 	GotObelisk[TEAM_RED] = False;
 	BaseLeft[TEAM_RED]--;
@@ -386,7 +387,7 @@ function int GetBuildingTID( int b, int team )
 			return cond( team == TEAM_RED, 207, 107 );
 
 		case BUILDING_OBELISK:
-			return cond( team == TEAM_RED, 214, 114 );
+			return cond( team == TEAM_RED, TID_OBELISK, TID_TESLACOIL );
 
 		case BUILDING_REPAIR:
 			return cond( team == TEAM_RED, 209, 109 );
@@ -433,4 +434,75 @@ function bool IsMinorBuilding( int b )
 	}
 
 	return false;
+}
+
+// [Dusk] Obelisk revival.
+script SC_ReviveObelisk( int team )
+{	if( GotObelisk[team] || ObeliskRevival[team] )
+		terminate;
+
+	int tid1, tid2, tid3;
+
+	if( team == TEAM_RED )
+	{	tid1 = 214;
+		tid2 = 215;
+		tid3 = TID_OBELISK_EYE;
+	}
+	else
+	{	tid1 = 114;
+		tid2 = 115;
+		tid3 = TID_TESLACOIL_EYE;
+	}
+
+	// Tell the obelisk actors to respawn
+	GiveActorInventory( tid1, "PleaseRespawn", 1 );
+	GiveActorInventory( tid2, "PleaseRespawn", 1 );
+	GiveActorInventory( tid3, "PleaseRespawn", 1 );
+	delay( 40 );
+	TakeActorInventory( tid1, "PleaseRespawn", 1 );
+	TakeActorInventory( tid2, "PleaseRespawn", 1 );
+	TakeActorInventory( tid3, "PleaseRespawn", 1 );
+	SetLineTexture( cond( team == TEAM_RED, 12, 11 ), SIDE_FRONT, TEXTURE_BOTTOM, "MCT1" );
+	SetActorProperty( tid1, APROP_Invulnerable, 1 );
+	ObeliskRevival[team] = true;
+	int time = GetCVar( "aow_obeliskrevivetime" );
+	Log( s:"Starting obelisk revival process for  ", s:TeamNames[team] );
+
+	for( int i = 0; i < time; ++i )
+	{	if( BaseLeft[team] == 0 )
+		{	// Whoopsie, we lost the game in the mean time! :(
+			// Gotta stop here!
+			terminate;
+		}
+
+		int hp = ( GetActorSpawnHealth( tid1 ) * i ) / time;
+
+		if ( hp <= 0 )
+			hp = 1;
+
+		SetActorHealth( tid1, hp );
+		DrawBuildingHud();
+		delay( 35 );
+	}
+
+	Sector_SetColor( cond( team == TEAM_RED , 20, 19 ), 255, 255, 255, 0 );
+	GotObelisk[team] = true;
+	BaseLeft[team]++;
+	ObeliskRevival[team] = false;
+	SetActorHealth( tid1, GetActorSpawnHealth( tid1 ));
+	SetActorProperty( tid1, APROP_Invulnerable, 0 );
+	SetActorState( tid3, "Spawn" );
+	DrawBuildingHud();
+	AmbientSound( "misc/poweron", 127 );
+	SetFont( "BIGFONT" );
+
+	if( team == TEAM_BLUE )
+	{	HudMessageBold( s:"The \cHTesla Coil\cd has been revived!";
+			HUDMSG_FADEOUT | HUDMSG_LOG, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
+		SpawnSpotForced( "TeslaCoilOrb", TID_TESLACOIL_EYE, 0, 0 );
+	} else
+		HudMessageBold( s:"The \cGObelisk of Light\cd has been revived!";
+			HUDMSG_FADEOUT | HUDMSG_LOG, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
+
+	Log( s:TeamNames[team], s:" obelisk revival complete." );
 }

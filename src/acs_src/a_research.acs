@@ -70,7 +70,7 @@ script 66( void )
 	if( CheckInventory( "PurchaseToken" ) == 0 )
 	{	GiveInventory( "PurchaseToken", 1 );
 		SetFont( "BIGFONT" );
-HudMessage( s: "\cd----Advanced Mech Research----
+		HudMessage( s: "\cd----Advanced Mech Research----
 					\n\n\ciCost: \cf$2000
 					\n\ciPurpose: \cdNew Mech chassis and hardened metal plating.
 					\n\cd--- Enables construction of larger Mechs.";
@@ -90,13 +90,59 @@ HudMessage( s: "\cd----Advanced Mech Research----
 	DisplayTick();
 
 	BigMessage( "\ciResearch Complete!" );
-Log( s: pname( -1 ), s: " researches Advanced Mechs for ", s: TeamNames[PlayerTeam()] );
+	Log( s: pname( -1 ), s: " researches Advanced Mechs for ", s: TeamNames[PlayerTeam()] );
 	AdvancedMechResearch[PlayerTeam()] = True;
 }
 
-// [Dusk] Dummy script for a possible future research
+// [Dusk] OBELISK REVIVAL
 script 67( void )
-	terminate;
+{	int cost = 8000;
+	int team = PlayerTeam();
+	str name = cond( team == TEAM_BLUE, "Tesla Coil", "Obelisk" );
+
+	if( MitigateDoublePress() )
+		terminate;
+
+	if( !CheckPlant( PlayerTeam() ))
+		terminate;
+
+	if( GotObelisk[team] )
+	{	Error( strparam( s:"The ", s:name, s:" is not destroyed!" ));
+		terminate;
+	}
+
+	if( ObeliskRevival[team] )
+	{	Error( strparam( s:"The ", s:name, s:" is already being revived!" ));
+		terminate;
+	}
+
+	if( CheckInventory( "PurchaseToken" ) == 0 )
+	{	GiveInventory( "PurchaseToken", 1 );
+		SetFont( "BIGFONT" );
+		HudMessage(
+			s: "\cd----", s:name, s:" Revival----",
+			s:"\n\n\ciCost: \cf$", d:cost,
+			s:"\n\ciPurpose: \cdRevives the ", s:name, s:" if it is destroyed.\n",
+			s:"\n\cd--- Revival takes ", d:GetCVAR( "aow_obeliskrevivetime" ), s:" seconds to complete.";
+			HUDMSG_FADEOUT, 2100 + PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0 );
+
+		ACS_ExecuteWithResult( 330, cost );
+		Delay( 35 );
+		TakeInventory( "PurchaseToken", 1 );
+		terminate;
+	}
+
+	if( !CheckCredits( cost ))
+		terminate;
+
+	Log( s:pname( -1 ), s:" researches Obelisk revival." );
+	ACS_ExecuteWithResult( SC_ReviveObelisk, team );
+	AddExperience( 750 );
+	GivePoints( POINTS_RESEARCH * 5 );
+	SpendCredits( cost );
+	DisplayTick();
+	BigMessage( "\ciRevival process started!" );
+}
 
 
 //---------------------------HEALTH REGEN CACHE
@@ -117,7 +163,7 @@ script 68( void )
 	if( !CheckInventory( "PurchaseToken" ))
 	{	GiveInventory( "PurchaseToken", 1 );
 		SetFont( "BIGFONT" );
-HudMessage( s: "\cd----Team Health Regeneration----
+		HudMessage( s: "\cd----Team Health Regeneration----
 					\n\n\ciCost: \cf$2250
 					\n\ciPurpose: \cdImplant advanced cell reproduction.
 					\n\cd--- Gives entire team +1 health/s regeneration.
@@ -163,7 +209,7 @@ script 69( void )
 	if( !CheckInventory( "PurchaseToken" ))
 	{	GiveInventory( "PurchaseToken", 1 );
 		SetFont( "BIGFONT" );
-HudMessage( s: "\cd----Team Ammo Regeneration----
+		HudMessage( s: "\cd----Team Ammo Regeneration----
 					\n\n\ciCost: \cf$2250
 					\n\ciPurpose: \cdIssue mini-ammo dispensers
 					\n\cd--- Gives entire team slow Ammo regeneration. Mechs Included.
