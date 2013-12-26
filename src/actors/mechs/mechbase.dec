@@ -162,6 +162,8 @@ actor MechEjectButton : CustomInventory {
 		TNT1 A 0
 		stop
 	Use:
+		TNT1 A 0 A_TakeInventory ("PowerTimeGunSpeed", 1)
+		TNT1 A 0 A_TakeInventory ("TimeGunSpeed", 1)
 		TNT1 A 0 ACS_ExecuteAlways (697, 0)
 		stop
 	}
