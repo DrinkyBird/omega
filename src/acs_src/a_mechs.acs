@@ -139,12 +139,12 @@ script 80( int mech )
 	SpendCredits( cost );
 	DisplayTick();
 	SetFont( "BIGFONT" );
-HudMessage( s: "You are now a \cF", s: nicename, s: "!";
+	HudMessage( s: "You are now a \cF", s: nicename, s: "!";
 				HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 2.0, 1.0 );
 
 	// [Dusk] extra notes
 	if( mech == MECH_GUARDIAN )
-HudMessage( s: "Upon ejecting, the suit \ckself-destructs.";
+	HudMessage( s: "Upon ejecting, the suit \ckself-destructs.";
 					HUDMSG_FADEOUT, 1860 + PlayerNumber(), CR_WHITE, 0.45, 0.5, 2.0, 1.0 );
 
 	// [Dusk] Mark down who is in the hanger so we can free the hanger
@@ -184,13 +184,13 @@ Log( s: pname( -1 ), s: " pilots ", s: nicename, s: "." );
 	SetFont( "BIGFONT" );
 
 	if( mech == MECH_GUARDIAN )
-HudMessage( s: "Powersuit online!";
+	HudMessage( s: "Powersuit online!";
 					HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	else if( mech == MECH_ORCA )
-HudMessage( s: "Gunship online!";
+	HudMessage( s: "Gunship online!";
 					HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	else
-HudMessage( s: "Mech online!";
+	HudMessage( s: "Mech online!";
 					HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 
 	ACS_ExecuteAlways( 315, 0 ); // display mech HUD
@@ -243,19 +243,19 @@ script 314( void )
 	{	if( CheckInventory( "Wolverine-WhatWeapon" ) == 0 )
 		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
 			SetFont( "DOOMFONT" );
-HudMessage( s: "\cfPulse Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "\cfPulse Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/pulse", 128 );
 		}
 		else if( CheckInventory( "Wolverine-WhatWeapon" ) == 1 )
 		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
 			SetFont( "DOOMFONT" );
-HudMessage( s: "\cfMinigun"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "\cfMinigun"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/minigun", 128 );
 		}
 		else
 		{	TakeInventory( "Wolverine-WhatWeapon", 3 );
 			SetFont( "DOOMFONT" );
-HudMessage( s: "\cfLRM-10"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "\cfLRM-10"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/lrm", 128 );
 		}
 	}
@@ -264,19 +264,19 @@ HudMessage( s: "\cfLRM-10"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 	{	if( CheckInventory( "Wolverine-WhatWeapon" ) == 0 )
 		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
 			SetFont( "DOOMFONT" );
-HudMessage( s: "\cfDual Flamethrowers"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "\cfDual Flamethrowers"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/flamer", 128 );
 		}
 		else if( CheckInventory( "Wolverine-WhatWeapon" ) == 1 )
 		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
 			SetFont( "DOOMFONT" );
-HudMessage( s: "\cfLRM-20"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "\cfLRM-20"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/lrm", 128 );
 		}
 		else     //if(CheckInventory("Wolverine-WhatWeapon") == 2)
 		{	TakeInventory( "Wolverine-WhatWeapon", 3 );
 			SetFont( "DOOMFONT" );
-HudMessage( s: "\cf100mm Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "\cf100mm Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/80mm", 128 );
 		}
 	}
@@ -285,19 +285,19 @@ HudMessage( s: "\cf100mm Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5
 	{	if( CheckInventory( "Wolverine-WhatWeapon" ) == 0 )
 		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
 			SetFont( "DOOMFONT" );
-HudMessage( s: "\cfDual Shock Autorifles"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "\cfDual Shock Autorifles"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/minigun", 128 );
 		}
 		else if( CheckInventory( "Wolverine-WhatWeapon" ) == 1 )
 		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
 			SetFont( "DOOMFONT" );
-HudMessage( s: "\cfLRM-20"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "\cfLRM-20"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/lrm", 128 );
 		}
 		else
 		{	TakeInventory( "Wolverine-WhatWeapon", 3 );
 			SetFont( "DOOMFONT" );
-HudMessage( s: "\cfDual Shock Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "\cfDual Shock Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/pulse", 128 );
 		}
 	}
@@ -307,27 +307,27 @@ HudMessage( s: "\cfDual Shock Cannon"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0
 
 		if( !CheckInventory( "Wolverine-WhatWeapon" ))
 		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
-HudMessage( s: "\cfSRM-15"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "\cfSRM-15"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/lrm", 128 );
 		}
 		else if( CheckInventory( "Wolverine-WhatWeapon" ) == 1 )
 		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
-HudMessage( s: "\cfFlak Minigun"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "\cfFlak Minigun"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/minigun", 128 );
 		}
 		else if( CheckInventory( "Wolverine-WhatWeapon" ) == 2 )
 		{	GiveInventory( "Wolverine-WhatWeapon", 1 );
 
 			if( PlayerTeam() == TEAM_RED )
-HudMessage( s: "\cfMini-nuke artillery"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "\cfMini-nuke artillery"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			else
-HudMessage( s: "\cfIon-bomb artillery"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "\cfIon-bomb artillery"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 
 			ActivatorSound( "switch/80mm", 128 );
 		}
 		else
 		{	TakeInventory( "Wolverine-WhatWeapon", 3 );
-HudMessage( s: "Twin Mass Drivers"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
+			HudMessage( s: "Twin Mass Drivers"; HUDMSG_FADEOUT, 0, CR_Gold, 0.5, 0.8, 1.0, 0.5 );
 			ActivatorSound( "switch/lrm", 128 );
 		}
 	}
@@ -361,7 +361,7 @@ s: "\n-\n", d: CheckInventory( "Wolverine-MinigunAmmo" );
 s: MechHudColor( 1, "" ), s: "SHOCK RIFLE:\n",
 s: MechHudColor( 2, "Reload-LRM" ), s: "LRM-20:\n";
 		HUDMSG_PLAIN, 0, CR_Gold, 0.8, 0.7, 0.2 );
-HudMessage( s: "-",
+		HudMessage( s: "-",
 s: "\n", d: CheckInventory( "GeneporiumCharge" ),
 s: "\n", d: CheckInventory( "MechRocketAmmo" );
 		HUDMSG_PLAIN, 0, CR_White, 0.85, 0.7, 0.2 );
@@ -373,7 +373,7 @@ s: "\n", d: CheckInventory( "MechRocketAmmo" );
 s: MechHudColor( 1, "" ), s: "FLAMER:\n",
 s: MechHudColor( 2, "Reload-LRM" ), s: "LRM-20: ";
 		HUDMSG_PLAIN, 0, CR_Gold, 0.8, 0.7, 0.2 );
-HudMessage( d: CheckInventory( "Titan-80mmAmmo" ),
+		HudMessage( d: CheckInventory( "Titan-80mmAmmo" ),
 s: "\n", d: CheckInventory( "Titan-FlamerAmmo" ),
 s: "\n", d: CheckInventory( "MechRocketAmmo" );
 		HUDMSG_PLAIN, 0, CR_White, 0.85, 0.7, 0.2 );
@@ -392,7 +392,7 @@ s: MechHudColor( 1, "Reload-LRM" ), s: "SRM-15:\n",
 s: MechHudColor( 2, "" ), s: "FLAK:\n",
 s: MechHudColor( 3, "Reload-Nuke" ), s: nukename, s: ":";
 		HUDMSG_PLAIN, 0, CR_Gold, 0.8, 0.7, 0.2 );
-HudMessage( d: CheckInventory( "ArtilleryShellAmmo" ),
+		HudMessage( d: CheckInventory( "ArtilleryShellAmmo" ),
 s: "\n", d: CheckInventory( "ShortRangeMissileAmmo" ),
 s: "\n", d: CheckInventory( "MachineGunAmmo" ),
 s: "\n", d: CheckInventory( "NukeAmmo" );
@@ -570,7 +570,7 @@ script 332( void ) CLIENTSIDE
 {	while( CheckInventory( "IsMech" ))
 	{	if( GetHealth() <= GetSpawnHealth() / 5 )
 		{	SETFONT( "BigFont" );
-HudMessage( s: "\cR== Health Level Critical =="; HUDMSG_PLAIN, 0, CR_Green, 0.5, 0.59, 0.75 );
+			HudMessage( s: "\cR== Health Level Critical =="; HUDMSG_PLAIN, 0, CR_Green, 0.5, 0.59, 0.75 );
 HudMessage( s: "\cFPrepare to Eject"; HUDMSG_PLAIN, 0, CR_Green, 0.5, 0.63, 0.75 );
 		}
 
@@ -599,7 +599,7 @@ script 150( int angle )
 {	if( CheckInventory( "IsMech" ))
 	{	DisplayCross();
 		SETFONT( "BigFont" );
-HudMessage( s: "You can't go there in a mech!";
+		HudMessage( s: "You can't go there in a mech!";
 					HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
 		ThrustThing( angle, 40, 1, 0 );
 	}
@@ -619,7 +619,7 @@ script 86( int x )
 
 	DisplayCross();
 	SetFont( "BIGFONT" );
-HudMessage( s: "You can't enter here!";
+	HudMessage( s: "You can't enter here!";
 				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_DarkRed, 0.5, 0.45, 2.0, 1.0 );
 
 	if( !CheckInventory( "IsMech" ))

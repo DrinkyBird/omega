@@ -11,7 +11,6 @@ script SC_InventoryItemUse( int action, int team )
 
 	switch( action )
 	{	case INVITEM_Beacon:
-
 			/* Plant superweapon beacon */
 			if( ActivatorTID() < TID_Player || ActivatorTID() >= ( TID_Player + MAXPLAYERS ))
 				terminate;
@@ -21,9 +20,9 @@ script SC_InventoryItemUse( int action, int team )
 			{	GiveInventory( "BeaconUseToken", 1 );
 				ActivatorSound( "beacon/safetylock", 80 );
 				SetFont( "BIGFONT" );
-HudMessage( s: "BEACON SAFETY LOCK DISENGAGED";
-							HUDMSG_FADEOUT, 0, CR_RED,
-							0.1, 0.95, 2.0, 0.25 );
+				HudMessage( s: "BEACON SAFETY LOCK DISENGAGED";
+					HUDMSG_FADEOUT, 0, CR_RED,
+					0.1, 0.95, 2.0, 0.25 );
 
 				delay( 2 * 35 );
 				TakeInventory( "BeaconUseToken", 1 );
@@ -50,12 +49,12 @@ HudMessage( s: "BEACON SAFETY LOCK DISENGAGED";
 				SpawnProjectile( ActivatorTID(), "NukeBeaconThrown", 0, 0, -5, 1, 0 );
 
 			/* Thaw the player now and write this event to the server log. */
-Log( s: pname( -1 ), s: " plants ", s: cond( PlayerTeam() == TEAM_RED, "Nuclear Strike Beacon", "Ion Cannon Beacon" ));
+			str nukename = cond( PlayerTeam() == TEAM_RED, "Nuclear Strike Beacon", "Ion Cannon Beacon" );
+			Log( s: pname( -1 ), s: " plants ", s:nukename );
 			SetPlayerProperty( 0, 0, PROP_TOTALLYFROZEN );
 			break;
 
 		case INVITEM_RefillC4:
-
 			/* Refill remote C4 */
 			if( CheckInventory( "RemoteC4Count" ) > 0 )
 				SetInventory( "RemoteC4", CheckInventory( "RemoteC4Count" ));
@@ -89,7 +88,6 @@ Log( s: pname( -1 ), s: " plants ", s: cond( PlayerTeam() == TEAM_RED, "Nuclear 
 			break;
 
 		case INVITEM_SelfHeal:
-
 			/* Self-heal item was used - give the syringe and switch to it. This
 			 * cannot be done in DECORATE because of the necessary one-tic delay. */
 			if( CheckInventory( "SelfHeal" ))
@@ -117,7 +115,9 @@ Log( s: pname( -1 ), s: " plants ", s: cond( PlayerTeam() == TEAM_RED, "Nuclear 
 
 #define HEALRAD_SEEK 0
 #define HEALRAD_HEAL 1
+
 int IsBeingHealed[MAXPLAYERS];
+
 script SC_HealingRadius( int action, int i )
 {	int shp, n;
 

@@ -26,8 +26,8 @@ function void DrawBuildingHud( void )
 
 	if( SuddenDeath || TicketPool )
 	{	HudMessageBold(
-	s: "\cHLives\cC: ", s: FractionColor( Tickets[TEAM_BLUE], StartingTickets ), d: Tickets[TEAM_BLUE],
-	s: "\n\cGLives\cC: ", s: FractionColor( Tickets[TEAM_RED], StartingTickets ), d: Tickets[TEAM_RED];
+			s: "\cHLives\cC: ", s: FractionColor( Tickets[TEAM_BLUE], StartingTickets ), d: Tickets[TEAM_BLUE],
+			s: "\n\cGLives\cC: ", s: FractionColor( Tickets[TEAM_RED], StartingTickets ), d: Tickets[TEAM_RED];
 			HUDMSG_PLAIN, i++, CR_BLUE, 0.012, y, 0.0 );
 	}
 
@@ -42,29 +42,29 @@ function void DrawBuildingHud( void )
 
 			if( IsMinorBuilding( b ))
 			{	HudMessageBold( s: ExistsBuildingGreen( tid ), s: "++",
-				s: ExistsBuilding( tid ), s: GetBuildingName( b, team ), s: "\cc: ",
-				s: ColorCodeHealth( BuildingHealth( tid )),
-				d: BuildingHealth( tid ), s: "\cc%\n";
-								HUDMSG_PLAIN, i++, CR_GRAY, 0.012, y, 0.0 );
+					s: ExistsBuilding( tid ), s: GetBuildingName( b, team ), s: "\cc: ",
+					s: ColorCodeHealth( BuildingHealth( tid )),
+					d: BuildingHealth( tid ), s: "\cc%\n";
+					HUDMSG_PLAIN, i++, CR_GRAY, 0.012, y, 0.0 );
 			}
 			else
 			{	HudMessageBold( s: ExistsBuilding( tid ),
-				s: GetBuildingName( b, team ), s: "\cc: ",
-				s: ColorCodeHealth( BuildingHealth( tid )),
-				d: BuildingHealth( tid ), s: "\cc%\n";
-								HUDMSG_PLAIN, i++, CR_GRAY, 0.012, y, 0.0 );
+					s: GetBuildingName( b, team ), s: "\cc: ",
+					s: ColorCodeHealth( BuildingHealth( tid )),
+					d: BuildingHealth( tid ), s: "\cc%\n";
+					HUDMSG_PLAIN, i++, CR_GRAY, 0.012, y, 0.0 );
 			}
 
 			y += -SMALLSPACE;
 		}
 
-HudMessageBold( s: PortalLinkColor( TEAM_BLUE, 0 ), s: "++",
-				s: PortalLinkColor( TEAM_BLUE, 1 ), s: "Portal\cc: ",
-				s: ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE1 )),
-				d: BuildingHealth( TID_PORTAL_BLUE1 ), s: "\cc% / ",
-				s: ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE2 )),
-				d: BuildingHealth( TID_PORTAL_BLUE2 ), s: "\cc%";
-						HUDMSG_PLAIN, i++, CR_BLUE, 0.012, y, 0.0 );
+		HudMessageBold( s: PortalLinkColor( TEAM_BLUE, 0 ), s: "++",
+			s: PortalLinkColor( TEAM_BLUE, 1 ), s: "Portal\cc: ",
+			s: ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE1 )),
+			d: BuildingHealth( TID_PORTAL_BLUE1 ), s: "\cc% / ",
+			s: ColorCodeHealth( BuildingHealth( TID_PORTAL_BLUE2 )),
+			d: BuildingHealth( TID_PORTAL_BLUE2 ), s: "\cc%";
+			HUDMSG_PLAIN, i++, CR_BLUE, 0.012, y, 0.0 );
 
 		y += 2 * -SMALLSPACE;
 	}

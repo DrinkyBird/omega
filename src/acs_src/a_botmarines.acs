@@ -139,8 +139,7 @@ script SC_MARINE_COMPENSATION OPEN
 
 			if( delta > 0 )
 			{	// Positive delta, too many AI marines - send one of them home
-Log( s: "Compensation: Removing ", d: delta,
-	 s: " marines from ", s: TeamNames[team], s: "." );
+				Log( s: "Compensation: Removing ", d: delta, s: " marines from ", s: TeamNames[team], s: "." );
 
 				for( i = 0; i < MAX_MARINES && delta > 0; i++ )
 				{	// Find a marine that we can send home.
@@ -159,8 +158,7 @@ Log( s: "Compensation: Removing ", d: delta,
 			}
 			else if( delta < 0 )
 			{	// Negative delta, team needs more marines.
-Log( s: "Compensation: Adding ", d: -delta,
-	 s: " marines to ", s: TeamNames[team], s: "." );
+				Log( s: "Compensation: Adding ", d: -delta, s: " marines to ", s: TeamNames[team], s: "." );
 
 				while( AICount < AIMarines[team] )
 				{	// Get a free ID
@@ -198,13 +196,13 @@ Log( s: "Compensation: Adding ", d: -delta,
 
 					if( !spawned )
 					{	// Something's seriously wrong if we get here
-Log( s: "WARNING: Couldn't spawn compensation marines to ", s: TeamNames[team],
-	 s: "!\nSomething is going haywire here!" );
+						Log( s: "WARNING: Couldn't spawn compensation marines to ", s: TeamNames[team],
+							s: "!\nSomething is going haywire here!" );
 						terminate;
 					}
 				}
 
-Log( s: "Done adding marines for ", s: TeamNames[team] );
+				Log( s: "Done adding marines for ", s: TeamNames[team] );
 			}
 		}
 	}
@@ -242,6 +240,6 @@ script SC_MARINE_STATS( void )
 		if( CheckActorInventory( TID_MARINE + i, "IsCompensationMarine" ))
 			compensation = " (compensation)";
 
-Log( s: "Marine ", d: i, s: ": ", s: TeamNames[CheckActorInventory( TID_MARINE + i, "IsRed" )], s: compensation );
+		Log( s: "Marine ", d: i, s: ": ", s: TeamNames[CheckActorInventory( TID_MARINE + i, "IsRed" )], s: compensation );
 	}
 }

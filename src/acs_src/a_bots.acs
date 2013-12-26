@@ -20,19 +20,20 @@ script 888 ENTER
 	int max = 12;
 	int x;
 
-	if( !GotPlant[Team] ) max = 8;
+	if( !GotPlant[Team] )
+		max = 8;
 
-	if( !GotBarracks[Team] ) max = 2;
+	if( !GotBarracks[Team] )
+		max = 2;
 
 	// PrintBold (n:0, s:"\c-: I have \cQ$\cD", d:GetCredits (PlayerNumber()));
 
 	// [Dusk] TODO: this is quite a gross hack, find a cleaner way to do this!
-	do {
-		i = random( 0, max );
-	}
-	while( ( !GotBarracks[Team] && BotClassBarDependencies[i] ) ||
-	( !GotPlant[Team] && BotClassPlantDependencies[i] ) ||
-	( GetCredits( PlayerNumber() ) < BotClassCosts[i] ));
+	do
+	{	i = random( 0, max );
+	} while( ( !GotBarracks[Team] && BotClassBarDependencies[i] ) ||
+		( !GotPlant[Team] && BotClassPlantDependencies[i] ) ||
+		( GetCredits( PlayerNumber() ) < BotClassCosts[i] ));
 
 	ACS_ExecuteAlways( BotClassNumbers[i], 0, team );
 }

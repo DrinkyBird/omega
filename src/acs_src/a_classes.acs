@@ -84,7 +84,7 @@ function void PurchaseClass( int c )
 	{	if( maxtimecops == 1 )
 			Error( "You already have a time cop in-field!" );
 		else
-Error( strparam( s: "You already have ", d: NumTimeCops[team], s: " time cops in-field!" ));
+			Error( strparam( s: "You already have ", d: NumTimeCops[team], s: " time cops in-field!" ));
 
 		return;
 	}

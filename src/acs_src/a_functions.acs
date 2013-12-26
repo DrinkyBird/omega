@@ -277,17 +277,18 @@ function void FreezeBold( void )
 
 // [Dusk] Refreshes time cop limit
 function void RecountTimeCops( void )
-{	NumTimeCops[0] = 0;
-	NumTimeCops[1] = 0;
+{	NumTimeCops[TEAM_BLUE] = 0;
+	NumTimeCops[TEAM_RED] = 0;
 
 	for( int i = 0; i < MAXPLAYERS; i++ )
-	{	if( !PlayerInGame( i )) continue;
+	{	if( !PlayerInGame( i ))
+			continue;
 
 		if( CheckActorInventory( TID_Player + i, "TimeGun" ))
 		{	if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_RED )
-				NumTimeCops[0]++;
+				NumTimeCops[TEAM_RED]++;
 			else if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_BLUE )
-				NumTimeCops[1]++;
+				NumTimeCops[TEAM_BLUE]++;
 		}
 	}
 }

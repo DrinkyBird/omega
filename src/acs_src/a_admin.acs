@@ -94,16 +94,16 @@ script 402( int Arg1, int Arg2, int Arg3 ) NET
 			// Teleport to spot
 			if( arg2 <= 0 )
 			{	/* [Dusk] Help message. */
-HudMessage( s: "Usage: a_teleport <tid>\n",
-s: "TIDs of interest:\n",
-s: "1: Blue base\t\t2: Red base\n",
-s: "70: Blue spawn room\t71: Red spawn room\n",
-s: "108: Blue wf hanger\t208: Red wf hanger\n",
-s: "110: Blue mech room\t210: Red mech room\n",
-s: "111: Blue res room\t211: Red res room\n";
-				HUDMSG_PLAIN | HUDMSG_LOG, 9000, 0, 0, 0, 0 );
+				HudMessage( s: "Usage: a_teleport <tid>\n",
+					s: "TIDs of interest:\n",
+					s: "1: Blue base\t\t2: Red base\n",
+					s: "70: Blue spawn room\t71: Red spawn room\n",
+					s: "108: Blue wf hanger\t208: Red wf hanger\n",
+					s: "110: Blue mech room\t210: Red mech room\n",
+					s: "111: Blue res room\t211: Red res room\n";
+					HUDMSG_PLAIN | HUDMSG_LOG, 9000, 0, 0, 0, 0 );
 
-HudMessage( s: ""; HUDMSG_PLAIN, 9000, 0, 0, 0, 0.1 );
+				HudMessage( s: ""; HUDMSG_PLAIN, 9000, 0, 0, 0, 0.1 );
 				terminate;
 			}
 
@@ -198,17 +198,17 @@ HudMessage( s: ""; HUDMSG_PLAIN, 9000, 0, 0, 0, 0.1 );
 
 			switch( CheckInventory( "AdminPistolRotation" ))
 			{	case 0:
-HudMessage( s: "Normal mode";
+				HudMessage( s: "Normal mode";
 								HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 1.0, 0.5 );
 					break;
 
 				case 1:
-HudMessage( s: "\cJRepair / Disarm mode";
+				HudMessage( s: "\cJRepair / Disarm mode";
 								HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 1.0, 0.5 );
 					break;
 
 				case 2:
-HudMessage( s: "Deconstruction mode";
+				HudMessage( s: "Deconstruction mode";
 								HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_WHITE, 0.5, 0.45, 1.0, 0.5 );
 					break;
 			}
@@ -311,7 +311,7 @@ Log( s: "[SHUFFLE] Begin of team shuffle." );
 	}
 
 	SetActivator( -1 );
-HudMessageBold( s: "Teams have been shuffled";
+	HudMessageBold( s: "Teams have been shuffled";
 					HUDMSG_FADEOUT, 0, CR_GREEN, 0.5, 0.3, 3.5, 1.0 );
 Log( s: "[SHUFFLE] Shuffle complete." );
 }
