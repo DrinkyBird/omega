@@ -65,11 +65,11 @@ script 999 OPEN
 	SpawnSpotForced( "TeslaCoilOrb", TID_TESLACOIL_EYE, 0, 0 );
 
 	// wf unavailability
-	if( !ThingCount( T_NONE, 107 ) && !ThingCount( T_NONE, 207 ))
-	{	GotFactory[0] = 0;
-		GotFactory[1] = 0;
-		Team_GivePoints( TEAM_RED, 1, 0 );
-		Team_GivePoints( TEAM_BLUE, 1, 0 );
+	if( !ThingCount( T_NONE, TID_FACTORY_BLUE ) && !ThingCount( T_NONE, TID_FACTORY_RED ))
+	{	GotFactory[TEAM_BLUE] = 0;
+		GotFactory[TEAM_RED] = 0;
+		BaseLeft[TEAM_BLUE]--;
+		BaseLeft[TEAM_RED]--;
 	}
 
 	ACS_ExecuteAlways( 930, 0, BUILDING_ALL, TEAM_RED );
