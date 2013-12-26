@@ -48,7 +48,7 @@ OB_RIFLE = "%o was crippled by %k's rifle.";
 OB_SEEKERMISSILE = "%o was sought and found by %k's seeker missile.";
 OB_SNIPER = "%o found %k's bullet in %p head.";
 OB_SUBBY = "%o was tickled by %k's sub-machinegun.";
-OB_TESLACOIL = "%o was overloaded by the \cFTesla Coil\c-.";
+OB_TESLACOIL = "%o was overloaded by the \cHTesla Coil\c-.";
 
 // =============================================================================
 // Mech obits
