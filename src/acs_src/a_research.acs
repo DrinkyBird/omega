@@ -96,7 +96,7 @@ Log( s: pname( -1 ), s: " researches Advanced Mechs for ", s: TeamNames[PlayerTe
 
 // [Dusk] Dummy script for a possible future research
 script 67( void )
-terminate;
+	terminate;
 
 
 //---------------------------HEALTH REGEN CACHE
@@ -192,44 +192,9 @@ HudMessage( s: "\ciConstruction Complete!";
 		SpawnSpot( "Utility_GlobalAmmoCacheBlue", 113 );
 }
 
-
-//---------------------------+1 TIMED C4
+//---------------------------
 script 70( void )
-{	int cost = 200;
-
-	// [Dusk] Wait 5 minutes before giving out additional C4.
-	if( !TimeDelay( GetCVar( "aow_c4delay" ), true ))
-		terminate;
-
-	if( MitigateDoublePress() )
-		terminate;
-
-	// [Dusk] Classes that don't have C4 aren't supposed to buy any
-	if( !CheckInventory( "TimedC4Count" ))
-		terminate;
-
-	if( CheckInventory( "TimedC4Count" ) >= 4 )
-		terminate;
-
-	if( !CheckPlant( PlayerTeam() ))
-		terminate;
-
-	if( !IsSecondPress( "UPGR02", cost ))
-		terminate;
-
-	if( !CheckCredits( cost ))
-		terminate;
-
-	SpendCredits( 200 );
-	DisplayTick();
-	GiveInventory( "Refunds", 50 );
-
-	BigMessage( "\ciGot extra C4!" );
-
-	GiveInventory( "TimedC4Count", 1 );
-	SetInventory( "TimedC4", CheckInventory( "TimedC4Count" ));
-Log( s: pname( -1 ), s: " purchases extra C4." );
-}
+	terminate;
 
 //---------------------------REPAIR GUN UPGRADE
 script 71( void )

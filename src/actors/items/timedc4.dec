@@ -1,10 +1,11 @@
 // TIMED C4
 actor TimedC4 : InventoryItem {
-	tag "Timed C4"
-	inventory.maxamount 4
-	inventory.pickupmessage "Picked up a Timed C4"
-	inventory.icon "TMC4ICON"
-	states {
+	Tag "Timed C4"
+	Inventory.MaxAmount 2
+	Inventory.PickupMessage "Picked up a Timed C4"
+	Inventory.Icon "TMC4ICON"
+
+	States {
 	Use:
 		TNT1 A 0 A_JumpIfInventory ("IsMech", 1, "Use.Mech")
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Failure")
@@ -12,23 +13,13 @@ actor TimedC4 : InventoryItem {
 		TNT1 A 0 A_JumpIfInventory ("StealthMode", 1, "Destealth")
 		TNT1 A 0 A_PlaySound ("c4/use", CHAN_AUTO)
 		TNT1 A 0 A_JumpIfInventory ("IsBlue", 1, "UseBlue")
-		TNT1 A 0 A_JumpIfInventory ("EnhancedTimedC4", 1, "UseEnhanced")
 		TNT1 A 5 A_FireCustomMissile ("TimedC4Thrown", 0, 0)
 		stop
-	
-	UseEnhanced:
-		TNT1 A 5 A_FireCustomMissile ("TimedC4ThrownE", 0, 0)
-		stop
-	
+
 	UseBlue:
-		TNT1 A 0 A_JumpIfInventory ("EnhancedTimedC4", 1, "UseEnhancedBlue")
 		TNT1 A 5 A_FireCustomMissile ("TimedC4ThrownBlue", 0, 0)
 		stop
-	
-	UseEnhancedBlue:
-		TNT1 A 5 A_FireCustomMissile ("TimedC4ThrownEBlue", 0, 0)
-		stop
-	
+
 	DontUse:
 		TNT1 A 0 ACS_ExecuteWithResult (949, 1)
 		fail
@@ -72,7 +63,7 @@ actor TimedC4Armed {
 	Radius 6
 	Height 8
 	Scale 0.125
-	Health 500
+	Health 400
 	Mass 0x7FFFFFFF
 	DamageType "Explosion"
 	DamageFactor "Fist",             0.0
@@ -104,17 +95,17 @@ actor TimedC4Armed {
 		TC4T A 0 A_PlayWeaponSound("c4/detonate")
 		TC4T R 50 A_PlaySound("c4/detonate")
 		TC4T A 0 A_Die
-	Death:  
+
+	Death:
 		TC4T A 0 ACS_ExecuteAlways (978, 0, 2)
 		TC4T A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx ("ExplosionMainLarge")
 		TC4T A 0 A_PlaySound ("weapons/rocklx")
 		TC4T A 0 A_PlayWeaponSound ("weapons/rocklx")
 		TNT1 AAAAA 0 A_SpawnItemEx ("FlameWallDecay", random(-48,48), random(-48,48), 4)
-		TC4T A 0 bright A_Explode (400, 256)
-		TC4T A 0 bright A_Explode (700, 64)
-		TC4T A 0 bright A_Explode (700, 128)
-		TC4T A 0 bright A_Explode (700, 256)
+		TC4T A 0 bright A_Explode (1700, 64)
+		TC4T A 0 bright A_Explode (1350, 128)
+		TC4T A 0 bright A_Explode (750, 256)
 		TC4T AAAAAAAAAAAAAAAAAAAA 0 bright A_Explode (5, 16)
 		TNT1 A 4 bright 
 		stop
@@ -135,13 +126,14 @@ actor TimedC4ThrownBlue : TimedC4Thrown {
 	}
 }
 
-actor TimedC4ArmedBlue : TimedC4Armed {	
+actor TimedC4ArmedBlue : TimedC4Armed {
 	States {
 	Spawn:
 		TC4T AA 0 A_JumpIf(waterlevel > 1, "Death.Disarm")
 		TC4T A 0 A_GiveInventory ("IsBlue", 1)
 		TC4T B 35 Thing_SetSpecial (0, 226, 328, 0, 0)
 		goto Idle
+
 	Idle:
 		TC4T BBBBBBBBBBBBBBB 35 A_PlaySound("c4/beep2")
 		TC4T A 0 A_JumpIf(waterlevel > 1, "Death.Disarm")
@@ -149,91 +141,22 @@ actor TimedC4ArmedBlue : TimedC4Armed {
 		TC4T A 0 A_PlayWeaponSound("c4/detonate")
 		TC4T B 50 A_PlaySound("c4/detonate")
 		TC4T A 0 A_Die
-	Death:  
+	Death:
 		TC4T A 0 ACS_ExecuteAlways (978, 0, 2)
 		TC4T A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("ExplosionMainLarge")
 		TC4T A 0 A_PlaySound("weapons/rocklx")
 		TC4T A 0 A_PlayWeaponSound("weapons/rocklx")
 		TNT1 AAAAA 0 A_SpawnItemEx("FlameWallDecay", random(-48,48), random(-48,48), 4)
-		TC4T A 0 bright A_Explode(400,256)
-		TC4T A 0 bright A_Explode(700,64)
-		TC4T A 0 bright A_Explode(700,128)
-		TC4T A 0 bright A_Explode(700,256)
+		TC4T A 0 bright A_Explode (1700, 64)
+		TC4T A 0 bright A_Explode (1350, 128)
+		TC4T A 0 bright A_Explode (750, 256)
 		TC4T AAAAAAAAAAAAAAAAAAAA 0 bright A_Explode(5,16)
 		TNT1 A 4 bright 
 		stop
 	}
 }
 
-actor TimedC4Count : Inventory {inventory.maxamount 4}
-actor EnhancedTimedC4 : Inventory {}
-
-actor TimedC4ThrownE : TimedC4Thrown {
-	obituary "%o was blown far away by %k's Timed C4 bomb."
-	health 500
-	states {
-	Death:
-		TC4T A 0
-		TC4T A 0 A_SpawnItemEx("TimedC4ArmedE",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER,0)
-		TNT1 A 4 bright 
-		stop
-	}
-}
-
-actor TimedC4ArmedE : TimedC4Armed {
-	Obituary "%o was blown far away by %k's Timed C4 bomb."
-	Health 700
-	States {
-	Death:  
-		TC4T A 0 ACS_ExecuteAlways (978, 0, 2)
-		TC4T A 0 A_NoBlocking
-		TNT1 A 0 A_SpawnItemEx("ExplosionMainLarge", 0, 0, 0, 0, 0, 0, 0, 128, 0)
-		TC4T A 0 A_PlaySound("weapons/rocklx")
-		TC4T A 0 A_PlayWeaponSound("weapons/rocklx")
-		TNT1 AAAAAAA 0 A_SpawnItemEx("FlameWallDecay", random(-64,64), random(-64,64), 4, 0, 0, 0, 0, 0, 0)
-		TC4T A 0 bright A_Explode(500,256)
-		TC4T A 0 bright A_Explode(800,64)
-		TC4T A 0 bright A_Explode(800,128)
-		TC4T A 0 bright A_Explode(800,256)
-		TC4T AAAAAAAAAAAAAAAAAAAA 0 bright A_Explode(5,16)
-		TNT1 A 4 bright 
-		stop
-	}
-}
-
-actor TimedC4ThrownEBlue : TimedC4ThrownE {
-	Translation "112:120=200:207", "121:127=241:247"
-	States {
-	Death:
-		TC4T A 0
-		TC4T A 0 A_SpawnItemEx("TimedC4ArmedEBlue",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_SETMASTER,0)
-		TNT1 A 4 bright 
-		stop
-	}
-}
-
-actor TimedC4ArmedEBlue : TimedC4ArmedBlue {
-	Translation "112:120=200:207", "121:127=241:247"
-	States {
-	Spawn:
-		TC4T AA 0 A_JumpIf(waterlevel > 1, "Death.Disarm")
-		TC4T A 0 A_GiveInventory ("IsBlue", 1)
-		TC4T A 35 Thing_SetSpecial (0, 226, 328, 0, 0)
-		goto Idle
-	Death:  
-		TC4T A 0 ACS_ExecuteAlways (978, 0, 2)
-		TC4T A 0 A_NoBlocking
-		TNT1 A 0 A_SpawnItemEx("ExplosionMainLarge", 0, 0, 0, 0, 0, 0, 0, 128, 0)
-		TC4T A 0 A_PlaySound("weapons/rocklx")
-		TC4T A 0 A_PlayWeaponSound("weapons/rocklx")
-		TNT1 AAAAAAA 0 A_SpawnItemEx("FlameWallDecay", random(-64,64), random(-64,64), 4, 0, 0, 0, 0, 0, 0)
-		TC4T A 0 bright A_Explode(500,256)
-		TC4T A 0 bright A_Explode(800,64)
-		TC4T A 0 bright A_Explode(800,128)
-		TC4T A 0 bright A_Explode(800,256)
-		TC4T AAAAAAAAAAAAAAAAAAAA 0 bright A_Explode(5,16)
-		TNT1 A 4 bright 
-		stop
-	}
+actor TimedC4Count : Inventory {
+	Inventory.MaxAmount 2
 }

@@ -654,24 +654,6 @@ Model TimedC4Thrown               // Name of actor in DECORATE
 
    FrameIndex TC4T R 0 0         // The sprite lump, sprite frame, model index, frame number
 }
-Model TimedC4ArmedE               // Name of actor in DECORATE
-{
-   Path "models/weapons"    // Path to model in PK3
-   Model 0 "timedc4.md3"    // Model index, model file
-   Skin 0 "timedc4.png"     // Model index, texture (can be in any format supported by GZDoom)
-   Scale 115.0 115.0 160.0             // Scale values
-
-   FrameIndex TC4T R 0 0         // The sprite lump, sprite frame, model index, frame number
-}
-Model TimedC4ThrownE               // Name of actor in DECORATE
-{
-   Path "models/weapons"    // Path to model in PK3
-   Model 0 "timedc4.md3"    // Model index, model file
-   Skin 0 "timedc4.png"     // Model index, texture (can be in any format supported by GZDoom)
-   Scale 115.0 115.0 160.0             // Scale values
-
-   FrameIndex TC4T R 0 0         // The sprite lump, sprite frame, model index, frame number
-}
 Model TimedC4ArmedBlue               // Name of actor in DECORATE
 {
    Path "models/weapons"    // Path to model in PK3
@@ -682,24 +664,6 @@ Model TimedC4ArmedBlue               // Name of actor in DECORATE
    FrameIndex TC4T B 0 0         // The sprite lump, sprite frame, model index, frame number
 }
 Model TimedC4ThrownBlue               // Name of actor in DECORATE
-{
-   Path "models/weapons"    // Path to model in PK3
-   Model 0 "timedc4.md3"    // Model index, model file
-   Skin 0 "timedc4.png"     // Model index, texture (can be in any format supported by GZDoom)
-   Scale 115.0 115.0 160.0             // Scale values
-
-   FrameIndex TC4T B 0 0         // The sprite lump, sprite frame, model index, frame number
-}
-Model TimedC4ArmedEBlue               // Name of actor in DECORATE
-{
-   Path "models/weapons"    // Path to model in PK3
-   Model 0 "timedc4.md3"    // Model index, model file
-   Skin 0 "timedc4.png"     // Model index, texture (can be in any format supported by GZDoom)
-   Scale 115.0 115.0 160.0             // Scale values
-
-   FrameIndex TC4T B 0 0         // The sprite lump, sprite frame, model index, frame number
-}
-Model TimedC4ThrownEBlue               // Name of actor in DECORATE
 {
    Path "models/weapons"    // Path to model in PK3
    Model 0 "timedc4.md3"    // Model index, model file

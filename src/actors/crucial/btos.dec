@@ -46,20 +46,20 @@ actor BaseTerminalOutside {
 		stop
 	
 	Pain:
-		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 1)
+		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], random( 0, 1 ))
 		goto Idle
 	
 	Pain.Fire:
-		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], random(0, 1))
+		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], random( 0, 2 ) / 2)
 		goto Idle
 	
 	Pain.MassDriver:
 	Pain.Explosion:
-		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 30)
+		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 15)
 		goto Idle
 	
 	Pain.AntiArmor:
-		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 60)
+		TNT1 A 5 ACS_ExecuteAlways (652, 0, args[0], 30)
 		goto Idle
 	
 	Pain.Superweapon:

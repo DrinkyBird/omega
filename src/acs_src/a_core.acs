@@ -175,9 +175,6 @@ script 599 OPEN
 	// [SP]Maximum number of time cops per team. (Set to -1 for unlimited)
 	if( !GetCVAR( "aow_maxtimecopsperteam" )) ConsoleCommand( "set aow_maxtimecopsperteam 1" );
 
-	// [Dusk] How many minutes until Timed C4 can be used. (-1 to disable)
-	if( !GetCVAR( "aow_c4delay" )) ConsoleCommand( "set aow_c4delay 5" );
-
 	//[SP] Time (in minutes) before sudden death.
 	// [Dusk] changed default to 45, -1 means immediate
 	if( GetCVAR( "aow_suddendeathtime" ) == 0 ) ConsoleCommand( "set aow_suddendeathtime 45" );

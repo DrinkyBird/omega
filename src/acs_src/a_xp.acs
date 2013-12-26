@@ -207,9 +207,6 @@ script 91( void )
 	else if( Rank[PlayerNumber()] >= RANK_LIEUTENANT && GetAmmoCapacity( "FragGrenadeAmmo" ) < 3 )
 		SetFragGrenades( 3 );
 
-	if( Rank[PlayerNumber()] >= RANK_OFFICER )
-		GiveInventory( "EnhancedTimedC4", 1 );
-
 	if( Rank[PlayerNumber()] >= RANK_MAJOR )
 	{	GiveInventory( "EagerBeaver", 1 );
 

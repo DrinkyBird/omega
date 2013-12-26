@@ -111,16 +111,6 @@
 #define HM_4TICS 7489 // (4/35) * 2^16
 #define HM_5TICS 9362 // (5/35) * 2^16
 
-#define HP_BARRACKS 20000
-#define HP_REFINERY 30000
-#define HP_PLANT 20000
-#define HP_FACTORY 30000
-#define HP_REPAIR 15000
-#define HP_OBELISK 15000
-#define HP_MINIREF 6500
-#define HP_REGENS 10000
-#define HP_PORTAL 3000
-
 #define BUILDING_ALL            -1
 #define BUILDING_BARRACKS        0
 #define BUILDING_REFINERY        1
@@ -382,11 +372,11 @@ int Classes[NUM_CLASSES][64];
 #define CK_NUMITEMS     9 // last key - item info follows
 
 // CK_FLAGS
-#define CF_ENHANCEDC4    (1 << 0)
-#define CF_SUPPORT       (1 << 1)
-#define CF_CANTPILOT     (1 << 2)
-#define CF_HEALTHREGEN   (1 << 3)
-#define CF_HARVESTER     (1 << 4)
+//						(1 << 0)
+#define CF_SUPPORT		(1 << 1)
+#define CF_CANTPILOT	(1 << 2)
+#define CF_HEALTHREGEN	(1 << 3)
+#define CF_HARVESTER	(1 << 4)
 
 // CK_DEP
 #define DEP_NONE        0

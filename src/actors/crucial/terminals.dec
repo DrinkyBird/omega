@@ -105,7 +105,7 @@ actor TerminalExplosion {
 }
 
 actor BarracksTerminalBlue : BaseTerminalBlue 21100 {
-	Health 20000
+	Health 16000
 	States {
 	Spawn:
 		TNT1 A 0
@@ -122,7 +122,7 @@ actor BarracksTerminalBlue : BaseTerminalBlue 21100 {
 }
 
 actor RefineryTerminalBlue : BaseTerminalBlue 21102 {
-	Health 30000
+	Health 24000
 	States {
 	Spawn:
 		TNT1 A 0
@@ -139,7 +139,7 @@ actor RefineryTerminalBlue : BaseTerminalBlue 21102 {
 }
 
 actor PowerPlantTerminalBlue : BaseTerminalBlue 21103 {
-	Health 20000
+	Health 16000
 	
 	States {
 	Spawn:
@@ -157,7 +157,7 @@ actor PowerPlantTerminalBlue : BaseTerminalBlue 21103 {
 }
 
 actor WarFactoryTerminalBlue : BaseTerminalBlue 21104 {
-	Health 30000
+	Health 24000
 	States {
 	Spawn:
 		TNT1 A 0
@@ -174,7 +174,7 @@ actor WarFactoryTerminalBlue : BaseTerminalBlue 21104 {
 }
 
 actor ObeliskTerminalBlue : BaseTerminalBlue 21111 {
-	Health 15000
+	Health 12000
 	States {
 	Spawn:
 		TNT1 A 0
@@ -191,7 +191,7 @@ actor ObeliskTerminalBlue : BaseTerminalBlue 21111 {
 }
 
 actor BarracksTerminalRed : BaseTerminal 21105 {
-	Health 20000
+	Health 16000
 	States {
 	Spawn:
 		TNT1 A 0
@@ -208,7 +208,7 @@ actor BarracksTerminalRed : BaseTerminal 21105 {
 }
 
 actor RefineryTerminalRed : BaseTerminal 21106 {
-	Health 30000
+	Health 24000
 	States {
 	Spawn:
 		TNT1 A 0
@@ -225,7 +225,7 @@ actor RefineryTerminalRed : BaseTerminal 21106 {
 }
 
 actor PowerPlantTerminalRed : BaseTerminal 21107 {
-	Health 20000
+	Health 16000
 	States {
 	Spawn:
 		TNT1 A 0
@@ -242,7 +242,7 @@ actor PowerPlantTerminalRed : BaseTerminal 21107 {
 }
 
 actor WarFactoryTerminalRed : BaseTerminal 21108 {
-	Health 30000
+	Health 24000
 	States {
 	Spawn:
 		TNT1 A 0
@@ -259,7 +259,7 @@ actor WarFactoryTerminalRed : BaseTerminal 21108 {
 }
 
 actor ObeliskTerminalRed : BaseTerminal 21112 {
-	Health 15000
+	Health 12000
 	States {
 	Spawn:
 		TNT1 A 0
@@ -281,7 +281,7 @@ actor RepairTerminalRed : BaseTerminal 21110 {
 	Height 8
 	DeathSound "grenade/explode"
 	PainChance 255
-	Health 15000
+	Health 12000
 	
 	States {
 	Spawn:
@@ -302,7 +302,7 @@ actor RepairTerminalBlue : BaseTerminalBlue 21109 {
 	Height 8
 	DeathSound "grenade/explode"
 	PainChance 255
-	Health 15000
+	Health 12000
 	
 	States {
 	Spawn:

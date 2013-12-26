@@ -135,9 +135,6 @@ BigMessage( strparam( s: "You are a \cf", s: Classes[c][CK_NAME], s: "!" ));
 	if( Classes[c][CK_C4] > 0 )
 	{	GiveInventory( "TimedC4", Classes[c][CK_C4] );
 		GiveInventory( "TimedC4Count", Classes[c][CK_C4] );
-
-		if( cflags & CF_ENHANCEDC4 )
-			GiveInventory( "EnhancedTimedC4", 1 );
 	}
 
 	// Give the self heal item here so timed C4 takes precedence in the inventory
@@ -636,12 +633,12 @@ HUDMessage( s: Classes[c][CK_NAME];
 
 	SetFont( "SMALLFONT" );
 	str body = strparam(
-			   s: "Cost: \cQ$\cD", d: Classes[c][CK_COST],
-			   s: "\nSpeed:", s: GetSpeedMeter( c ), s: " ", s: FractionColor( cspeed - 0.5, 0.5 ), d: ( cspeed * 100 ) >> 16, s: "\cJ%",
-			   s: "\nArmor: Grade ", d: Classes[c][CK_ARMORNUM], s: " ", s: ArmorModifierName( Classes[c][CK_ARMORMOD] ),
-			   s: "\nC4: ", d: Classes[c][CK_C4], s: cond( cflags & CF_ENHANCEDC4, "+", "" ),
-			   s: "\nGrenades:", d: Classes[c][CK_GERNADES], s: "\n"
-			   );
+		s: "Cost: \cQ$\cD", d: Classes[c][CK_COST],
+		s: "\nSpeed:", s: GetSpeedMeter( c ), s: " ", s: FractionColor( cspeed - 0.5, 0.5 ), d: ( cspeed * 100 ) >> 16, s: "\cJ%",
+		s: "\nArmor: Grade ", d: Classes[c][CK_ARMORNUM], s: " ", s: ArmorModifierName( Classes[c][CK_ARMORMOD] ),
+		s: "\nC4: ", d: Classes[c][CK_C4],
+		s: "\nGrenades:", d: Classes[c][CK_GERNADES], s: "\n"
+	);
 
 	for( int i = 0; i < Classes[c][CK_NUMITEMS]; ++i )
 	{	str item = GetClassItemName( c, i );
