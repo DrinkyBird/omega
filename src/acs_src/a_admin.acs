@@ -17,11 +17,11 @@ script 401( int Player, int Action, int arg )
 			SetPlayerProperty( 0, 1, 1 );
 			SetPlayerProperty( 0, 1, 2 );
 			SetPlayerProperty( 0, 1, 3 );
-BigMessageBold( strparam( n: Player + 1, s: "\c- becomes an \cGadministrator" ));
-Log( s: "*** \caWARNING!\c- Game Master mode activated for ", s: pname( Player ),
-	 s: " - this has been logged in the server console." );
-Log( s: "*** To deactivate this mode, you (or target) must either spectate or call a_exit in console." );
-Log( s: "*** Please don't abuse this! Do what you need to do, then exit this mode immediately." );
+			BigMessageBold( strparam( n:Player + 1, s:"\c- becomes an \cGadministrator" ));
+			Log( s:"*** \caWARNING!\c- Game Master mode activated for ", s:pname( Player ),
+				s:" - this has been logged in the server console." );
+			Log( s:"*** To deactivate this mode, you (or target) must either spectate or call a_exit in console." );
+			Log( s:"*** Please don't abuse this! Do what you need to do, then exit this mode immediately." );
 			GiveInventory( "AdministratorSwitch", 1 );
 			IsAdmin[Player] = true;
 			GiveInventory( "IsAdmin", 1 );
@@ -31,17 +31,17 @@ Log( s: "*** Please don't abuse this! Do what you need to do, then exit this mod
 
 			// [Dusk] Merged the two team-based scripts to one
 			if( !PlayerInGame( player ))
-			{	Log( s: "Player ", d: Player, s: " not found!" );
+			{	Log( s:"Player ", d:Player, s:" not found!" );
 				terminate;
 			}
 
 			if( PlayerTeam() == arg )
-			{	Log( s: pname( Player ), s: " is already on ", s: TeamNames[arg] );
+			{	Log( s:pname( Player ), s:" is already on ", s:TeamNames[arg] );
 				terminate;
 			}
 
-BigMessageBold( strparam( n: Player, s: "\c- has been forced to change to ", s: TeamNames[arg], s: " by an admin." ));
-Log( s: pname( Player ), s: " forced to change to ", s: TeamNames[arg], s: " by admin." );
+			BigMessageBold( strparam( n:Player + 1, s:"\c- has been forced to change to ", s:TeamNames[arg], s:" by an admin." ));
+			Log( s:pname( Player ), s:" forced to change to ", s:TeamNames[arg], s:" by admin." );
 			ChangePlayerTeam( Player, arg );
 			StartTime[Player] = -0x7FFFFFFF;
 			break;
@@ -49,16 +49,20 @@ Log( s: pname( Player ), s: " forced to change to ", s: TeamNames[arg], s: " by 
 		case 0:
 			switch( Player )
 			{	case 3:
-Log( s: "Usage: gamemaster <IDX> (use 'playerinfo' to get IDX numbers)" );
+					Log( s: "Usage: gamemaster <IDX> (use 'playerinfo' to get IDX numbers)" );
+					break;
 
 				case 1:
-Log( s: "Usage: forceblue / forcered <IDX> (use ",
-	 s: "'playerinfo' to get IDX numbers)" );
+					Log( s: "Usage: forceblue / forcered <IDX> (use ",
+						s: "'playerinfo' to get IDX numbers)" );
+					break;
 
 				default:
-Log( s: "Please don't puke this script directly! Use the provided ccmd's ",
-	 s: "- it's for your sanity's own good!" );
+					Log( s: "Please don't puke this script directly! Use the provided ccmd's ",
+						s: "- it's for your sanity's own good!" );
+					break;
 			}
+			break;
 
 		default:
 Log( s: "Unknown action!" );
