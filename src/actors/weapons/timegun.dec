@@ -463,13 +463,15 @@ actor GoldBeam : BlueBeam {
 }
 
 // hues
+actor PowerGoldHue : PowerNull {}
+
 actor GoldHue : PowerupGiver {
 	+INVENTORY.AUTOACTIVATE
 	inventory.pickupmessage "wat are you doing"
 	inventory.maxamount 0
 	powerup.color GoldMap
 	powerup.duration -1
-	powerup.type "Null"
+	powerup.type "GoldHue"
 	states {
 	Spawn:
 		TNT1 A 0

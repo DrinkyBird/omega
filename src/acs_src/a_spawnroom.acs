@@ -71,8 +71,8 @@ script 95( int unused, int force )
 	if( !CheckInventory( "HasClass" ) && !force )
 	{	DisplayCross();
 		SETFONT( "BigFont" );
-HudMessage( s: "You don't have a class to resign from!";
-					HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+		HudMessage( s:"You don't have a class to resign from!";
+			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
 		terminate;
 	}
 
@@ -90,28 +90,24 @@ HudMessage( s: "You don't have a class to resign from!";
 	SetInventory( "Refunds", 0 );
 
 	if( CheckInventory( "JumpjetSwitch" )) GiveInventory( "JumpjetDeactivate", 1 );
-
 	if( CheckInventory( "PlasmaCannon" )) bool HasPlasma = True;
-
 	if( CheckInventory( "ArtilleryCannon" )) bool HasArtillery = True;
-
 	if( CheckInventory( "TiberiumAutorifleWeak" )) bool HasTiberiumAutorifle = True;
-
 	if( CheckInventory( "IonCannonBeacon" ) || CheckInventory( "NuclearStrikeBeacon" )) bool HasSuperWeapon = True;
-
 	if( CheckInventory( "EagerBeaver" )) bool HasChainsaw = True;
-
 	if( CheckInventory( "BombPack" )) bool HasKamikaze = True;
 
 	// ClearInventory doesn't reset the fade, hack around it
-	if( CheckInventory( "PowerTimeGunFloat" ) || CheckInventory( "PowerTimeGunBoost" ) || CheckInventory( "IsTeleporting" ))
-		bool HasTimeGunPositiveEffect = 1;
+	if( CheckInventory( "PowerTimeGunFloat" ) || CheckInventory( "PowerTimeGunBoost" ) ||
+		CheckInventory( "IsTeleporting" ) || CheckInventory( "PowerTimeGunSpeed" ) ||
+		CheckInventory( "PowerGoldHue" ))
+		bool HasGoldHue = 1;
 
 	if( CheckInventory( "PowerTimeGunWeaken" ) || CheckInventory( "PowerTimeGunSlow" ))
-		bool HasTimeGunNegativeEffect = 1;
+		bool HasRedHue = 1;
 
 	if( CheckInventory( "PowerInvulnerable" ))
-		bool HasIronCurtain = True;
+		bool HasGreenHue = True;
 
 	if( CheckInventory( "PowerBerserk" ))
 		bool HasBerserk = True;
@@ -162,7 +158,7 @@ HudMessage( s: "You don't have a class to resign from!";
 		GiveInventory( "TE21CalAmmo", 120 );
 	}
 
-	if( HasIronCurtain )
+	if( HasGreenHue )
 		GiveInventory( "GreenHueRemover", 1 );
 
 	if( HasBerserk )
@@ -183,10 +179,11 @@ HudMessage( s: "You don't have a class to resign from!";
 		GiveInventory( "NoMoreTerrorism", 1 );
 
 	// [Dusk] The hues have to be removed manually like this due to a bug
-	if( HasTimeGunPositiveEffect )
+	// This was fixed in ZDoom but Zandronum has not backported it yet.
+	if( HasGoldHue )
 		GiveInventory( "DimGoldHueRemover", 1 );
 
-	if( HasTimeGunNegativeEffect )
+	if( HasRedHue )
 		GiveInventory( "DimRedHueRemover", 1 );
 
 	DisplayTick();
@@ -194,8 +191,7 @@ HudMessage( s: "You don't have a class to resign from!";
 	ACS_ExecuteAlways( 91, 0 );
 	ACS_ExecuteAlways( 10, 0 );
 	RecountTimeCops();
-Log( s: pname( -1 ), s: " resigns." );
-
+	Log( s:pname( -1 ), s:" resigns." );
 	delay( 3 * 35 );
 }
 
