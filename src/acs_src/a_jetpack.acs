@@ -35,6 +35,11 @@ script SC_JetpackToggle( void ) NET
 				terminate;
 		}
 
+		// It's possible that we resigned at this point, in which case we must
+		// stop right here.
+		if( !CheckInventory( "HasClass" ))
+			terminate;
+
 		GiveInventory( "JetpackStart", 1 );
 		SetInventory( "JetpackActive", 1 );
 		SetPlayerProperty( 0, true, PROP_Fly );
