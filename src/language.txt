@@ -63,9 +63,9 @@ OB_MECHEXPLOSION = "%o chose the wrong day to inspect %k's mech.";
 
 // =============================================================================
 // AI marine obits
-OB_MARINE_ROCKET_BLUE = "%o nearly dodged a \cfSteel Talon Marine's\c- rocket.";
-OB_MARINE_ROCKET_RED = "%o nearly dodged a \cgBlack Hand Marine's\c- rocket.";
-OB_MARINE_SSG_BLUE = "%o was splattered by a \cfSteel Talon Marine's\c- double shotgun.";
-OB_MARINE_SSG_RED = "%o was splattered by a \cgBlack Hand Marine's\c- double shotgun.";
-OB_MARINE_TIBRIFLE_BLUE = "%o was skewered by a \cfSteel Talon Marine's\c- tiberium autorifle";
-OB_MARINE_TIBRIFLE_RED = "%o was skewered by a \cgBlack Hand Marine's\c- tiberium autorifle";
+OB_MARINE_ROCKET_BLUE = "%o nearly dodged a \cHBlue Marine's\c- rocket.";
+OB_MARINE_ROCKET_RED = "%o nearly dodged a \cGRed Marine's\c- rocket.";
+OB_MARINE_SSG_BLUE = "%o was splattered by a \cHBlue Marine's\c- double shotgun.";
+OB_MARINE_SSG_RED = "%o was splattered by a \cGRed Marine's\c- double shotgun.";
+OB_MARINE_TIBRIFLE_BLUE = "%o was skewered by a \cHBlue Marine's\c- tiberium autorifle";
+OB_MARINE_TIBRIFLE_RED = "%o was skewered by a \cGRed Marine's\c- tiberium autorifle";
