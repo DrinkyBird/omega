@@ -204,15 +204,16 @@ function int CheckAdvMechResearch( int Team )
 function int CheckPlasmaCooldown( void )
 {	int wait;
 
-	if( IsAdmin[PlayerNumber()] ) return 1;
+	if( IsAdmin[PlayerNumber()] )
+		return 1;
 
 	if( PlasmaCooldown[PlayerNumber()] > Timer() )
 	{	wait = ( PlasmaCooldown[PlayerNumber()] - Timer() ) / 35;
 		DisplayCross();
 		SETFONT( "BigFont" );
-HudMessage( s: "You must wait \cF", d: wait, s: " seconds\c- before\n",
+		HudMessage( s: "You must wait \cF", d: wait, s: " seconds\c- before\n",
 			s: "purchasing another \cNplasma cannon!";
-					HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+			HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
 		return 0;
 	}
 
@@ -223,28 +224,6 @@ HudMessage( s: "You must wait \cF", d: wait, s: " seconds\c- before\n",
 function void GiveToAll( str what, int amount )
 {	for( int i = 0; i < MAXPLAYERS; i++ )
 		GiveActorInventory( TID_Player + i, what, amount );
-}
-
-script 356( void )
-{	if( PlayerTeam() == TEAM_RED )
-		SetResultValue( 1 );
-	else if( PlayerTeam() == TEAM_BLUE )
-		SetResultValue( 0 );
-}
-
-script 336( int Invert )
-{	if( Invert == 0 )
-	{	if( PlayerTeam() == TEAM_RED )
-			SetResultValue( 0 );
-		else if( PlayerTeam() == TEAM_BLUE )
-			SetResultValue( 1 );
-	}
-	else
-	{	if( PlayerTeam() == TEAM_RED )
-			SetResultValue( 1 );
-		else if( PlayerTeam() == TEAM_BLUE )
-			SetResultValue( 0 );
-	}
 }
 
 function bool MitigateDoublePress( void )
@@ -259,7 +238,8 @@ function int SurrenderCount( int team )
 {	int count = 0;
 
 	for( int i = 0; i < MAXPLAYERS; i++ )
-	{	if( PlayerInGame( i ) && GetPlayerInfo( i, PLAYERINFO_TEAM ) == team && Surrender[i] ) count++;
+	{	if( PlayerInGame( i ) && GetPlayerInfo( i, PLAYERINFO_TEAM ) == team && Surrender[i] )
+			count++;
 	}
 
 	return count;
@@ -307,58 +287,6 @@ function void RecountPlasma( void )
 			else if( GetPlayerInfo( i, PLAYERINFO_TEAM ) == TEAM_BLUE )
 				NumPlasmaCannons[1]++;
 		}
-	}
-}
-
-// [Dusk] Checks tickets and ends the game if tickets are out
-// The activator is assumed to be the killer!
-// TODO: should this be moved to a_suddendeath.acs?
-function void TakeTickets( int team, int count )
-{	if( !SuddenDeath && !TicketPool ) return;
-
-	Tickets[team] -= count;
-
-	// inform clients of the new ticket values by changing the counters'
-	// speed. clients use these speeds to display ticket values.
-	if( GetActorSpeed( TID_TICKETCOUNTER_RED ) != Tickets[TEAM_RED] )
-		SetActorSpeed( TID_TICKETCOUNTER_RED, Tickets[TEAM_RED] );
-
-	if( GetActorSpeed( TID_TICKETCOUNTER_BLUE ) != Tickets[TEAM_BLUE] )
-		SetActorSpeed( TID_TICKETCOUNTER_BLUE, Tickets[TEAM_BLUE] );
-
-	// Update the HUD now.
-	DrawBuildingHud();
-
-	// handle ticket loss
-	int d;
-
-	if( Tickets[TEAM_BLUE] <= 0 )
-	{	d = BlueScore() - RedScore();
-
-		if( d < 0 ) d = 0;
-
-		SetFont( "BIGFONT" );
-HudMessageBold( s: "\cHBlue Team\cJ lose out of ticket loss";
-						HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0 );
-Log( s: "Blue loses out of ticket loss" );
-
-		GameOver = true;
-		ConsoleCommand( "pointlimit 1" );
-		Team_GivePoints( TEAM_RED, d + 50, 0 );
-	}
-	else if( Tickets[TEAM_RED] <= 0 )
-	{	d = RedScore() - BlueScore();
-
-		if( d < 0 ) d = 0;
-
-		SetFont( "BIGFONT" );
-HudMessageBold( s: "\cGRed Team\cJ loses out of ticket loss";
-						HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0 );
-Log( s: "Red loses out of ticket loss" );
-
-		GameOver = true;
-		ConsoleCommand( "pointlimit 1" );
-		Team_GivePoints( TEAM_BLUE, d + 50, 0 );
 	}
 }
 

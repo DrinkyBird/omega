@@ -19,7 +19,7 @@ script SC_TIMEGUN( int action, int type )
 	}
 
 	if( action == 2 )
-	{	// [Dusk] {9/6/12} Check for a possible reward.
+	{	// [Dusk] Check for a possible reward.
 		// Boosting teammates gives you 1 bonus,
 		// weakening enemies gets you 2 bonus.
 		int ttid = GetTargetInfo( TARGETINFO_TID );
@@ -75,11 +75,12 @@ script SC_TIMEGUN( int action, int type )
 script SC_CL_TimeGunHUD( void ) NET CLIENTSIDE
 {	while( CheckWeapon( "TimeGun" ) && GetHealth() >= 0 )
 	{	SetFont( "SMALLFONT" );
-HudMessage( s: TimeHUDColor( 0, 0 ), s: "BOOST ", s: TimeHUDColor( 0, 1 ), s: " / ", s: TimeHUDColor( 0, 2 ), s: "SLOW\n",
-s: TimeHUDColor( 1, 0 ), s: "FLOAT ", s: TimeHUDColor( 1, 1 ), s: " / ", s: TimeHUDColor( 1, 2 ), s: "WEAKEN\n",
-s: TimeHUDColor( 2, 0 ), s: "TELEPORT\n",
-s: TimeHUDColor( 3, 0 ), s: "HYPERSPEED\n";
-		HUDMSG_PLAIN, 0, CR_WHITE, -0.8, -0.6, 0.2 );
+		HudMessage(
+			s: TimeHUDColor( 0, 0 ), s: "BOOST ", s: TimeHUDColor( 0, 1 ), s: " / ", s: TimeHUDColor( 0, 2 ), s: "SLOW\n",
+			s: TimeHUDColor( 1, 0 ), s: "FLOAT ", s: TimeHUDColor( 1, 1 ), s: " / ", s: TimeHUDColor( 1, 2 ), s: "WEAKEN\n",
+			s: TimeHUDColor( 2, 0 ), s: "TELEPORT\n",
+			s: TimeHUDColor( 3, 0 ), s: "HYPERSPEED\n";
+			HUDMSG_PLAIN, 0, CR_WHITE, -0.8, -0.6, 0.2 );
 
 		delay( 5 );
 	}
@@ -92,14 +93,10 @@ function str TimeHUDColor( int type, int side )
 		{	case 0:
 			case 1:
 				switch( side )
-				{	case 0:
-						return "\cD";
-
-					case 1:
-						return "\cC";
+				{	case 0: return "\cD";
+					case 1: return "\cC";
+					case 2: return "\cG";
 				}
-
-				return "\cG";
 
 			case 2:
 			case 3:
@@ -112,14 +109,9 @@ function str TimeHUDColor( int type, int side )
 		{	case 0:
 			case 1:
 				switch( side )
-				{	case 0:
-						return "\cQ";
-
-					case 1:
-						return "\cU";
-
-					case 2:
-						return "\cR";
+				{	case 0: return "\cQ";
+					case 1: return "\cU";
+					case 2: return "\cR";
 				}
 
 			case 2:

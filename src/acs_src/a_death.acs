@@ -47,14 +47,12 @@ script 994 DEATH
 	int killer_t = GetTargetInfo( TARGETINFO_TID );
 	int killer_p = GetTargetInfo( TARGETINFO_PlayerNum );
 
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * KILLER POV STARTS HERE
-	 */
+	// ==============================================================
+	// KILLER POV STARTS HERE
 
 	int n0 = PlayerNumber();
 	int t0 = PlayerTeam();
 	SetActivatorToTarget( 0 );
-
 	int n1 = PlayerNumber();
 	int t1 = PlayerTeam();
 
@@ -73,7 +71,7 @@ script 994 DEATH
 		if( !FirstBlood )
 		{	// we got first blood!
 			FirstBlood = true;
-IntelMessageBold( strparam( n: 0, s: "\c- gets first blood!" ));
+			IntelMessageBold( strparam( n: 0, s: "\c- gets first blood!" ));
 		}
 	}
 }

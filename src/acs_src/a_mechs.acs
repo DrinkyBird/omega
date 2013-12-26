@@ -129,7 +129,7 @@ script 80( int mech )
 		GiveInventory( "JumpjetDeactivate", 1 );
 
 	// [Dusk] If the player is still in the utility menu, get him out of it
-	CheckAndRemove( "InUtilMenu" );
+	SetInventory( "InUtilMenu", 0 );
 
 	GiveInventory( "IsMech", 1 );
 	GiveInventory( morph, 1 );
@@ -486,7 +486,7 @@ script 697( void )
 
 	SetActorProperty( 0, APROP_Invulnerable, false );
 	SetPlayerProperty( 0, 0, 3 );
-	CheckAndRemove( "MechEjectButton" );
+	SetInventory( "MechEjectButton", 0 );
 	ACS_ExecuteAlways( 10, 0 );
 	TakeInventory( "IsMech", 1 );
 	MECH_PopArmorMod();
@@ -504,7 +504,7 @@ script 699( void )
 	SetActorState( 0, "Spawn2" );
 
 	// [Dusk] If the player is still in the menu, get him out of it
-	CheckAndRemove( "InUtilMenu" );
+	SetInventory( "InUtilMenu", 0 );
 }
 
 // Activates weapon reload.

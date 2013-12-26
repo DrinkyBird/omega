@@ -5,7 +5,7 @@
 // You may use portions of this script in your project as long as you give credit where credit is
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
-/* Get an armor modifier's name. */
+// Get an armor modifier's name.
 function str ArmorModifierName( int mod )
 {	switch( mod )
 	{	case ARMOD_FIRE:
@@ -27,7 +27,7 @@ function str ArmorModifierName( int mod )
 	return "";
 }
 
-/* Get the activator's armor grade number. */
+// Get the activator's armor grade number.
 function int GetArmorGrade( void )
 {	if( CheckInventory( "PowerGrade5Armor" )) return 5;
 	if( CheckInventory( "PowerGrade4Armor" )) return 4;
@@ -39,7 +39,7 @@ function int GetArmorGrade( void )
 	return 0;
 }
 
-/* Get the activator's armor modifier. */
+// Get the activator's armor modifier.
 function int GetArmorModifier( void )
 {	if( CheckInventory( "PowerFireProof" )) return ARMOD_FIRE;
 	if( CheckInventory( "PowerChemicalProof" )) return ARMOD_CHEM;
@@ -50,12 +50,11 @@ function int GetArmorModifier( void )
 	return 0;
 }
 
-/* Set the activator's armor grade and modifier. The mod field also accepts some flags:
- *
- * AGF_ADDITIVE: add to the current grade instead of setting it
- * AGF_DONTADD: do not alter the grade if the change would increase it
- * AGF_DONTSUBTRACT: don't alter if the change would decrease the grade.
- */
+// Set the activator's armor grade and modifier. The mod field also accepts some flags:
+//
+// AGF_ADDITIVE: add to the current grade instead of setting it
+// AGF_DONTADD: do not alter the grade if the change would increase it
+// AGF_DONTSUBTRACT: don't alter if the change would decrease the grade.
 function void SetArmorGrade( int n, int mod )
 {	int grade = GetArmorGrade();
 
@@ -63,7 +62,7 @@ function void SetArmorGrade( int n, int mod )
 	{	if( mod & AGF_ADDITIVE )
 			n += grade;
 		else
-		{	/* Check for armour upgrade */
+		{	// Check for armour upgrade
 			if( CheckInventory( "HasArmorUpgrade" ))
 				n++;
 		}
@@ -72,44 +71,44 @@ function void SetArmorGrade( int n, int mod )
 			n = 5;
 
 		if( n < 0 )
-		{	/* Do not go to -1 with AGF_ADDITIVE */
+		{	// Do not go to -1 with AGF_ADDITIVE
 			if( mod & AGF_ADDITIVE )
 				n = 0;
 			else
 				n = -1;
 		}
 
-		/* Handle AGF_DONTADD and AGF_DONTSUBTRACT here. */
+		// Handle AGF_DONTADD and AGF_DONTSUBTRACT here.
 		if( ( mod & AGF_DONTSUBTRACT && n <= grade ) || ( mod & AGF_DONTADD && n >= grade ))
 			return;
 
 		if( grade != n )
-		{	/* Set the new armor grade. */
-			CheckAndRemove( "PowerGrade5Armor" );
-			CheckAndRemove( "PowerGrade4Armor" );
-			CheckAndRemove( "PowerGrade3Armor" );
-			CheckAndRemove( "PowerGrade2Armor" );
-			CheckAndRemove( "PowerGrade1Armor" );
-			CheckAndRemove( "PowerGrade-1Armor" );
+		{	// Set the new armor grade.
+			SetInventory( "PowerGrade5Armor", 0 );
+			SetInventory( "PowerGrade4Armor", 0 );
+			SetInventory( "PowerGrade3Armor", 0 );
+			SetInventory( "PowerGrade2Armor", 0 );
+			SetInventory( "PowerGrade1Armor", 0 );
+			SetInventory( "PowerGrade-1Armor", 0 );
 
 			if( n != 0 )
 				GiveInventory( strparam( s: "Grade", d: n, s: "Armor" ), 1 );
 
-			/* Announce grade 5 armor */
+			// Announce grade 5 armor
 			if( n == 5 )
 IntelMessageBold( strparam( n: 0, s: "\c- has \cKGrade 5 Armor!" ));
 		}
 	}
 
-	/* Now for the modifier - remove the flags off 'mod' now. */
+	// Now for the modifier - remove the flags off 'mod' now.
 	mod &= ~( AGF_ADDITIVE | AGF_DONTADD | AGF_DONTSUBTRACT );
 
 	if( mod != ARMOD_NOCHANGE )
-	{	CheckAndRemove( "PowerFireProof" );
-		CheckAndRemove( "PowerChemicalProof" );
-		CheckAndRemove( "PowerBulletResistance" );
-		CheckAndRemove( "PowerExplosiveResistance" );
-		CheckAndRemove( "PowerLaserResistance" );
+	{	SetInventory( "PowerFireProof", 0 );
+		SetInventory( "PowerChemicalProof", 0 );
+		SetInventory( "PowerBulletResistance", 0 );
+		SetInventory( "PowerExplosiveResistance", 0 );
+		SetInventory( "PowerLaserResistance", 0 );
 
 		switch( mod )
 		{	case ARMOD_FIRE:
@@ -135,12 +134,12 @@ IntelMessageBold( strparam( n: 0, s: "\c- has \cKGrade 5 Armor!" ));
 	}
 }
 
-/* For testing and DECORATE purposes (e.g. AI marines) */
+// For testing and DECORATE purposes (e.g. AI marines)
 script 985( int grade, int mod )
 {	SetArmorGrade( grade, mod );
 }
 
-/* [DEBUG] ARMOR DISPLAY */
+// [DEBUG] ARMOR DISPLAY
 int ArmorNames[13] = {"PowerGrade1Armor", "PowerGrade2Armor", "PowerGrade3Armor", "PowerGrade4Armor", "PowerGrade5Armor",
 	"PowerGrade-1Armor", "PowerFireProof", "PowerChemicalProof", "PowerExplosiveResistance", "PowerLaserResistance",
 	"PowerBulletResistance", "PowerChemicalResistance", "PowerGrade2ArmorFactoryPower"

@@ -81,3 +81,57 @@ Log( s: "=== Sudden Death begins ===" );
 		delay( 35 * 60 );
 	}
 }
+
+// [Dusk] Checks tickets and ends the game if tickets are out
+// The activator is to be the killer!
+function void TakeTickets( int team, int count )
+{	if( !SuddenDeath && !TicketPool )
+		return;
+
+	Tickets[team] -= count;
+
+	// inform clients of the new ticket values by changing the counters'
+	// speed. clients use these speeds to display ticket values.
+	if( GetActorSpeed( TID_TICKETCOUNTER_RED ) != Tickets[TEAM_RED] )
+		SetActorSpeed( TID_TICKETCOUNTER_RED, Tickets[TEAM_RED] );
+
+	if( GetActorSpeed( TID_TICKETCOUNTER_BLUE ) != Tickets[TEAM_BLUE] )
+		SetActorSpeed( TID_TICKETCOUNTER_BLUE, Tickets[TEAM_BLUE] );
+
+	// Update the HUD now.
+	DrawBuildingHud();
+
+	// handle ticket loss
+	int d;
+
+	if( Tickets[TEAM_BLUE] <= 0 )
+	{	d = BlueScore() - RedScore();
+
+		if( d < 0 )
+			d = 0;
+
+		SetFont( "BIGFONT" );
+		HudMessageBold( s: "\cHBlue Team\cJ lose out of ticket loss";
+			HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0 );
+		Log( s: "Blue loses out of ticket loss" );
+
+		GameOver = true;
+		ConsoleCommand( "pointlimit 1" );
+		Team_GivePoints( TEAM_RED, d + 50, 0 );
+	}
+	else if( Tickets[TEAM_RED] <= 0 )
+	{	d = RedScore() - BlueScore();
+
+		if( d < 0 )
+			d = 0;
+
+		SetFont( "BIGFONT" );
+		HudMessageBold( s: "\cGRed Team\cJ loses out of ticket loss";
+			HUDMSG_FADEOUT, 0, CR_YELLOW, 0.5, 0.3, 2.0, 1.0 );
+		Log( s: "Red loses out of ticket loss" );
+
+		GameOver = true;
+		ConsoleCommand( "pointlimit 1" );
+		Team_GivePoints( TEAM_BLUE, d + 50, 0 );
+	}
+}

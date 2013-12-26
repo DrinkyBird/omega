@@ -34,10 +34,10 @@ script 93( int unused, int silent )
 	if( !CheckInventory( "IsMech" ))
 		SetHealth( GetSpawnHealth() );
 
-	/* [Dusk] Also refill the self-heal syringe. */
+	// [Dusk] Also refill the self-heal syringe.
 	GiveInventory( "SelfHealItem", 1 );
 
-	/* [Dusk] Refill jetpack fuel. */
+	// [Dusk] Refill jetpack fuel.
 	if( CheckInventory( "Jetpack" ))
 		SetInventory( "JetpackFuel", 100 );
 
@@ -220,7 +220,7 @@ script 96( int type )
 			// PURCHASE TERMINAL
 			dest = 70 + PlayerTeam();
 
-			/* [Dusk] Refill the player when he enters the spawn room. */
+			// [Dusk] Refill the player when he enters the spawn room.
 			ACS_ExecuteAlways( 93, 0 );
 			break;
 
@@ -273,7 +273,7 @@ script 96( int type )
 			break;
 	}
 
-	/* If we cannot enter the desired room, go to spawn room instead. */
+	// If we cannot enter the desired room, go to spawn room instead.
 	if( teleportToSpawn )
 	{	delay( 5 );
 		ACS_ExecuteAlways( 96, 0, 1 - team );
@@ -282,10 +282,9 @@ script 96( int type )
 
 	GiveInventory( "IsInSpawnRoom", 1 );
 
-	/* If we cannot teleport the player to the destination, then spawn an
-	 * anti-utility explosion to clear the pad. This prevents utility guys from
-	 * blocking the pad with caches and stuff like that.
-	 */
+	// If we cannot teleport the player to the destination, then spawn an
+	// anti-utility explosion to clear the pad. This prevents utility guys from
+	// blocking the pad with caches and stuff like that.
 	if( !Teleport( dest ))
 	{	SpawnSpotForced( "AntiUtilityExplosion", dest, 0, 0 );
 		delay( 10 );

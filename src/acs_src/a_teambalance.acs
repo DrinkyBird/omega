@@ -13,6 +13,7 @@ function void CheckTeamBalance( void )
 {	int i, delta, lesserteam, switchee, switcheetime;
 	int PlayerStayTics = GetCVAR( "aow_teamstaytime" ) * MINUTETICS;
 
+	// [Dusk] Allow the team switcher be disabled
 	if( GetCVar( "aow_noteamswitcher" ))
 		return;
 
@@ -20,7 +21,7 @@ function void CheckTeamBalance( void )
 	{	delta = RedCount() - BlueCount();
 
 		if( abs( delta ) <= 1 )
-			break;
+			break; // teams are even enough
 
 		lesserteam = cond( delta > 0, TEAM_BLUE, TEAM_RED );
 
@@ -45,8 +46,8 @@ function void CheckTeamBalance( void )
 		if( switchee == MAXPLAYERS )
 			return;
 
-log( s: "Team auto-switcher: switching out ", n: switchee + 1,
-	 s: "\c- to ", s: TeamNames[lesserteam] );
+		Log( s:"Team auto-switcher: switching out ", n:switchee + 1,
+			s:"\c- to ", s:TeamNames[lesserteam] );
 
 		ChangePlayerTeam( switchee, lesserteam );
 

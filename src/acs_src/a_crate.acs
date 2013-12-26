@@ -8,7 +8,7 @@
  * of this and call it your own. Thanks!
  */
 
-// [Dusk] There's some anomaly going around with the RNG which causes the powerup crate
+// [Dusk] There's some anomaly going on with the RNG which causes the powerup crate
 // to favor one effect over another. Get around this by re-rolling the crate number
 // every second.
 script 312 OPEN
@@ -634,39 +634,39 @@ Log( s: pname( -1 ), s: " gets Thermal Cloaking." );
 			SetFont( "SMALLFONT" );
 Log( s: pname( -1 ), s: " gets disarm crate." );
 
-			CheckAndRemove( "Boomstick" );
-			CheckAndRemove( "DoubleShotgun" );
-			CheckAndRemove( "Rifle" );
-			CheckAndRemove( "GaussRifle" );
-			CheckAndRemove( "GrenadeLauncher" );
-			CheckAndRemove( "StealthLaserRifle" );
-			CheckAndRemove( "LaserRifle" );
-			CheckAndRemove( "TimeGun" );
-			CheckAndRemove( "MissileLauncher" );
-			CheckAndRemove( "CrateChooser" );
-			CheckAndRemove( "LaserChaingun" );
-			CheckAndRemove( "UtilityGun" );
-			CheckAndRemove( "PlasmaCannon" );
-			CheckAndRemove( "ArtilleryCannon" );
-			CheckAndRemove( "ChemicalSprayer" );
-			CheckAndRemove( "TiberiumAutorifleWeak" );
-			CheckAndRemove( "TiberiumAutorifle" );
-			CheckAndRemove( "FragGrenade" );
-			CheckAndRemove( "RepairGunUpgrade" );
+			SetInventory( "Boomstick", 0 );
+			SetInventory( "DoubleShotgun", 0 );
+			SetInventory( "Rifle", 0 );
+			SetInventory( "GaussRifle", 0 );
+			SetInventory( "GrenadeLauncher", 0 );
+			SetInventory( "StealthLaserRifle", 0 );
+			SetInventory( "LaserRifle", 0 );
+			SetInventory( "TimeGun", 0 );
+			SetInventory( "MissileLauncher", 0 );
+			SetInventory( "CrateChooser", 0 );
+			SetInventory( "LaserChaingun", 0 );
+			SetInventory( "UtilityGun", 0 );
+			SetInventory( "PlasmaCannon", 0 );
+			SetInventory( "ArtilleryCannon", 0 );
+			SetInventory( "ChemicalSprayer", 0 );
+			SetInventory( "TiberiumAutorifleWeak", 0 );
+			SetInventory( "TiberiumAutorifle", 0 );
+			SetInventory( "FragGrenade", 0 );
+			SetInventory( "RepairGunUpgrade", 0 );
 
-			if( Rank[PlayerNumber()] != RANK_COMMANDO ) CheckAndRemove( "RepairGun" );
+			if( Rank[PlayerNumber()] != RANK_COMMANDO ) SetInventory( "RepairGun", 0 );
 
-			CheckAndRemove( "HealGun" );
-			CheckAndRemove( "BombSquadGun" );
-			CheckAndRemove( "SubMachineGun" );
-			CheckAndRemove( "Flamer" );
-			CheckAndRemove( "ShockRifle" );
-			CheckAndRemove( "SniperRifle" );
-			CheckAndRemove( "SniperRifleWeak" );
-			CheckAndRemove( "PlasmaGun" );
-			CheckAndRemove( "MachineGun" );
-			CheckAndRemove( "GatlingGun" );
-			CheckAndRemove( "JumpjetGatlingGun" );
+			SetInventory( "HealGun", 0 );
+			SetInventory( "BombSquadGun", 0 );
+			SetInventory( "SubMachineGun", 0 );
+			SetInventory( "Flamer", 0 );
+			SetInventory( "ShockRifle", 0 );
+			SetInventory( "SniperRifle", 0 );
+			SetInventory( "SniperRifleWeak", 0 );
+			SetInventory( "PlasmaGun", 0 );
+			SetInventory( "MachineGun", 0 );
+			SetInventory( "GatlingGun", 0 );
+			SetInventory( "JumpjetGatlingGun", 0 );
 
 			if( CheckInventory( "EagerBeaver" ))
 			{	TakeInventory( "EagerBeaver", 1 );

@@ -16,12 +16,12 @@ function int DonateCredits( int Player, int NewCredits )
 	LocalAmbientSound( "powerup/stolsound", 255 );
 
 	SetFont( "SMALLFONT" );
-HudMessage( s: "You have donated \cf$", d: NewCredits, s: "\cd to ", n: CheckInventory( "DonationName" ) + 1;
-				HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0 );
+	HudMessage( s: "You have donated \cf$", d: NewCredits, s: "\cd to ", n: CheckInventory( "DonationName" ) + 1;
+		HUDMSG_FADEOUT, 480 + PlayerNumber(), CR_Green, 0.5, 0.55, 2.0, 1.0 );
 
 	// Draw the donation message on the recipient
 	SetActivator( TID_Player + CheckInventory( "DonationName" ));
-IntelMessage( strparam( s: "You have been donated \cQ$\cD100\cJ\nby ", n: donor + 1 ));
+	IntelMessage( strparam( s: "You have been donated \cQ$\cD100\cJ\nby ", n: donor + 1 ));
 
 	return NewCredits;
 }
@@ -38,13 +38,13 @@ function void ShowCurrentDonationMenu( void )
 		color = CR_RED;
 
 	SetFont( "SMALLFONT" );
-HudMessage( s: "\cJ== Make a donation!",
-			s: "\n\cFChange Name \cK-> \cI", k: "DonationName",
-			s: "\n\cFDonate \cQ$\cD100 \cK-> \cI", k: "DonationGive",
-			s: "\n\n", n: DonationName + 1, s: "\n\cKCredits:\cQ$\cD", d: Credits[DonationName],
-			s: "\n\cKHealth: ", d: GetActorHealth( TID_Player + DonationName ), s: " / ", d: GetActorSpawnHealth( TID_Player + DonationName ),
-			s: "\n\cK", s: DisplayName( DonationName );
-				HUDMSG_PLAIN, 6000 + PlayerNumber(), color, -0.65, 0.65, 1.15 );
+	HudMessage( s: "\cJ== Make a donation!",
+		s: "\n\cFChange Name \cK-> \cI", k: "DonationName",
+		s: "\n\cFDonate \cQ$\cD100 \cK-> \cI", k: "DonationGive",
+		s: "\n\n", n: DonationName + 1, s: "\n\cKCredits:\cQ$\cD", d: Credits[DonationName],
+		s: "\n\cKHealth: ", d: GetActorHealth( TID_Player + DonationName ), s: " / ", d: GetActorSpawnHealth( TID_Player + DonationName ),
+		s: "\n\cK", s: DisplayName( DonationName );
+		HUDMSG_PLAIN, 6000 + PlayerNumber(), color, -0.65, 0.65, 1.15 );
 }
 
 

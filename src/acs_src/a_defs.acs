@@ -22,12 +22,12 @@
  * - CK_GERNADES: [sic] Amount of frag grenades the class gets. Default: 1
  * - CK_DEP:      Building dependency: one of DEP_BARRACKS, DEP_REFINERY, DEP_CENTRE. Default: 0 (no dep)
  * - CK_ARMORNUM: Armor grade of the class, default: 0
- * - CK_ARMORMOD: Armor modifier: ARMOD_FIRE, ARMOD_CHEM, ARMOD_LASER, ARMOD_EXPLO, ARMOD_BULLET
+ * - CK_ARMORMOD: Armor modifier: ARMOD_FIRE, ARMOD_CHEM, ARMOD_LASER, ARMOD_EXPLO, ARMOD_BULLET, 0 for none
  * - CK_FLAGS:    Flag modifiers:
  * ---- CF_ENHANCEDC4: Class gets enhanced C4
  * ---- CF_SUPPORT:    Class is support and deals less damage.
  * ---- (more to follow)
- * - CK_NUMITEMS: Amount of items the class has (again, don't set this directly!)
+ * - CK_NUMITEMS: Amount of items the class has (again, don't set this directly! Only ever read it!)
  *
  * After CK_NUMITEMS (which is the last key), the class definition in the table is continued with
  * CK_NUMITEMS amount of name-and-amount pairs. The GetClassItemName and GetClassItemAmount functions
@@ -303,7 +303,7 @@ function void LoadClassDefinitions( void )
 	c = CLASS_DOUBLESHOTGUNNER;
 	Classes[c][CK_NAME] = "Double Shotgunner";
 	Classes[c][CK_COST] = 200;
-	Classes[c][CK_SPEED] = 0.8;;
+	Classes[c][CK_SPEED] = 0.8;
 	Classes[c][CK_ARMORNUM] = 1;
 	AddClassItem( c, "DoubleShotgun", 1 );
 	AddClassItem( c, "ShotgunAmmo", 50 );

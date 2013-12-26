@@ -1,48 +1,25 @@
 // SURRENDER SCRIPT
 script 342( void ) NET
 {	if( !PlayerInGame( PlayerNumber() ))
-	{	DisplayCross();
-		SETFONT( "BigFont" );
-HudMessage( s: "You can't surrender as a spectator!";
-		HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+	{	Error( "You can't surrender as a spectator!" );
 		terminate;
 	}
 
-	if( GetCVAR( "aow_surrendermode" ) == 2 )
-	{	DisplayCross();
-		SETFONT( "BigFont" );
-HudMessage( s: "Surrender is disabled!";
-		HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
-		terminate;
-	}
-
-	else if( GetCVAR( "aow_surrendermode" ) == 1 )
-	{	if( PlayerTeam() == TEAM_RED )
-		{	if( BaseLeft[0] >= 5 )
-			{	DisplayCross();
-				SETFONT( "BigFont" );
-HudMessage( s: "It's too early to surrender!";
-				HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+	switch( GetCVAR( "aow_surrendermode" ))
+	{	case 1:
+			if(( PlayerTeam() == TEAM_RED && BaseLeft[0] >= 5 ) || ( PlayerTeam() == TEAM_BLUE && BaseLeft[1] >= 5 ))
+			{	Error( "It's too early to surrender!" );
 				terminate;
 			}
-		}
+			break;
 
-		if( PlayerTeam() == TEAM_BLUE )
-		{	if( BaseLeft[1] >= 5 )
-			{	DisplayCross();
-				SETFONT( "BigFont" );
-HudMessage( s: "It's too early to surrender!";
-							HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
-				terminate;
-			}
-		}
+		case 2:
+			Error( "Surrender is disabled!" );
+			terminate;
 	}
 
 	if( Timer() - LastSurrenderTime[PlayerNumber()] < 35 * SurrenderWaitTime )
-	{	DisplayCross();
-		SETFONT( "BigFont" );
-HudMessage( s: "Please wait to revote for surrender!";
-					HUDMSG_FADEOUT, 240 + PlayerNumber(), CR_RED, 0.5, 0.45, 2.0, 1.0 );
+	{	Error( "You cannot re-vote for surrender that quickly" );
 		terminate;
 	}
 
@@ -51,11 +28,11 @@ HudMessage( s: "Please wait to revote for surrender!";
 	Surrender[PlayerNumber()] = !Surrender[PlayerNumber()];
 
 	if( PlayerTeam() == TEAM_RED )
-IntelMessageBold( strparam( s: "\cD", d: SurrenderCount( TEAM_RED ), s: "\cQ/\cD", d: RedCount(), s: " ",
-							s: "\cJof \cGRed\cJ\n have voted to surrender" ));
+		IntelMessageBold( strparam( s: "\cD", d: SurrenderCount( TEAM_RED ), s: "\cQ/\cD", d: RedCount(), s: " ",
+			s: "\cJof \cGRed\cJ\n have voted to surrender" ));
 	else
-IntelMessageBold( strparam( s: "\cD", d: SurrenderCount( TEAM_BLUE ), s: "\cQ/\cD", d: BlueCount(), s: " ",
-							s: "\cJof \cHBlue\cJ\n have voted to surrender" ));
+		IntelMessageBold( strparam( s: "\cD", d: SurrenderCount( TEAM_BLUE ), s: "\cQ/\cD", d: BlueCount(), s: " ",
+			s: "\cJof \cHBlue\cJ\n have voted to surrender" ));
 
 	delay( 35 * 2 );
 	ACS_Execute( 751, 0 );
@@ -66,7 +43,7 @@ script 751( void )
 
 	int count = SurrenderCount( TEAM_BLUE );
 
-	if( ( count > BlueCount() / 2 && BlueCount() <= 6 && RedCount() != 0 ) ||
+	if(( count > BlueCount() / 2 && BlueCount() <= 6 && RedCount() != 0 ) ||
 			( count >= BlueCount() - 3 && BlueCount() > 6 && RedCount() != 0 ))
 	{	BigMessageBold( "\cHBlue Team surrenders" );
 		FreezeBold();
@@ -82,13 +59,13 @@ script 751( void )
 		Thing_Destroy( 109 );
 		delay( 5 );
 		Thing_Destroy( 114 );
-Log( s: "Blue Team surrenders." );
+		Log( s: "Blue Team surrenders." );
 	}
 
 	count = SurrenderCount( TEAM_RED );
 
-	if( ( count > RedCount() / 2 && RedCount() <= 6 && BlueCount() != 0 ) ||
-			( count >= RedCount() - 3 && RedCount() > 6 && BlueCount() != 0 ))
+	if(( count > RedCount() / 2 && RedCount() <= 6 && BlueCount() != 0 ) ||
+		( count >= RedCount() - 3 && RedCount() > 6 && BlueCount() != 0 ))
 	{	BigMessageBold( "\cRed Team surrenders" );
 		FreezeBold();
 		delay( 35 * 2 );
@@ -103,6 +80,6 @@ Log( s: "Blue Team surrenders." );
 		Thing_Destroy( 209 );
 		delay( 5 );
 		Thing_Destroy( 214 );
-Log( s: "Red surrenders." );
+		Log( s: "Red surrenders." );
 	}
 }

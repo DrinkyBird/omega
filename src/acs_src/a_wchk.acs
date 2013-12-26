@@ -1,51 +1,14 @@
-// [SP] Plasma cannon checking script
-script 556 OPEN
-{	while( 1 )
-	{	int Counter = 0;
-		NumPlasmaCannons[0] = 0;
-		NumPlasmaCannons[1] = 0;
-		NumTimeCops[0] = 0;
-		NumTimeCops[1] = 0;
+script 905 ENTER
+	ACS_ExecuteAlways( 906, 0 );
 
-		while( Counter < MAXPLAYERS )
-		{	if( PlayerInGame( Counter ))
-			{	if( CheckActorInventory( TID_Player + Counter, "PlasmaCannon" ))
-				{	if( CheckActorInventory( TID_Player + Counter, "IsRed" ))
-						NumPlasmaCannons[0]++;
-					else if( CheckActorInventory( TID_Player + Counter, "IsBlue" ))
-						NumPlasmaCannons[1]++;
-				}
-
-				if( CheckActorInventory( TID_Player + Counter, "TimeGun" ))
-				{	if( CheckActorInventory( TID_Player + Counter, "IsRed" ))
-						NumTimeCops[0]++;
-					else if( CheckActorInventory( TID_Player + Counter, "IsBlue" ))
-						NumTimeCops[1]++;
-				}
-			}
-
-			Counter++;
-		}
-
-		delay( 35 * 4 );
-	}
-}
-
-script 905 ENTER {ACS_ExecuteAlways( 906, 0 );}
 script 906 RESPAWN
 {	if( PlayerInGame( PlayerNumber() ))
 	{	// [SP] The following code removes redundant weapons
-		if( CheckInventory( "StealthLaserRifle" )) CheckAndRemove( "LaserRifle" );
-
-		if( CheckInventory( "TiberiumAutorifle" )) CheckAndRemove( "TiberiumAutorifleWeak" );
-
-		if( CheckInventory( "SniperRifle" )) CheckAndRemove( "SniperRifleWeak" );
+		if( CheckInventory( "StealthLaserRifle" )) SetInventory( "LaserRifle", 0 );
+		if( CheckInventory( "TiberiumAutorifle" )) SetInventory( "TiberiumAutorifleWeak", 0 );
+		if( CheckInventory( "SniperRifle" )) SetInventory( "SniperRifleWeak", 0 );
 	}
 
 	delay( 35 );
 	restart;
-}
-
-function void CheckAndRemove( str Type )
-{	if( CheckInventory( Type )) TakeInventory( Type, 1 );
 }
