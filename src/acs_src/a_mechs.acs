@@ -5,19 +5,6 @@
 // You may use portions of this script in your project as long as you give credit where credit is
 // due. Please don't be lame and just copy-paste any of this and call it your own. Thanks!
 
-// [Dusk] Functions to store the armor information to memory. This way we
-// can remove the armor from the player upon morph and restore it upon unmorph.
-function void MECH_PushArmorMod( void )
-{	SetInventory( "StoredArmorModifier", GetArmorModifier() );
-	SetArmorGrade( NOCHANGE, ARMOD_NONE );
-}
-
-function void MECH_PopArmorMod( void )
-{	int mod = CheckInventory( "StoredArmorModifier" );
-	TakeInventory( "StoredArmorModifier", mod );
-	SetArmorGrade( NOCHANGE, mod );
-}
-
 script 45( void ) ACS_Execute( 80, 0, MECH_WOLVERINE );
 script 46( void ) ACS_Execute( 80, 0, MECH_TITAN );
 script 47( void ) ACS_Execute( 80, 0, MECH_RAVEN );
@@ -124,13 +111,7 @@ script 80( int mech )
 	SetSpeed( 1.0 );
 	delay( 1 );
 
-	// [Dusk] If we're still using the jump jet, de-activate it now
-	if( CheckInventory( "JumpjetSwitch" ))
-		GiveInventory( "JumpjetDeactivate", 1 );
-
-	// [Dusk] If the player is still in the utility menu, get him out of it
-	SetInventory( "InUtilMenu", 0 );
-
+	PrepareForMechMorph();
 	GiveInventory( "IsMech", 1 );
 	GiveInventory( morph, 1 );
 	GiveInventory( ammo, 1 );
@@ -178,20 +159,17 @@ Log( s: pname( -1 ), s: " pilots ", s: nicename, s: "." );
 	SetPlayerProperty( 0, 0, PROP_TOTALLYFROZEN );
 	ActivatorSound( "mech/start", 127 );
 
-	// [Dusk] Store which armor modifier does the player have and take it from the actual mech
-	MECH_PushArmorMod();
-
 	SetFont( "BIGFONT" );
 
 	if( mech == MECH_GUARDIAN )
-	HudMessage( s: "Powersuit online!";
-					HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
+		HudMessage( s:"Powersuit online!";
+			HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	else if( mech == MECH_ORCA )
-	HudMessage( s: "Gunship online!";
-					HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
+		HudMessage( s:"Gunship online!";
+			HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 	else
-	HudMessage( s: "Mech online!";
-					HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
+		HudMessage( s:"Mech online!";
+			HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 
 	ACS_ExecuteAlways( 315, 0 ); // display mech HUD
 
@@ -489,7 +467,11 @@ script 697( void )
 	SetInventory( "MechEjectButton", 0 );
 	ACS_ExecuteAlways( 10, 0 );
 	TakeInventory( "IsMech", 1 );
-	MECH_PopArmorMod();
+
+	// Restore the armor mod now
+	int mod = CheckInventory( "StoredArmorModifier" );
+	TakeInventory( "StoredArmorModifier", mod );
+	SetArmorGrade( NOCHANGE, mod );
 
 	delay( 1 );
 
@@ -590,7 +572,7 @@ script 353( void )
 	SetResultValue( 1 );
 
 	// [Dusk] Push the armor modifier so that it doesn't actually affect the mech
-	MECH_PushArmorMod();
+	PrepareForMechMorph();
 }
 
 // [Dusk] thrusts the player with the specified angle if they are in a mech
@@ -628,11 +610,35 @@ script 86( int x )
 		ThrustThing( GetActorAngle( 6000 + x ) >> 8, 20, 0, 0 );
 }
 
-// duplicates..
+// Duplicates..
 script 85( void )
-ACS_ExecuteAlways( 84, 0 );
+	ACS_ExecuteAlways( 84, 0 );
 
 script 88( void )
-ACS_ExecuteAlways( 86, 0, 1 );
+	ACS_ExecuteAlways( 86, 0, 1 );
 
-script 89( void ) {} // dummy - present because maps actually call this. even though it was empty
+// Dummy - present because maps actually call this. even though it was empty
+script 89( void ) {}
+
+// [Dusk]
+function void PrepareForMechMorph( void )
+{	// If we're still using the jump jet, de-activate it now
+	if( CheckInventory( "JumpjetSwitch" ))
+		GiveInventory( "JumpjetDeactivate", 1 );
+
+	// If the player is still in the utility menu, get him out of it
+	SetInventory( "InUtilMenu", 0 );
+
+	// Remove some powerups
+	SetInventory( "PowerTimeGunSpeed", 0 );
+	SetInventory( "PowerTimeGunFloat", 0 );
+	SetInventory( "PowerTimeGunBoost", 0 );
+
+	// Store the armor modifier
+	SetInventory( "StoredArmorModifier", GetArmorModifier() );
+	SetArmorGrade( NOCHANGE, ARMOD_NONE );
+
+	// Reset renderstyle
+	SetActorProperty( 0, APROP_RenderStyle, STYLE_Translucent );
+	SetActorProperty( 0, APROP_Alpha, 1.0 );
+}
