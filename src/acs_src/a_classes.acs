@@ -146,11 +146,11 @@ BigMessage( strparam( s: "You are a \cf", s: Classes[c][CK_NAME], s: "!" ));
 	{	str itemname = GetClassItemName( c, i );
 		int itemamount = GetClassItemAmount( c, i );
 		GiveInventory( itemname, itemamount );
-
-		// First item defined is the primary weapon, set it:
-		if( i == 0 )
-			SetWeapon( itemname );
 	}
+
+	// Set the weapon now
+	if( Classes[c][CK_NUMITEMS] > 0 )
+		SetWeapon( GetClassItemName( c, 0 ));
 
 	// Handle flags:
 	if( cflags & CF_CANTPILOT )
@@ -600,7 +600,7 @@ script 961( int team )
 // [Dusk] Helper function for DrawClassInfoText
 function str GetSpeedMeter( int c )
 {	int speed = Classes[c][CK_SPEED];
-str msg = strparam( s: "\cU[", s: FractionColor( speed - 0.5, 0.5 ));
+	str msg = strparam( s: "\cU[", s: FractionColor( speed - 0.5, 0.5 ));
 	bool darkened = false;
 
 	for( int i = 0; i < 10; ++i )
@@ -611,10 +611,10 @@ str msg = strparam( s: "\cU[", s: FractionColor( speed - 0.5, 0.5 ));
 			darkened = true;
 		}
 
-msg = strparam( s: msg, s: "I" );
+		msg = strparam( s: msg, s: "I" );
 	}
 
-msg = strparam( s: msg, s: "\cU]" );
+	msg = strparam( s: msg, s: "\cU]" );
 	return msg;
 }
 
