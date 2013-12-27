@@ -1,7 +1,7 @@
 Green {
-	#001E00  #A0FF00
+	#001E00  #BDFF4C
 Console:
-	#000000  #2D8000    0 127
+	#000000  #388011    0 127
 	#A0FF00  #FEFFFE  128 256
 Flat:
 	#00CC00
@@ -18,7 +18,7 @@ Flat:
 }
 
 Blue {
-	#000810  #0BA5BF
+	#000810  #108BA3
 Console:
 	#000000  #00007F    0 127
 	#4040FF  #DEDEFF  128 256
@@ -45,7 +45,7 @@ Flat:
 }
 
 LightBlue "Light Blue" {
-	#002130  #10E0FF
+	#002130  #41C5DB
 Console:
 	#00003C  #5050FF    0 127
 	#8080FF  #FFFFFF  128 256
@@ -54,10 +54,10 @@ Flat:
 }
 
 DarkGreen "Dark Green" {
-	#001E00  #3B9000
+	#001E00  #489017
 Console:
-	#000000  #005800    0 127
-	#008C00  #DCFFDC  128 256
+	#000000  #186009    0 127
+	#489017  #BDFF4C  128 256
 Flat:
 	#008C00
 }
@@ -73,11 +73,31 @@ Flat:
 }
 
 Cyan {
-	#002A3A- #10E0FF     0 191
-	#10E0FF #FFFFFF   192 256
+	#002A3A #5CD3E6     0 191
+	#5CD3E6 #FFFFFF   192 256
 Console:
 	#000000 #007F7F     0 127
 	#00FFFF #FEFFFF   128 256
 Flat:
 	#00DDDD
+}
+
+Red
+{
+	#3D000F  #FF002A
+Console:
+	#000000  #7F0015    0 127
+	#FF002A  #FFD0D8  128 256
+Flat:
+	#FF5566
+}
+
+DarkRed "Dark Red"
+{
+	#2E000B  #A7001B
+Console:
+	#000000  #730013    0 127
+	#7F0015  #FFD0D8  128 255
+Flat:
+	#7F0015
 }
