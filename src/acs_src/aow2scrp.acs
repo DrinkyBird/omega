@@ -193,7 +193,7 @@
 #define SC_PORTAL_FUNCTION        937
 #define SC_MARINE_INIT            938
 #define SC_MARINE_COMPENSATION    939
-#define SC_ReviveObelisk          944
+#define SC_RestoreObelisk          944
 #define SC_InventoryItemUse       951
 #define SC_HealingRadius          952
 #define SC_TimeGun                958
@@ -318,7 +318,7 @@ int MinEnemyTurretDistance = 1500;
 int SurrenderWaitTime = 20;
 
 // [Dusk]
-int ObeliskRevival[2];
+int RestoringObelisk[2];
 
 //RESEARCHES!!!!!!!!
 bool EnhancedRefining[2]; //Increases profits from harvesting by $50 //Costs $2000

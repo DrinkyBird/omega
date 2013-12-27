@@ -188,9 +188,9 @@ script 599 OPEN
 	if( GetCVAR( "aow_buildingpoints" ) <= 0 )
 		ConsoleCommand( "set aow_buildingpoints 125" );
 
-	// [Dusk] How long does the obelisk take to revive fully? Seconds, -1 for instant
-	if( GetCVAR( "aow_obeliskrevivetime" ) == 0 )
-		ConsoleCommand( "set aow_obeliskrevivetime 450" );
+	// [Dusk] How long does the obelisk take to restore fully? Seconds, -1 for instant
+	if( GetCVAR( "aow_obeliskrestoredelay" ) == 0 )
+		ConsoleCommand( "set aow_obeliskrestoredelay 450" );
 
 	delay( 35 * 5 );
 	restart;

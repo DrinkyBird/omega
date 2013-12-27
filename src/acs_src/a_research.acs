@@ -94,7 +94,7 @@ script 66( void )
 	AdvancedMechResearch[PlayerTeam()] = True;
 }
 
-// [Dusk] OBELISK REVIVAL
+// [Dusk] OBELISK RESTORATION
 script 67( void )
 {	int cost = 8000;
 	int team = PlayerTeam();
@@ -107,12 +107,12 @@ script 67( void )
 		terminate;
 
 	if( GotObelisk[team] )
-	{	Error( strparam( s:"The ", s:name, s:" is not destroyed!" ));
+	{	Error( strparam( s:"The ", s:name, s:" is already active!" ));
 		terminate;
 	}
 
-	if( ObeliskRevival[team] )
-	{	Error( strparam( s:"The ", s:name, s:" is already being revived!" ));
+	if( RestoringObelisk[team] )
+	{	Error( strparam( s:"The ", s:name, s:" is already being restored!" ));
 		terminate;
 	}
 
@@ -120,10 +120,10 @@ script 67( void )
 	{	GiveInventory( "PurchaseToken", 1 );
 		SetFont( "BIGFONT" );
 		HudMessage(
-			s: "\cd----", s:name, s:" Revival----",
+			s: "\cd----", s:name, s:" Restoration----",
 			s:"\n\n\ciCost: \cf$", d:cost,
-			s:"\n\ciPurpose: \cdRevives the ", s:name, s:" if it is destroyed.\n",
-			s:"\n\cd--- Revival takes ", d:GetCVAR( "aow_obeliskrevivetime" ), s:" seconds to complete.";
+			s:"\n\ciPurpose: \cdRestores the ", s:name, s:" if it is destroyed.\n",
+			s:"\n\cd--- Restoration takes ", d:GetCVAR( "aow_obeliskrestoredelay" ), s:" seconds to complete.";
 			HUDMSG_FADEOUT, 2100 + PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0 );
 
 		ACS_ExecuteWithResult( 330, cost );
@@ -135,13 +135,13 @@ script 67( void )
 	if( !CheckCredits( cost ))
 		terminate;
 
-	Log( s:pname( -1 ), s:" researches Obelisk revival." );
-	ACS_ExecuteWithResult( SC_ReviveObelisk, team );
+	Log( s:pname( -1 ), s:" researches ", s:name, s:" Restoration." );
+	ACS_ExecuteWithResult( SC_RestoreObelisk, team );
 	AddExperience( 750 );
 	GivePoints( POINTS_RESEARCH * 5 );
 	SpendCredits( cost );
 	DisplayTick();
-	BigMessage( "\ciRevival process started!" );
+	BigMessage( "\cIRestoration process started!" );
 }
 
 

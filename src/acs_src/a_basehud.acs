@@ -111,8 +111,8 @@ function str PortalLinkColor( int team, int teamcolor )
 }
 
 function str ColorCodeHealth( int b, int team, int Percentage )
-{	// [Dusk] If this is an obelisk that's being revived, we use white color for the health
-	if( b == BUILDING_OBELISK && ObeliskRevival[team] == true )
+{	// [Dusk] If this is an obelisk that's being restored, we use white color for the health
+	if( b == BUILDING_OBELISK && RestoringObelisk[team] == true )
 		return "\cJ";
 
 	if( Percentage == 100 ) // 100%
@@ -130,8 +130,8 @@ function str ColorCodeHealth( int b, int team, int Percentage )
 }
 
 function str ExistsBuilding( int tid )
-{	// use white color if being revived
-	if(( tid == TID_OBELISK && ObeliskRevival[TEAM_RED] ) || ( tid == TID_TESLACOIL && ObeliskRevival[TEAM_BLUE] ))
+{	// use white color if being restored
+	if(( tid == TID_OBELISK && RestoringObelisk[TEAM_RED] ) || ( tid == TID_TESLACOIL && RestoringObelisk[TEAM_BLUE] ))
 		return "\cJ";
 
 	if( tid <= 199 || ( tid >= 900 && tid % 2 == 1 ))

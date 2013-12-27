@@ -436,9 +436,9 @@ function bool IsMinorBuilding( int b )
 	return false;
 }
 
-// [Dusk] Obelisk revival.
-script SC_ReviveObelisk( int team )
-{	if( GotObelisk[team] || ObeliskRevival[team] )
+// [Dusk] Obelisk restoration.
+script SC_RestoreObelisk( int team )
+{	if( GotObelisk[team] || RestoringObelisk[team] )
 		terminate;
 
 	int tid1, tid2, tid3;
@@ -464,9 +464,9 @@ script SC_ReviveObelisk( int team )
 	TakeActorInventory( tid3, "PleaseRespawn", 1 );
 	SetLineTexture( cond( team == TEAM_RED, 12, 11 ), SIDE_FRONT, TEXTURE_BOTTOM, "MCT1" );
 	SetActorProperty( tid1, APROP_Invulnerable, 1 );
-	ObeliskRevival[team] = true;
-	int time = GetCVar( "aow_obeliskrevivetime" );
-	Log( s:"Starting obelisk revival process for  ", s:TeamNames[team] );
+	RestoringObelisk[team] = true;
+	int time = GetCVar( "aow_obeliskrestoredelay" );
+	Log( s:"Starting obelisk restoration process for ", s:TeamNames[team] );
 
 	for( int i = 0; i < time; ++i )
 	{	if( BaseLeft[team] == 0 )
@@ -488,7 +488,7 @@ script SC_ReviveObelisk( int team )
 	Sector_SetColor( cond( team == TEAM_RED , 20, 19 ), 255, 255, 255, 0 );
 	GotObelisk[team] = true;
 	BaseLeft[team]++;
-	ObeliskRevival[team] = false;
+	RestoringObelisk[team] = false;
 	SetActorHealth( tid1, GetActorSpawnHealth( tid1 ));
 	SetActorProperty( tid1, APROP_Invulnerable, 0 );
 	SetActorState( tid3, "Spawn" );
@@ -497,12 +497,12 @@ script SC_ReviveObelisk( int team )
 	SetFont( "BIGFONT" );
 
 	if( team == TEAM_BLUE )
-	{	HudMessageBold( s:"The \cHTesla Coil\cd has been revived!";
+	{	HudMessageBold( s:"The \cHTesla Coil\cd has been restored!";
 			HUDMSG_FADEOUT | HUDMSG_LOG, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
 		SpawnSpotForced( "TeslaCoilOrb", TID_TESLACOIL_EYE, 0, 0 );
 	} else
-		HudMessageBold( s:"The \cGObelisk of Light\cd has been revived!";
+		HudMessageBold( s:"The \cGObelisk of Light\cd has been restored!";
 			HUDMSG_FADEOUT | HUDMSG_LOG, 0, CR_Green, 0.5, 0.7, 2.0, 1.0 );
 
-	Log( s:TeamNames[team], s:" obelisk revival complete." );
+	Log( s:TeamNames[team], s:" obelisk restoration complete." );
 }
