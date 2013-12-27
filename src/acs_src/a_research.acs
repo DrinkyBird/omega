@@ -227,7 +227,7 @@ script 69( void )
 	SpendCredits( cost );
 	DisplayTick();
 	SETFONT( "BigFont" );
-HudMessage( s: "\ciConstruction Complete!";
+	HudMessage( s: "\ciConstruction Complete!";
 				HUDMSG_FADEOUT, 1800 + PlayerNumber(), CR_GREEN, 0.5, 0.45, 2.0, 1.0 );
 
 	ACS_ExecuteAlways( 344, 0, 8 );
@@ -238,9 +238,48 @@ HudMessage( s: "\ciConstruction Complete!";
 		SpawnSpot( "Utility_GlobalAmmoCacheBlue", 113 );
 }
 
-//---------------------------
+//---------------------------+1 GERNADE
 script 70( void )
-	terminate;
+{	int cost = 250;
+
+	if( MitigateDoublePress() )
+		terminate;
+
+	if( !CheckPlant( PlayerTeam() ))
+		terminate;
+
+	if( GetAmmoCapacity( "FragGrenadeAmmo" ) >= 4 )
+	{	Error( "You already have 4!" );
+		terminate;
+	}
+
+	if( !CheckInventory( "PurchaseToken" ))
+	{	GiveInventory( "PurchaseToken", 1 );
+		SetFont( "BIGFONT" );
+		HudMessage( s: "\cd----+1 FRAG GRENADE----\n",
+					s:"\n\ciCost: \cf$", d:cost, s:"\n",
+					s:"\ciPurpose: \cdAdditional frag grenade.\n",
+					s:"\cd--- Maximum of 4.\n";
+					HUDMSG_FADEOUT, 2100 + PlayerNumber(), CR_Green, 0.25, 0.25, 3.0, 2.0 );
+		ACS_ExecuteWithResult( 330, cost );
+		Delay( 35 * 1 );
+		TakeInventory( "PurchaseToken", 1 );
+		terminate;
+	}
+
+	if( !CheckCredits( cost ))
+		terminate;
+
+	SpendCredits( cost );
+	GiveInventory( "Refunds", cost / 2 );
+	DisplayTick();
+	BigMessage( "\ci+1 frag grenade!" );
+	SetAmmoCapacity( "FragGrenadeAmmo", GetAmmoCapacity( "FragGrenadeAmmo" ) + 1);
+	SetInventory( "FragGrenadeAmmo", GetAmmoCapacity( "FragGrenadeAmmo" ));
+	SetWeapon( "FragGrenade" );
+	TakeInventory( "PurchaseToken", 1 );
+	Log( s: pname( -1 ), s: " purchases +1 frag grenade" );
+}
 
 //---------------------------REPAIR GUN UPGRADE
 script 71( void )
