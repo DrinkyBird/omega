@@ -113,9 +113,9 @@ Log( s: pname( -1 ), s: " destroys Blue Repair Facility." );
 
 //---------------------------TESLA COIL DEATH
 script 114( VOID )
-{	Thing_Destroy( 114, 0 );
-	Thing_Destroy( 115, 0 );
-	Thing_Destroy( TID_TESLACOIL_EYE, 0 );
+{	Thing_Destroy( 114, 1 );
+	Thing_Destroy( 115, 1 );
+	Thing_Destroy( TID_TESLACOIL_EYE, 1 );
 	ACS_ExecuteAlways( 99, 0, TEAM_BLUE );
 	GotObelisk[TEAM_BLUE] = False;
 	BaseLeft[TEAM_BLUE]--;
@@ -247,9 +247,9 @@ script 205( VOID )
 
 //---------------------------OBELISK DEATH
 script 214( VOID )
-{	Thing_Destroy( 214, 0 );
-	Thing_Destroy( 215, 0 );
-	Thing_Destroy( TID_OBELISK_EYE, 0 );
+{	Thing_Destroy( 214, 1 );
+	Thing_Destroy( 215, 1 );
+	Thing_Destroy( TID_OBELISK_EYE, 1 );
 	ACS_ExecuteAlways( 99, 0, TEAM_RED );
 	GotObelisk[TEAM_RED] = False;
 	BaseLeft[TEAM_RED]--;
