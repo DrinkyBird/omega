@@ -566,7 +566,13 @@ script 353( void )
 
 	if( CheckInventory( "HighUpgrade" ))
 		terminate;
-	else if( CheckInventory( "IsMech" )) //[SP] disallow other mech pickups
+
+	if( CheckInventory( "IsMech" )) //[SP] disallow other mech pickups
+		terminate;
+
+	// [Dusk] If the player has iron curtain, he may not morph into mechs,
+	// since the powerup would be lost even though the hue remains
+	if( CheckInventory( "PowerInvulnerable" ))
 		terminate;
 
 	SetResultValue( 1 );
@@ -641,4 +647,10 @@ function void PrepareForMechMorph( void )
 	// Reset renderstyle
 	SetActorProperty( 0, APROP_RenderStyle, STYLE_Translucent );
 	SetActorProperty( 0, APROP_Alpha, 1.0 );
+
+	// Remove iron curtain
+	if( CheckInventory( "PowerInvulnerable" ))
+	{	TakeInventory( "PowerInvulnerable", 1 );
+		GiveInventory( "GreenHueRemover", 1 );
+	}
 }
