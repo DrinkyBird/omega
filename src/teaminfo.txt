@@ -7,7 +7,7 @@ Team "Blue" {
 }
 
 Team "Red" {
-	PlayerColor "7F 00 00"
+	PlayerColor "B3 00 1D"
 	TextColor "Red"
 	PlayerStartThingNumber 5081
 }
