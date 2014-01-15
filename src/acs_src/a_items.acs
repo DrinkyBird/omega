@@ -97,7 +97,67 @@ script SC_InventoryItemUse( int action, int team )
 			delay( 1 );
 			SetWeapon( "SelfHeal" );
 			break;
+
+		case INVITEM_SpawnMarker:
+			int markertid = TID_SpawnMarker + PlayerNumber();
+
+			if (CheckInventory ("PowerSpawnMarkerRecentUse") && HasSpawnMarker[PlayerNumber()])
+			{
+				RemoveSpawnMarker (PlayerNumber());
+				IntelMessage ("Spawn spot cleared");
+				terminate;
+			}
+
+			if (CheckInventory ("IsInSpawnRoom"))
+			{
+				IntelMessage ("\cAYou cannot set the spawn point in the spawn room!\nUse twice to clear the spawn spot.");
+				LocalAmbientSound ("misc/nope", 127);
+			}
+			else
+			{
+				RemoveSpawnMarker (PlayerNumber());
+				bool failed = false;
+
+				if (!IsPlayerInBase())
+					failed = true;
+				else if (Spawn ("SpawnMarkerCheck", GetActorX (0), GetActorY (0), GetActorFloorZ (0)) == 0)
+					failed = true;
+				else
+				{
+					if (Spawn (cond (PlayerTeam() == TEAM_BLUE, "SpawnMarker_Blue", "SpawnMarker_Red"),
+						GetActorX (0), GetActorY (0), GetActorCeilingZ (0) - 32.0, markertid, GetActorAngle (0)))
+					{
+						IntelMessage ("\cDSpawn point set successfully!\nUse twice to clear the spawn spot.");
+						SetThingSpecial (markertid, ACS_ExecuteAlways, SC_SpawnMarkerDestroyed, 0, PlayerNumber());
+						LocalAmbientSound ("menu/prompt", 127);
+						HasSpawnMarker[PlayerNumber()] = true;
+					}
+					else
+						failed = true;
+				}
+
+				if (failed)
+				{
+					IntelMessage ("\cACould not set spawn point there.\nYour spawn point has been cleared.");
+					LocalAmbientSound ("misc/nope", 127);
+				}
+			}
+
+			GiveInventory ("SpawnMarkerRecentUse", 1);
+			break;
 	}
+}
+
+// =============================================================================
+//
+script SC_SpawnMarkerDestroyed (int playernum)
+{
+	int killernum = PlayerNumber();
+	SetActivator (killernum);
+	IntelMessage (strparam (s:"You have destroyed the spawn marker of ", n:playernum + 1));
+	SetActivator (playernum);
+	IntelMessage (strparam (s:"Your spawn marker has been destroyed by ", n:killernum + 1));
+	HasSpawnMarker[playernum] = false;
 }
 
 /* =============================================================================

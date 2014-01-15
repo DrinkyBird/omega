@@ -929,6 +929,22 @@ graphic "mbcnicon", 19, 32 {
 	offset -15, -12
 }
 
+Graphic "spnmicon", 43, 21
+{
+	XScale 2.5
+	YScale 2.5
+	Patch "spnma0", 0, 0
+	Offset -6, -22
+}
+
+Graphic "spnmico2", 43, 21
+{
+	XScale 2.5
+	YScale 2.5
+	Patch "spnmb0", 0, 0
+	Offset -6, -22
+}
+
 graphic syriicon, 29, 63 {
 	xscale 3.5
 	yscale 3.5

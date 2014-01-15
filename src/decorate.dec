@@ -39,6 +39,7 @@
 #include "actors/weapons/w_bombpack.dec"
 #include "actors/items/i_powerupcrate.dec"
 #include "actors/items/i_secrets.dec"
+#include "actors/items/i_spawnmarker.dec"
 #include "actors/items/i_tiberium.dec"
 #include "actors/items/i_beacons.dec"
 #include "actors/items/i_proxymine.dec"

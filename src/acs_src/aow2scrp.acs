@@ -124,6 +124,8 @@
 #define BUILDING_PORTAL          9
 #define BUILDING_PORTAL_2       10
 
+#define NUM_BUILDINGS            9 // [Dusk] we don't count portals, do we?
+
 // TODO: move these to 1000+ range
 #define TID_BARRACKS_BLUE 101
 #define TID_BARRACKS_RED 201
@@ -160,6 +162,7 @@
 #define TID_TESLACOIL_EYE				1700
 #define TID_OBELISK_EYE					1701
 #define TID_Player						2000 // - 2063
+#define TID_SpawnMarker					2064 // - 2127
 
 #define TARGETINFO_X			0  // X-coordinate
 #define TARGETINFO_Y			1  // Y-coordinate
@@ -173,13 +176,12 @@
 #define TARGETINFO_WeaponCheck	12 // for CheckTargetWeapon
 #define TARGETINFO_Name			13 // Name (akin to print (n:0))
 
-#define NUM_BUILDINGS            9
-
 // TODO: populate this list
 #define SC_SelfHealHealth         816
 #define SC_CL_ObeliskTrail        822
 #define SC_UpdateCreditDisplay    827
 #define SC_MedicHealthRegen       835
+#define SC_SpawnMarkerDestroyed   852
 #define SC_CL_Changelog           853
 #define SC_HUDTicker              854
 #define SC_ChangePlayerTeam       891
@@ -205,6 +207,7 @@
 #define INVITEM_RefillC4            1
 #define INVITEM_MarineBeacon        2
 #define INVITEM_SelfHeal            3
+#define INVITEM_SpawnMarker			4
 
 // How many points does researching stuff give you?
 // Also used for miniref and utility-built ammo/health regens
@@ -360,7 +363,11 @@ int AIMarines[2] = {0}; // compensation-spawned only
 
 int AIMarineCount = 0; // how many AI marines are there overall?
 
-int CrateNumber = 0; // crate logic
+// [Dusk] for crate logic
+int CrateNumber = 0;
+
+// [Dusk] for spawn markers
+int HasSpawnMarker[MAXPLAYERS];
 
 // =============================================================================
 int Classes[NUM_CLASSES][64];

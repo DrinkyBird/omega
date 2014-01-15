@@ -1,0 +1,99 @@
+// =============================================================================
+//
+Actor SpawnMarker_Base
+{
+	+NOGRAVITY
+	+SHOOTABLE
+	+NOCLIP
+	+NOBLOOD
+	Health			150
+	Scale			0.75
+	Radius			16
+	Height			16
+	DamageFactor	"Deconstruction", 0
+
+	States
+	{
+		Idle:
+			"----" A 3 HealThing (1)
+			wait
+	}
+}
+
+// =============================================================================
+//
+Actor SpawnMarker_Blue : SpawnMarker_Base
+{
+	DesignatedTeam	0
+
+	States
+	{
+		Spawn:
+			SPNM A 0
+			goto Idle
+	}
+}
+
+// =============================================================================
+//
+Actor SpawnMarker_Red : SpawnMarker_Base
+{
+	DesignatedTeam	1
+
+	States
+	{
+		Spawn:
+			SPNM B 0
+			goto Idle
+	}
+}
+
+// =============================================================================
+//
+Actor SpawnMarkerItem : InventoryItem
+{
+	Inventory.Icon "spnmicon"
+	Tag "Spawn Marker"
+
+	States
+	{
+		Use:
+			TNT1 A 0 ACS_ExecuteAlways (SC_InventoryItemUse, 0, INVITEM_SpawnMarker)
+			fail
+	}
+}
+
+// =============================================================================
+//
+Actor SpawnMarkerItem_Red : SpawnMarkerItem
+{
+	Inventory.Icon "spnmico2"
+}
+
+// =============================================================================
+// Spawn marker test for height
+//
+actor SpawnMarkerCheck
+{
+	Radius 32
+	Height 128
+
+	States
+	{
+		Spawn:
+			TNT1 A 1
+			stop
+	}
+}
+
+// =============================================================================
+//
+Actor PowerSpawnMarkerRecentUse : PowerNull {}
+
+Actor SpawnMarkerRecentUse : PowerupGiver
+{
+	+INVENTORY.AUTOACTIVATE
+	Inventory.MaxAmount 0
+	Powerup.Type "SpawnMarkerRecentUse"
+	Powerup.Duration -1
+}

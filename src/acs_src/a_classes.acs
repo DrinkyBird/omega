@@ -581,6 +581,17 @@ script 961( int team )
 {	int tries, i;
 	bool failed = true;
 
+	// [Dusk] If we have a spawn marker, use that.
+	if (HasSpawnMarker[PlayerNumber()])
+	{
+		if (Teleport (TID_SpawnMarker + PlayerNumber()))
+			TakeInventory ("IsInSpawnRoom", 1);
+		else
+			IntelMessage ("Could not teleport to spawn marker.\nTry again or clear the marker.");
+
+		terminate;
+	}
+
 	for( i = 0; i <= 9; i++ )
 	{	if( Teleport( 1 + team ))
 		{	failed = false;
@@ -589,8 +600,7 @@ script 961( int team )
 	}
 
 	if( failed )
-	{	IntelMessage( strparam( s: "In-field teleportation \cAfailed\cJ - use the\n",
-						s: "\cDTeleport back to Field\cJ -terminal" ));
+	{	IntelMessage( "In-field teleportation \cAfailed\cJ - use the\n\cDTeleport back to Field\cJ -terminal" );
 		terminate;
 	}
 	else

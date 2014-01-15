@@ -424,114 +424,7 @@ script 347( int Type )
 
 // [SP] This script is used to determine whether a utility is in his own base or not, and to give "UtilityOutOfRange" if he's not.
 script 370( void )
-{	bool IsInBase;
-
-	if( PlayerTeam() == TEAM_RED )
-	{	if( CheckActorDistance( 0, 201, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 203, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 205, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 207, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 209, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 214, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 900, MaxTurretDistance / 4 ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 902, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 904, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else
-		{	IsInBase = false;
-		}
-
-		if( IsInBase )
-		{	if( CheckActorDistance( 0, 101, MinEnemyTurretDistance ))
-			{	IsInBase = false;
-			}
-			else if( CheckActorDistance( 0, 103, MinEnemyTurretDistance ))
-			{	IsInBase = false;
-			}
-			else if( CheckActorDistance( 0, 105, MinEnemyTurretDistance ))
-			{	IsInBase = false;
-			}
-			else if( CheckActorDistance( 0, 107, MinEnemyTurretDistance ))
-			{	IsInBase = false;
-			}
-			else if( CheckActorDistance( 0, 109, MinEnemyTurretDistance ))
-			{	IsInBase = false;
-			}
-			else if( CheckActorDistance( 0, 114, MinEnemyTurretDistance ))
-			{	IsInBase = false;
-			}
-		}
-	}
-	else
-	{	if( CheckActorDistance( 0, 101, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 103, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 105, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 107, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 109, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 114, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 901, MaxTurretDistance / 4 ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 903, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else if( CheckActorDistance( 0, 905, MaxTurretDistance ))
-		{	IsInBase = true;
-		}
-		else
-		{	IsInBase = false;
-		}
-
-		if( IsInBase )
-		{	if( CheckActorDistance( 0, 201, MinEnemyTurretDistance ))
-			{	IsInBase = false;
-			}
-			else if( CheckActorDistance( 0, 203, MinEnemyTurretDistance ))
-			{	IsInBase = false;
-			}
-			else if( CheckActorDistance( 0, 205, MinEnemyTurretDistance ))
-			{	IsInBase = false;
-			}
-			else if( CheckActorDistance( 0, 207, MinEnemyTurretDistance ))
-			{	IsInBase = false;
-			}
-			else if( CheckActorDistance( 0, 209, MinEnemyTurretDistance ))
-			{	IsInBase = false;
-			}
-			else if( CheckActorDistance( 0, 214, MinEnemyTurretDistance ))
-			{	IsInBase = false;
-			}
-		}
-	}
+{	int IsInBase = IsPlayerInBase();
 
 	//if  (IsInBase)
 	//	Log(s:"In base");
@@ -550,25 +443,6 @@ script 971( void )
 	if( AdvancedTurrets[1 - PlayerTeam()] )
 	{	SetResultValue( 0 );
 	}
-}
-
-function bool CheckActorDistance( int Source, int Target, int Range )
-{	// [SP] If either object does not exist, then we're really not close to anything.
-	if( ThingCount( T_NONE, Target ) == 0 || ThingCount( T_NONE, Source ) == 0 )
-		return false;
-
-	// [SP] Check the distance between two objects using Pythagorean theorum - except do not root the squares, it makes the check faster
-	int Dist = msqr( GetActorX( Source ) - GetActorX( Target ) >> 16 );
-	Dist += msqr( GetActorY( Source ) - GetActorY( Target ) >> 16 );
-	Dist += msqr( GetActorZ( Source ) - GetActorZ( Target ) >> 16 );
-
-	if( Dist <= msqr( Range ) && GetCVar( "aow_debug" ) == 1 )
-Log( s: "I'm close to object ", d: Target );
-
-	if( Dist <= msqr( Range ))
-		return true;
-
-	return false;
 }
 
 //BUILD with Utility (check for cash)

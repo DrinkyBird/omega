@@ -487,6 +487,62 @@ function int cond( int a, int b, int c )
 	return c;
 }
 
+// ============================================================================
+//
+function bool CheckActorDistance( int Source, int Target, int Range )
+{	// [SP] If either object does not exist, then we're really not close to anything.
+	if( ThingCount( T_NONE, Target ) == 0 || ThingCount( T_NONE, Source ) == 0 )
+		return false;
+
+	// [SP] Check the distance between two objects using Pythagorean theorum - except do not root the squares, it makes the check faster
+	int Dist = msqr( GetActorX( Source ) - GetActorX( Target ) >> 16 );
+	Dist += msqr( GetActorY( Source ) - GetActorY( Target ) >> 16 );
+	Dist += msqr( GetActorZ( Source ) - GetActorZ( Target ) >> 16 );
+
+	if( Dist <= msqr( Range ) && GetCVar( "aow_debug" ) == 1 )
+		Log( s: "I'm close to object ", d: Target );
+
+	if( Dist <= msqr( Range ))
+		return true;
+
+	return false;
+}
+
+// ============================================================================
+// [Dusk] This should be a bit cleaner than the old code.
+//
+function bool IsPlayerInBase (void)
+{
+	bool IsInBase;
+	int i;
+	int dist;
+
+	for (i = 0; i < NUM_BUILDINGS; ++i)
+	{
+		dist = cond (i != BUILDING_MINIREF, MaxTurretDistance, MaxTurretDistance / 4);
+		if (CheckActorDistance (0, GetBuildingTID (i, PlayerTeam()), dist))
+		{
+			IsInBase = true;
+			break;
+		}
+	}
+
+	if (IsInBase)
+	{
+		for (i = 0; i < NUM_BUILDINGS; ++i)
+		{
+			dist = cond (i != BUILDING_MINIREF, MaxTurretDistance, MaxTurretDistance / 4);
+			if (CheckActorDistance (0, GetBuildingTID (i, !PlayerTeam()), dist))
+			{
+				IsInBase = false;
+				break;
+			}
+		}
+	}
+
+	return IsInBase;
+}
+
 /* ============================================================================
  * [Dusk] Acquire target information. This is encapsulated in a script so
  * as not to interfere with the original script's activator.
@@ -620,9 +676,21 @@ function int AproxDistance( int t1, int t2 )
 	return dx + ( dy / 2 );
 }
 
-/* ============================================================================
- * [Dusk] Clean way to change a player's team. Don't use Player_SetTeam!
- */
+// =============================================================================
+// [Dusk] Remove the spawn marker of a given player
+//
+function void RemoveSpawnMarker (int p)
+{
+	if (!HasSpawnMarker[p])
+		return;
+
+	Thing_Remove (TID_SpawnMarker + p);
+	HasSpawnMarker[p] = false;
+}
+
+// =============================================================================
+// [Dusk] Clean way to change a player's team. Don't use Player_SetTeam!
+//
 function void ChangePlayerTeam( int p, int newteam )
 {	if( !PlayerInGame( p ) || GetPlayerTeam( p ) == newteam || newteam < 0 || newteam > 1 )
 		return;
@@ -630,7 +698,7 @@ function void ChangePlayerTeam( int p, int newteam )
 	ACS_ExecuteWithResult( 891, p, newteam );
 }
 
-/* [Dusk] Separate script so as not to mess with the activator. */
+// [Dusk] Separate script so as not to mess with the activator.
 script SC_ChangePlayerTeam( int p, int newteam )
 {	Log( s: pname( p ), s: " is now on ", s: TeamNames[newteam], s: "." );
 
@@ -639,16 +707,19 @@ script SC_ChangePlayerTeam( int p, int newteam )
 	SetInventory( "IsBlue", newteam == TEAM_BLUE );
 	SetInventory( "IsRed",  newteam == TEAM_RED );
 
-	/* If they are in field right now, send them to their new team's base,
-	 * otherwise, into the spawn room. */
+	// If they are in field right now, send them to their new team's base,
+	// otherwise, into the spawn room.
 	if( CheckInventory( "IsInSpawnRoom" ))
 		Teleport( 70 + ( newteam == TEAM_RED ));
 	else
 		Teleport( 1 + ( newteam == TEAM_RED ));
 
-	/* If we were carrying a beacon, swap that now. */
+	// If they were carrying a beacon, swap that now.
 	if( CheckInventory( "IonCannonBeacon" ) || CheckInventory( "NuclearStrikeBeacon" ))
 	{	SetInventory( "IonCannonBeacon", newteam == TEAM_BLUE );
 		SetInventory( "NuclearStrikeBeacon", newteam == TEAM_RED );
 	}
+
+	// Their spawn marker is now invalidated
+	RemoveSpawnMarker (p);
 }
