@@ -469,7 +469,7 @@ Actor TimeGunFlareExplosion
 		TNT1 AAAAAAAAAAAAAAAA 0 A_SpawnItemEx ("TimeGunFlareGravity", 0, 0, 0, random (-12, 12), random (-12, 12), random (4, 9))
 		TNT1 AAAAAAAAAAAAAAAA 0 A_SpawnItemEx ("TimeGunFlareGravity", 0, 0, 0, random (-12, 12), random (-12, 12), random (4, 9))
 		TNT1 AAAAAAAAAAAAAAAA 0 A_SpawnItemEx ("TimeGunFlareGravity", 0, 0, 0, random (-12, 12), random (-12, 12), random (4, 9))
-		TNT1 A 2 A_SpawnItemEx ("GoldBeam")
+		TNT1 A 2
 		stop
 	}
 }

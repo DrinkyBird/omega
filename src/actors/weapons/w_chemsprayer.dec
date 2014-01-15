@@ -195,7 +195,8 @@ actor AnthraxDecay {
 	}
 }
 
-actor AnthraxDecaySpecial : AnthraxDecay {
+actor AnthraxDecaySpecial : AnthraxDecay
+{
 	DamageType "ChemicalSpecial" // neutral
 }
 
@@ -204,29 +205,35 @@ actor ChemicalGrenade {
 	PROJECTILE
 	-RANDOMIZE
 	-NOGRAVITY
-	+LOWGRAVITY
-	Radius 11
-	Height 8
-	Speed 35
-	Damage (30)
-	SeeSound ""
-	DeathSound "weapons/rocklx"
-	Obituary "$OB_CHEMSPRAYER_GRENADE"
-	DamageType "Chemical"
-	Decal "ChemScorchStrong"
-	Translation "80:111=120:127"
+	Radius		11
+	Height		8
+	Speed		35
+	Damage		(30)
+	Gravity		0.33
+	SeeSound	""
+	DeathSound	"weapons/rocklx"
+	Obituary	"$OB_CHEMSPRAYER_GRENADE"
+	DamageType	"Chemical"
+	Decal		"ChemScorchStrong"
+	Translation	"80:111=120:127"
 
-	States {
-	Spawn:
-		SGRN A 2 bright A_SpawnItemEx ("PulseBallSmokePuff", -25)
-		loop
+	States
+	{
+		Spawn:
+			SGRN A 2 bright A_SpawnItemEx ("ChemicalGrenadeFX", -25, 0, random (-1, 1), 0, 0, random (0, 5))
+			loop
 
-	Death:
-		TNT1 A 0 bright A_SpawnItem ("ChemicalExplosion")
-		TNT1 A 0 bright A_Gravity
-		TNT1 A 0 bright A_Explode (90, 128, 1)
-		TNT1 AAAAAAAAA 70 A_SpawnItemEx("AnthraxDecay", random(-64,64), random(-64,64), 4)
-		TNT1 A 0
-		stop
+		Death:
+			TNT1 A 0 bright A_SpawnItem ("ChemicalExplosion")
+			TNT1 A 0 bright A_Gravity
+			TNT1 A 0 bright A_Explode (90, 128, 1)
+			TNT1 AAAAAAAAA 70 A_SpawnItemEx("AnthraxDecay", random(-64,64), random(-64,64), 4)
+			TNT1 A 0
+			stop
 	}
+}
+
+Actor ChemicalGrenadeFX : ChemFakeDeath
+{
+	Alpha 0.4
 }
