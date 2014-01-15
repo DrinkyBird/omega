@@ -2,6 +2,8 @@
 // ------------------------------------------ TIME GUN
 // ===================================================
 
+#define NUM_TIME_GUN_MODES 3
+
 // [Dusk] Time gun effect messages and altfire rotation (in one script o.O)
 // action == 0 => intel message
 // action == 1 => altfire rotation
@@ -9,11 +11,7 @@
 script SC_TIMEGUN( int action, int type )
 {	if( action == 1 )
 	{	// Rotation
-		if( CheckInventory( "TimeGunRotation" ) == 3 )
-			TakeInventory( "TimeGunRotation", 3 );
-		else
-			GiveInventory( "TimeGunRotation", 1 );
-
+		SetInventory ("TimeGunRotation", (CheckInventory ("TimeGunRotation") + 1) % (NUM_TIME_GUN_MODES));
 		ActivatorSound( "switch/pulse", 127 );
 		terminate;
 	}
@@ -61,11 +59,11 @@ script SC_TIMEGUN( int action, int type )
 			break;
 
 		case 2: // slow
-			IntelMessage( "\cISomething pulls your legs..." );
+			IntelMessage( "\cGYou have been slowed down!" );
 			break;
 
 		case 3: // weaken
-			IntelMessage( "\cIYou hear something crack in your weapon..." );
+			IntelMessage( "\cGYou have been weakened!" );
 			break;
 	}
 }
@@ -78,8 +76,7 @@ script SC_CL_TimeGunHUD( void ) NET CLIENTSIDE
 		HudMessage(
 			s: TimeHUDColor( 0, 0 ), s: "BOOST ", s: TimeHUDColor( 0, 1 ), s: " / ", s: TimeHUDColor( 0, 2 ), s: "SLOW\n",
 			s: TimeHUDColor( 1, 0 ), s: "FLOAT ", s: TimeHUDColor( 1, 1 ), s: " / ", s: TimeHUDColor( 1, 2 ), s: "WEAKEN\n",
-			s: TimeHUDColor( 2, 0 ), s: "TELEPORT\n",
-			s: TimeHUDColor( 3, 0 ), s: "HYPERSPEED\n";
+			s: TimeHUDColor( 2, 0 ), s: "HYPERSPEED\n";
 			HUDMSG_PLAIN, 0, CR_WHITE, -0.8, -0.6, 0.2 );
 
 		delay( 5 );
@@ -99,7 +96,6 @@ function str TimeHUDColor( int type, int side )
 				}
 
 			case 2:
-			case 3:
 				return "\cF";
 		}
 	}
@@ -115,7 +111,6 @@ function str TimeHUDColor( int type, int side )
 				}
 
 			case 2:
-			case 3:
 				return "\cK";
 		}
 	}
