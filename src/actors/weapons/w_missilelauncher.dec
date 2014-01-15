@@ -8,36 +8,36 @@ actor MissileLauncher : AOWWeapon {
 	Weapon.AmmoUse 1
 	Weapon.AmmoGive 2
 	Weapon.PreferredSkin "MarineRockets"
-	
+
 	States {
 	Select:
 		MSLR A 0 ACS_ExecuteAlways (963, 0) // init targeter
 		MSLR A 0 A_JumpIfInventory ("IsBlue", 1, "SelectBlue")
 		MSLR A 1 A_Raise
 		wait
-	
+
 	SelectBlue:
 		MSLB A 1 A_Raise
 		wait
-	
+
 	Deselect:
 		MSLR A 0 A_JumpIfInventory ("IsBlue", 1, "DeselectBlue")
 		MSLR A 1 A_Lower
 		loop
-	
+
 	DeselectBlue:
 		MSLB A 1 A_Lower
 		loop
-	
+
 	Ready:
 		MSLR A 0 A_JumpIfInventory ("IsBlue", 1, "ReadyBlue")
 		MSLR A 1 A_WeaponReady (WRF_NOSECONDARY)
 		wait
-	
+
 	ReadyBlue:
 		MSLB A 1 A_WeaponReady (WRF_NOSECONDARY)
 		wait
-	
+
 	Fire:
 		MSLB A 0
 		MSLB A 0 A_JumpIfInventory ("IsInSpawnRoom",1,"Ready")
@@ -46,11 +46,11 @@ actor MissileLauncher : AOWWeapon {
 		MSLB A 0 A_JumpIfTargetInLOS ("Fire.Homing")
 		MSLB A 0 A_FireCustomMissile ("HeavyMissile")
 		goto AnimationRed
-	
+
 	Fire.Homing:
 		MSLB A 0 A_FireCustomMissile ("HeavyHomingMissile")
 		goto AnimationRed
-	
+
 	AnimationRed:
 		MSLB A 0 A_JumpIfInventory ("IsBlue", 1, "AnimationBlue")
 		MSLR A 1 offset (1, 35)
@@ -73,7 +73,7 @@ actor MissileLauncher : AOWWeapon {
 		MSLR E 4 A_WeaponReady(WRF_NOSWITCH|WRF_NOFIRE)
 		MSLR E 0 A_ReFire
 		goto Ready
-	
+
 	AnimationBlue:
 		MSLB A 1 offset (1, 35)
 		MSLB A 1 offset (2, 38)
@@ -95,7 +95,7 @@ actor MissileLauncher : AOWWeapon {
 		MSLB E 4 A_WeaponReady(WRF_NOSWITCH|WRF_NOFIRE)
 		MSLB E 0 A_ReFire
 		goto Ready
-	
+
 	Flash:
 		MSFR A 2 bright A_Light1
 		MSFR B 2 bright 
@@ -103,7 +103,7 @@ actor MissileLauncher : AOWWeapon {
 		MSFR D 2 bright
 		MSFR D 0 A_Light0
 		stop
-	
+
 	Spawn:
 		LAUN A -1
 		stop
@@ -129,7 +129,7 @@ actor HeavyMissile {
 	DeathSound "weapons/rocklx"
 	DamageType "Explosion"
 	Decal "Scorch"
-	
+
 	States {
 	Spawn:
 		MISR A 2 bright
@@ -153,7 +153,7 @@ actor HeavyHomingMissile : HeavyMissile {
 	+SEEKERMISSILE
 	Obituary "$OB_SEEKERMISSILE"
 	Speed 26
-	
+
 	States {
 	Spawn:
 		MISR A 2 bright

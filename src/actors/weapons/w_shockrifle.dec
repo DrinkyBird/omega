@@ -9,16 +9,16 @@ Actor ShockRifle : AOWWeapon 21068 {
 	AttackSound "voltrifle/fire"
 	Weapon.PreferredSkin "MarineFlamer"
 	decal "VoltageScorch"
-	
+
 	states {
 	Ready:
 		VOLT AAABBBCCCDDDCCCBBB 1 A_WeaponReady
 		loop
-	
+
 	Deselect:
 		VOLT A 1 A_Lower
 		loop
-	
+
 	Select:
 		VOLT A 1 A_Raise
 		loop
@@ -71,7 +71,7 @@ actor VoltagePuff
 	Alpha 0.5
 	DamageType "Laser"
 	Scale 0.25
-	
+
 	States
 	{
 	Spawn:
@@ -104,11 +104,11 @@ actor VoltageDecay {
 	-ACTIVATEPCROSS +NOBLOCKMAP
 	+NOGRAVITY +NOINTERACTION
 	+FORCEXYBILLBOARD
-	
+
 	renderstyle Add
 	alpha 0.5
 	Scale 2.0
-	
+
 	states {
 	Spawn:
 		TNT1 AA 0 A_PlaySound("voltrifle/decay")

@@ -12,26 +12,26 @@ actor ChemicalSprayer : AOWWeapon 21066 {
 	weapon.ammouse2 1
 	weapon.ammogive2 0
 	Weapon.PreferredSkin "MarinePlasma"
-	
+
 	States {
 	Spawn:
 		CHMG X -1
 		stop
-	
+
 	Ready:
 		CHMS A 0 A_StopSound (CHAN_WEAPON)
 		CHMS A 1 A_WeaponReady
 		wait
-	
+
 	Deselect:
 		CHMS A 0 A_StopSound (CHAN_WEAPON)
 		CHMS A 1 A_Lower
 		wait
-	
+
 	Select:
 		CHMS A 1 A_Raise
 		loop
-	
+
 	Fire:
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
 		CHMS A 0 A_PlaySound ("chem/fire", CHAN_WEAPON, 1.0, 1)
@@ -43,7 +43,7 @@ actor ChemicalSprayer : AOWWeapon 21066 {
 		CHMS A 8 bright offset (-1, 34) A_ReFire
 		CHMS A 0 A_StopSound (CHAN_WEAPON)
 		goto Ready
-	
+
 	AltFire:
 		CHMS A 0 A_JumpIfNoAmmo ("AltRejected")
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
@@ -56,11 +56,11 @@ actor ChemicalSprayer : AOWWeapon 21066 {
 		CHMS A 0 A_ReFire
 		CHMS A 15 A_WeaponReady // This is to prevent the altfire sound from cutting off
 		goto Ready
-	
+
 	AltRejected:
 		CHMS A 35 A_WeaponReady (WRF_NOSECONDARY)
 		goto Ready
-	
+
 	Flash:
 		TNT1 A 2 A_Light1
 		TNT1 A 2 A_Light2
@@ -107,18 +107,18 @@ actor ChemicalShot {
 	Damage (4)
 	DamageType "Chemical"
 	Scale 0.5
-	
+
 	States {
 	Spawn:
 		TNT1 A 4
 		TIBX ABCDEFGHIJK 2 bright
-	
+
 	Clear:
 		TNT1 A 0 A_SpawnItemEx("AnthraxDecay", random(-16,16), random(-16,16), 4, 0, 0, 0, 0, 0, 240)
 		TIBX L 2 bright
 		TIBX MMNNOOPPQQ 1 bright A_FadeOut(0.1)
 		stop
-	
+
 	Death:
 		TNT1 A 1 //A_Explode (5, 140)
 		TNT1 A 0 A_SpawnItemEx("AnthraxDecay", random(-16,16), random(-16,16), 4, 0, 0, 0, 0, 0, 240)
@@ -140,17 +140,17 @@ actor ChemicalShotDummy {
 	Damage (0)
 	DamageType "Chemical"
 	Scale 0.5
-	
+
 	States {
 	Spawn:
 		TNT1 A 4
 		TIBX ABCDEFGHIJK 2 bright
-	
+
 	Clear:
 		TIBX L 2 bright
 		TIBX MMNNOOPPQQ 1 bright A_FadeOut(0.1)
 		stop
-	
+
 	Death:
 		TNT1 A 1
 		TIBX H 3 bright A_SpawnItemEx("ChemFakeDeath",0,0,0,momx,momy,momz,0,SXF_ABSOLUTEMOMENTUM)
@@ -163,7 +163,7 @@ actor ChemFakeDeath : ChemicalShot {
 	Damage (0)
 	Alpha 0.375
 	+CLIENTSIDEONLY // This guy decreases network usage, remember? :(
-	
+
 	States {
 	Death:
 	Spawn:
@@ -180,12 +180,12 @@ actor AnthraxDecay {
 	DamageType "Chemical"
 	Obituary "$OB_CHEMSPRAYER"
 	ReactionTime 17
-	
+
 	States {
 	Spawn:
 		TNT1 AA 0 A_PlaySound("chem/chem")
 		goto Idle
-	
+
 	Idle:
 		TNT1 A 0
 		TNT1 AAA 5 A_SpawnItemEx("ChemicalFlame", random(-16,16), random(-16,16), random(8,16), 0, 0, random(1,3), 0, 128, 32)
@@ -215,12 +215,12 @@ actor ChemicalGrenade {
 	DamageType "Chemical"
 	Decal "ChemScorchStrong"
 	Translation "80:111=120:127"
-	
+
 	States {
 	Spawn:
 		SGRN A 2 bright A_SpawnItemEx ("PulseBallSmokePuff", -25)
 		loop
-	
+
 	Death:
 		TNT1 A 0 bright A_SpawnItem ("ChemicalExplosion")
 		TNT1 A 0 bright A_Gravity

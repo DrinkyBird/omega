@@ -14,20 +14,20 @@ actor Rifle : AOWWeapon 21042 {
 	weapon.ammogive2 2
 	inventory.pickupmessage "You got the Rifle!"
 	Weapon.PreferredSkin "MarineBase"
-	
+
 	States {
 	Ready:
 		RIFL A 1 A_WeaponReady
 		loop
-	
+
 	Deselect:
 		RIFL A 1 A_Lower
 		loop
-	
+
 	Select:
 		RIFL A 1 A_Raise
 		loop
-	
+
 	Fire:
 		RIFL A 2
 		RIFL A 0 A_Light2
@@ -42,7 +42,7 @@ actor Rifle : AOWWeapon 21042 {
 		RIFL A 8 offset (0, 32)
 		RIFL A 4 A_ReFire
 		goto Ready
-	
+
 	AltFire:
 		RIFL A 0 A_JumpIfNoAmmo ("AltRejected")
 		RIFL A 4
@@ -58,11 +58,11 @@ actor Rifle : AOWWeapon 21042 {
 		RIFL A 20 A_PlayWeaponSound ("rifle/reload")
 		RIFL A 4 A_ReFire
 		goto Ready
-	
+
 	AltRejected:
 		RIFL A 8 A_WeaponReady (WRF_NOSECONDARY)
 		goto Ready
-	
+
 	Spawn:
 		RIFL X -1
 		stop

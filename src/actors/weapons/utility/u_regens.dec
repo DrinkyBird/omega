@@ -33,7 +33,7 @@ actor Utility_GlobalMedicCacheRed {
 	scale 0.65
 	mass 0x7FFFFFFF
 	painchance 255
-	
+
 	states {
 	Spawn:
 		CACH AA 0 Thing_ChangeTID(0, 902)

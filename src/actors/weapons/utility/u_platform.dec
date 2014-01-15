@@ -8,7 +8,7 @@ actor FloatingPlatform : InvisibleBridge {
 	damagefactor "Disarm", 0.0
 	damagefactor "Fist", 0.5
 	damagefactor "Mechstomp", 0.0
-	
+
 	states {
 	Spawn:
 		TNT1 A 0

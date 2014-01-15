@@ -13,7 +13,7 @@ actor FragGrenade : AOWWeapon {
 	weapon.ammogive2 0
 	scale 0.25
 	Weapon.PreferredSkin "MarineFist"
-	
+
 	States {
 	Ready:
 		FRGS A 0 
@@ -23,7 +23,7 @@ actor FragGrenade : AOWWeapon {
 		goto Ready+9
 		TNT1 A 1 A_WeaponReady
 		loop
-	
+
 	Deselect:
 		FRGI A 0 A_JumpIfNoAmmo(4)
 		FRGI A 0 A_Lower
@@ -32,11 +32,11 @@ actor FragGrenade : AOWWeapon {
 		TNT1 A 0 A_Lower
 		TNT1 A 1 A_Lower
 		loop
-	
+
 	Select:
 		FRGI A 0 A_Raise
 		loop
-	
+
 	Fire:
 		FRGI A 2 A_TakeInventory ("FragGrenadePower", 100)
 		FRG1 BCDEFGH 2
@@ -51,7 +51,7 @@ actor FragGrenade : AOWWeapon {
 		FRG2 D 2 A_FireCustomMissile ("FragGrenadeThrown1",-1,1,10,5)
 		FRG2 EFG 2
 		goto Ready
-	
+
 	Hold:
 		TNT1 A 4 A_GiveInventory("FragGrenadePower", 6)
 		TNT1 A 1 A_ReFire
@@ -66,7 +66,7 @@ actor FragGrenade : AOWWeapon {
 		FRG2 D 2 A_FireCustomMissile("FragGrenadeThrown1",-1,1,10,5)
 		FRG2 EFG 2
 		goto Ready
-	
+
 	Throw2:
 		FRG2 AB 2
 		FRG2 C 2 A_PlayWeaponSound("frag/throw")
@@ -74,7 +74,7 @@ actor FragGrenade : AOWWeapon {
 		FRG2 D 2 A_FireCustomMissile("FragGrenadeThrown2",-1,1,10,5)
 		FRG2 EFG 2
 		goto Ready
-	
+
 	Throw3:
 		TNT1 A 2
 		TNT1 A 2 A_PlayWeaponSound("frag/throw")
@@ -83,7 +83,7 @@ actor FragGrenade : AOWWeapon {
 		FRG3 BCD 2
 		TNT1 AA 2
 		goto Ready
-	
+
 	Throw4:
 		TNT1 A 2
 		TNT1 A 2 A_PlayWeaponSound("frag/throw")
@@ -92,7 +92,7 @@ actor FragGrenade : AOWWeapon {
 		FRG3 BCD 2
 		TNT1 AA 2
 		goto Ready
-	
+
 	Throw5:
 		TNT1 A 2
 		TNT1 A 2 A_PlayWeaponSound("frag/throw")
@@ -101,7 +101,7 @@ actor FragGrenade : AOWWeapon {
 		FRG3 BCD 2
 		TNT1 AA 2
 		goto Ready
-	
+
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 A_SpawnItem ("FragGrenadeAmmo")
@@ -150,13 +150,13 @@ actor FragGrenadeThrown1 {
 	Gravity 0.6
 	BounceFactor 0.5
 	Damagetype "Rifle"
-	
+
 	States {
 	Spawn:
 		FRGX ABCDEFGHA 5
 		FRGX BB 5
 		goto Death
-	
+
 	Death:
 		TNT1 B 0 bright A_NoGravity
 		TNT1 A 0 bright A_PlaySound( "weapons/rocklx" )
@@ -182,7 +182,7 @@ actor FragGrenadeShrapnel {
 	Gravity 0.6
 	bouncecount 10
 	DamageType "Rifle"
-	
+
 	States {
 	Spawn:
 		SHRA A 5 BRIGHT

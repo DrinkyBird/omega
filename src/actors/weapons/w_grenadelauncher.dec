@@ -117,7 +117,7 @@ actor GrenadeAmmo : Ammo
 	Inventory.MaxAmount 40
 	Ammo.BackpackAmount 5
 	Ammo.BackpackMaxAmount 40
-	
+
 	States
 	{
 	Spawn:

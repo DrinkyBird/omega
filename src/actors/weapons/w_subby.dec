@@ -41,7 +41,7 @@ actor SubMachineGun : AOWWeapon 21043 {
 		SUBR A 1 bright offset (3, 35)
 		SUBR A 1 offset (5, 37)
 		SUBR A 1 offset (7, 39)
-		
+
 		//SUBR A 0 bright A_FireCustomMissile("MuzzleFlashSpawner",0,0,5,5)
 		SUBR A 0 bright A_GunFlash
 		SUBR A 0 bright A_SpawnItemEx("ShellCasing",8,8,32,random(1,3),random(0,1),random(1,3),random(45,60),128)
@@ -49,7 +49,7 @@ actor SubMachineGun : AOWWeapon 21043 {
 		SUBR A 1 bright offset (3, 35)
 		SUBR A 1 offset (5, 37)
 		SUBR A 1 offset (7, 39)
-		
+
 		//SUBR A 0 bright A_FireCustomMissile("MuzzleFlashSpawner",0,0,5,5)
 		SUBR A 0 bright A_GunFlash
 		SUBR A 0 bright A_SpawnItemEx("ShellCasing",8,8,32,random(1,3),random(0,1),random(1,3),random(45,60),128)
@@ -57,7 +57,7 @@ actor SubMachineGun : AOWWeapon 21043 {
 		SUBR A 1 bright offset (3, 35)
 		SUBR A 1 offset (5, 37)
 		SUBR A 1 offset (7, 39)
-		
+
 		SUBR A 9 offset (1, 32)
 		SUBR A 2 A_ReFire
 		goto Ready
@@ -80,7 +80,7 @@ actor SubMachineGun : AOWWeapon 21043 {
 		SUBB A 1 bright offset (3, 35)
 		SUBB A 1 offset (5, 37)
 		SUBB A 1 offset (7, 39)
-		
+
 		//SUBB A 0 bright A_FireCustomMissile("MuzzleFlashSpawner",0,0,5,5)
 		SUBB A 0 bright A_GunFlash
 		SUBB A 0 bright A_SpawnItemEx("ShellCasing",8,8,32,random(1,3),random(0,1),random(1,3),random(45,60),128)
@@ -88,7 +88,7 @@ actor SubMachineGun : AOWWeapon 21043 {
 		SUBB A 1 bright offset (3, 35)
 		SUBB A 1 offset (5, 37)
 		SUBB A 1 offset (7, 39)
-		
+
 		//SUBB A 0 bright A_FireCustomMissile("MuzzleFlashSpawner",0,0,5,5)
 		SUBB A 0 bright A_GunFlash
 		SUBB A 0 bright A_SpawnItemEx("ShellCasing",8,8,32,random(1,3),random(0,1),random(1,3),random(45,60),128)
@@ -96,7 +96,7 @@ actor SubMachineGun : AOWWeapon 21043 {
 		SUBB A 1 bright offset (3, 35)
 		SUBB A 1 offset (5, 37)
 		SUBB A 1 offset (7, 39)
-		
+
 		SUBB A 9 offset (1, 32)
 		SUBB A 2 A_ReFire
 		goto Ready

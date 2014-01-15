@@ -15,43 +15,43 @@ actor Flamer : AOWWeapon 21047 {
 	Weapon.PreferredSkin "MarineFlamer"
 	Decal BulletChip
 	Tag "Flamethrower"
-	
+
 	States {
 	Spawn:
 		FLMR X -1
 		stop
-	
+
 	Ready:
 		FL_R A 0 A_JumpIfInventory ("IsBlue", 1, "Ready.Blue")
 		FL_R ABCABCABCABCABCABCABCABCABCABCABCABC 2 A_WeaponReady
 		FL_R A 0 A_StopSound (CHAN_WEAPON)
 		loop
-	
+
 	Ready.Blue:
 		FL_B ABCABCABCABCABCABCABCABCABCABCABCABC 2 A_WeaponReady
 		FL_B A 0 A_StopSound (CHAN_WEAPON)
 		loop
-	
+
 	Deselect:
 		FL_R A 0 A_JumpIfInventory ("IsBlue", 1, "DeSelect.Blue")
 		FL_R E 0 A_StopSound (CHAN_WEAPON)
 		FL_R E 1 A_Lower
 		wait
-	
+
 	Deselect.Blue:
 		FL_B E 0 A_StopSound (CHAN_WEAPON)
 		FL_B E 1 A_Lower
 		wait
-	
+
 	Select:
 		FL_R E 0 A_JumpIfInventory("IsBlue",1,"Select.Blue")
 		FL_R E 1 A_Raise
 		wait
-	
+
 	Select.Blue:
 		FL_B E 1 A_Raise
 		wait
-	
+
 	Fire:
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
 		FL_R E 0 A_JumpIfInventory("IsBlue",1,"FireBlue")
@@ -64,7 +64,7 @@ actor Flamer : AOWWeapon 21047 {
 		FL_R E 1
 		FL_R E 2 A_PlaySound ("flamer2/down", CHAN_WEAPON)
 		goto Ready
-	
+
 	Hold:
 		FL_R E 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
 		FL_R E 0 A_GunFlash
@@ -76,7 +76,7 @@ actor Flamer : AOWWeapon 21047 {
 		FL_R E 1 offset (2, 33)
 		FL_R E 2 A_PlaySound ("flamer2/down", CHAN_WEAPON)
 		goto Ready
-	
+
 	FireBlue:
 		FL_B E 4 A_PlaySound ("flamer2/up", CHAN_WEAPON)
 		FL_B E 0 A_GunFlash
@@ -88,7 +88,7 @@ actor Flamer : AOWWeapon 21047 {
 		FL_B E 1 offset (1, 32)
 		FL_B E 2 A_PlaySound ("flamer2/down", CHAN_WEAPON)
 		goto Ready
-	
+
 	HoldBlue:
 		FL_B EE 1 bright offset (4, 35) A_FireCustomMissile ("FlamethrowerFire", random(-2,2), 1, 0, random(2, 6))
 		FL_B EE 1 bright offset (5, 36) A_FireCustomMissile ("FlamethrowerFire", random(-2,2), 0, 0, random(2, 6))
@@ -97,7 +97,7 @@ actor Flamer : AOWWeapon 21047 {
 		FL_B E 1 offset (2, 33)
 		FL_B E 2 A_PlaySound ("flamer2/down", CHAN_WEAPON)
 		goto Ready
-	
+
 	AltFire:
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "AltRejected")
 		TNT1 A 0 A_JumpIfNoAmmo ("AltRejected")
@@ -106,13 +106,13 @@ actor Flamer : AOWWeapon 21047 {
 		FL_R E 6 A_PlaySound ("grenade/fire", 6)
 		FL_R E 1 offset (0, 32) A_FireCustomMissile ("PhosphorusGrenade", 0, 1, 10, 0)
 		goto AltReload
-	
+
 	AltFireBlue:
 		FL_B E 15
 		FL_B E 6 A_PlaySound ("grenade/fire", 6)
 		FL_B E 1 offset (0, 32) A_FireCustomMissile ("PhosphorusGrenade", 0, 1, 10, 0)
 		goto AltReloadBlue
-	
+
 	AltReload:
 		FL_R E 1 offset (5, 35)
 		FL_R E 1 offset (10, 38)
@@ -128,7 +128,7 @@ actor Flamer : AOWWeapon 21047 {
 		FL_R E 1 offset (0, 32)
 		FL_R E 0 A_ReFire
 		goto Ready
-	
+
 	AltReloadBlue:
 		FL_B E 1 offset (5, 35)
 		FL_B E 1 offset (10, 38)
@@ -144,16 +144,16 @@ actor Flamer : AOWWeapon 21047 {
 		FL_B E 1 offset (0, 32)
 		FL_B E 0 A_ReFire
 		goto Ready
-	
+
 	AltRejected:
 		TNT1 A 0 A_JumpIfInventory("IsBlue", 1, "AltRejectedBlue")
 		FL_R E 35 A_WeaponReady (WRF_NOSECONDARY)
 		goto Ready
-	
+
 	AltRejectedBlue:
 		FL_B E 35 A_WeaponReady (WRF_NOSECONDARY)
 		goto Ready
-	
+
 	Flash:
 		TNT1 A 2 A_Light1
 		TNT1 A 2 A_Light2
@@ -200,12 +200,12 @@ actor FlameThrowerFire {
 	DamageType "Fire"
 	Decal Scorch
 	Scale 1.15
-	
+
 	States {
 	Spawn:
 		FMRF JIHGFEDCBA 1 bright A_Explode (1, 144, 0)
 		goto DeathGo
-	
+
 	Death:
 		FMRF A 0 A_SpawnItemEx ("FlameDecay", random (-8,8), random (-8,8), 0, 0,0,0, 0, 0, 250) //why was this flamerfiredecay
 	DeathGo:
@@ -225,7 +225,7 @@ actor FlameThrowerFireRemains {
 	+FORCEXYBILLBOARD
 	-ACTIVATEIMPACT
 	-ACTIVATEPCROSS
-	
+
 	RenderStyle Add
 	radius 2
 	height 4

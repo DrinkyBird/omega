@@ -14,15 +14,15 @@ actor DoubleShotgun : AOWWeapon {
 	Ready:
 		SHT2 A 1 A_WeaponReady
 		loop
-	
+
 	Deselect:
 		SHT2 A 1 A_Lower
 		loop
-	
+
 	Select:
 		SHT2 A 1 A_Raise
 		loop
-	
+
 	Fire:
 		SHT2 A 3
 		SHT2 A 0 Bright A_GunFlash
@@ -37,13 +37,13 @@ actor DoubleShotgun : AOWWeapon {
 		SHT2 H 6 A_CloseShotgun2
 		SHT2 A 5 A_ReFire
 		goto Ready
-	
+
 	Flash:
 		SHT2 I 3 Bright A_Light1
 		SHT2 J 4 Bright A_Light2
 		TNT1 A 28 A_Light0
 		stop
-	
+
 	Spawn:
 		TNT1 A 0
 		stop

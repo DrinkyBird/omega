@@ -171,7 +171,7 @@ actor LaserRifleAmmo : Ammo {
 	inventory.maxamount 200
 	ammo.backpackamount 20
 	ammo.backpackmaxamount 200
-	
+
 	States {
 	Spawn:
 		TNT1 A 0
@@ -188,7 +188,7 @@ actor LaserPuff : HHBulletPuff {
 	RenderStyle Add
 	Alpha 0.75
 	VSpeed 0
-	
+
 	States {
 	Spawn:
 	Melee:

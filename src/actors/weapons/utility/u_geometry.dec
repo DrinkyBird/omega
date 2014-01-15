@@ -18,7 +18,7 @@ actor Step {
 	RenderStyle Translucent
 	Alpha 0.0
 	DamageFactor "Disarm", 0.0
-	
+
 	States {
 	Spawn:
 		USTP AAAAAAAAAA 3 A_FadeIn(0.1)
@@ -61,7 +61,7 @@ actor SandbagWall {
 	Alpha 0.0
 	DamageFactor "Laser", 1.25
 	DamageFactor "Disarm", 0.0
-	
+
 	States {
 	Spawn:
 		BAGG A 0
@@ -74,7 +74,7 @@ actor SandbagWall {
 		BAGG A 0 A_SpawnItemEx ("SandbagWallSideBlocker", 0,32,0,0,0,0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
 		BAGG A -1 A_SpawnItemEx ("SandbagWallSideBlocker", 0,-32,0,0,0,0, 0, SXF_SETMASTER|SXF_NOCHECKPOSITION)
 		stop
-	
+
 	Death:
 		TNT1 A 0
 		TNT1 A 0 A_RemoveChildren (1)
@@ -83,7 +83,7 @@ actor SandbagWall {
 		TNT1 A 0 A_PlaySound ("weapons/rocklx")
 		TNT1 A 1
 		stop
-	
+
 	Death.Deconstruction:
 		"----" A 0 A_NoBlocking
 		"----" A 0 A_RemoveChildren (1)
@@ -98,7 +98,7 @@ actor SandbagWallSideBlocker {
 	+ISMONSTER
 	Radius 16
 	Height 48
-	
+
 	States {
 	Spawn:
 		TNT1 A -1

@@ -14,7 +14,7 @@ actor Utility_PortalBlue {
 	+BUMPSPECIAL
 	+NOBLOOD
 	+ISMONSTER
-	
+
 	radius 16
 	height 128
 	health 3000

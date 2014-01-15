@@ -5,14 +5,14 @@ actor Utility_ArtilleryTurretRed : Utility_TurretBase {
 	PainChance 50
 	ActiveSound "turret/sight"
 	DeathSound "weapons/rocklx"
-	
+
 	States {
 	Spawn:
 		CIGN F 0
 		CIGN F 0 Thing_SetSpecial (0, 84, 345, 0, TEAM_RED)
 		CIGN F 6 A_Look
 		wait
-	
+
 	See:
 		CIGN F 0 A_GiveInventory("IsRed",1)
 		CIGN F 2 A_ChangeFlag("FRIENDLY",0)
@@ -20,11 +20,11 @@ actor Utility_ArtilleryTurretRed : Utility_TurretBase {
 		CIGN F 2 A_JumpIfTargetInLOS("Missile")
 		CIGN F 2 A_ClearTarget
 		goto Spawn+2
-	
+
 	Clear:
 		CIGN F 2 A_ClearTarget
 		goto See
-	
+
 	Missile:
 		CIGN F 0 
 		CIGN F 1 A_JumpIfInTargetInventory("IsBlue", 1, 1) goto Clear
@@ -33,7 +33,7 @@ actor Utility_ArtilleryTurretRed : Utility_TurretBase {
 		CIGN F 1 A_JumpIfCloser(6000,"MissileGo")
 		CIGN F 0 
 		goto Clear
-	
+
 	MissileGo:
 		CIGN F 0 A_SpawnItemEx ("KlaxonMarker", 0,0,0,0,0,0,0, 32)
 		CIGN F 10 A_PlaySound("misc/alarm")
@@ -50,12 +50,12 @@ actor Utility_ArtilleryTurretRed : Utility_TurretBase {
 		CIGN G 0 A_PlayWeaponSound ("80mm/reload")
 		CIGN G 0 A_ChangeFlag ("NOPAIN", 0)
 		goto See
-	
+
 	Pain:
 		CIGN G 0 A_ClearTarget
 		CIGN G 3
 		goto See
-	
+
 	Death:
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("ExplosionMain", 0, 0, 32)
@@ -79,7 +79,7 @@ actor Utility_ArtilleryTurretBlue : Utility_TurretBase {
 		CIGN F 0 Thing_SetSpecial (0, 84, 345, 0, TEAM_BLUE)
 		CIGN F 6 A_Look
 		wait
-	
+
 	See:
 		CIGN F 0 A_SpawnItemEx ("KlaxonMarker", 0,0,0,0,0,0,0, 32)
 		CIGN F 0 A_GiveInventory("IsBlue",1)
@@ -88,11 +88,11 @@ actor Utility_ArtilleryTurretBlue : Utility_TurretBase {
 		CIGN F 2 A_JumpIfTargetInLOS("Missile")
 		CIGN F 2 A_ClearTarget
 		goto Spawn+2
-	
+
 	Clear:
 		CIGN F 2 A_ClearTarget
 		goto See
-	
+
 	Missile:
 		CIGN F 0 
 		CIGN F 1 A_JumpIfInTargetInventory("IsRed", 1, 1) goto Clear
@@ -101,7 +101,7 @@ actor Utility_ArtilleryTurretBlue : Utility_TurretBase {
 		CIGN F 1 A_JumpIfCloser(6000,"MissileGo")
 		CIGN F 0 
 		goto Clear
-	
+
 	MissileGo:
 		CIGN F 10 A_PlaySound("misc/alarm")
 		CIGN G 0 A_FaceTarget
@@ -117,12 +117,12 @@ actor Utility_ArtilleryTurretBlue : Utility_TurretBase {
 		CIGN G 0 A_PlayWeaponSound ("80mm/reload")
 		CIGN G 0 A_ChangeFlag ("NOPAIN", 0)
 		goto See
-	
+
 	Pain:
 		CIGN G 0 A_ClearTarget
 		CIGN G 3
 		goto See
-	
+
 	Death:
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx("ExplosionMain", 0, 0, 32)
@@ -147,7 +147,7 @@ actor ArtilleryTurretShell : ArtilleryShell {
 		SHRP A 0 A_Gravity
 		SHRP A 1 bright A_SpawnItemEx ("PulseBallSmokePuff", -25)
 		wait
-	
+
 	Death:
 		TNT1 A 0 A_NoGravity
 		TNT1 A 0 A_PlaySoundEx ("blanksnd", "Body",0)

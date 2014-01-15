@@ -1091,7 +1091,7 @@ actor Utility_Ammo : Ammo {
 	inventory.maxamount 75
 	ammo.backpackamount 75
 	ammo.backpackmaxamount 75
-	
+
 	states {
 	Spawn:
 		TNT1 A 0
@@ -1124,7 +1124,7 @@ actor Utility_TurretBase {
 	+NOTARGET
 	+LOOKALLAROUND
 	+NEVERRESPAWN
-	
+
 	states {
 	Death.Deconstruction:
 		"----" A 2 A_PlaySound ("utility/deconstruct")
