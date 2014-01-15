@@ -11,12 +11,12 @@ ACTOR PlasmaGun : AOWWeapon replaces PlasmaRifle 21087 {
 	Weapon.SelectionOrder 5
 	Weapon.PreferredSkin "MarinePlasma"
 
-	States  { 
+	States {
 	Spawn:
 		PLAS A -1
 		stop
 
-	Ready: 
+	Ready:
 		ENRG A 0 A_JumpIfInventory("IsBlue",1,"ReadyBlue")
 		ENRG A 3 A_WeaponReady
 		ENRG A 0 A_TakeInventory("PlasmaHeat",2)
@@ -41,7 +41,7 @@ ACTOR PlasmaGun : AOWWeapon replaces PlasmaRifle 21087 {
 
 	Deselect:
 		ENRG A 0 A_JumpIfInventory("IsBlue",1,"DeselectBlue")
-		ENRG A 1 A_Lower 
+		ENRG A 1 A_Lower
 		loop
 
 	DeselectBlue:
@@ -50,7 +50,7 @@ ACTOR PlasmaGun : AOWWeapon replaces PlasmaRifle 21087 {
 
 	Select:
 		ENRG A 0 A_JumpIfInventory("IsBlue",1,"SelectBlue")
-		ENRG A 1 A_Raise 
+		ENRG A 1 A_Raise
 		loop
 
 	SelectBlue:
@@ -61,19 +61,19 @@ ACTOR PlasmaGun : AOWWeapon replaces PlasmaRifle 21087 {
 		TNT1 A 0 A_JumpIfInventory ("IsInSpawnRoom", 1, "Ready")
 		ENRG A 0 A_JumpIfInventory("PlasmaHeat",100,"Overheat")
 		ENRG A 0 A_JumpIfInventory("IsBlue",1,"FireBlue")
-		ENRG A 1 A_GunFlash
+		ENRG A 0 A_GunFlash
 		ENRG A 0 A_PlaySound ("Weapons/PlasmaShot", CHAN_WEAPON)
 		ENRG A 1 Offset(1,35) A_FireCustomMissile("PlasmaShot",0,1,2,0)
-		ENRG A 1 Offset(0,37) A_GiveInventory("PlasmaHeat",random(0,3))
+		ENRG A 2 Offset(0,37) A_GiveInventory("PlasmaHeat",random(0,3))
 		ENRG A 0 A_JumpIfInventory("PlasmaHeat",75,"Warning")
 		ENRG A 1 A_Refire
 		Goto Ready
 
 	FireBlue:
-		ENBG A 1 A_GunFlash
+		ENBG A 0 A_GunFlash
 		ENBG A 0 A_PlaySound ("Weapons/PlasmaShot", CHAN_WEAPON)
 		ENBG A 1 Offset(1,35) A_FireCustomMissile("PlasmaShotBlue",0,1,2,0)
-		ENBG A 1 Offset(0,37) A_GiveInventory("PlasmaHeat",random(0,3))
+		ENBG A 2 Offset(0,37) A_GiveInventory("PlasmaHeat",random(0,3))
 		ENBG A 0 A_JumpIfInventory("PlasmaHeat",75,"Warning")
 		ENBG A 1 A_Refire
 		Goto Ready
@@ -95,7 +95,7 @@ ACTOR PlasmaGun : AOWWeapon replaces PlasmaRifle 21087 {
 		ENRG A 0 A_TakeInventory("WarningChecker", 1)
 		goto Ready
 
-	Flash: 
+	Flash:
 		RPRL B 0 A_JumpIfInventory ("IsRed", 1, "Flash.Red")
 		ENRF A 2 bright A_Light1
 		ENRF B 1 bright A_Light2

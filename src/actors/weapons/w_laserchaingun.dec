@@ -34,7 +34,7 @@ actor LaserChaingun : AOWWeapon {
 		wait
 	Fire:
 		LCGR AA 0 A_JumpIfInventory ("IsBlue", 1, "FireBlue")
-		LCGR A 2 A_CheckReload
+		LCGR A 0 A_CheckReload
 		LCGR B 0 A_GunFlash
 		LCGR B 0 A_PlayWeaponSound("lchaingun/fire")
 		LCGR B 0 A_FireBullets (1.0, 1.0, -1, 8, "LaserPuff",FBF_USEAMMO|FBF_NORANDOM,4000)
@@ -53,11 +53,12 @@ actor LaserChaingun : AOWWeapon {
 		LCGR C 0 A_SpawnItemEx("LaserChainGunLight",35*(1-(sin(pitch)*0.8)),4.5,34*(1-(sin(pitch)*0.8)),0,0,0)
 		LCGR C 0 A_FireBullets (1.0, 1.0, -1, 8, "LaserPuff",FBF_USEAMMO|FBF_NORANDOM,4000)
 		LCGR C 1 BRIGHT
+		LCGR A 2
 		LCGR A 0 A_ReFire
 		LCGR ABCABC 2
 		goto Ready
 	FireBlue:
-		LCGB A 2 A_CheckReload
+		LCGB A 0 A_CheckReload
 		LCGB A 0 A_GunFlash
 		LCGB B 0 A_PlayWeaponSound("lchaingun/fire")
 		LCGB B 0 A_FireBullets (1.0, 1.0, -1, 8, "LaserPuffBlue",FBF_USEAMMO|FBF_NORANDOM,4000)
@@ -75,6 +76,7 @@ actor LaserChaingun : AOWWeapon {
 		LCGB C 0 A_SpawnItemEx("LaserChainGunLightBlue",35*(1-(sin(pitch)*0.8)),4.5,34*(1-(sin(pitch)*0.8)),0,0,0)
 		LCGB C 0 A_FireBullets (1.0, 1.0, -1, 8, "LaserPuffBlue",FBF_USEAMMO|FBF_NORANDOM,4000)
 		LCGB C 1 BRIGHT
+		LCGB A 2
 		LCGB A 0 A_ReFire
 		LCGB ABCABC 2
 		goto Ready

@@ -24,7 +24,6 @@ actor DoubleShotgun : AOWWeapon {
 		loop
 
 	Fire:
-		SHT2 A 3
 		SHT2 A 0 Bright A_GunFlash
 		SHT2 A 7 Bright A_FireBullets (15.7, 11.7, 20, 8, "HandgunPuff", FBF_USEAMMO|FBF_NORANDOM, 512)
 		SHT2 B 7
@@ -34,7 +33,7 @@ actor DoubleShotgun : AOWWeapon {
 		SHT2 E 7
 		SHT2 F 7 A_LoadShotgun2
 		SHT2 G 6
-		SHT2 H 6 A_CloseShotgun2
+		SHT2 H 9 A_CloseShotgun2
 		SHT2 A 5 A_ReFire
 		goto Ready
 
